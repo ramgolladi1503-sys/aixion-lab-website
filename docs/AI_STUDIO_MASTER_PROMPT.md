@@ -1,5 +1,21 @@
 # AIXION LAB — Google AI Studio Master Build Prompt
 
+## Mandatory first read
+
+Before changing any visual, layout, logo, color, typography, or brand element, read and obey:
+
+`docs/BRAND_AUTHORITY.md`
+
+That file is the immutable brand contract and outranks generated design suggestions. The exact supplied logo asset must be used directly. Do not recreate it with SVG, CSS, canvas, WebGL, tracing, image generation, or approximation.
+
+Also import and use:
+
+`src/brand.css`
+
+for the canonical AIXION LAB design tokens and button treatments.
+
+If the expected logo asset `/public/brand/aixion-lab-primary.png` is missing, STOP and request the original supplied file. Do not invent a replacement.
+
 ## Mission
 Continue building the existing AIXION LAB website in this repository. Do not replace the project with an unrelated template. Treat this repository as the source of truth for the public website.
 
@@ -262,20 +278,22 @@ This is a public company website. It may describe architecture and engineering d
 Perform the following in order:
 
 1. Inspect the repository before changing anything.
-2. Preserve the official AIXION LAB brand.
-3. Make the existing site compile and run cleanly.
-4. Refactor the UI into maintainable components without changing the core brand direction.
-5. Build the header, hero, systems, work, proof, principles, founder and contact sections.
-6. Add honest product maturity labels.
-7. Add responsive behavior.
-8. Add restrained micro-interactions.
-9. Add accessibility and SEO basics.
-10. Run the production build and fix all build errors.
-11. Summarize exactly what changed and what remains incomplete.
+2. Read `docs/BRAND_AUTHORITY.md` and import `src/brand.css` before editing UI.
+3. Preserve the official AIXION LAB logo asset exactly; do not recreate it.
+4. Make the existing site compile and run cleanly.
+5. Refactor the UI into maintainable components without changing the core brand direction.
+6. Build the header, hero, systems, work, proof, principles, founder and contact sections.
+7. Add honest product maturity labels.
+8. Add responsive behavior.
+9. Add restrained micro-interactions.
+10. Add accessibility and SEO basics.
+11. Run the production build and fix all build errors.
+12. Summarize exactly what changed and what remains incomplete.
 
 ## Acceptance criteria
 The first pass is complete only when:
 - official AIXION LAB logo is preserved
+- logo is loaded from the supplied asset file, not recreated
 - tagline "END IS THE NEW BEGINNING" is visible at least once without dominating every section
 - site communicates the company in under 10 seconds
 - Control Tower, MCP Shield, Veriforge and Financial Systems Research Lab are clearly differentiated
@@ -289,7 +307,7 @@ The first pass is complete only when:
 - source is reasonably componentized
 
 ## Working behavior
-Do not make a giant uncontrolled rewrite in one step. First inspect, explain the intended change set, then implement in coherent increments. Preserve working behavior. If a requested improvement conflicts with the truth rules or public/private boundary, keep the safer version and explain why.
+Do not make a giant uncontrolled rewrite in one step. First inspect, explain the intended change set, then implement in coherent increments. Preserve working behavior. If a requested improvement conflicts with the truth rules, public/private boundary, or `docs/BRAND_AUTHORITY.md`, keep the safer version and explain why.
 
 At the end, return:
 1. files changed
