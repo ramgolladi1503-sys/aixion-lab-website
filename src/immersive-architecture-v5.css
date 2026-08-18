@@ -1,0 +1,460 @@
+/* AIXION LAB — Architectural World V5
+   Purpose: replace diagram/card-first chapter rendering with one luminous spatial environment.
+   This file intentionally loads last and overrides V3/V4 presentation without changing publication truth. */
+
+:root {
+  --v5-white: #ffffff;
+  --v5-porcelain: #fbfcfb;
+  --v5-mist: #f3f8f7;
+  --v5-aqua: #bfe7e3;
+  --v5-aqua-mid: #8fc9c6;
+  --v5-aqua-deep: #5f9f9e;
+  --v5-gold: #c9a469;
+  --v5-gold-soft: rgba(201,164,105,.42);
+  --v5-ink: #15282e;
+  --v5-soft: rgba(21,40,46,.62);
+}
+
+html,
+body,
+.experience-site,
+.experience-home,
+.aixion-scene {
+  background-color: var(--v5-white) !important;
+}
+
+body {
+  background:
+    radial-gradient(circle at 75% 8%, rgba(177,224,221,.14), transparent 24%),
+    linear-gradient(180deg, #fff 0%, #fbfdfc 58%, #f7fbfa 100%) !important;
+}
+
+.experience-header {
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.78) 70%, rgba(255,255,255,0)) !important;
+}
+
+.experience-shell {
+  width: min(1580px, calc(100% - 72px));
+}
+
+/* HERO — visual world dominates the frame. */
+.experience-home {
+  min-height: 230vh !important;
+  background:
+    radial-gradient(circle at 74% 34%, rgba(155,219,215,.17), transparent 29%),
+    radial-gradient(circle at 46% 8%, rgba(255,255,255,1), transparent 38%),
+    linear-gradient(180deg, #fff 0%, #fbfdfc 52%, #f4faf8 100%) !important;
+}
+
+.experience-home-sticky {
+  min-height: 760px;
+  overflow: hidden;
+}
+
+.experience-world-v3 {
+  inset: -3% -9% -10% 27% !important;
+  opacity: 1 !important;
+  transform: scale(1.16);
+  transform-origin: center right;
+  filter: saturate(.94) brightness(1.05) contrast(1.01);
+}
+
+.experience-world-svg {
+  transform-origin: 52% 50% !important;
+  transform:
+    translate3d(
+      calc(var(--world-pointer-x) * 10px - var(--world-progress) * 28px),
+      calc(var(--world-pointer-y) * 7px + var(--world-progress) * 10px),
+      0
+    )
+    scale(calc(1.13 + var(--world-progress) * .06)) !important;
+}
+
+.world-cloud-layer ellipse { fill: rgba(255,255,255,.97) !important; }
+.world-cloud-layer-back { opacity: .96 !important; }
+.world-cloud-layer-front { opacity: 1 !important; }
+.world-master-side,
+.world-platform-side { fill: #edf2ef !important; }
+.world-master-top,
+.world-platform-top,
+.world-dome-base,
+.world-dome-mid,
+.world-dome-top,
+.world-small-dome,
+.world-dome-secondary { fill: #fff !important; }
+.world-aqua-top { filter: saturate(.9) brightness(1.08); }
+.world-mountain-back { fill: #edf4f2 !important; }
+.world-mountain-front { fill: #f7faf8 !important; }
+.world-glass-panel rect { fill: rgba(245,255,253,.58) !important; }
+
+.experience-home-content {
+  grid-template-columns: minmax(320px, 34%) minmax(0, 66%);
+}
+
+.experience-overview {
+  max-width: 500px;
+  transform: translateY(-2vh);
+}
+
+.experience-overview h1 {
+  font-size: clamp(72px, 7.2vw, 116px) !important;
+  line-height: .89 !important;
+}
+
+.experience-overview p {
+  max-width: 470px;
+  font-size: 17px;
+  line-height: 1.72;
+}
+
+.hero-cloud {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,255,255,.98) 0 48%, rgba(255,255,255,0) 76%);
+  filter: blur(10px);
+}
+
+.hero-cloud-a {
+  width: 620px;
+  height: 220px;
+  right: -130px;
+  top: 9%;
+  animation: v5-cloud 18s ease-in-out infinite alternate;
+}
+
+.hero-cloud-b {
+  width: 720px;
+  height: 260px;
+  right: 8%;
+  bottom: -2%;
+  opacity: .92;
+  animation: v5-cloud 23s ease-in-out infinite alternate-reverse;
+}
+
+.hero-foreground-ridge {
+  position: absolute;
+  z-index: 1;
+  right: -4%;
+  bottom: 4%;
+  width: 42%;
+  height: 34%;
+  opacity: .52;
+  pointer-events: none;
+}
+
+.hero-foreground-ridge i {
+  position: absolute;
+  bottom: 0;
+  width: 38%;
+  height: 86%;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: linear-gradient(145deg, #eaf3f0 0%, #fbfdfc 58%, #dfecea 100%);
+  filter: drop-shadow(0 22px 30px rgba(60,89,84,.07));
+}
+
+.hero-foreground-ridge i:nth-child(1) { left: 0; height: 72%; }
+.hero-foreground-ridge i:nth-child(2) { left: 28%; height: 100%; }
+.hero-foreground-ridge i:nth-child(3) { right: 0; height: 63%; }
+
+/* CHAPTER FOUNDATION */
+.world-chapter {
+  min-height: 112vh !important;
+  padding: 132px 0 116px !important;
+  border-top: 0 !important;
+  background:
+    radial-gradient(circle at 76% 22%, rgba(174,224,220,.14), transparent 25%),
+    radial-gradient(circle at 92% 88%, rgba(255,255,255,.95), transparent 32%),
+    linear-gradient(180deg, #fff 0%, #fbfdfc 55%, #f6fbf9 100%) !important;
+}
+
+.world-chapter::before,
+.world-chapter::after {
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,255,255,.98), rgba(255,255,255,0) 72%) !important;
+  filter: blur(24px) !important;
+}
+
+.aixion-scene-grid {
+  grid-template-columns: minmax(320px, .62fr) minmax(700px, 1.38fr) !important;
+  gap: clamp(54px, 6vw, 118px) !important;
+}
+
+.aixion-scene-copy {
+  max-width: 500px;
+  position: relative;
+  z-index: 12;
+}
+
+.aixion-scene-copy h2,
+.contact-content h2 {
+  font-size: clamp(62px, 5.6vw, 94px) !important;
+  line-height: .92 !important;
+  color: var(--v5-ink) !important;
+}
+
+.aixion-scene-copy p,
+.contact-content p {
+  color: var(--v5-soft) !important;
+}
+
+.scene-cloud {
+  position: absolute;
+  z-index: 1;
+  width: 650px;
+  height: 210px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,255,255,.98), rgba(255,255,255,0) 72%);
+  filter: blur(16px);
+  pointer-events: none;
+}
+
+.scene-cloud-left { left: -220px; bottom: 4%; }
+.scene-cloud-right { right: -190px; top: 12%; }
+
+/* SYSTEMS — architectural districts, not cards. */
+.systems-landscape {
+  position: relative;
+  min-height: 760px;
+  perspective: 1400px;
+  isolation: isolate;
+}
+
+.systems-horizon {
+  position: absolute;
+  inset: 0 0 32%;
+  z-index: 0;
+  opacity: .58;
+}
+
+.systems-horizon i {
+  position: absolute;
+  bottom: 0;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: linear-gradient(150deg, #e9f3f0, #fbfdfc 62%, #dce9e6);
+  filter: drop-shadow(0 25px 40px rgba(74,95,89,.08));
+}
+.systems-horizon i:nth-child(1){left:0;width:34%;height:58%}
+.systems-horizon i:nth-child(2){left:28%;width:42%;height:76%}
+.systems-horizon i:nth-child(3){right:0;width:38%;height:52%}
+
+.systems-water {
+  position: absolute;
+  z-index: 1;
+  left: 8%;
+  right: 4%;
+  bottom: 5%;
+  height: 49%;
+  transform: rotateX(63deg) rotateZ(-3deg);
+  transform-origin: bottom center;
+  border-radius: 42% 54% 36% 48%;
+  background:
+    radial-gradient(circle at 48% 46%, rgba(255,255,255,.92), transparent 12%),
+    linear-gradient(145deg, rgba(207,241,237,.93), rgba(121,193,190,.70));
+  border: 1px solid rgba(93,159,157,.23);
+  box-shadow: 0 36px 80px rgba(73,108,104,.10);
+}
+
+.systems-water i {
+  position: absolute;
+  border: 1px solid rgba(255,255,255,.72);
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+.systems-water i:first-child{width:46%;height:34%}
+.systems-water i:last-child{width:24%;height:18%;border-color:var(--v5-gold-soft)}
+
+.systems-core-city {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  top: 44%;
+  width: 150px;
+  height: 205px;
+  transform: translate(-50%,-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 18px;
+  color: var(--v5-ink);
+}
+
+.systems-core-city::before,
+.systems-core-city::after {
+  content:'';
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(180deg,#fff,#e9f7f4);
+  border:1px solid rgba(92,154,152,.23);
+  box-shadow:0 22px 36px rgba(70,99,94,.08);
+}
+.systems-core-city::before{bottom:58px;width:104px;height:80px;border-radius:52% 52% 16px 16px}
+.systems-core-city::after{bottom:118px;width:44px;height:74px;border-radius:24px 24px 8px 8px}
+.systems-core-city i{position:absolute;left:50%;top:3px;width:2px;height:70px;background:linear-gradient(var(--v5-gold),transparent)}
+.systems-core-city b{z-index:2;font-family:var(--experience-serif);font-weight:300;font-size:23px}
+.systems-core-city span{z-index:2;font-size:8px;letter-spacing:.12em;color:rgba(21,40,46,.48)}
+
+.systems-route {
+  position:absolute;
+  z-index:3;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+.systems-route path{fill:none;stroke:rgba(198,159,99,.60);stroke-width:1.5;stroke-dasharray:6 9;animation:v5-dash 18s linear infinite}
+
+.system-district {
+  position:absolute;
+  z-index:6;
+  width:31%;
+  min-height:270px;
+}
+.system-district-1{left:2%;top:9%}
+.system-district-2{right:0;top:5%}
+.system-district-3{left:35%;bottom:0;width:34%}
+
+.district-architecture {
+  position:relative;
+  height:185px;
+  transform-style:preserve-3d;
+}
+.district-plinth{position:absolute;left:50%;bottom:8px;width:84%;height:58px;transform:translateX(-50%) skewX(-18deg);border-radius:22px;background:linear-gradient(145deg,#fff,#e8f1ef);border:1px solid rgba(89,129,126,.14);box-shadow:0 25px 38px rgba(62,89,84,.09)}
+.district-tower{position:absolute;bottom:44px;background:linear-gradient(180deg,#fff 0%,#eef7f4 80%);border:1px solid rgba(81,142,140,.19);box-shadow:0 15px 28px rgba(69,94,89,.07)}
+.district-tower-a{left:31%;width:44px;height:98px;border-radius:19px 19px 5px 5px}
+.district-tower-b{right:28%;width:30px;height:70px;border-radius:15px 15px 4px 4px}
+.district-dome{position:absolute;left:50%;bottom:40px;width:92px;height:46px;transform:translateX(-50%);border-radius:90px 90px 16px 16px;background:linear-gradient(180deg,rgba(213,244,240,.88),#fff);border:1px solid rgba(76,145,143,.24)}
+.district-spire{position:absolute;left:50%;bottom:85px;width:1.5px;height:72px;background:linear-gradient(var(--v5-gold),rgba(201,164,105,.1));transform:translateX(-50%)}
+.district-spire::before{content:'';position:absolute;left:50%;top:-5px;width:7px;height:7px;border-radius:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--v5-gold)}
+.district-glass{position:absolute;right:12%;top:16px;width:72px;height:94px;border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.65),rgba(177,228,223,.20));border:1px solid rgba(89,151,149,.22);backdrop-filter:blur(10px);transform:rotate(5deg)}
+.district-architecture-2 .district-tower-a{height:126px}
+.district-architecture-2 .district-dome{width:76px}
+.district-architecture-3 .district-plinth{width:96%}
+.district-architecture-3 .district-tower-a{left:24%;height:78px}
+.district-architecture-3 .district-tower-b{right:22%;height:102px}
+
+.district-label {
+  position:relative;
+  margin:-4px auto 0;
+  max-width:270px;
+  text-align:center;
+}
+.district-label>span{color:#a37a41;font-size:9px;letter-spacing:.12em}
+.district-label>small{display:block;margin:5px 0 8px;color:rgba(21,40,46,.42);font-size:8px;letter-spacing:.12em}
+.district-label h3{margin:0;font-family:var(--experience-serif);font-weight:300;font-size:25px;line-height:1.02;color:var(--v5-ink)}
+.district-label p,.district-label li{font-size:11px;line-height:1.5;color:rgba(21,40,46,.58)}
+.district-label ul{padding-left:17px;text-align:left}
+
+.systems-moving-guide{width:12px!important;height:12px!important;left:49%!important;top:44%!important;background:#fff!important;border:1.5px solid var(--v5-aqua-deep)!important;box-shadow:0 0 0 8px rgba(130,204,200,.16),0 0 24px rgba(94,166,163,.30)!important;animation:v5-guide 14s ease-in-out infinite!important}
+
+/* EVIDENCE — monumental stepped vault. */
+.evidence-vault {
+  position:relative;
+  min-height:730px;
+  perspective:1300px;
+  transform-style:preserve-3d;
+}
+.evidence-vault-haze{position:absolute;left:12%;right:2%;bottom:2%;height:55%;border-radius:50%;background:radial-gradient(ellipse,rgba(170,222,218,.24),rgba(255,255,255,0) 68%);filter:blur(20px)}
+.evidence-vault-spine{position:absolute;z-index:8;left:50%;top:11%;bottom:9%;width:1px;background:linear-gradient(transparent,var(--v5-gold),var(--v5-aqua-deep),transparent)}
+.evidence-vault-spine i{position:absolute;left:50%;width:10px;height:10px;border-radius:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--v5-gold);box-shadow:0 0 0 7px rgba(197,164,105,.08)}
+.evidence-vault-spine i:first-child{top:18%}.evidence-vault-spine i:last-child{bottom:14%}
+.evidence-terrace{position:absolute;left:50%;width:min(650px,82%);height:148px;transform:translateX(-50%) rotateX(59deg) rotateZ(-4deg);border:1px solid rgba(87,148,146,.25);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(194,233,229,.36));box-shadow:0 34px 66px rgba(63,91,86,.10);backdrop-filter:blur(12px)}
+.evidence-terrace-1{top:54px;width:50%;opacity:.72}.evidence-terrace-2{top:168px;width:61%;opacity:.82}.evidence-terrace-3{top:286px;width:72%;opacity:.92}.evidence-terrace-4{top:408px;width:84%}
+.evidence-terrace>b,.evidence-terrace>span{position:absolute;z-index:3;transform:rotateZ(4deg) rotateX(-59deg)}
+.evidence-terrace>b{left:26px;top:26px;font-size:9px;color:#9f7944}.evidence-terrace>span{left:58px;top:22px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--v5-ink)}
+.evidence-terrace-structure{position:absolute;inset:0}
+.evidence-terrace-structure i{position:absolute;bottom:24px;background:linear-gradient(180deg,#fff,rgba(204,238,234,.56));border:1px solid rgba(87,148,146,.18)}
+.evidence-terrace-structure i:nth-child(1){left:34%;width:34px;height:62px;border-radius:17px 17px 4px 4px}.evidence-terrace-structure i:nth-child(2){left:48%;width:62px;height:34px;border-radius:50px 50px 8px 8px}.evidence-terrace-structure i:nth-child(3){right:31%;width:22px;height:52px;border-radius:12px 12px 3px 3px}
+.evidence-signal{position:absolute;z-index:12;left:50%;bottom:11%;width:12px;height:12px;border-radius:50%;background:#fff;border:1.5px solid var(--v5-aqua-deep);box-shadow:0 0 0 8px rgba(130,204,200,.15),0 0 24px rgba(95,165,162,.32);animation:v5-evidence-signal 8s ease-in-out infinite}
+.evidence-cases-v5 article{background:rgba(255,255,255,.62)!important;border-color:rgba(78,135,133,.10)!important;box-shadow:0 24px 45px rgba(63,91,86,.05)}
+
+/* PRINCIPLES — five distinct monuments along a sanctuary ridge. */
+.aixion-scene-principles{min-height:118vh!important}
+.principles-layout{position:relative;z-index:3}
+.principles-mountain{position:absolute;z-index:0;right:-4%;bottom:0;width:70%;height:70%;opacity:.42}
+.principles-mountain i{position:absolute;bottom:0;clip-path:polygon(50% 0,100% 100%,0 100%);background:linear-gradient(150deg,#ebf4f1,#fff 62%,#dceae7)}
+.principles-mountain i:nth-child(1){left:0;width:42%;height:58%}.principles-mountain i:nth-child(2){left:26%;width:48%;height:80%}.principles-mountain i:nth-child(3){right:0;width:43%;height:48%}
+.principle-sanctuary{position:relative;min-height:650px;margin-top:12px}
+.principle-route{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.principle-route path{fill:none;stroke:rgba(197,158,96,.52);stroke-width:1.4;stroke-dasharray:5 8;animation:v5-dash 18s linear infinite}
+.principle-monument{position:absolute;z-index:4;width:18%;min-height:0!important;text-align:center}
+.monument-1{left:1%;bottom:2%}.monument-2{left:20%;bottom:18%}.monument-3{left:41%;bottom:31%}.monument-4{left:63%;bottom:45%}.monument-5{right:0;top:2%}
+.monument-architecture{position:relative;height:180px;margin-bottom:12px}
+.monument-architecture::after{content:'';position:absolute;left:50%;bottom:12px;width:118px;height:34px;transform:translateX(-50%);border-radius:50%;background:linear-gradient(180deg,#fff,#e7efed);border:1px solid rgba(93,135,131,.14);box-shadow:0 18px 28px rgba(61,88,83,.07)}
+.monument-architecture i{position:absolute;left:50%;transform:translateX(-50%);border:1px solid rgba(88,149,147,.23)}
+.monument-architecture i:nth-child(1){bottom:43px;width:78px;height:78px;border-radius:50%;background:rgba(198,235,231,.28)}
+.monument-architecture i:nth-child(2){bottom:61px;width:42px;height:42px;border-radius:50%;background:#fff}
+.monument-architecture i:nth-child(3){bottom:78px;width:10px;height:68px;border:0;background:linear-gradient(var(--v5-gold),transparent)}
+.monument-architecture i:nth-child(4){bottom:117px;width:9px;height:9px;border-radius:50%;background:#fff;border:1px solid var(--v5-gold)}
+.monument-2 .monument-architecture i:nth-child(1){width:70px;height:112px;border-radius:36px 36px 8px 8px}.monument-3 .monument-architecture i:nth-child(1){clip-path:polygon(50% 0,100% 85%,74% 100%,26% 100%,0 85%);border-radius:0}.monument-4 .monument-architecture i:nth-child(1){width:102px;height:54px;border-radius:70px 70px 12px 12px}.monument-5 .monument-architecture i:nth-child(1){width:56px;height:130px;border-radius:28px 28px 6px 6px}
+.principle-monument>span{font-size:9px;color:#a27b42;letter-spacing:.11em}.principle-monument h3{margin:8px auto 0;max-width:175px;font-family:var(--experience-serif);font-weight:300;font-size:21px;line-height:1.08;color:var(--v5-ink)}.principle-monument p{font-size:10px;line-height:1.5;color:rgba(21,40,46,.57)}
+.principle-guide{position:absolute;z-index:10;left:4%;bottom:12%;width:11px;height:11px;border-radius:50%;background:#fff;border:1.5px solid var(--v5-aqua-deep);box-shadow:0 0 0 8px rgba(130,204,200,.14);animation:v5-principle-guide 13s ease-in-out infinite}
+
+/* FOUNDER — ascent through stations, not a dotted infographic. */
+.aixion-scene-founder{min-height:118vh!important}
+.founder-mountain-range{position:absolute;z-index:0;right:-2%;bottom:0;width:67%;height:82%;opacity:.48}.founder-mountain-range i{position:absolute;bottom:0;clip-path:polygon(50% 0,100% 100%,0 100%);background:linear-gradient(150deg,#e8f2ef,#fff 64%,#dbe8e5)}
+.founder-mountain-range i:nth-child(1){left:0;width:34%;height:45%}.founder-mountain-range i:nth-child(2){left:21%;width:40%;height:65%}.founder-mountain-range i:nth-child(3){left:48%;width:44%;height:88%}.founder-mountain-range i:nth-child(4){right:-4%;width:37%;height:58%}
+.founder-climb{position:relative;min-height:720px}.founder-route{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.founder-route path{fill:none;stroke:rgba(194,154,92,.62);stroke-width:1.5;stroke-dasharray:6 9;animation:v5-dash 18s linear infinite}
+.journey-station{position:absolute;z-index:4;width:160px;text-align:center}.journey-station-1{left:0;bottom:4%}.journey-station-2{left:17%;bottom:18%}.journey-station-3{left:34%;bottom:34%}.journey-station-4{left:51%;bottom:49%}.journey-station-5{left:67%;bottom:65%}.journey-station-6{right:0;top:0}
+.journey-architecture{position:relative;height:100px}.journey-architecture::after{content:'';position:absolute;left:50%;bottom:8px;width:86px;height:25px;transform:translateX(-50%);border-radius:50%;background:linear-gradient(#fff,#e7efed);border:1px solid rgba(87,132,128,.13)}.journey-architecture i:nth-child(1){position:absolute;left:50%;bottom:28px;width:46px;height:46px;transform:translateX(-50%);border-radius:50%;background:rgba(196,235,231,.33);border:1px solid rgba(85,146,144,.21)}.journey-architecture i:nth-child(2){position:absolute;left:50%;bottom:47px;width:2px;height:46px;background:linear-gradient(var(--v5-gold),transparent);transform:translateX(-50%)}.journey-architecture i:nth-child(3){position:absolute;left:50%;bottom:85px;width:8px;height:8px;border-radius:50%;background:#fff;border:1px solid var(--v5-gold);transform:translateX(-50%)}
+.journey-station-6 .journey-architecture i:nth-child(1){width:64px;height:70px;border-radius:34px 34px 8px 8px}.journey-station b{display:block;font-size:9px;color:#9f7740}.journey-station span{display:block;margin-top:5px;font-family:var(--experience-serif);font-size:16px;color:var(--v5-ink)}
+.journey-runner{width:12px!important;height:12px!important;left:4%!important;bottom:12%!important;top:auto!important;border:1.5px solid var(--v5-aqua-deep)!important;background:#fff!important;box-shadow:0 0 0 8px rgba(130,204,200,.14),0 0 25px rgba(97,168,165,.29)!important;animation:v5-founder-guide 14s ease-in-out infinite!important}
+
+/* CONTACT — destination city and bridge. */
+.aixion-scene-contact{min-height:110vh!important;display:block!important;padding:0!important;background:linear-gradient(180deg,#fff 0%,#f9fdfc 48%,#edf8f5 100%)!important}
+.contact-sky{position:absolute;inset:0 0 36%;overflow:hidden}.contact-sky i{position:absolute;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.98),rgba(255,255,255,0) 70%);filter:blur(14px)}.contact-sky i:nth-child(1){width:540px;height:190px;left:-120px;top:18%}.contact-sky i:nth-child(2){width:620px;height:220px;right:-110px;top:8%}.contact-sky i:nth-child(3){width:480px;height:170px;left:42%;top:34%}
+.contact-water{position:absolute;left:0;right:0;bottom:0;height:43%;background:linear-gradient(180deg,rgba(205,239,235,.64),rgba(132,201,197,.45));border-top:1px solid rgba(106,177,173,.16)}
+.contact-city{position:absolute;z-index:3;right:6%;bottom:30%;width:48%;height:44%}.contact-city i{position:absolute;bottom:0;background:linear-gradient(180deg,#fff,#e7f1ee);border:1px solid rgba(87,141,138,.15);box-shadow:0 22px 36px rgba(64,92,87,.07)}.contact-city i:nth-child(1){left:4%;width:80px;height:115px;border-radius:38px 38px 8px 8px}.contact-city i:nth-child(2){left:24%;width:54px;height:172px;border-radius:26px 26px 6px 6px}.contact-city i:nth-child(3){left:44%;width:118px;height:88px;border-radius:70px 70px 10px 10px}.contact-city i:nth-child(4){right:22%;width:48px;height:142px;border-radius:24px 24px 6px 6px}.contact-city i:nth-child(5){right:2%;width:72px;height:104px;border-radius:35px 35px 8px 8px}
+.contact-bridge{position:absolute;z-index:5;left:37%;right:7%;bottom:10%;height:33%;transform:perspective(900px) rotateX(59deg);transform-origin:bottom center}.contact-bridge::before{content:'';position:absolute;left:16%;right:14%;top:0;bottom:0;clip-path:polygon(42% 0,58% 0,92% 100%,8% 100%);background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(229,240,237,.92));border:1px solid rgba(98,145,141,.12);box-shadow:0 30px 60px rgba(66,99,93,.09)}.contact-bridge i{position:absolute;top:20%;bottom:8%;width:1px;background:linear-gradient(var(--v5-gold),transparent)}.contact-bridge i:nth-child(1){left:36%}.contact-bridge i:nth-child(2){left:50%}.contact-bridge i:nth-child(3){right:36%}
+.contact-beacon{position:absolute;z-index:7;right:28%;bottom:38%;width:12px;height:180px}.contact-beacon::before{content:'';position:absolute;left:50%;bottom:0;width:2px;height:160px;transform:translateX(-50%);background:linear-gradient(transparent,var(--v5-gold))}.contact-beacon i{position:absolute;left:50%;top:0;width:13px;height:13px;border-radius:50%;transform:translateX(-50%);background:#fff;border:1.5px solid var(--v5-gold);box-shadow:0 0 0 10px rgba(201,164,105,.08),0 0 35px rgba(135,207,203,.30)}
+.contact-content{position:relative!important;z-index:9!important;padding-top:23vh!important;max-width:1580px!important}.contact-content p{max-width:480px!important}.contact-content a{margin-top:30px!important}
+
+/* Native scrolling only; calm motion. */
+@keyframes v5-cloud{from{transform:translate3d(-12px,0,0) scale(.98)}to{transform:translate3d(18px,8px,0) scale(1.03)}}
+@keyframes v5-dash{to{stroke-dashoffset:-120}}
+@keyframes v5-guide{0%,100%{transform:translate(0,0)}28%{transform:translate(-260px,-128px)}55%{transform:translate(250px,-145px)}78%{transform:translate(30px,225px)}}
+@keyframes v5-evidence-signal{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-420px)}}
+@keyframes v5-principle-guide{0%,100%{transform:translate(0,0)}24%{transform:translate(230px,-90px)}48%{transform:translate(480px,-180px)}72%{transform:translate(740px,-280px)}90%{transform:translate(980px,-390px)}}
+@keyframes v5-founder-guide{0%,100%{transform:translate(0,0)}20%{transform:translate(135px,-80px)}40%{transform:translate(285px,-190px)}60%{transform:translate(430px,-295px)}80%{transform:translate(580px,-405px)}92%{transform:translate(700px,-500px)}}
+
+@media (max-width: 1180px) {
+  .experience-world-v3{inset:2% -16% -6% 31%!important;transform:scale(1.08)}
+  .aixion-scene-grid{grid-template-columns:minmax(280px,.7fr) minmax(560px,1.3fr)!important;gap:36px!important}
+  .system-district{width:34%}.system-district-3{left:33%}
+  .principle-monument h3{font-size:18px}
+}
+
+@media (max-width: 900px) {
+  .experience-shell{width:min(100% - 36px,760px)}
+  .experience-home{min-height:auto!important}.experience-home-sticky{min-height:980px;position:relative!important}
+  .experience-home-content{grid-template-columns:1fr!important;align-items:start!important;padding-top:130px}
+  .experience-overview{max-width:620px}.experience-overview h1{font-size:clamp(58px,13vw,94px)!important}
+  .experience-world-v3{inset:35% -22% 0 3%!important;transform:scale(1.02)}
+  .hero-foreground-ridge{width:70%;height:28%}
+  .aixion-scene-grid{grid-template-columns:1fr!important;gap:24px!important}.world-chapter{min-height:auto!important;padding:110px 0 88px!important}
+  .systems-landscape,.evidence-vault,.founder-climb{min-height:650px}
+  .principle-sanctuary{min-height:620px;transform:scale(.92);transform-origin:center top}
+  .contact-content{padding-top:18vh!important}.contact-city{right:-5%;width:65%}.contact-bridge{left:28%;right:-4%}
+}
+
+@media (max-width: 620px) {
+  .experience-shell{width:calc(100% - 28px)}
+  .experience-home-sticky{min-height:900px}.experience-world-v3{inset:37% -48% 1% -8%!important;transform:scale(.92)}
+  .experience-overview h1{font-size:57px!important}.experience-overview p{font-size:14px}
+  .hero-cloud-a{width:360px}.hero-cloud-b{width:420px}.hero-foreground-ridge{display:none}
+  .aixion-scene-copy h2,.contact-content h2{font-size:52px!important}
+  .systems-landscape{min-height:880px;transform:none}.systems-horizon{opacity:.36}.systems-water{left:-6%;right:-12%;bottom:20%}.systems-core-city{top:46%}
+  .system-district{width:46%}.system-district-1{left:-2%;top:4%}.system-district-2{right:-3%;top:6%}.system-district-3{left:27%;bottom:0;width:48%}.district-label h3{font-size:20px}.district-label p{font-size:10px}
+  .evidence-vault{min-height:620px}.evidence-terrace{width:92%!important}.evidence-terrace-1{top:36px}.evidence-terrace-2{top:134px}.evidence-terrace-3{top:234px}.evidence-terrace-4{top:336px}.evidence-signal{bottom:15%}
+  .principle-sanctuary{min-height:760px;transform:none}.principle-monument{width:31%}.monument-1{left:0;bottom:1%}.monument-2{left:18%;bottom:18%}.monument-3{left:36%;bottom:36%}.monument-4{left:55%;bottom:54%}.monument-5{right:-2%;top:0}.principle-monument h3{font-size:15px}.monument-architecture{height:130px;transform:scale(.78)}
+  .founder-climb{min-height:760px}.journey-station{width:118px}.journey-station-1{left:-4%}.journey-station-2{left:12%}.journey-station-3{left:28%}.journey-station-4{left:44%}.journey-station-5{left:60%}.journey-station-6{right:-4%}.journey-station span{font-size:13px}.journey-architecture{transform:scale(.8)}
+  .aixion-scene-contact{min-height:850px!important}.contact-city{width:85%;right:-28%;bottom:34%}.contact-bridge{left:18%;right:-22%;bottom:11%}.contact-beacon{right:19%;bottom:41%}.contact-content{padding-top:120px!important;max-width:78%!important}
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cloud,.systems-route path,.principle-route path,.founder-route path,.systems-moving-guide,.evidence-signal,.principle-guide,.journey-runner{animation:none!important}
+}
