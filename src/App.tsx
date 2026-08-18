@@ -97,12 +97,15 @@ function ImmersiveHome() {
       <div className="experience-home-sticky">
         <ExperienceWorld storyId="aixion-home-experience" />
         <div className="experience-atmosphere" aria-hidden="true" />
+        <div className="hero-cloud hero-cloud-a" aria-hidden="true" />
+        <div className="hero-cloud hero-cloud-b" aria-hidden="true" />
+        <div className="hero-foreground-ridge" aria-hidden="true"><i /><i /><i /></div>
         <div className="experience-shell experience-home-content">
           <section className="experience-overview">
             <div className="experience-kicker">CONTROL • RELIABILITY • EVIDENCE</div>
             <h1>Intelligence<br />in Control.</h1>
             <p>AIXION LAB builds systems for controlled execution, runtime reliability, and evidence-backed software operations.</p>
-            <a className="experience-cta" href="#systems-preview">Explore the system <ArrowRight size={17} /></a>
+            <a className="experience-cta" href="#systems-preview">Enter the world <ArrowRight size={17} /></a>
           </section>
           <nav className="experience-chapter-rail" aria-label="Experience chapters">
             <span className="is-active">01 <b>Overview</b></span>
@@ -112,39 +115,57 @@ function ImmersiveHome() {
             <a href="#founder-preview">05 <b>Founder</b></a>
             <a href="#contact-preview">06 <b>Contact</b></a>
           </nav>
-          <div className="experience-scroll-cue" aria-hidden="true">Scroll to begin <ChevronDown size={14} /></div>
+          <div className="experience-scroll-cue" aria-hidden="true">Scroll to travel <ChevronDown size={14} /></div>
         </div>
       </div>
     </main>
   );
 }
 
+function DistrictArchitecture({ index }: { index: number }) {
+  return (
+    <div className={`district-architecture district-architecture-${index + 1}`} aria-hidden="true">
+      <span className="district-plinth" />
+      <span className="district-tower district-tower-a" />
+      <span className="district-tower district-tower-b" />
+      <span className="district-dome" />
+      <span className="district-spire" />
+      <span className="district-glass" />
+    </div>
+  );
+}
+
 function SystemsScene({ detail = false }: { detail?: boolean }) {
   return (
-    <section id={detail ? undefined : 'systems-preview'} className={`aixion-scene aixion-scene-systems ${detail ? 'is-detail' : ''}`}>
+    <section id={detail ? undefined : 'systems-preview'} className={`aixion-scene aixion-scene-systems world-chapter ${detail ? 'is-detail' : ''}`}>
+      <div className="scene-cloud scene-cloud-left" aria-hidden="true" />
+      <div className="scene-cloud scene-cloud-right" aria-hidden="true" />
       <div className="experience-shell aixion-scene-grid">
         <div className="aixion-scene-copy">
           <span>02 / SYSTEMS</span>
           <h2>Systems that govern intelligence.</h2>
-          <p>Three bodies of work are separated by purpose and maturity: a flagship control-plane build, an applied reliability research environment, and early verification directions.</p>
+          <p>Three bodies of work occupy one connected environment, separated by purpose and maturity rather than flattened into product cards.</p>
           {!detail && <a href="#/systems">Explore all systems <ArrowRight size={16} /></a>}
         </div>
-        <div className="systems-world" aria-label="AIXION systems map">
-          <div className="systems-core"><i /><strong>AIXION</strong><small>control • truth • evidence</small></div>
+        <div className="systems-landscape" aria-label="AIXION systems landscape">
+          <div className="systems-horizon" aria-hidden="true"><i /><i /><i /></div>
+          <div className="systems-water" aria-hidden="true"><i /><i /></div>
+          <div className="systems-core-city" aria-hidden="true"><i /><b>AIXION</b><span>control • truth • evidence</span></div>
+          <svg className="systems-route" viewBox="0 0 1000 700" aria-hidden="true">
+            <path d="M500 380 C382 310 298 290 212 240 C300 168 424 180 500 380 C638 302 730 278 812 218 C744 390 650 484 500 380 C520 500 530 564 514 628" />
+          </svg>
           {systems.map((system, index) => (
-            <article className={`systems-node systems-node-${index + 1}`} key={system.name}>
-              <span>0{index + 1}</span>
-              <small>{system.status}</small>
-              <h3>{system.name}</h3>
-              <p>{system.short}</p>
-              {detail && <ul>{system.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
+            <article className={`system-district system-district-${index + 1}`} key={system.name}>
+              <DistrictArchitecture index={index} />
+              <div className="district-label">
+                <span>0{index + 1}</span>
+                <small>{system.status}</small>
+                <h3>{system.name}</h3>
+                <p>{system.short}</p>
+                {detail && <ul>{system.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
+              </div>
             </article>
           ))}
-          <svg className="systems-links" viewBox="0 0 900 640" aria-hidden="true">
-            <path d="M450 318 C355 267 286 225 220 184" />
-            <path d="M450 318 C556 263 646 220 721 180" />
-            <path d="M450 318 C455 424 456 495 456 560" />
-          </svg>
           <div className="systems-moving-guide" aria-hidden="true" />
         </div>
       </div>
@@ -154,24 +175,28 @@ function SystemsScene({ detail = false }: { detail?: boolean }) {
 
 function EvidenceScene({ detail = false }: { detail?: boolean }) {
   return (
-    <section id={detail ? undefined : 'evidence-preview'} className={`aixion-scene aixion-scene-evidence ${detail ? 'is-detail' : ''}`}>
+    <section id={detail ? undefined : 'evidence-preview'} className={`aixion-scene aixion-scene-evidence world-chapter ${detail ? 'is-detail' : ''}`}>
       <div className="experience-shell aixion-scene-grid">
         <div className="aixion-scene-copy">
           <span>03 / EVIDENCE</span>
           <h2>Evidence over assumption.</h2>
-          <p>Problem, engineering response, validation, and limitation remain visibly separate. The point where evidence stops is part of the result.</p>
+          <p>Problem, engineering response, validation, and boundary are separate physical levels. The visitor can see where the evidence ends before reading the detail.</p>
           {!detail && <a href="#/evidence">Open the evidence cases <ArrowRight size={16} /></a>}
         </div>
-        <div className="evidence-stack-wrap">
-          <div className="evidence-orbit" aria-hidden="true" />
+        <div className="evidence-vault" aria-label="Layered evidence structure">
+          <div className="evidence-vault-haze" aria-hidden="true" />
+          <div className="evidence-vault-spine" aria-hidden="true"><i /><i /></div>
           {['Problem', 'Engineering response', 'Validation', 'Boundary'].map((label, index) => (
-            <div className={`evidence-layer evidence-layer-${index + 1}`} key={label}><b>0{index + 1}</b><span>{label}</span></div>
+            <div className={`evidence-terrace evidence-terrace-${index + 1}`} key={label}>
+              <div className="evidence-terrace-structure" aria-hidden="true"><i /><i /><i /></div>
+              <b>0{index + 1}</b><span>{label}</span>
+            </div>
           ))}
-          <div className="evidence-core" aria-hidden="true"><i /></div>
+          <div className="evidence-signal" aria-hidden="true" />
         </div>
       </div>
       {detail && (
-        <div className="experience-shell evidence-cases-grid">
+        <div className="experience-shell evidence-cases-grid evidence-cases-v5">
           {evidenceCases.map(([title, tag, summary]) => <article key={title}><span>{tag}</span><h3>{title}</h3><p>{summary}</p></article>)}
         </div>
       )}
@@ -181,20 +206,23 @@ function EvidenceScene({ detail = false }: { detail?: boolean }) {
 
 function PrinciplesScene({ detail = false }: { detail?: boolean }) {
   return (
-    <section id={detail ? undefined : 'principles-preview'} className={`aixion-scene aixion-scene-principles ${detail ? 'is-detail' : ''}`}>
-      <div className="experience-shell">
+    <section id={detail ? undefined : 'principles-preview'} className={`aixion-scene aixion-scene-principles world-chapter ${detail ? 'is-detail' : ''}`}>
+      <div className="principles-mountain" aria-hidden="true"><i /><i /><i /></div>
+      <div className="experience-shell principles-layout">
         <div className="aixion-scene-copy aixion-scene-copy-wide">
           <span>04 / PRINCIPLES</span>
           <h2>Five monuments. Five constraints.</h2>
-          <p>The principles are treated as physical anchors in the world rather than corporate-value cards.</p>
+          <p>Each principle stands as an architectural anchor inside the same world, with distinct mass and silhouette rather than repeated corporate icons.</p>
         </div>
-        <div className="principle-monuments">
+        <div className="principle-sanctuary">
+          <svg className="principle-route" viewBox="0 0 1200 520" aria-hidden="true"><path d="M42 420 C230 318 322 388 478 274 C636 160 710 260 858 150 C972 65 1088 110 1160 52" /></svg>
           {principles.map(([title, body], index) => (
             <article key={title} className={`principle-monument monument-${index + 1}`}>
-              <div className="monument-object"><i /><i /><i /></div>
+              <div className="monument-architecture" aria-hidden="true"><i /><i /><i /><i /></div>
               <span>0{index + 1}</span><h3>{title}</h3>{detail && <p>{body}</p>}
             </article>
           ))}
+          <div className="principle-guide" aria-hidden="true" />
         </div>
       </div>
     </section>
@@ -203,7 +231,8 @@ function PrinciplesScene({ detail = false }: { detail?: boolean }) {
 
 function FounderScene({ detail = false }: { detail?: boolean }) {
   return (
-    <section id={detail ? undefined : 'founder-preview'} className={`aixion-scene aixion-scene-founder ${detail ? 'is-detail' : ''}`}>
+    <section id={detail ? undefined : 'founder-preview'} className={`aixion-scene aixion-scene-founder world-chapter ${detail ? 'is-detail' : ''}`}>
+      <div className="founder-mountain-range" aria-hidden="true"><i /><i /><i /><i /></div>
       <div className="experience-shell aixion-scene-grid">
         <div className="aixion-scene-copy">
           <span>05 / FOUNDER</span>
@@ -211,9 +240,14 @@ function FounderScene({ detail = false }: { detail?: boolean }) {
           <p><strong>Ram Golladi — Founder / AI Systems Builder.</strong> The path from software quality to automation, runtime reliability, AI-assisted engineering, and evidence-aware systems building is the origin of AIXION LAB.</p>
           {!detail && <a href="#/founder">Explore the journey <ArrowRight size={16} /></a>}
         </div>
-        <div className="founder-path">
-          <svg viewBox="0 0 760 470" aria-hidden="true"><path d="M62 380 C146 294 208 344 282 252 C348 170 416 228 482 158 C545 90 623 120 696 55" /></svg>
-          {journey.map((stage, index) => <div key={stage} className={`journey-marker journey-marker-${index + 1}`}><b>0{index + 1}</b><span>{stage}</span></div>)}
+        <div className="founder-climb" aria-label="Founder journey">
+          <svg className="founder-route" viewBox="0 0 900 650" aria-hidden="true"><path d="M48 570 C142 474 232 520 300 416 C370 310 442 360 512 268 C584 174 660 216 728 128 C774 70 824 58 866 42" /></svg>
+          {journey.map((stage, index) => (
+            <div key={stage} className={`journey-station journey-station-${index + 1}`}>
+              <div className="journey-architecture" aria-hidden="true"><i /><i /><i /></div>
+              <b>0{index + 1}</b><span>{stage}</span>
+            </div>
+          ))}
           <div className="journey-runner" aria-hidden="true" />
         </div>
       </div>
@@ -223,12 +257,15 @@ function FounderScene({ detail = false }: { detail?: boolean }) {
 
 function ContactScene({ detail = false }: { detail?: boolean }) {
   return (
-    <section id={detail ? undefined : 'contact-preview'} className={`aixion-scene aixion-scene-contact ${detail ? 'is-detail' : ''}`}>
-      <div className="contact-sun" aria-hidden="true"><i /><i /><i /></div>
-      <div className="contact-road" aria-hidden="true"><i /><i /></div>
+    <section id={detail ? undefined : 'contact-preview'} className={`aixion-scene aixion-scene-contact world-chapter ${detail ? 'is-detail' : ''}`}>
+      <div className="contact-sky" aria-hidden="true"><i /><i /><i /></div>
+      <div className="contact-city" aria-hidden="true"><i /><i /><i /><i /><i /></div>
+      <div className="contact-water" aria-hidden="true" />
+      <div className="contact-bridge" aria-hidden="true"><i /><i /><i /></div>
+      <div className="contact-beacon" aria-hidden="true"><i /></div>
       <div className="experience-shell contact-content">
         <span>06 / CONTACT</span>
-        <h2>Start a conversation.</h2>
+        <h2>Reach the horizon.</h2>
         <p>Product discussions, technical collaboration, research questions, or system-design conversations.</p>
         <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer"><Github size={18} /> GitHub <ArrowRight size={16} /></a>
       </div>
@@ -238,7 +275,7 @@ function ContactScene({ detail = false }: { detail?: boolean }) {
 
 function WhyScene() {
   return (
-    <section className="aixion-scene aixion-scene-why is-detail">
+    <section className="aixion-scene aixion-scene-why is-detail world-chapter">
       <div className="experience-shell why-layout">
         <div className="aixion-scene-copy"><span>01 / WHY</span><h2>Capability is only the beginning.</h2><p>AIXION LAB focuses on the systems around AI-assisted work: explicit execution boundaries, trustworthy runtime state, and evidence that stays connected to what actually happened.</p></div>
         <div className="why-orbits" aria-hidden="true"><i /><i /><i /><b>CONTROL</b></div>
