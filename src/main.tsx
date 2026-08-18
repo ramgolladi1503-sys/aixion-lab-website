@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 import './experience.css';
 import './experience-lock-v2.css';
+import './motion.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
