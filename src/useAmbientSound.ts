@@ -8,7 +8,7 @@ type AmbientNodes = {
   sources: AudioScheduledSourceNode[];
 };
 
-const TARGET_MASTER_GAIN = 0.18;
+const TARGET_MASTER_GAIN = 0.24;
 
 export function useAmbientSound() {
   const [enabled, setEnabled] = useState(false);
@@ -25,31 +25,27 @@ export function useAmbientSound() {
     master.connect(context.destination);
 
     const musicBus = context.createGain();
-    musicBus.gain.value = 0.22;
+    musicBus.gain.value = 0.27;
     musicBus.connect(master);
 
     const airBus = context.createGain();
-    airBus.gain.value = 0.055;
+    airBus.gain.value = 0.075;
     airBus.connect(master);
 
     const sources: AudioScheduledSourceNode[] = [];
-
-    // Soft open fifth + major ninth. Deliberately slow, calm and non-rhythmic.
     const frequencies = [130.81, 196.0, 261.63, 329.63, 440.0];
+
     frequencies.forEach((frequency, index) => {
       const oscillator = context.createOscillator();
       const gain = context.createGain();
       const filter = context.createBiquadFilter();
-
       oscillator.type = index % 3 === 1 ? 'triangle' : 'sine';
       oscillator.frequency.value = frequency;
       oscillator.detune.value = [-7, 3, -3, 5, -5][index] ?? 0;
-
       filter.type = 'lowpass';
-      filter.frequency.value = 900 + index * 170;
-      filter.Q.value = 0.22;
-
-      gain.gain.value = index === 0 ? 0.22 : index < 3 ? 0.14 : 0.075;
+      filter.frequency.value = 920 + index * 180;
+      filter.Q.value = 0.2;
+      gain.gain.value = index === 0 ? 0.23 : index < 3 ? 0.145 : 0.072;
       oscillator.connect(filter);
       filter.connect(gain);
       gain.connect(musicBus);
@@ -57,7 +53,6 @@ export function useAmbientSound() {
       sources.push(oscillator);
     });
 
-    // Soft filtered air layer. Generated locally; no streamed/copyrighted asset.
     const duration = 6;
     const frameCount = Math.floor(context.sampleRate * duration);
     const buffer = context.createBuffer(1, frameCount, context.sampleRate);
@@ -74,30 +69,28 @@ export function useAmbientSound() {
     air.loop = true;
     const airFilter = context.createBiquadFilter();
     airFilter.type = 'bandpass';
-    airFilter.frequency.value = 720;
-    airFilter.Q.value = 0.28;
+    airFilter.frequency.value = 760;
+    airFilter.Q.value = 0.26;
     air.connect(airFilter);
     airFilter.connect(airBus);
     air.start();
     sources.push(air);
 
-    // Extremely slow breathing. The visitor should perceive space, not a loop.
     const lfo = context.createOscillator();
     const lfoGain = context.createGain();
     lfo.type = 'sine';
     lfo.frequency.value = 0.043;
-    lfoGain.gain.value = 0.035;
+    lfoGain.gain.value = 0.032;
     lfo.connect(lfoGain);
     lfoGain.connect(musicBus.gain);
     lfo.start();
     sources.push(lfo);
 
-    // A second slow modulation gently opens/closes the air layer.
     const airLfo = context.createOscillator();
     const airLfoGain = context.createGain();
     airLfo.type = 'sine';
     airLfo.frequency.value = 0.026;
-    airLfoGain.gain.value = 0.012;
+    airLfoGain.gain.value = 0.014;
     airLfo.connect(airLfoGain);
     airLfoGain.connect(airBus.gain);
     airLfo.start();
@@ -108,18 +101,42 @@ export function useAmbientSound() {
     return nodes;
   }, []);
 
+  const playActivationTone = useCallback((context: AudioContext, destination: AudioNode) => {
+    const now = context.currentTime;
+    [523.25, 659.25, 783.99].forEach((frequency, index) => {
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      oscillator.type = 'sine';
+      oscillator.frequency.value = frequency;
+      gain.gain.setValueAtTime(0.0001, now + index * 0.055);
+      gain.gain.exponentialRampToValueAtTime(0.055, now + 0.04 + index * 0.055);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.72 + index * 0.07);
+      oscillator.connect(gain);
+      gain.connect(destination);
+      oscillator.start(now + index * 0.055);
+      oscillator.stop(now + 0.85 + index * 0.07);
+    });
+  }, []);
+
   const enable = useCallback(async () => {
     if (!supported) return;
     const existing = nodesRef.current;
     const nodes = existing ?? buildSoundscape();
     if (!nodes) return;
 
-    if (nodes.context.state === 'suspended') await nodes.context.resume();
-    nodes.master.gain.cancelScheduledValues(nodes.context.currentTime);
-    nodes.master.gain.setValueAtTime(Math.max(0.0001, nodes.master.gain.value), nodes.context.currentTime);
-    nodes.master.gain.exponentialRampToValueAtTime(TARGET_MASTER_GAIN, nodes.context.currentTime + 1.25);
-    setEnabled(true);
-  }, [buildSoundscape, supported]);
+    try {
+      if (nodes.context.state !== 'running') await nodes.context.resume();
+      if (nodes.context.state !== 'running') return;
+
+      nodes.master.gain.cancelScheduledValues(nodes.context.currentTime);
+      nodes.master.gain.setValueAtTime(Math.max(0.0001, nodes.master.gain.value), nodes.context.currentTime);
+      nodes.master.gain.exponentialRampToValueAtTime(TARGET_MASTER_GAIN, nodes.context.currentTime + 0.9);
+      playActivationTone(nodes.context, nodes.master);
+      setEnabled(true);
+    } catch {
+      setEnabled(false);
+    }
+  }, [buildSoundscape, playActivationTone, supported]);
 
   const disable = useCallback(() => {
     const nodes = nodesRef.current;
@@ -130,10 +147,10 @@ export function useAmbientSound() {
 
     nodes.master.gain.cancelScheduledValues(nodes.context.currentTime);
     nodes.master.gain.setValueAtTime(Math.max(0.0001, nodes.master.gain.value), nodes.context.currentTime);
-    nodes.master.gain.exponentialRampToValueAtTime(0.0001, nodes.context.currentTime + 0.32);
+    nodes.master.gain.exponentialRampToValueAtTime(0.0001, nodes.context.currentTime + 0.28);
     window.setTimeout(() => {
       if (nodes.context.state === 'running') void nodes.context.suspend();
-    }, 420);
+    }, 360);
     setEnabled(false);
   }, []);
 
