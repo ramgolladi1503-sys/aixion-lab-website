@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, CheckCircle2, FileCheck2, Github, Menu, ShieldCheck, X } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Github, Menu, ShieldCheck, X } from 'lucide-react';
 
 const products = [
   { name: 'Aixion Control Tower', status: 'FLAGSHIP BUILD', short: 'Human-in-the-loop control for AI-assisted software workflows.', problem: 'AI-assisted work can move faster than the human review and approval structures around it.', built: 'A control-plane direction for task review, explicit approval gates, validation checkpoints, audit-oriented records, and operator visibility.', evidence: 'Public architecture and governance principles are available; stronger readiness claims remain intentionally withheld until evidence supports them.', limitation: 'Not presented as autonomous production infrastructure or an enterprise deployment.' },
@@ -17,8 +17,18 @@ const principles = [
   ['Failure is evidence', 'Negative findings and repairs should improve the next system decision.'],
 ];
 
-function Brand({ compact = false }: { compact?: boolean }) {
-  return <img src="/brand/aixion-lab-primary.png" alt="AIXION LAB — End is the new beginning" className={compact ? 'h-12 sm:h-14 w-auto object-contain' : 'w-full max-w-[470px] h-auto object-contain'} />;
+function Brand() {
+  return <img src="/brand/aixion-lab-primary.png" alt="AIXION LAB — End is the new beginning" className="brand-lockup" />;
+}
+
+function SectionHeading({ index, title, statement }: { index: string; title: string; statement?: string }) {
+  return <div className="section-heading">
+    <div className="section-index">{index}</div>
+    <div>
+      <h2 className="section-title">{title}</h2>
+      {statement && <p className="section-statement">{statement}</p>}
+    </div>
+  </div>;
 }
 
 export default function App() {
@@ -27,46 +37,122 @@ export default function App() {
   const nav = [['Why', 'why'], ['Work', 'work'], ['Proof', 'proof'], ['Principles', 'principles'], ['Founder', 'founder'], ['Contact', 'contact']];
   const go = (id: string) => { setMenu(false); document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); };
 
-  return <div className="min-h-screen bg-frosted-canvas text-[#c7c7c7]">
-    <header className="fixed inset-x-0 top-0 z-40 h-16 border-b border-white/[0.05] bg-[#050505]/85 backdrop-blur-xl">
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <button onClick={() => go('hero')} aria-label="AIXION LAB home" className="cursor-pointer"><Brand compact /></button>
-        <nav className="hidden items-center gap-6 lg:flex">{nav.map(([label,id]) => <button key={id} onClick={() => go(id)} className="text-[10px] uppercase tracking-[.22em] text-white/50 transition hover:text-white">{label}</button>)}</nav>
-        <button onClick={() => setMenu(!menu)} className="rounded-lg border border-white/10 p-2 text-white/70 lg:hidden" aria-label="Toggle navigation">{menu ? <X size={16}/> : <Menu size={16}/>}</button>
+  return <div className="min-h-screen bg-frosted-canvas text-[#d8d8d8]">
+    <header className="site-header">
+      <div className="site-header-inner">
+        <button onClick={() => go('hero')} aria-label="AIXION LAB home" className="brand-button"><Brand /></button>
+        <nav className="desktop-nav">{nav.map(([label,id]) => <button key={id} onClick={() => go(id)}>{label}</button>)}</nav>
+        <button onClick={() => setMenu(!menu)} className="mobile-menu-button" aria-label="Toggle navigation">{menu ? <X size={18}/> : <Menu size={18}/>}</button>
       </div>
-      {menu && <div className="grid grid-cols-2 gap-2 border-b border-white/[0.05] bg-[#070707]/95 p-4 lg:hidden">{nav.map(([label,id]) => <button key={id} onClick={() => go(id)} className="rounded-lg px-3 py-2 text-left text-[10px] uppercase tracking-[.18em] text-white/60 hover:bg-white/[0.05]">{label}</button>)}</div>}
+      {menu && <div className="mobile-nav">{nav.map(([label,id]) => <button key={id} onClick={() => go(id)}>{label}</button>)}</div>}
     </header>
 
-    <main className="pt-16">
-      <section id="hero" className="relative min-h-[88vh] overflow-hidden py-14 sm:py-20">
-        <div className="pointer-events-none absolute left-1/4 top-10 h-80 w-80 rounded-full bg-white/[0.035] blur-3xl" />
-        <div className="mx-auto grid max-w-7xl gap-5 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
-          <div className="glass-blend-card rounded-3xl p-6 sm:p-10 lg:col-span-7">
-            <div className="mb-7"><Brand /></div>
-            <div className="mb-4 text-[9px] uppercase tracking-[.35em] text-white/35">AI AGENT GOVERNANCE · SOFTWARE QUALITY · RUNTIME SECURITY · APPLIED RESEARCH</div>
-            <h1 className="max-w-3xl text-4xl font-extralight leading-[1.03] tracking-[-.04em] text-white sm:text-6xl">Human control for <span className="font-serif italic text-white/45">AI systems</span> that can actually change things.</h1>
-            <p className="mt-7 max-w-2xl text-sm leading-7 text-white/58">AIXION LAB is an independent AI product and research studio building controlled, testable, evidence-driven systems across agent governance, software quality, runtime security, automation, and applied research.</p>
-            <div className="mt-8 flex flex-wrap gap-3"><button onClick={() => go('work')} className="rounded-full bg-white px-5 py-3 text-[10px] font-semibold uppercase tracking-[.2em] text-black transition hover:bg-white/90">Explore the work</button><button onClick={() => go('proof')} className="rounded-full border border-white/15 px-5 py-3 text-[10px] uppercase tracking-[.2em] text-white/70 transition hover:border-white/30 hover:text-white">How we use evidence</button></div>
+    <main>
+      <section id="hero" className="hero-section">
+        <div className="hero-orbit" />
+        <div className="page-shell hero-grid">
+          <div className="hero-copy">
+            <div className="hero-kicker">AI AGENT GOVERNANCE · SOFTWARE QUALITY · RUNTIME SECURITY · APPLIED RESEARCH</div>
+            <h1 className="hero-title">Human control for <span>AI systems</span> that can actually change things.</h1>
+            <p className="hero-body">AIXION LAB is an independent AI product and research studio building controlled, testable, evidence-driven systems across agent governance, software quality, runtime security, automation, and applied research.</p>
+            <div className="hero-actions">
+              <button onClick={() => go('work')} className="primary-cta">Explore the work <ArrowRight size={16}/></button>
+              <button onClick={() => go('proof')} className="secondary-cta">View evidence</button>
+            </div>
           </div>
-          <aside className="glass-blend-card rounded-3xl p-6 sm:p-8 lg:col-span-5"><div className="text-[9px] uppercase tracking-[.3em] text-white/35">What we are building</div><div className="mt-5 space-y-3">{products.map((p, i) => <button key={p.name} onClick={() => setSelected(p)} className="group block w-full rounded-2xl border border-white/[0.05] bg-black/20 p-4 text-left transition hover:border-white/15 hover:bg-white/[0.025]"><div className="flex items-start justify-between gap-4"><span className="text-sm font-medium text-white/90">{p.name}</span><span className="text-[8px] uppercase tracking-[.18em] text-white/35">0{i+1}</span></div><p className="mt-2 text-xs leading-5 text-white/45">{p.short}</p><div className="mt-3 text-[8px] uppercase tracking-[.18em] text-white/35">{p.status}</div></button>)}</div></aside>
+
+          <aside className="project-index">
+            <div className="project-index-label">What we are building</div>
+            <div className="project-list">{products.map((p, i) => <button key={p.name} onClick={() => setSelected(p)} className="project-row">
+              <span className="project-number">0{i+1}</span>
+              <span className="project-row-copy"><span className="project-row-title">{p.name}</span><span className="project-row-short">{p.short}</span></span>
+              <span className="project-status">{p.status}</span>
+              <ArrowRight size={16} className="project-arrow"/>
+            </button>)}</div>
+          </aside>
         </div>
       </section>
 
-      <section id="why" className="border-y border-white/[0.05] bg-white/[0.012] py-20"><div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8"><div><div className="text-[9px] uppercase tracking-[.3em] text-white/35">Why AIXION LAB</div><h2 className="mt-4 text-3xl font-extralight tracking-tight text-white sm:text-5xl">AI capability is moving faster than control, review, and proof.</h2></div><div className="space-y-5 text-sm leading-7 text-white/58"><p>Models can now interact with code, tools, files, APIs, and operational workflows. The difficult question is no longer only whether AI can generate work. It is whether that work remains inside explicit boundaries.</p><p>AIXION LAB explores the layer between human intent and AI-assisted execution: approval, security, testing, auditability, failure handling, and evidence.</p></div></div></section>
+      <section id="why" className="editorial-section brighter-band">
+        <div className="page-shell">
+          <SectionHeading index="01 / PURPOSE" title="WHY AIXION LAB" statement="AI capability is moving faster than control, review, and proof." />
+          <div className="editorial-two-col">
+            <p>Models can now interact with code, tools, files, APIs, and operational workflows. The difficult question is no longer only whether AI can generate work. It is whether that work remains inside explicit boundaries.</p>
+            <p>AIXION LAB explores the layer between human intent and AI-assisted execution: approval, security, testing, auditability, failure handling, and evidence.</p>
+          </div>
+        </div>
+      </section>
 
-      <section id="work" className="py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div className="max-w-3xl"><div className="text-[9px] uppercase tracking-[.3em] text-white/35">Products & research</div><h2 className="mt-4 text-3xl font-extralight tracking-tight text-white sm:text-5xl">Different problems. One operating principle: control must remain visible.</h2><p className="mt-5 text-sm leading-7 text-white/55">Projects are shown according to their current role and maturity. Research stays research; stronger claims require stronger evidence.</p></div><div className="mt-10 grid gap-4 md:grid-cols-2">{products.map((p) => <article key={p.name} className="glass-blend-card rounded-3xl p-6 sm:p-7"><div className="flex items-center justify-between gap-3"><span className="text-[9px] uppercase tracking-[.23em] text-white/35">{p.status}</span><ArrowRight size={15} className="text-white/30"/></div><h3 className="mt-5 text-xl font-medium text-white">{p.name}</h3><p className="mt-2 text-sm leading-6 text-white/55">{p.short}</p><button onClick={() => setSelected(p)} className="mt-6 text-[9px] uppercase tracking-[.22em] text-white/60 hover:text-white">View problem, evidence & limits →</button></article>)}</div></div></section>
+      <section id="work" className="editorial-section">
+        <div className="page-shell">
+          <SectionHeading index="02 / SYSTEMS" title="WHAT WE'RE BUILDING" statement="Different problems. One operating principle: control must remain visible." />
+          <p className="section-intro">Projects are shown according to their current role and maturity. Research stays research; stronger claims require stronger evidence.</p>
+          <div className="work-list">{products.map((p, i) => <button key={p.name} onClick={() => setSelected(p)} className="work-row">
+            <span className="work-number">0{i+1}</span>
+            <span className="work-main"><span className="work-title">{p.name}</span><span className="work-description">{p.short}</span></span>
+            <span className="work-status">{p.status}</span>
+            <span className="work-action">View system <ArrowRight size={15}/></span>
+          </button>)}</div>
+        </div>
+      </section>
 
-      <section id="proof" className="border-y border-white/[0.05] bg-white/[0.012] py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div className="max-w-3xl"><div className="flex items-center gap-2 text-[9px] uppercase tracking-[.3em] text-white/35"><FileCheck2 size={13}/>Proof & evidence</div><h2 className="mt-4 text-3xl font-extralight tracking-tight text-white sm:text-5xl">A claim is only as strong as the evidence behind it.</h2><p className="mt-5 text-sm leading-7 text-white/55">This site deliberately distinguishes product intent, implementation work, research, and evidence. Missing proof is not treated as zero, success, or readiness.</p></div><div className="mt-10 grid gap-4 md:grid-cols-4">{[['Architecture','Explain the system boundary and why it exists.'],['Tests','Use validation results where they actually exist.'],['Failures','Keep meaningful negative findings and repairs visible.'],['Maturity','Do not promote a prototype or research result into a stronger claim.']].map(([title,body]) => <div key={title} className="glass-blend-card rounded-2xl p-5"><ShieldCheck size={16} className="text-white/55"/><h3 className="mt-4 text-sm font-medium text-white">{title}</h3><p className="mt-2 text-xs leading-5 text-white/48">{body}</p></div>)}</div><div className="mt-7 flex items-start gap-3 rounded-2xl border border-white/[0.06] bg-black/20 p-5"><CheckCircle2 className="mt-0.5 shrink-0 text-white/55" size={17}/><p className="text-xs leading-6 text-white/50">Website rule: unsupported customers, metrics, certifications, profitability, production-readiness, or security guarantees are not substituted with impressive-sounding language.</p></div></div></section>
+      <section id="proof" className="editorial-section brighter-band">
+        <div className="page-shell">
+          <SectionHeading index="03 / PROOF" title="SHOW THE WORK" statement="A claim is only as strong as the evidence behind it." />
+          <p className="section-intro">This site deliberately distinguishes product intent, implementation work, research, and evidence. Missing proof is not treated as zero, success, or readiness.</p>
+          <div className="proof-grid">{[
+            ['Architecture','Explain the system boundary and why it exists.'],
+            ['Tests','Use validation results where they actually exist.'],
+            ['Failures','Keep meaningful negative findings and repairs visible.'],
+            ['Maturity','Do not promote a prototype or research result into a stronger claim.']
+          ].map(([title,body], i) => <div key={title} className="proof-item"><span className="proof-number">0{i+1}</span><ShieldCheck size={18}/><h3>{title}</h3><p>{body}</p></div>)}</div>
+          <div className="evidence-rule"><CheckCircle2 size={18}/><span>Unsupported customers, metrics, certifications, profitability, production-readiness, or security guarantees are not substituted with impressive-sounding language.</span></div>
+        </div>
+      </section>
 
-      <section id="principles" className="py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div className="grid gap-10 lg:grid-cols-2"><div><div className="text-[9px] uppercase tracking-[.3em] text-white/35">Principles</div><h2 className="mt-4 text-3xl font-extralight tracking-tight text-white sm:text-5xl">No blind automation. No fake certainty.</h2></div><div className="grid gap-3 sm:grid-cols-2">{principles.map(([title,body], i) => <div key={title} className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-5"><div className="text-[8px] text-white/25">0{i+1}</div><h3 className="mt-3 text-sm text-white/90">{title}</h3><p className="mt-2 text-xs leading-5 text-white/45">{body}</p></div>)}</div></div></div></section>
+      <section id="principles" className="editorial-section">
+        <div className="page-shell">
+          <SectionHeading index="04 / PRINCIPLES" title="HOW WE BUILD" statement="No blind automation. No fake certainty." />
+          <div className="principles-list">{principles.map(([title,body], i) => <div key={title} className="principle-row"><span>0{i+1}</span><h3>{title}</h3><p>{body}</p></div>)}</div>
+        </div>
+      </section>
 
-      <section id="founder" className="border-y border-white/[0.05] bg-white/[0.012] py-24"><div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8"><div><div className="text-[9px] uppercase tracking-[.3em] text-white/35">Founder</div><h2 className="mt-4 text-3xl font-extralight tracking-tight text-white sm:text-5xl">Ram Golladi<br/><span className="font-serif italic text-white/45">Founder / AI Systems Builder</span></h2></div><div className="space-y-5 text-sm leading-7 text-white/58"><p>AIXION LAB grows out of a software-quality background: testing software, automating validation, and then moving deeper into AI-assisted systems where control and evidence become part of the architecture.</p><p>The objective is not to hide AI-assisted development. It is to show how systems are directed, reviewed, tested, corrected, and governed — and where the evidence still stops.</p><a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[.2em] text-white/65 hover:text-white"><Github size={15}/>View GitHub</a></div></div></section>
+      <section id="founder" className="editorial-section brighter-band">
+        <div className="page-shell">
+          <SectionHeading index="05 / FOUNDER" title="RAM GOLLADI" statement="Founder / AI Systems Builder" />
+          <div className="editorial-two-col founder-copy">
+            <p>AIXION LAB grows out of a software-quality background: testing software, automating validation, and then moving deeper into AI-assisted systems where control and evidence become part of the architecture.</p>
+            <div><p>The objective is not to hide AI-assisted development. It is to show how systems are directed, reviewed, tested, corrected, and governed — and where the evidence still stops.</p><a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer" className="github-link"><Github size={16}/>View GitHub</a></div>
+          </div>
+        </div>
+      </section>
 
-      <section id="contact" className="py-24"><div className="mx-auto max-w-5xl px-4 text-center sm:px-6"><div className="glass-blend-card rounded-3xl p-8 sm:p-12"><div className="mx-auto max-w-sm"><Brand /></div><div className="mt-5 text-[9px] uppercase tracking-[.3em] text-white/35">Contact</div><h2 className="mt-4 text-3xl font-extralight text-white sm:text-5xl">Building something where AI needs stronger control, quality, or evidence?</h2><p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/50">AIXION LAB is being built in public through products, engineering case studies, research, failures, decisions, and proof of work.</p><a href="mailto:contact@aixionlabs.com" className="mt-7 inline-flex rounded-full bg-white px-5 py-3 text-[10px] font-semibold uppercase tracking-[.2em] text-black">contact@aixionlabs.com</a></div></div></section>
+      <section id="contact" className="contact-section">
+        <div className="page-shell contact-inner">
+          <SectionHeading index="06 / CONTACT" title="LET'S BUILD WITH CONTROL" />
+          <h2 className="contact-question">Building something where AI needs stronger control, quality, or evidence?</h2>
+          <p>AIXION LAB is being built in public through products, engineering case studies, research, failures, decisions, and proof of work.</p>
+          <a href="mailto:contact@aixionlabs.com" className="contact-link">contact@aixionlabs.com <ArrowRight size={18}/></a>
+        </div>
+      </section>
     </main>
 
-    <footer className="border-t border-white/[0.05] py-8"><div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-[9px] uppercase tracking-[.2em] text-white/30 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8"><span>© 2026 AIXION LAB</span><span>END IS THE NEW BEGINNING</span><span>Financial Systems Research Lab: research only, not investment advice.</span></div></footer>
+    <footer className="site-footer"><div className="page-shell footer-inner"><span>© 2026 AIXION LAB</span><span>END IS THE NEW BEGINNING</span><span>Financial Systems Research Lab: research only, not investment advice.</span></div></footer>
 
-    {selected && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-xl" role="dialog" aria-modal="true" aria-label={`${selected.name} details`}><div className="glass-blend-card max-h-[86vh] w-full max-w-3xl overflow-y-auto rounded-3xl bg-[#090909]/95 p-6 sm:p-8"><div className="flex items-start justify-between gap-5"><div><div className="text-[9px] uppercase tracking-[.22em] text-white/35">{selected.status}</div><h2 className="mt-3 text-2xl font-medium text-white sm:text-3xl">{selected.name}</h2><p className="mt-2 text-sm text-white/50">{selected.short}</p></div><button onClick={() => setSelected(null)} className="rounded-lg border border-white/10 p-2 text-white/55 hover:text-white" aria-label="Close details"><X size={17}/></button></div><div className="mt-7 grid gap-4 sm:grid-cols-2">{[["Problem",selected.problem],["What is being built",selected.built],["Evidence boundary",selected.evidence],["Known limitation",selected.limitation]].map(([title,body]) => <div key={title} className="rounded-2xl border border-white/[0.06] bg-black/20 p-5"><h3 className="text-[9px] uppercase tracking-[.22em] text-white/35">{title}</h3><p className="mt-3 text-xs leading-6 text-white/58">{body}</p></div>)}</div></div></div>}
+    {selected && <div className="modal-backdrop" role="dialog" aria-modal="true" aria-label={`${selected.name} details`}>
+      <div className="system-dossier">
+        <button onClick={() => setSelected(null)} className="modal-close" aria-label="Close"><X size={18}/></button>
+        <div className="dossier-index">{selected.status}</div>
+        <h2>{selected.name}</h2>
+        <p className="dossier-lead">{selected.short}</p>
+        <div className="dossier-rule" />
+        <div className="dossier-grid">
+          <section><span>THE PROBLEM</span><p>{selected.problem}</p></section>
+          <section><span>SYSTEM DIRECTION</span><p>{selected.built}</p></section>
+          <section><span>EVIDENCE BOUNDARY</span><p>{selected.evidence}</p></section>
+          <section><span>CURRENT LIMITATION</span><p>{selected.limitation}</p></section>
+        </div>
+      </div>
+    </div>}
   </div>;
 }
