@@ -1,6 +1,12 @@
 # AIXION LAB — Immutable Brand Authority
 
-This file is a hard design contract for Google AI Studio and any other AI-assisted website builder.
+This file is the hard brand-identity contract for AIXION LAB.
+
+The current website visual/interaction system is governed by:
+
+`docs/EXPERIENCE_AUTHORITY.md`
+
+That experience authority supersedes older dark/black website palette and hero-layout directions. It does **not** supersede the immutable identity rules below.
 
 ## 1. Brand source of truth
 
@@ -12,7 +18,7 @@ The official brand is exactly:
 
 The supplied metallic forged-knot logo image is the authoritative visual asset.
 
-Expected canonical asset path:
+Canonical asset path:
 
 `/public/brand/aixion-lab-primary.png`
 
@@ -20,7 +26,7 @@ If that exact asset is missing, STOP and request the original supplied logo file
 
 ## 2. Non-negotiable logo rules
 
-AI Studio MUST NOT:
+AI-assisted tooling MUST NOT:
 
 - generate a new AIXION logo
 - redraw the icon with CSS, SVG, canvas, WebGL, or AI image generation
@@ -34,121 +40,15 @@ AI Studio MUST NOT:
 - animate individual parts of the logo
 - create alternate marks without explicit approval
 
-AI Studio MAY:
+Allowed:
 
 - scale the original asset proportionally
-- place the original asset on dark backgrounds
+- place the original asset inside a neutral container when contrast requires it
 - use `object-fit: contain`
 - adjust surrounding whitespace
 - use the full lockup in hero/header/footer where appropriate
 
-## 3. Exact visual language
-
-The website must use a restrained premium black/silver engineering aesthetic.
-
-### Core colors
-
-```css
---aixion-black: #050608;
---aixion-black-2: #0A0A0A;
---aixion-charcoal: #121212;
---aixion-gunmetal: #2A2A2A;
---aixion-silver: #C0C0C0;
---aixion-light-silver: #E6E6E6;
---aixion-white: #F5F5F5;
---aixion-muted: rgba(255,255,255,0.62);
---aixion-soft: rgba(255,255,255,0.38);
---aixion-line: rgba(255,255,255,0.10);
---aixion-line-strong: rgba(255,255,255,0.22);
-```
-
-### Backgrounds
-
-Allowed:
-
-- near-black solid backgrounds
-- extremely subtle charcoal gradients
-- faint engineering grids
-- restrained radial silver/white glow at very low opacity
-- subtle metallic/noise texture if performance-safe
-
-Forbidden:
-
-- purple AI gradients
-- blue/cyan neon themes
-- rainbow gradients
-- bright SaaS illustration palettes
-- heavy glassmorphism everywhere
-- colorful particle storms
-
-## 4. Typography
-
-Primary feel: wide, geometric, technical, premium, sparse.
-
-Do not depend on an unlicensed proprietary font.
-
-Preferred web-safe/open alternatives:
-
-- headings/brand-adjacent display: `Rajdhani`, `Space Grotesk`, or `Inter`
-- body: `Inter`, system-ui, sans-serif
-
-Typography rules:
-
-- headings: light/regular weight, tight tracking for large statements
-- labels: uppercase, small size, generous letter spacing
-- body: high readability, 1.6–1.9 line height
-- avoid overly rounded consumer-SaaS typography
-
-## 5. UI geometry
-
-```css
---aixion-radius-xl: 32px;
---aixion-radius-lg: 22px;
---aixion-radius-md: 16px;
---aixion-max-width: 1180px;
-```
-
-Preferred components:
-
-- thin silver/white borders
-- dark panels with subtle elevation
-- pill or softly rounded CTA buttons
-- minimal icons
-- restrained hover movement (1–3px maximum)
-- subtle 150–250ms transitions
-
-Do not make the website look like a gaming UI.
-
-## 6. Primary CTA style
-
-```css
-.aixion-button-primary {
-  background: #F5F5F5;
-  color: #050608;
-  border: 1px solid #F5F5F5;
-  border-radius: 999px;
-  min-height: 48px;
-  padding: 0 22px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.aixion-button-secondary {
-  background: transparent;
-  color: rgba(255,255,255,0.78);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 999px;
-  min-height: 48px;
-  padding: 0 22px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 11px;
-}
-```
-
-## 7. Logo component contract
+## 3. Logo component contract
 
 Use the original file directly:
 
@@ -165,7 +65,7 @@ export function AixionBrand({ className = "" }) {
 }
 ```
 
-Recommended CSS:
+Recommended behavior:
 
 ```css
 .aixion-brand {
@@ -179,63 +79,77 @@ Recommended CSS:
 }
 ```
 
-Never rebuild the logo as HTML/CSS shapes.
+Never rebuild the logo as HTML/CSS/3D geometry.
 
-## 8. Hero design contract
+## 4. Product maturity language
 
-The hero should feel cinematic but controlled.
+Status labels are evidence labels, not decoration.
 
-Required:
-
-- dark near-black canvas
-- official AIXION LAB lockup visible
-- headline: `Human control for AI systems that can actually change things.`
-- short factual supporting copy
-- at most two CTAs
-- a product/system visual grounded in actual product concepts such as approval, audit, runtime security, evidence, or validation
-
-Do not use fake live metrics or fabricated system activity.
-
-## 9. Product status visual language
-
-Use small status labels such as:
+Current safe categories include:
 
 - FLAGSHIP BUILD
-- PRODUCT / MVP
-- PLATFORM / PROTOTYPE
-- RESEARCH
+- ACTIVE DEVELOPMENT
+- APPLIED RESEARCH
+- EARLY RESEARCH
+- RESEARCH DIRECTION
 
-Status labels are evidence labels, not decoration. Never upgrade maturity because it looks better in the UI.
+Never upgrade maturity because stronger wording looks better in the interface.
 
-## 10. Brand personality
+## 5. Brand personality
 
 The website should communicate:
 
 - disciplined
-- technical
+- technically credible
 - evidence-driven
-- ambitious but not exaggerated
-- security-conscious
-- human-controlled AI
+- ambitious without exaggeration
+- calm confidence
+- precise systems thinking
 - founder-built
 - engineering-first
+- visually distinctive
 
 It must NOT communicate:
 
 - crypto project
 - trading signal service
 - generic AI agency
-- futuristic gaming product
+- gaming interface
 - fake enterprise corporation
 - hype-first startup
 
-## 11. Final enforcement instruction to AI Studio
+## 6. Truth boundary
 
-Before changing any visual component, compare the change against this document.
+Do not invent:
 
-If a requested design conflicts with this brand contract, preserve this contract and explicitly report the conflict.
+- customers
+- users
+- revenue
+- funding
+- team size
+- deployments
+- benchmarks
+- latency
+- uptime
+- certifications
+- audits
+- trading returns
+- structural trading edge
+- fake files
+- fake evidence
+- fake operational telemetry
 
-The official logo asset and this file outrank generated design suggestions.
+Visual storytelling may be metaphorical. Public technical claims must remain bounded by actual evidence.
+
+## 7. Current visual authority
+
+For palette, typography, motion, sound, homepage world, scroll behavior, responsive behavior, and interaction design, follow:
+
+`docs/EXPERIENCE_AUTHORITY.md`
+
+The current approved direction is the warm-ivory immersive experience, not the superseded dark website style.
+
+## 8. Enforcement
 
 `BRAND_RECREATION_AUTHORITY=false`
 
