@@ -1,0 +1,335 @@
+/* Visual refinement pass: preserve the editorial system while tightening scale,
+   increasing readable luminance, and framing the immutable brand PNG without
+   altering the underlying asset. */
+
+:root {
+  --aixion-surface-0: #090909;
+  --aixion-surface-1: #0d0d0e;
+  --aixion-surface-2: #121214;
+  --aixion-text: #f2f2f2;
+  --aixion-muted: rgba(242, 242, 242, .72);
+  --aixion-subtle: rgba(242, 242, 242, .54);
+  --aixion-rule: rgba(232, 232, 232, .16);
+}
+
+body {
+  background: var(--aixion-surface-0);
+  color: #dedede;
+}
+
+.bg-frosted-canvas {
+  background-color: var(--aixion-surface-0);
+  background-image:
+    radial-gradient(circle at 14% 9%, rgba(230,230,230,.10) 0%, transparent 28%),
+    radial-gradient(circle at 83% 31%, rgba(160,168,178,.065) 0%, transparent 26%),
+    linear-gradient(180deg, #0b0b0c 0%, #080809 48%, #0d0d0e 100%),
+    radial-gradient(circle at 2px 2px, rgba(255,255,255,.075) 1px, transparent 0);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 44px 44px;
+}
+
+/* Header: visually enlarge the real lockup while removing the PNG's unused
+   top/bottom canvas from the layout. The source file itself is unchanged. */
+.site-header {
+  background: rgba(9,9,10,.93);
+  border-bottom-color: rgba(255,255,255,.13);
+  box-shadow: 0 14px 44px rgba(0,0,0,.22);
+}
+
+.site-header-inner {
+  min-height: 126px;
+}
+
+.brand-button {
+  width: clamp(250px, 25vw, 350px);
+  height: 108px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.brand-lockup {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(1.12) contrast(1.05);
+}
+
+.desktop-nav {
+  gap: 30px;
+}
+
+.desktop-nav button,
+.mobile-nav button {
+  color: rgba(255,255,255,.78);
+  font-size: 11px;
+}
+
+/* Hero: retain the statement's authority without making it poster-sized. */
+.hero-section {
+  padding: 76px 0 78px;
+}
+
+.hero-grid {
+  gap: 68px;
+  align-items: center;
+}
+
+.hero-title {
+  max-width: 700px;
+  font-size: clamp(54px, 5.4vw, 84px);
+  line-height: .99;
+  letter-spacing: -.048em;
+  text-wrap: balance;
+}
+
+.hero-title span {
+  color: #d6d6d8;
+  text-shadow: 0 0 28px rgba(255,255,255,.06);
+}
+
+.hero-body {
+  margin-top: 26px;
+  color: rgba(255,255,255,.79);
+  font-size: 16px;
+  line-height: 1.78;
+}
+
+.hero-kicker,
+.project-index-label,
+.section-index,
+.dossier-index {
+  color: rgba(255,255,255,.69);
+}
+
+.hero-orbit {
+  border-color: rgba(220,224,230,.08);
+  box-shadow: 0 0 120px rgba(210,215,225,.055), inset 0 0 120px rgba(255,255,255,.025);
+}
+
+.project-list {
+  border-top-color: var(--aixion-rule);
+}
+
+.project-row {
+  padding: 22px 0;
+  border-bottom-color: var(--aixion-rule);
+}
+
+.project-row:hover,
+.work-row:hover {
+  background: linear-gradient(90deg, rgba(225,228,235,.065), rgba(255,255,255,0));
+}
+
+.project-row-title,
+.work-title,
+.proof-item h3,
+.principle-row h3 {
+  color: #f4f4f5;
+}
+
+.project-row-short,
+.work-description {
+  color: rgba(255,255,255,.69);
+}
+
+.project-status,
+.work-status {
+  border-color: rgba(235,235,235,.24);
+  color: rgba(255,255,255,.78);
+  background: rgba(255,255,255,.025);
+}
+
+/* Editorial hierarchy: chapter title leads, statement supports. */
+.editorial-section {
+  padding: 88px 0;
+  border-top-color: rgba(255,255,255,.105);
+}
+
+.brighter-band {
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255,255,255,.045), transparent 34%),
+    linear-gradient(180deg, rgba(255,255,255,.052), rgba(255,255,255,.018));
+}
+
+.section-heading {
+  grid-template-columns: 150px minmax(0,1fr);
+  gap: 40px;
+}
+
+.section-index {
+  padding-top: 9px;
+  font-size: 11px;
+  letter-spacing: .22em;
+}
+
+.section-title {
+  font-size: clamp(44px, 4.1vw, 62px);
+  font-weight: 450;
+  letter-spacing: -.032em;
+  color: var(--aixion-text);
+}
+
+.section-statement {
+  margin-top: 18px;
+  max-width: 850px;
+  color: rgba(255,255,255,.81);
+  font-size: clamp(25px, 2.65vw, 39px);
+  line-height: 1.18;
+  letter-spacing: -.026em;
+}
+
+.section-intro,
+.editorial-two-col,
+.proof-grid,
+.evidence-rule,
+.principles-list,
+.contact-question,
+.contact-inner > p,
+.contact-link {
+  margin-left: 190px;
+}
+
+.section-intro {
+  margin-top: 26px;
+  color: rgba(255,255,255,.71);
+}
+
+.editorial-two-col {
+  margin-top: 44px;
+  gap: 62px;
+}
+
+.editorial-two-col p {
+  color: rgba(255,255,255,.76);
+  line-height: 1.82;
+}
+
+.work-list {
+  margin-top: 44px;
+  border-top-color: rgba(255,255,255,.17);
+}
+
+.work-row {
+  padding: 25px 0;
+  border-bottom-color: rgba(255,255,255,.16);
+}
+
+.work-description,
+.principle-row p,
+.proof-item p {
+  color: rgba(255,255,255,.68);
+}
+
+.proof-grid,
+.principles-list {
+  margin-top: 44px;
+}
+
+.proof-item {
+  border-top-color: rgba(255,255,255,.22);
+}
+
+.evidence-rule {
+  margin-top: 36px;
+  color: rgba(255,255,255,.72);
+}
+
+.principle-row {
+  padding: 22px 0;
+  border-bottom-color: rgba(255,255,255,.17);
+}
+
+/* Founder and contact should read like editorial pages, not giant posters. */
+.founder-copy .github-link {
+  color: rgba(255,255,255,.9);
+}
+
+.contact-section {
+  padding: 98px 0 100px;
+  background:
+    radial-gradient(circle at 18% 48%, rgba(220,224,232,.085), transparent 34%),
+    linear-gradient(180deg, #0b0b0c, #080809);
+}
+
+.contact-question {
+  margin-top: 38px;
+  max-width: 820px;
+  font-size: clamp(38px, 4vw, 60px);
+  line-height: 1.06;
+}
+
+.contact-inner > p {
+  margin-top: 24px;
+  color: rgba(255,255,255,.72);
+}
+
+.contact-link {
+  margin-top: 26px;
+  color: #f5f5f5;
+  border-bottom-color: rgba(255,255,255,.58);
+}
+
+.site-footer {
+  border-top-color: rgba(255,255,255,.13);
+  background: #080809;
+}
+
+.footer-inner {
+  color: rgba(255,255,255,.56);
+}
+
+.system-dossier {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255,255,255,.065), transparent 28%),
+    linear-gradient(180deg, #141416, #0b0b0c);
+  border-color: rgba(255,255,255,.2);
+}
+
+/* Responsive tuning. */
+@media (max-width: 1024px) {
+  .site-header-inner { min-height: 108px; }
+  .brand-button { width: 280px; height: 92px; }
+  .hero-grid { gap: 48px; }
+  .hero-title { font-size: clamp(52px, 7vw, 74px); }
+  .section-heading { grid-template-columns: 126px minmax(0,1fr); }
+  .section-intro,
+  .editorial-two-col,
+  .proof-grid,
+  .evidence-rule,
+  .principles-list,
+  .contact-question,
+  .contact-inner > p,
+  .contact-link { margin-left: 166px; }
+}
+
+@media (max-width: 820px) {
+  .site-header-inner { min-height: 92px; }
+  .brand-button { width: 232px; height: 78px; }
+  .hero-section { padding: 58px 0 64px; }
+  .hero-title { font-size: clamp(48px, 12vw, 68px); }
+  .editorial-section { padding: 70px 0; }
+  .section-heading { grid-template-columns: 1fr; gap: 12px; }
+  .section-index { padding-top: 0; }
+  .section-title { font-size: clamp(38px, 9vw, 54px); }
+  .section-statement { font-size: clamp(24px, 6vw, 34px); }
+  .section-intro,
+  .editorial-two-col,
+  .proof-grid,
+  .evidence-rule,
+  .principles-list,
+  .contact-question,
+  .contact-inner > p,
+  .contact-link { margin-left: 0; }
+  .contact-question { font-size: clamp(38px, 9vw, 54px); }
+}
+
+@media (max-width: 560px) {
+  .page-shell { width: min(100% - 30px, 1180px); }
+  .site-header-inner { width: min(100% - 30px, 1180px); }
+  .brand-button { width: 205px; height: 70px; }
+  .hero-title { font-size: clamp(44px, 13vw, 62px); }
+  .hero-body { font-size: 15px; }
+  .editorial-section { padding: 58px 0; }
+  .contact-section { padding: 72px 0 76px; }
+}
