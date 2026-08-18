@@ -2,12 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.css';
-import './experience.css';
-import './experience-lock-v2.css';
-import './motion.css';
-import './experience-world-v3.css';
-import './experience-scenes-v4.css';
-import './immersive-architecture-v5.css';
+import './reference-world.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
