@@ -20,13 +20,13 @@ The user supplied the following five unique visual references in the ChatGPT des
 
 Original uploaded source SHA-256 values from the design session:
 
-- `48618db4-d720-49c8-a9d2-89a62fa21550.png` → `8c3c46a7f521f107a75d5a8cf72ace4c6a62c754d0e06966e1dd0adb0e9ab1f7`
-- `b24137d8-5767-4fb9-b838-b212830f1727.png` → `43c2f58499eb25f62122f39ca18c74265a2cbdc927d5062d8adad1080a0dbdf8`
-- `21167d3b-1910-498e-a9ad-6d387f7c25eb.png` → `c34c524df6c5848fe19f0ea28f10912c8200a43784aa501f8c655e5e464a9811`
-- `03d5f3e9-b4ff-46ad-b1cc-1aca01ee4434.png` → `1b9082cc89c0b7355de2404914321efae7ae0a8916ac04a8fbec7f24de73e1af`
-- `b5cc4c10-2ee9-4a4e-91e2-d667dc1b5c1a.png` → `bf386b7fe49d035009862dd92c38238f8b355a497c4f58515d4cf96bb6f895fe`
+- `48618db4-d720-49c8-a9d2-89a62fa21550.png` → `c74583ed39886ea113676794d8dfbb80094ef775d67ca3c6cb55c0e91d84215a`
+- `b24137d8-5767-4fb9-b838-b212830f1727.png` → `f2dcabc2ffdd474c25739354b640e7fb20252500a765a5435f8b32caf48278f6`
+- `21167d3b-1910-498e-a9ad-6d387f7c25eb.png` → `b4c1d46e70a1402be2b33592df0cc1de180d8c80c336cd53f31c7e8f06d8d201`
+- `03d5f3e9-b4ff-46ad-b1cc-1aca01ee4434.png` → `5f600bf5b61e8a5893f779e9ade9f0e899cd48d74a08263b0f6961e471aca5c1`
+- `b5cc4c10-2ee9-4a4e-91e2-d667dc1b5c1a.png` → `8c67c96bfd8f27235b8deb21ec6c57e10b2c5ee5fed4d1aac2ac753386c68d04`
 
-One additional uploaded home image was a duplicate of the approved home-world composition and is intentionally not treated as a sixth unique direction.
+The additional uploaded file `7890eef1-4ce1-4977-bf49-ef7452cbbae6.png` has the same SHA-256 as the approved home-world source (`b4c1d46e...`) and is intentionally treated as a duplicate, not a sixth direction.
 
 ## What these references DO govern
 
