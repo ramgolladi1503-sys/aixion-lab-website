@@ -6,9 +6,7 @@ Date: 2026-08-19
 
 This document freezes the current public-website experience direction approved by the user.
 
-It **supersedes the old dark/black website palette and old hero-layout requirements** in `docs/BRAND_AUTHORITY.md`.
-
-It does **not** supersede any immutable brand-asset rule. The official logo, company name, and tagline remain governed by `docs/BRAND_AUTHORITY.md`.
+It supersedes the old dark/black website palette and old hero-layout requirements in `docs/BRAND_AUTHORITY.md`, but it does not supersede immutable brand-asset rules. The official logo, company name, and tagline remain governed by brand authority.
 
 ## 1. Locked identity
 
@@ -16,276 +14,180 @@ Brand: **AIXION LAB**
 
 Tagline: **END IS THE NEW BEGINNING**
 
-Official visual asset:
-
-`/public/brand/aixion-lab-primary.png`
+Official asset: `/public/brand/aixion-lab-primary.png`
 
 The asset must not be regenerated, recolored, traced, vectorized, geometrically modified, or substituted.
 
 ## 2. Locked visual world
 
-The website is no longer a dark dashboard, black AI landing page, or aged beige editorial site.
+The approved experience is a **luminous porcelain / bright-ivory architectural world**.
 
-The approved experience is a **bright, calm, immersive warm-ivory world** with:
+The page should read visually as clean white/porcelain first, with warmth supplied by materials and light rather than a beige page background.
 
-- luminous warm ivory rather than grey, brown, sepia, or antique beige
-- cloud-white highlights with enough contrast to preserve form
-- pale aqua / sea-glass surfaces as the main secondary visual material
-- restrained champagne-gold structural lines and small details
+Required visual DNA:
+
+- porcelain white / luminous ivory atmosphere
+- neutral-white cloud depth, not rough-paper beige
+- pale aqua glass / water as the main visual anchor
+- restrained champagne-gold structural lines
 - dark graphite/navy typography
-- floating architectural islands with meaningful spatial hierarchy
-- translucent aqua information planes
-- visible atmospheric depth, cloud banks, water/glass reflections, and fine architecture
+- floating architectural islands and platforms
+- mountains, domes, spires, observatory-like forms, and small engineered details
+- translucent information planes
+- strong foreground / midground / background depth
 - precise editorial typography
-- generous but intentional negative space
-- richer informational density after the opening hero
-- a sense of peace, clarity, freshness, and engineered control
+- controlled negative space
+- peaceful, premium, intelligent, engineered mood
 
-### Exposure / palette rule
-
-The visual references approved by the user are intentionally **brighter and fresher** than the first implemented Three.js pass.
-
-Do not deliberately darken the ivory background to make it look “premium.”
-Do not shift the palette toward tan, brown, sepia, parchment, or vintage beige.
-Do not wash the scene into pure white either.
-
-The correct target is a luminous ivory atmosphere with pale aqua depth and fine gold structure.
-
-The approved visual should feel sophisticated and immersive without becoming fantasy art, a game UI, a crypto dashboard, or generic SaaS glassmorphism.
+Explicitly avoid brown, taupe-heavy, parchment, sepia, aged-paper, or yellowed-cream page treatments.
 
 ## 3. Experience thesis
 
-The website should feel like **one environment that changes state**, not a stack of unrelated sections.
+The website must feel like **one environment that changes state**, not a hero followed by unrelated documentation pages.
 
 Core journey:
 
 `OVERVIEW -> SYSTEMS -> EVIDENCE -> PRINCIPLES -> FOUNDER -> CONTACT`
 
-The visual world remains coherent while camera position, architecture, information planes, text, and section emphasis evolve.
+Each chapter gets its own spatial composition while retaining the same porcelain/aqua/gold/cloud world.
 
-The first viewport can be selective. The pages/chapters that follow must contain enough real context to match the information richness of the approved references without inventing claims.
+## 4. Scene architecture
 
-## 4. Home experience
+### Overview
 
-Primary headline:
+Editorial left side + dominant spatial world on the right. The world should carry most of the designed density.
 
-**Intelligence in Control.**
+Primary headline: **Intelligence in Control.**
 
-Safe supporting language:
+Safe supporting language: **AIXION LAB builds systems for controlled execution, runtime reliability, and evidence-backed software operations.**
 
-**AIXION LAB builds systems for controlled execution, runtime reliability, and evidence-backed software operations — designed for the point where AI-assisted work begins to affect real systems.**
+### Systems
 
-The home scene should contain one coherent procedural 3D world, not fake dashboards or telemetry.
+A spatial ecosystem, not three SaaS cards. A central AIXION core connects to the real bodies of work at their actual maturity levels.
 
-### Visual composition
+### Evidence
 
-The approved hero composition contains:
+A physical layered evidence stack. Problem, engineering response, validation, and boundary should remain visually distinct.
 
-- editorial headline and concise context on the left
-- the large immersive world as the primary visual protagonist
-- architectural islands arranged around a pale-aqua central intelligence plane
-- mountain / dome / spire details to give the world scale and identity
-- translucent information planes that reinforce the system story
-- a restrained chapter rail / scroll cue
-- no fake operational status required to make the scene feel alive
+### Principles
 
-### Scroll motion
+Five sculptural/architectural objects, not five generic corporate-value cards.
 
-The visitor uses native vertical scrolling.
+### Founder
 
-The world responds with:
+A continuous journey path through software quality, automation, runtime reliability, AI-assisted engineering, control/evidence, and AIXION LAB. No fictional portrait or credentials.
 
-- subtle camera travel
-- small parallax from pointer movement
-- slow island breathing/floating motion
-- restrained ring/line motion
-- soft glass-plane movement
-- progressive reveal of the Systems gateway
-- continuity into richer Systems / Evidence / Principles / Founder / Contact chapters
+### Contact
 
-The motion must remain calm and weighted.
+A calm architectural horizon / pathway end-state. Only verified contact destinations may be published.
 
-No scroll hijacking.
-No forced snap.
-No horizontal wheel capture.
-No bouncing.
-No fake loading sequence.
-No animation may overlap or obscure important copy.
+## 5. Continuous-guide motion principle
 
-## 5. Information density and progressive disclosure
+AIXION may use a continuously moving guide/signal that travels through architectural routes and checkpoints.
 
-The opening hero remains concise, but the complete experience must not become visually empty or context-starved.
+This interaction principle is useful because it creates continuity between states without requiring fake telemetry. It may be used for:
 
-Required public story areas:
+- slow route traversal through the overview world
+- movement between Systems nodes
+- Founder/Journey progression
+- subtle transition cues between chapters
 
-- AIXION LAB thesis / why
-- Aixion Control Tower with evidence-bounded current capability context
-- TradeBot Reliability Lab as applied systems research
-- Research Directions as early research
-- engineering evidence cases with explicit problem / response / validation / boundary
-- engineering principles
-- Ram Golladi founder journey using only factual, supportable information
-- contact methods that are actually configured / approved
+The guide is metaphorical presentation only. It must never imply live product status, real network traffic, execution telemetry, or operational proof.
 
-Detailed information may expand on demand, but every page should have enough context to answer what the work is, why it exists, what exists now, and what is not yet proven.
+Movement must remain calm, weighted, slow, and non-blocking.
 
-## 6. Sound
+## 6. Rendering strategy
 
-Ambient sound is optional.
+Do not treat raw Three.js primitives as final art-direction assets simply because they render in WebGL.
 
-Default state: **muted**.
+The experience engine may use:
 
-The visitor may enable it through an always-visible sound/mute control.
+- authored SVG / 2.5D scenes
+- GLB/GLTF authored assets when available
+- Three.js as renderer/animation infrastructure where it materially improves the scene
+- DOM/SVG for accessible typography and spatial overlays
 
-The implementation uses a locally generated Web Audio soundscape rather than an unlicensed music file.
+Final visual quality is judged against the committed design references, not by whether a particular rendering technology was used.
 
-Sound rules:
+## 7. Sound
 
-- clearly audible after the visitor explicitly enables it, while remaining gentle
-- atmospheric and harmonic, not foreground soundtrack music
-- no repeated UI click sounds everywhere
-- immediate mute/unmute
-- no autoplay requirement
-- no sound required to understand the site
-- browser AudioContext suspension/resume must be handled correctly
+Ambient sound is optional and defaults to muted.
 
-`SOUND_CONTROL_VISIBLE=true`
-`SOUND_DEFAULT_MUTED=true`
-`SOUND_REQUIRES_USER_GESTURE=true`
+The visitor must explicitly enable it through a persistent sound control.
 
-## 7. Motion / rendering / performance contract
+Sound should be quiet, atmospheric, warm, spacious, and unobtrusive. No copyrighted music or repeated interface sound effects.
 
-Motion must not overlap important copy or cause layout instability.
+Audible success must be verified in a browser/session that actually captures audio; code presence is not proof that sound was heard.
+
+## 8. Motion/performance contract
 
 Required:
 
-- native scroll remains authoritative
-- main 3D scene pauses when offscreen/hidden
-- adaptive device pixel ratio
-- simplified mobile camera/world
+- native vertical scrolling remains authoritative
+- no scroll hijacking
+- no forced snap
+- no horizontal wheel capture
+- no jitter or overlapping critical content
+- responsive scene simplification
 - `prefers-reduced-motion` fallback
-- no mandatory animation for comprehension
+- no animation required for comprehension
+- pause or simplify expensive work when not visible where applicable
 - no fake telemetry
 - no fake live system status
 - no invented operational metrics
-- stable padding and safe text/world separation across target viewports
-- WebGL material/exposure choices must preserve the bright approved reference character
-
-The procedural scene is an implementation, not permission to drift from the reference art direction. If its geometry/materials make the result look crude, sparse, grey, muddy, or generic, refine the scene rather than weakening the visual target.
-
-## 8. Footer
-
-Primary navigation already exists in the persistent header.
-
-The footer must **not repeat the full top navigation**.
-
-Footer should remain minimal:
-
-- AIXION LAB identity / tagline
-- GitHub
-- copyright
-- compact financial-systems research disclaimer
-
-No second site map is required.
 
 ## 9. Product/publication truth
 
 The visual world is metaphorical presentation only.
 
-It must never be interpreted as live product telemetry or operational proof.
-
-Aixion Control Tower remains a flagship build / active development system according to current repository evidence.
+Aixion Control Tower remains a flagship build / active-development system according to current repository evidence.
 
 TradeBot Reliability Lab remains applied systems research.
 
 Research Directions remain early research.
 
-No profitability, structural trading edge, customer automated trading, enterprise deployment, certification, security guarantee, customer count, deployment count, benchmark, or fake audit claim may be created for visual drama.
+No profitability, structural trading edge, customer automated trading, enterprise deployment, certification, security guarantee, uptime, benchmark, or customer-scale claim may be created for visual drama.
 
-## 10. Public architecture
+## 10. Visual-reference authority
 
-Primary routes:
+The committed files under `docs/design-references/` are shot/composition references, not merely loose mood-board inspiration.
 
-- `/` (home experience)
-- `#/why`
-- `#/systems`
-- `#/evidence`
-- `#/principles`
-- `#/founder`
-- `#/contact`
+For each major chapter, compare:
 
-The home experience may also preview the six chapters so the visitor understands the complete world before choosing deeper routes.
+- camera/composition
+- visual hierarchy
+- foreground/midground/background depth
+- world scale
+- aqua/glass clarity
+- white/porcelain exposure
+- cloud density
+- gold restraint
+- typography safe area
+- object density
+- section continuity
 
-Technical depth belongs behind route navigation and progressive disclosure.
+Build or CI success does not establish visual alignment.
 
-## 11. Typography
+## 11. Current implementation authority
 
-Primary UI/body: restrained modern sans.
+Current implementation branch: `website/immersive-ivory-v1`
 
-Editorial headlines: elegant high-contrast serif.
+Current rebuild direction:
 
-Monospace is not a primary brand font and should only appear when real technical identifiers require it.
+- art-directed SVG/2.5D Overview world instead of a final hero made only from primitive WebGL geometry
+- continuous traveling signal/guide for spatial continuity
+- dedicated spatial scene compositions for Systems, Evidence, Principles, Founder, and Contact
+- shared scene language on detail routes
 
-Main copy should use natural capitalization.
-
-Tiny labels may use uppercase with restrained tracking.
-
-## 12. Design-reference authority
-
-Approved visual references should be stored under:
-
-`docs/design-references/`
-
-They define:
-
-- palette / exposure
-- composition
-- spacing
-- material language
-- atmospheric depth
-- information density
-- section rhythm
-- overall experiential ambition
-
-They do **not** define factual website copy. Generated names, metrics, emails, operational statuses, customer-style statements, or fictional product claims visible inside concept art are non-authoritative and must not be copied into the public site.
-
-## 13. Do not regress to
-
-- dull brown / antique beige / sepia palette
-- black hacker UI
-- concentric HUD-first visual language
-- generic AI orb
-- neon blue/cyan network theme
-- purple gradients
-- fake dashboards
-- terminal simulations
-- dense generic SaaS card grids
-- giant walls of copy
-- heavy glass on every component
-- excessive parallax
-- particles for decoration alone
-- motion that blocks input or navigation
-- empty pages with too little explanatory context
-- duplicated header navigation in the footer
-
-## 14. Implementation authority
-
-Current implementation branch:
-
-`website/immersive-ivory-v1`
-
-Current focus:
-
-**bright reference alignment + richer home chapters + refined Three.js world + working optional sound + responsive/padding repair**.
-
-Do not declare the entire website production-ready until rendered motion, responsive behavior, performance, truth claims, accessibility, links, domain/email, and deployment are independently reviewed.
+Do not declare the website production-ready until actual rendered motion, responsive behavior, accessibility, links, domain/email, performance, sound, truth claims, and deployment are independently reviewed.
 
 `IMMERSIVE_IVORY_THEME_LOCKED=true`
-`BRIGHT_IVORY_REFERENCE_LOCKED=true`
+`PORCELAIN_WHITE_BASE_REQUIRED=true`
+`BROWN_SEPIA_DRIFT_AUTHORITY=false`
+`VISUAL_REFERENCE_AUTHORITY=true`
 `BRAND_RECREATION_AUTHORITY=false`
 `BRAND_ASSET_SUBSTITUTION_AUTHORITY=false`
 `LOGO_GEOMETRY_CHANGE_AUTHORITY=false`
 `SOUND_DEFAULT_MUTED=true`
 `SCROLL_HIJACKING_AUTHORITY=false`
 `FAKE_TELEMETRY_AUTHORITY=false`
-`FOOTER_DUPLICATE_NAV_AUTHORITY=false`
