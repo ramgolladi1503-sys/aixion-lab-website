@@ -4,31 +4,39 @@ Official public website source for **AIXION LAB**.
 
 > END IS THE NEW BEGINNING
 
-This repository is the website authority. It is intentionally separated from the historical `axiom` repository so company branding, public product stories, and Google AI Studio work do not mix with legacy TradeBot/Axiom application code.
+AIXION LAB is an independent AI product and research studio building controlled, testable, evidence-driven systems across AI agent governance, software quality, runtime security, automation, and applied research.
 
-## Current scope
+## Public product framing
 
-- AIXION LAB brand and landing page
-- Aixion Control Tower
-- MCP Shield
-- Veriforge
-- Financial Systems Research Lab
-- Founder story and engineering principles
-- Google AI Studio governed continuation prompt
+- **Aixion Control Tower** — `FLAGSHIP BUILD` — human-in-the-loop control for AI-assisted software workflows.
+- **MCP Shield** — `AI SECURITY` — runtime security for AI agents and MCP tools.
+- **Veriforge** — `EVIDENCE SYSTEM` — connects claims to tests, decisions, failures, architecture, and reviewable evidence.
+- **Financial Systems Research Lab** — `RESEARCH` — financial-systems research focused on data quality, replay, reliability, risk controls, and evidence-driven analysis.
 
-## Website authority
+The Financial Systems Research Lab is not investment advice, a signal-selling service, or an automated customer trading service.
 
-The root Vite app is authoritative:
+## Brand authority
+
+- `public/brand/aixion-lab-primary.png`
+- `docs/BRAND_AUTHORITY.md`
+- `docs/AI_STUDIO_MASTER_PROMPT.md`
+- `src/brand.css`
+
+The official logo asset is used directly. It must not be redrawn, regenerated, recolored, traced, or substituted.
+
+## Website implementation
+
+The current audited iteration uses:
 
 ```text
 index.html
 package.json
-src/main.jsx
-src/styles.css
-docs/AI_STUDIO_MASTER_PROMPT.md
+src/main.tsx
+src/App.tsx
+src/index.css
+vite.config.ts
+tsconfig.json
 ```
-
-The `frontend/` directory is historical carry-over and is **not** the source Google AI Studio should extend. It can be removed after the root app is validated.
 
 ## Local development
 
@@ -37,27 +45,15 @@ npm install
 npm run dev
 ```
 
-Then open the Vite URL, normally `http://localhost:5173`.
-
-## Production build
+## Validation
 
 ```bash
-npm install
+npm run lint
 npm run build
 ```
 
-## Google AI Studio
-
-Import this GitHub repository and use `docs/AI_STUDIO_MASTER_PROMPT.md` as the governing build instruction. Tell AI Studio to inspect the current root app before making changes.
-
-The official brand is **AIXION LAB** with the tagline **END IS THE NEW BEGINNING**. Preserve the supplied metallic logo lockup and do not invent a replacement logo.
+GitHub Actions runs the same lint/build checks on website branches and pull requests.
 
 ## Truth boundary
 
-Product maturity and company claims must remain evidence-based. Research projects must not be presented as commercial financial advice, signal-selling products, or automated trading services. No fabricated customers, revenue, partnerships, testimonials, certifications, performance metrics, or readiness claims.
-
-## Current validation status
-
-Repository structure: PRESENT
-Production build: NOT YET INDEPENDENTLY VALIDATED
-Brand asset migration into this repo: PENDING — the starter currently references the preserved brand asset from the historical public Axiom branch until the supplied logo image is copied into `public/brand/`.
+Public claims must remain no stronger than the evidence available to support them. Do not fabricate customers, revenue, partnerships, testimonials, certifications, performance metrics, production readiness, trading performance, or security guarantees.
