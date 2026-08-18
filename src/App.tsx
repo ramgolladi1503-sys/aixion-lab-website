@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from 'react';
 import { ArrowRight, ChevronDown, Github, Menu, Volume2, VolumeX, X } from 'lucide-react';
-import ExperienceWorld from './ExperienceWorld';
 import { useAmbientSound } from './useAmbientSound';
+import { referenceWorldAssets } from './reference-world-assets';
 
 type View = 'home' | 'why' | 'systems' | 'evidence' | 'principles' | 'founder' | 'contact';
+type SceneName = 'overview' | 'why' | 'systems' | 'evidence' | 'principles' | 'founder' | 'contact';
 
 const views: Array<{ label: string; view: Exclude<View, 'home'> }> = [
   { label: 'Why', view: 'why' },
@@ -15,41 +16,37 @@ const views: Array<{ label: string; view: Exclude<View, 'home'> }> = [
 ];
 
 const systems = [
-  {
-    name: 'Aixion Control Tower',
-    status: 'FLAGSHIP BUILD',
-    short: 'Controlled execution for AI-assisted software work.',
-    bullets: ['Risk-aware review and approve / revise / reject flows', 'Validation checkpoints before consequential software changes', 'GitHub-oriented delivery and inspectable task state'],
-  },
-  {
-    name: 'TradeBot Reliability Lab',
-    status: 'APPLIED RESEARCH',
-    short: 'Real-time systems research for failure, recovery, and operational truth.',
-    bullets: ['Feed freshness and reconnect behavior', 'Fail-closed state handling and controlled recovery', 'Replay, evidence quality, and failure-oriented testing'],
-  },
-  {
-    name: 'Research Directions',
-    status: 'EARLY RESEARCH',
-    short: 'Exploratory work on runtime boundaries and claim-to-evidence systems.',
-    bullets: ['Runtime tool boundaries and sensitive-operation controls', 'Claim-to-evidence linking and engineering verification concepts', 'Research directions kept separate from product maturity'],
-  },
+  ['Aixion Control Tower', 'FLAGSHIP BUILD', 'Controlled execution for AI-assisted software work.'],
+  ['TradeBot Reliability Lab', 'APPLIED RESEARCH', 'Real-time systems research for failure, recovery, and operational truth.'],
+  ['Research Directions', 'EARLY RESEARCH', 'Runtime boundaries, verification concepts, and evidence-aware engineering.'],
 ] as const;
 
-const evidenceCases = [
-  ['Feed truth under disconnect and recovery', 'REAL-TIME RELIABILITY', 'What should a real-time system do when continuity or freshness can no longer be trusted?'],
-  ['Approval-gated AI-assisted software work', 'CONTROL PLANE', 'Review, validation, and execution boundaries before consequential software changes become operational.'],
-  ['Truth-first publication boundary', 'EVIDENCE GOVERNANCE', 'Public maturity language must not outrun the evidence that actually exists.'],
+const evidenceStages = ['Problem', 'Engineering response', 'Validation', 'Boundary'] as const;
+
+const systemsMapLabels = [
+  ['Control Tower', 'FLAGSHIP BUILD'],
+  ['Verification', 'EVIDENCE DISCIPLINE'],
+  ['Runtime Reliability', 'APPLIED RESEARCH'],
+  ['Research', 'EARLY RESEARCH'],
+  ['Governance', 'CONTROL BOUNDARIES'],
 ] as const;
 
 const principles = [
-  ['Evidence before claims', 'Published confidence stops where the supporting evidence stops.'],
-  ['Unknown state fails closed', 'Missing or degraded truth is not silently converted into a healthy state.'],
-  ['Consequence deserves boundaries', 'Actions that can change real systems should pass through explicit control points.'],
-  ['Failure becomes regression evidence', 'Useful failures become reproducible engineering evidence.'],
-  ['Maturity stays evidence-bound', 'Research, implementation, validation, and deployment remain separate claims.'],
+  'Evidence before claims',
+  'Unknown state fails closed',
+  'Consequence deserves boundaries',
+  'Failure becomes regression evidence',
+  'Maturity stays evidence-bound',
 ] as const;
 
-const journey = ['Software quality', 'Automation', 'Runtime reliability', 'AI-assisted engineering', 'Control & evidence', 'AIXION LAB'] as const;
+const journey = [
+  'Software quality',
+  'Automation',
+  'Runtime reliability',
+  'AI-assisted engineering',
+  'Control & evidence',
+  'AIXION LAB',
+] as const;
 
 function currentView(): View {
   const route = window.location.hash.replace('#/', '').replace('#', '');
@@ -59,115 +56,96 @@ function currentView(): View {
 
 function Brand() {
   return (
-    <span className="experience-brand">
+    <span className="experience-brand ref-brand">
       <img src="/brand/aixion-lab-primary.png" alt="AIXION LAB — End is the new beginning" draggable="false" />
       <span aria-hidden="true">AIXION LAB</span>
     </span>
   );
 }
 
-function ImmersiveHome() {
-  const ref = useRef<HTMLElement | null>(null);
+function WorldPlate({ scene, children, className = '' }: { scene: SceneName; children?: ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const section = ref.current;
-    if (!section) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const rect = section.getBoundingClientRect();
-      const distance = Math.max(1, section.offsetHeight - window.innerHeight);
-      const progress = Math.max(0, Math.min(1, -rect.top / distance));
-      section.style.setProperty('--experience-progress', (reduced ? 0.12 : progress).toFixed(4));
-    };
-    const request = () => { if (!raf) raf = window.requestAnimationFrame(update); };
-    update();
-    window.addEventListener('scroll', request, { passive: true });
-    window.addEventListener('resize', request);
-    return () => {
-      if (raf) window.cancelAnimationFrame(raf);
-      window.removeEventListener('scroll', request);
-      window.removeEventListener('resize', request);
-    };
-  }, []);
+  const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (!ref.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / Math.max(1, rect.width) - 0.5;
+    const y = (event.clientY - rect.top) / Math.max(1, rect.height) - 0.5;
+    ref.current.style.setProperty('--plate-x', x.toFixed(3));
+    ref.current.style.setProperty('--plate-y', y.toFixed(3));
+  };
 
   return (
-    <main id="aixion-home-experience" ref={ref} className="experience-home">
-      <div className="experience-home-sticky">
-        <ExperienceWorld storyId="aixion-home-experience" />
-        <div className="experience-atmosphere" aria-hidden="true" />
-        <div className="hero-cloud hero-cloud-a" aria-hidden="true" />
-        <div className="hero-cloud hero-cloud-b" aria-hidden="true" />
-        <div className="hero-foreground-ridge" aria-hidden="true"><i /><i /><i /></div>
-        <div className="experience-shell experience-home-content">
-          <section className="experience-overview">
-            <div className="experience-kicker">CONTROL • RELIABILITY • EVIDENCE</div>
-            <h1>Intelligence<br />in Control.</h1>
-            <p>AIXION LAB builds systems for controlled execution, runtime reliability, and evidence-backed software operations.</p>
-            <a className="experience-cta" href="#systems-preview">Enter the world <ArrowRight size={17} /></a>
-          </section>
-          <nav className="experience-chapter-rail" aria-label="Experience chapters">
-            <span className="is-active">01 <b>Overview</b></span>
-            <a href="#systems-preview">02 <b>Systems</b></a>
-            <a href="#evidence-preview">03 <b>Evidence</b></a>
-            <a href="#principles-preview">04 <b>Principles</b></a>
-            <a href="#founder-preview">05 <b>Founder</b></a>
-            <a href="#contact-preview">06 <b>Contact</b></a>
-          </nav>
-          <div className="experience-scroll-cue" aria-hidden="true">Scroll to travel <ChevronDown size={14} /></div>
+    <div ref={ref} className={`reference-world reference-world--${scene} ${className}`} onPointerMove={onPointerMove} onPointerLeave={() => {
+      ref.current?.style.setProperty('--plate-x', '0');
+      ref.current?.style.setProperty('--plate-y', '0');
+    }}>
+      <div className="reference-world__glow" aria-hidden="true" />
+      <img className="reference-world__image" src={referenceWorldAssets[scene]} alt="" aria-hidden="true" draggable="false" />
+      <div className="reference-world__foreground" aria-hidden="true" />
+      <div className="reference-world__haze" aria-hidden="true" />
+      {children}
+    </div>
+  );
+}
+
+function ChapterRail() {
+  return (
+    <nav className="ref-chapter-rail" aria-label="Experience chapters">
+      <span className="is-active"><i />01 <b>Overview</b></span>
+      <a href="#systems-preview"><i />02 <b>Systems</b></a>
+      <a href="#evidence-preview"><i />03 <b>Evidence</b></a>
+      <a href="#principles-preview"><i />04 <b>Principles</b></a>
+      <a href="#founder-preview"><i />05 <b>Founder</b></a>
+      <a href="#contact-preview"><i />06 <b>Contact</b></a>
+    </nav>
+  );
+}
+
+function HeroScene() {
+  return (
+    <main id="aixion-home-experience" className="ref-scene ref-scene--hero">
+      <div className="ref-scene__ambient ref-scene__ambient--top" />
+      <div className="ref-shell ref-hero-layout">
+        <div className="ref-copy ref-copy--hero">
+          <span className="ref-kicker">CONTROL • RELIABILITY • EVIDENCE</span>
+          <h1>Intelligence<br />in Control.</h1>
+          <p>AIXION LAB builds systems for controlled execution, runtime reliability, and evidence-backed software operations.</p>
+          <a className="ref-cta" href="#systems-preview">Explore the system <ArrowRight size={17} /></a>
+          <ChapterRail />
+          <span className="ref-scroll-cue">Scroll to begin <ChevronDown size={14} /></span>
         </div>
+
+        <WorldPlate scene="overview" className="ref-world--hero">
+          <div className="ref-glass-card ref-glass-card--hero-a"><b>CONTROL BOUNDARIES</b><small>Human review before consequential change.</small></div>
+          <div className="ref-glass-card ref-glass-card--hero-b"><b>RUNTIME RELIABILITY</b><small>Operational truth, recovery, and fail-closed behavior.</small></div>
+          <div className="ref-glass-card ref-glass-card--hero-c"><b>EVIDENCE PATHS</b><small>Claims stop where supporting evidence stops.</small></div>
+          <div className="ref-glass-card ref-glass-card--hero-d"><b>RESEARCH DIRECTIONS</b><small>Exploratory work remains visibly separated by maturity.</small></div>
+        </WorldPlate>
       </div>
     </main>
   );
 }
 
-function DistrictArchitecture({ index }: { index: number }) {
-  return (
-    <div className={`district-architecture district-architecture-${index + 1}`} aria-hidden="true">
-      <span className="district-plinth" />
-      <span className="district-tower district-tower-a" />
-      <span className="district-tower district-tower-b" />
-      <span className="district-dome" />
-      <span className="district-spire" />
-      <span className="district-glass" />
-    </div>
-  );
-}
-
 function SystemsScene({ detail = false }: { detail?: boolean }) {
   return (
-    <section id={detail ? undefined : 'systems-preview'} className={`aixion-scene aixion-scene-systems world-chapter ${detail ? 'is-detail' : ''}`}>
-      <div className="scene-cloud scene-cloud-left" aria-hidden="true" />
-      <div className="scene-cloud scene-cloud-right" aria-hidden="true" />
-      <div className="experience-shell aixion-scene-grid">
-        <div className="aixion-scene-copy">
-          <span>02 / SYSTEMS</span>
+    <section id={detail ? undefined : 'systems-preview'} className="ref-scene ref-scene--systems">
+      <div className="ref-shell ref-section-layout">
+        <div className="ref-copy">
+          <span className="ref-kicker">02 / SYSTEMS</span>
           <h2>Systems that govern intelligence.</h2>
-          <p>Three bodies of work occupy one connected environment, separated by purpose and maturity rather than flattened into product cards.</p>
-          {!detail && <a href="#/systems">Explore all systems <ArrowRight size={16} /></a>}
+          <p>Three bodies of work are separated by purpose and maturity, while sharing one control, reliability, and evidence philosophy.</p>
+          {!detail && <a className="ref-text-link" href="#/systems">Explore all systems <ArrowRight size={15} /></a>}
+          {detail && <div className="ref-detail-list">{systems.map(([name, status, summary]) => <article key={name}><span>{status}</span><h3>{name}</h3><p>{summary}</p></article>)}</div>}
         </div>
-        <div className="systems-landscape" aria-label="AIXION systems landscape">
-          <div className="systems-horizon" aria-hidden="true"><i /><i /><i /></div>
-          <div className="systems-water" aria-hidden="true"><i /><i /></div>
-          <div className="systems-core-city" aria-hidden="true"><i /><b>AIXION</b><span>control • truth • evidence</span></div>
-          <svg className="systems-route" viewBox="0 0 1000 700" aria-hidden="true">
-            <path d="M500 380 C382 310 298 290 212 240 C300 168 424 180 500 380 C638 302 730 278 812 218 C744 390 650 484 500 380 C520 500 530 564 514 628" />
-          </svg>
-          {systems.map((system, index) => (
-            <article className={`system-district system-district-${index + 1}`} key={system.name}>
-              <DistrictArchitecture index={index} />
-              <div className="district-label">
-                <span>0{index + 1}</span>
-                <small>{system.status}</small>
-                <h3>{system.name}</h3>
-                <p>{system.short}</p>
-                {detail && <ul>{system.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
-              </div>
-            </article>
+        <WorldPlate scene="systems">
+          {systemsMapLabels.map(([name, status], index) => (
+            <div key={name} className={`ref-hotspot ref-hotspot--systems-${index + 1}`}>
+              <span>0{index + 1}</span><b>{name}</b><small>{status}</small>
+            </div>
           ))}
-          <div className="systems-moving-guide" aria-hidden="true" />
-        </div>
+          <div className="ref-guide-dot ref-guide-dot--systems" aria-hidden="true" />
+        </WorldPlate>
       </div>
     </section>
   );
@@ -175,55 +153,37 @@ function SystemsScene({ detail = false }: { detail?: boolean }) {
 
 function EvidenceScene({ detail = false }: { detail?: boolean }) {
   return (
-    <section id={detail ? undefined : 'evidence-preview'} className={`aixion-scene aixion-scene-evidence world-chapter ${detail ? 'is-detail' : ''}`}>
-      <div className="experience-shell aixion-scene-grid">
-        <div className="aixion-scene-copy">
-          <span>03 / EVIDENCE</span>
+    <section id={detail ? undefined : 'evidence-preview'} className="ref-scene ref-scene--evidence">
+      <div className="ref-shell ref-section-layout">
+        <div className="ref-copy">
+          <span className="ref-kicker">03 / EVIDENCE</span>
           <h2>Evidence over assumption.</h2>
-          <p>Problem, engineering response, validation, and boundary are separate physical levels. The visitor can see where the evidence ends before reading the detail.</p>
-          {!detail && <a href="#/evidence">Open the evidence cases <ArrowRight size={16} /></a>}
+          <p>Problem, engineering response, validation, and boundary stay visibly separate. The point where evidence stops is part of the result.</p>
+          {!detail && <a className="ref-text-link" href="#/evidence">Open the evidence cases <ArrowRight size={15} /></a>}
+          {detail && <div className="ref-stage-list">{evidenceStages.map((stage, i) => <span key={stage}><b>0{i + 1}</b>{stage}</span>)}</div>}
         </div>
-        <div className="evidence-vault" aria-label="Layered evidence structure">
-          <div className="evidence-vault-haze" aria-hidden="true" />
-          <div className="evidence-vault-spine" aria-hidden="true"><i /><i /></div>
-          {['Problem', 'Engineering response', 'Validation', 'Boundary'].map((label, index) => (
-            <div className={`evidence-terrace evidence-terrace-${index + 1}`} key={label}>
-              <div className="evidence-terrace-structure" aria-hidden="true"><i /><i /><i /></div>
-              <b>0{index + 1}</b><span>{label}</span>
-            </div>
-          ))}
-          <div className="evidence-signal" aria-hidden="true" />
-        </div>
+        <WorldPlate scene="evidence" className="ref-world--evidence">
+          {evidenceStages.map((stage, i) => <div key={stage} className={`ref-evidence-label ref-evidence-label--${i + 1}`}><b>0{i + 1}</b><span>{stage}</span></div>)}
+          <div className="ref-guide-dot ref-guide-dot--evidence" aria-hidden="true" />
+        </WorldPlate>
       </div>
-      {detail && (
-        <div className="experience-shell evidence-cases-grid evidence-cases-v5">
-          {evidenceCases.map(([title, tag, summary]) => <article key={title}><span>{tag}</span><h3>{title}</h3><p>{summary}</p></article>)}
-        </div>
-      )}
     </section>
   );
 }
 
 function PrinciplesScene({ detail = false }: { detail?: boolean }) {
   return (
-    <section id={detail ? undefined : 'principles-preview'} className={`aixion-scene aixion-scene-principles world-chapter ${detail ? 'is-detail' : ''}`}>
-      <div className="principles-mountain" aria-hidden="true"><i /><i /><i /></div>
-      <div className="experience-shell principles-layout">
-        <div className="aixion-scene-copy aixion-scene-copy-wide">
-          <span>04 / PRINCIPLES</span>
-          <h2>Five monuments. Five constraints.</h2>
-          <p>Each principle stands as an architectural anchor inside the same world, with distinct mass and silhouette rather than repeated corporate icons.</p>
+    <section id={detail ? undefined : 'principles-preview'} className="ref-scene ref-scene--principles">
+      <div className="ref-shell ref-section-layout">
+        <div className="ref-copy">
+          <span className="ref-kicker">04 / PRINCIPLES</span>
+          <h2>Principles that shape every system.</h2>
+          <p>Five constraints guide how capability is built, validated, bounded, and described.</p>
+          {detail && <ol className="ref-principle-list">{principles.map((item, i) => <li key={item}><b>0{i + 1}</b>{item}</li>)}</ol>}
         </div>
-        <div className="principle-sanctuary">
-          <svg className="principle-route" viewBox="0 0 1200 520" aria-hidden="true"><path d="M42 420 C230 318 322 388 478 274 C636 160 710 260 858 150 C972 65 1088 110 1160 52" /></svg>
-          {principles.map(([title, body], index) => (
-            <article key={title} className={`principle-monument monument-${index + 1}`}>
-              <div className="monument-architecture" aria-hidden="true"><i /><i /><i /><i /></div>
-              <span>0{index + 1}</span><h3>{title}</h3>{detail && <p>{body}</p>}
-            </article>
-          ))}
-          <div className="principle-guide" aria-hidden="true" />
-        </div>
+        <WorldPlate scene="principles" className="ref-world--principles">
+          {principles.map((item, i) => <div key={item} className={`ref-principle-tag ref-principle-tag--${i + 1}`}><span>0{i + 1}</span><b>{item}</b></div>)}
+        </WorldPlate>
       </div>
     </section>
   );
@@ -231,25 +191,23 @@ function PrinciplesScene({ detail = false }: { detail?: boolean }) {
 
 function FounderScene({ detail = false }: { detail?: boolean }) {
   return (
-    <section id={detail ? undefined : 'founder-preview'} className={`aixion-scene aixion-scene-founder world-chapter ${detail ? 'is-detail' : ''}`}>
-      <div className="founder-mountain-range" aria-hidden="true"><i /><i /><i /><i /></div>
-      <div className="experience-shell aixion-scene-grid">
-        <div className="aixion-scene-copy">
-          <span>05 / FOUNDER</span>
-          <h2>A journey built from quality.</h2>
-          <p><strong>Ram Golladi — Founder / AI Systems Builder.</strong> The path from software quality to automation, runtime reliability, AI-assisted engineering, and evidence-aware systems building is the origin of AIXION LAB.</p>
-          {!detail && <a href="#/founder">Explore the journey <ArrowRight size={16} /></a>}
+    <section id={detail ? undefined : 'founder-preview'} className="ref-scene ref-scene--founder">
+      <div className="ref-shell ref-section-layout">
+        <div className="ref-copy">
+          <span className="ref-kicker">05 / FOUNDER</span>
+          <h2>The builder behind the system.</h2>
+          <p><strong>Ram Golladi — Founder / AI Systems Builder.</strong> A journey from software quality through automation, runtime reliability, AI-assisted engineering, and evidence-aware systems building.</p>
+          {!detail && <a className="ref-text-link" href="#/founder">Explore the journey <ArrowRight size={15} /></a>}
+          {detail && <div className="ref-journey-list">{journey.map((item, i) => <span key={item}><b>0{i + 1}</b>{item}</span>)}</div>}
         </div>
-        <div className="founder-climb" aria-label="Founder journey">
-          <svg className="founder-route" viewBox="0 0 900 650" aria-hidden="true"><path d="M48 570 C142 474 232 520 300 416 C370 310 442 360 512 268 C584 174 660 216 728 128 C774 70 824 58 866 42" /></svg>
-          {journey.map((stage, index) => (
-            <div key={stage} className={`journey-station journey-station-${index + 1}`}>
-              <div className="journey-architecture" aria-hidden="true"><i /><i /><i /></div>
-              <b>0{index + 1}</b><span>{stage}</span>
-            </div>
-          ))}
-          <div className="journey-runner" aria-hidden="true" />
-        </div>
+        <WorldPlate scene="founder" className="ref-world--founder">
+          <div className="ref-founder-card ref-founder-card--1"><span>01</span><b>Software quality</b><small>Testing discipline and engineering rigor.</small></div>
+          <div className="ref-founder-card ref-founder-card--2"><span>03</span><b>Runtime reliability</b><small>Recovery truth and fail-closed state handling.</small></div>
+          <div className="ref-founder-card ref-founder-card--3"><span>04</span><b>AI-assisted engineering</b><small>Human-directed workflows with explicit control.</small></div>
+          <div className="ref-founder-card ref-founder-card--4"><span>05</span><b>Control & evidence</b><small>Reviewable boundaries and evidence-aware systems.</small></div>
+          <div className="ref-guide-dot ref-guide-dot--founder" aria-hidden="true" />
+          <div className="ref-summit-label"><span>06</span><b>AIXION LAB</b><small>Control • reliability • evidence</small></div>
+        </WorldPlate>
       </div>
     </section>
   );
@@ -257,17 +215,13 @@ function FounderScene({ detail = false }: { detail?: boolean }) {
 
 function ContactScene({ detail = false }: { detail?: boolean }) {
   return (
-    <section id={detail ? undefined : 'contact-preview'} className={`aixion-scene aixion-scene-contact world-chapter ${detail ? 'is-detail' : ''}`}>
-      <div className="contact-sky" aria-hidden="true"><i /><i /><i /></div>
-      <div className="contact-city" aria-hidden="true"><i /><i /><i /><i /><i /></div>
-      <div className="contact-water" aria-hidden="true" />
-      <div className="contact-bridge" aria-hidden="true"><i /><i /><i /></div>
-      <div className="contact-beacon" aria-hidden="true"><i /></div>
-      <div className="experience-shell contact-content">
-        <span>06 / CONTACT</span>
-        <h2>Reach the horizon.</h2>
+    <section id={detail ? undefined : 'contact-preview'} className="ref-scene ref-scene--contact">
+      <WorldPlate scene="contact" className="ref-world--contact" />
+      <div className="ref-shell ref-contact-copy">
+        <span className="ref-kicker">06 / CONTACT</span>
+        <h2>Let&apos;s build the future, responsibly.</h2>
         <p>Product discussions, technical collaboration, research questions, or system-design conversations.</p>
-        <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer"><Github size={18} /> GitHub <ArrowRight size={16} /></a>
+        <a className="ref-cta" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer"><Github size={17} /> GitHub <ArrowRight size={16} /></a>
       </div>
     </section>
   );
@@ -275,17 +229,21 @@ function ContactScene({ detail = false }: { detail?: boolean }) {
 
 function WhyScene() {
   return (
-    <section className="aixion-scene aixion-scene-why is-detail world-chapter">
-      <div className="experience-shell why-layout">
-        <div className="aixion-scene-copy"><span>01 / WHY</span><h2>Capability is only the beginning.</h2><p>AIXION LAB focuses on the systems around AI-assisted work: explicit execution boundaries, trustworthy runtime state, and evidence that stays connected to what actually happened.</p></div>
-        <div className="why-orbits" aria-hidden="true"><i /><i /><i /><b>CONTROL</b></div>
+    <section className="ref-scene ref-scene--why">
+      <div className="ref-shell ref-section-layout">
+        <div className="ref-copy">
+          <span className="ref-kicker">01 / WHY</span>
+          <h2>Capability is only the beginning.</h2>
+          <p>AIXION LAB focuses on the systems around AI-assisted work: explicit execution boundaries, trustworthy runtime state, and evidence that stays connected to what actually happened.</p>
+        </div>
+        <WorldPlate scene="why" />
       </div>
     </section>
   );
 }
 
 function HomeChapters() {
-  return <div className="experience-home-chapters"><SystemsScene /><EvidenceScene /><PrinciplesScene /><FounderScene /><ContactScene /></div>;
+  return <><SystemsScene /><EvidenceScene /><PrinciplesScene /><FounderScene /><ContactScene /></>;
 }
 
 export default function App() {
@@ -294,34 +252,38 @@ export default function App() {
   const { enabled: soundEnabled, supported: soundSupported, toggle: toggleSound } = useAmbientSound();
 
   useEffect(() => {
-    const sync = () => { setView(currentView()); window.scrollTo({ top: 0, behavior: 'auto' }); };
+    const sync = () => {
+      setView(currentView());
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    };
     window.addEventListener('hashchange', sync);
     return () => window.removeEventListener('hashchange', sync);
   }, []);
 
   const navigate = (next: View) => {
     setMenu(false);
-    if (next === 'home') window.location.hash = '';
-    else window.location.hash = `/${next}`;
+    window.location.hash = next === 'home' ? '' : `/${next}`;
     setView(next);
     window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   return (
-    <div className="experience-site">
-      <header className="experience-header">
-        <div className="experience-shell experience-header-inner">
+    <div className="experience-site ref-site">
+      <header className="experience-header ref-header">
+        <div className="ref-shell ref-header-inner">
           <button className="experience-brand-button" onClick={() => navigate('home')} aria-label="AIXION LAB home"><Brand /></button>
-          <nav className="experience-nav" aria-label="Primary navigation">
+          <nav className="experience-nav ref-nav" aria-label="Primary navigation">
             {views.map((item) => <button key={item.view} className={view === item.view ? 'is-active' : ''} onClick={() => navigate(item.view)}>{item.label}</button>)}
           </nav>
-          {soundSupported && <button className={`experience-sound ${soundEnabled ? 'is-on' : ''}`} onClick={toggleSound} aria-label={soundEnabled ? 'Mute ambient sound' : 'Enable ambient sound'}>{soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}<span>{soundEnabled ? 'Sound on' : 'Sound'}</span></button>}
-          <button className="experience-menu" onClick={() => setMenu(!menu)} aria-label="Toggle navigation">{menu ? <X size={20} /> : <Menu size={20} />}</button>
+          <div className="ref-header-actions">
+            {soundSupported && <button className={`ref-utility ${soundEnabled ? 'is-on' : ''}`} onClick={toggleSound} aria-label={soundEnabled ? 'Mute ambient sound' : 'Enable ambient sound'}>{soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}<span>Sound</span></button>}
+            <button className="ref-menu" onClick={() => setMenu(!menu)} aria-label="Toggle navigation">{menu ? <X size={20} /> : <Menu size={20} />}</button>
+          </div>
         </div>
-        {menu && <nav className="experience-mobile-nav">{views.map((item) => <button key={item.view} onClick={() => navigate(item.view)}>{item.label}</button>)}</nav>}
+        {menu && <nav className="ref-mobile-nav">{views.map((item) => <button key={item.view} onClick={() => navigate(item.view)}>{item.label}</button>)}</nav>}
       </header>
 
-      {view === 'home' && <><ImmersiveHome /><HomeChapters /></>}
+      {view === 'home' && <><HeroScene /><HomeChapters /></>}
       {view === 'why' && <WhyScene />}
       {view === 'systems' && <SystemsScene detail />}
       {view === 'evidence' && <EvidenceScene detail />}
@@ -329,10 +291,15 @@ export default function App() {
       {view === 'founder' && <FounderScene detail />}
       {view === 'contact' && <ContactScene detail />}
 
-      <footer className="experience-footer">
-        <div className="experience-shell experience-footer-top"><div><strong>AIXION LAB</strong><span>END IS THE NEW BEGINNING</span></div><a className="experience-footer-github" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer"><Github size={17} /> GitHub</a></div>
-        <div className="experience-shell experience-footer-bottom"><span>© 2026 AIXION LAB. All rights reserved.</span><span>Financial-systems research is research only, not investment advice.</span></div>
+      <footer className="ref-footer">
+        <div className="ref-shell ref-footer-inner">
+          <div><strong>AIXION LAB</strong><span>END IS THE NEW BEGINNING</span></div>
+          <span>© 2026 AIXION LAB. All rights reserved.</span>
+          <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer"><Github size={15} /> GitHub</a>
+        </div>
+        <div className="ref-shell ref-footer-note">Financial-systems work shown publicly is research and systems-reliability work only, not investment advice.</div>
       </footer>
+
     </div>
   );
 }
