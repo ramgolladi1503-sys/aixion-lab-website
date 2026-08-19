@@ -1,96 +1,290 @@
-import React,{useEffect,useMemo,useRef,useState}from"react";
-import{createRoot}from"react-dom/client";
-import"./styles.css";
+import React, { useEffect, useRef, useState } from "react";
+import { createRoot } from "react-dom/client";
+import "./styles.css";
 
-const GITHUB="https://github.com/ramgolladi1503-sys",BRAND="/brand/aixion-lab-brand-lockup.webp";
-const NODES=[
-["about","About","01",-90,"Philosophy · operating principles"],["journey","Journey","02",-45,"QA → systems → applied AI"],
-["projects","Projects","03",0,"TradeBot · engineering systems"],["research","Research","04",45,"Hypotheses · replay · negative results"],
-["evidence","Evidence","05",90,"Validation · governance · proof"],["tower","Control Tower","06",135,"Observation · operational context"],
-["stack","Stack","07",180,"Tools by engineering purpose"],["contact","Contact","08",225,"Roles · collaboration · hard problems"]
-].map(([key,label,n,angle,micro])=>({key,label,n,angle,micro}));
-const META=Object.fromEntries(NODES.map(n=>[n.key,n]));
-const pathFor=k=>k==="home"?"/":k==="tower"?"/control-tower":k==="tradebot"?"/projects/tradebot":`/${k}`;
-const pageFor=p=>{p=p.replace(/\/+$/ ,"")||"/";if(p==="/")return"home";if(p==="/core")return"core";if(p==="/control-tower")return"tower";if(p==="/projects/tradebot")return"tradebot";let k=p.slice(1);return META[k]?k:"home"};
+const GITHUB = "https://github.com/ramgolladi1503-sys";
+const BRAND = "/brand/aixion-lab-brand-lockup.webp";
 
-function Icon({type,size=21}){let p={
-about:<><circle cx="12" cy="8" r="3"/><path d="M5.5 20c.7-4.2 3-6.2 6.5-6.2s5.8 2 6.5 6.2"/></>,
-journey:<><path d="M4 18c2.2-5.6 5.2-8.3 9-8.3h6"/><path d="m16 6 3 3.7-3 3.7"/><circle cx="5" cy="18" r="1.5"/></>,
-projects:<><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></>,
-research:<><path d="M9 3h6M10 3v5l-5.5 9.2A2.5 2.5 0 0 0 6.7 21h10.6a2.5 2.5 0 0 0 2.2-3.8L14 8V3"/><path d="M8 15h8"/></>,
-evidence:<><path d="M12 3 19 6v5c0 4.5-2.6 8-7 10-4.4-2-7-5.5-7-10V6l7-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></>,
-tower:<><path d="M4 19h16M7 16V8h4v8M13 16V4h4v12"/><path d="M8 5h2M14 8h2"/></>,
-stack:<><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4M4 17l8 4 8-4"/></>,
-contact:<><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></>,
-github:<path d="M9 19c-4 1.2-4-2-5.5-2.5M14.5 21v-3.1c0-.9.1-1.5-.4-2.1 3-.3 6.2-1.5 6.2-6.7A5.2 5.2 0 0 0 19 5.5 4.8 4.8 0 0 0 18.9 2S17.8 1.7 15 3.4a12.2 12.2 0 0 0-6 0C6.2 1.7 5.1 2 5.1 2A4.8 4.8 0 0 0 5 5.5a5.2 5.2 0 0 0-1.3 3.6c0 5.2 3.2 6.4 6.2 6.7-.4.5-.6 1.2-.5 2.1V21"/>,
-arrow:<><path d="M5 12h14M14 7l5 5-5 5"/></>
-};return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.55" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{p[type]||p.projects}</svg>}
+const NODES = [
+  ["about", "About", -90, "Philosophy · operating principles"],
+  ["journey", "Journey", -45, "QA → systems → applied AI"],
+  ["projects", "Projects", 0, "TradeBot · engineering systems"],
+  ["research", "Research", 45, "Hypotheses · replay · negative results"],
+  ["evidence", "Evidence", 90, "Validation · governance · proof"],
+  ["tower", "Control Tower", 135, "Observation · operational context"],
+  ["stack", "Stack", 180, "Tools by engineering purpose"],
+  ["contact", "Contact", 225, "Roles · collaboration · hard problems"],
+].map(([key, label, angle, micro]) => ({ key, label, angle, micro }));
 
-function Mark({className=""}){return <span className={`brand-mark ${className}`} aria-hidden="true"><img src={BRAND} alt=""/></span>}
-function origin(el){if(!el)return{x:innerWidth/2,y:innerHeight/2};let r=el.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}}
+const META = Object.fromEntries(NODES.map((node) => [node.key, node]));
+const PATHS = { home: "/", tower: "/control-tower", tradebot: "/projects/tradebot" };
+const pathFor = (key) => PATHS[key] || `/${key}`;
+const pageFor = (pathname) => {
+  const path = pathname.replace(/\/+$/, "") || "/";
+  if (path === "/") return "home";
+  if (path === "/core") return "core";
+  if (path === "/control-tower") return "tower";
+  if (path === "/projects/tradebot") return "tradebot";
+  const key = path.slice(1);
+  return META[key] ? key : "home";
+};
 
-function Field({mode="home",hot=false}){const ref=useRef(),m=useRef(mode),h=useRef(hot);useEffect(()=>{m.current=mode},[mode]);useEffect(()=>{h.current=hot},[hot]);
-useEffect(()=>{let c=ref.current,x=c.getContext("2d"),raf,W,H,D=1,p={x:0,y:0},reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-let pts=Array.from({length:82},(_,i)=>({x:((i*67)%101)/101,y:((i*43+17)%97)/97,vx:((i%7)-3)*.000012,vy:(((i*3)%7)-3)*.000012,q:i*.77}));
-let resize=()=>{D=Math.min(devicePixelRatio||1,1.6);W=innerWidth;H=innerHeight;c.width=W*D;c.height=H*D;c.style.width=W+"px";c.style.height=H+"px";x.setTransform(D,0,0,D,0,0)};
-let move=e=>{p.x=e.clientX/Math.max(W,1)-.5;p.y=e.clientY/Math.max(H,1)-.5};
-let draw=t=>{x.clearRect(0,0,W,H);let a=h.current?1.5:1,g=x.createRadialGradient(W*(.5+p.x*.04),H*(.48+p.y*.04),0,W/2,H/2,Math.max(W,H)*.7);g.addColorStop(0,`rgba(255,54,65,${.045*a})`);g.addColorStop(.45,"rgba(10,14,19,.1)");g.addColorStop(1,"rgba(2,3,5,0)");x.fillStyle=g;x.fillRect(0,0,W,H);
-pts.forEach(n=>{if(!reduced){n.x+=n.vx;n.y+=n.vy;if(n.x<0)n.x=1;if(n.x>1)n.x=0;if(n.y<0)n.y=1;if(n.y>1)n.y=0}n.px=n.x*W+Math.sin(t*.0005+n.q)*4+p.x*12;n.py=n.y*H+Math.cos(t*.0004+n.q)*3+p.y*9});
-for(let i=0;i<pts.length;i++)for(let j=i+1;j<Math.min(pts.length,i+8);j++){let A=pts[i],B=pts[j],d=Math.hypot(A.px-B.px,A.py-B.py);if(d<135){x.strokeStyle=`rgba(255,58,68,${(1-d/135)*.09*a})`;x.lineWidth=.55;x.beginPath();x.moveTo(A.px,A.py);m.current==="research"?x.quadraticCurveTo((A.px+B.px)/2+12,(A.py+B.py)/2-8,B.px,B.py):x.lineTo(B.px,B.py);x.stroke()}}
-pts.forEach((n,i)=>{x.fillStyle=i%11?"rgba(235,240,245,.22)":"rgba(255,66,77,.62)";x.beginPath();x.arc(n.px,n.py,i%11?.8:1.6,0,Math.PI*2);x.fill()});raf=requestAnimationFrame(draw)};
-resize();addEventListener("resize",resize);addEventListener("pointermove",move,{passive:true});raf=requestAnimationFrame(draw);return()=>{cancelAnimationFrame(raf);removeEventListener("resize",resize);removeEventListener("pointermove",move)}},[]);
-return <canvas ref={ref} className="computational-field" aria-hidden="true"/>}
+function Icon({ type, size = 22 }) {
+  const icons = {
+    about: <><circle cx="12" cy="8" r="3"/><path d="M5.5 20c.7-4.2 3-6.2 6.5-6.2s5.8 2 6.5 6.2"/></>,
+    journey: <><path d="M4 18c2.2-5.6 5.2-8.3 9-8.3h6"/><path d="m16 6 3 3.7-3 3.7"/><circle cx="5" cy="18" r="1.5"/></>,
+    projects: <><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></>,
+    research: <><path d="M9 3h6M10 3v5l-5.5 9.2A2.5 2.5 0 0 0 6.7 21h10.6a2.5 2.5 0 0 0 2.2-3.8L14 8V3"/><path d="M8 15h8"/></>,
+    evidence: <><path d="M12 3 19 6v5c0 4.5-2.6 8-7 10-4.4-2-7-5.5-7-10V6l7-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></>,
+    tower: <><path d="M4 19h16M7 16V8h4v8M13 16V4h4v12"/><path d="M8 5h2M14 8h2"/></>,
+    stack: <><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4M4 17l8 4 8-4"/></>,
+    contact: <><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></>,
+    github: <path d="M9 19c-4 1.2-4-2-5.5-2.5M14.5 21v-3.1c0-.9.1-1.5-.4-2.1 3-.3 6.2-1.5 6.2-6.7A5.2 5.2 0 0 0 19 5.5 4.8 4.8 0 0 0 18.9 2S17.8 1.7 15 3.4a12.2 12.2 0 0 0-6 0C6.2 1.7 5.1 2 5.1 2A4.8 4.8 0 0 0 5 5.5a5.2 5.2 0 0 0-1.3 3.6c0 5.2 3.2 6.4 6.2 6.7-.4.5-.6 1.2-.5 2.1V21"/>,
+    arrow: <><path d="M5 12h14M14 7l5 5-5 5"/></>,
+  };
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.55" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{icons[type] || icons.projects}</svg>;
+}
 
-function App(){let raw=pageFor(location.pathname),[page,setPage]=useState(raw==="core"?"home":raw),[entered,setEntered]=useState(()=>sessionStorage.getItem("aixion-entered-v2")==="1"),[hover,setHover]=useState(null),[portal,setPortal]=useState(null),[deep,setDeep]=useState(raw==="core"),[menu,setMenu]=useState(false);
-useEffect(()=>{let pop=()=>{let r=pageFor(location.pathname);if(r==="core"){setDeep(true);setPage("home");return}setDeep(false);setPortal({label:r==="home"?"HOME":META[r]?.label||r,back:r==="home",x:innerWidth/2,y:innerHeight/2});setTimeout(()=>setPage(r),160);setTimeout(()=>setPortal(null),1050)};addEventListener("popstate",pop);return()=>removeEventListener("popstate",pop)},[]);
-useEffect(()=>{document.title=deep?"AIXION CORE — AIXION LAB":page==="home"?"AIXION LAB — Engineering systems that survive reality":`${page==="tradebot"?"TradeBot":META[page]?.label||page} — AIXION LAB`;if(!deep)scrollTo(0,0)},[page,deep]);
-let nav=(k,el)=>{if(k===page&&!deep)return;if(k==="core"){history.pushState({},"","/core");setDeep(true);return}let o=origin(el),back=k==="home";setMenu(false);setDeep(false);setPortal({label:back?"HOME":META[k]?.label||(k==="tradebot"?"TRADEBOT":k),back,...o});setTimeout(()=>{history.pushState({},"",pathFor(k));setPage(k)},back?420:610);setTimeout(()=>setPortal(null),back?1120:1380)};
-let exitDeep=()=>{setDeep(false);history.replaceState({},"","/");setPage("home")};
-return <div className={`app page-${page} ${deep?"is-deep":""}`}><Field mode={deep?"deep":hover||page} hot={!!hover||!!portal}/>
-{!entered?<Entry enter={()=>{sessionStorage.setItem("aixion-entered-v2","1");setEntered(true)}}/>:deep?<Deep exit={exitDeep}/>:<><Header page={page} nav={nav} menu={menu} setMenu={setMenu}/>{page==="home"?<Home hover={hover} setHover={setHover} nav={nav}/>:page==="tradebot"?<TradeBot nav={nav}/>:<World page={page} nav={nav}/>}</>}
-{portal&&<Portal p={portal}/>}</div>}
+function Mark({ className = "" }) {
+  return <span className={`brand-mark ${className}`} aria-hidden="true"><img src={BRAND} alt="" /></span>;
+}
 
-function Entry({enter}){return <main className="entry-screen"><button className="entry-core" onClick={enter} aria-label="Enter Aixion Lab"><i/><i/><i/><Mark className="entry-mark"/><b/></button></main>}
+function clickOrigin(element) {
+  if (!element) return { x: innerWidth / 2, y: innerHeight / 2 };
+  const rect = element.getBoundingClientRect();
+  return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+}
 
-function Header({page,nav,menu,setMenu}){return <header className="global-header"><button className="brand-button" onClick={e=>nav("home",e.currentTarget)} aria-label="Aixion Lab home"><img src={BRAND} alt="AIXION LAB"/></button>
-<nav className="desktop-nav"><button className={`home-morph ${page==="home"?"home":"mark"}`} onClick={e=>nav("home",e.currentTarget)}><span>Home</span><Mark/></button>{["projects","research","evidence","contact"].map(k=><button key={k} className={page===k?"active":""} onClick={e=>nav(k,e.currentTarget)}>{META[k].label}</button>)}</nav>
-<div className="header-actions"><a href={GITHUB} target="_blank" rel="noreferrer" className="icon-button" title="GitHub — Selected engineering work" aria-label="GitHub — Selected engineering work"><Icon type="github"/></a><button className="menu-button" onClick={()=>setMenu(!menu)} aria-label="Open navigation"><span/><span/></button></div>
-{menu&&<div className="mobile-menu">{["home",...NODES.map(n=>n.key)].map(k=><button key={k} onClick={e=>nav(k,e.currentTarget)}>{k==="home"?"Home":META[k].label}</button>)}<a href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github"/> GitHub</a></div>}</header>}
+function ComputationalField({ mode = "home", active = null, transitioning = false }) {
+  const ref = useRef(null);
+  const modeRef = useRef(mode);
+  const activeRef = useRef(active);
+  const transitionRef = useRef(transitioning);
+  useEffect(() => { modeRef.current = mode; }, [mode]);
+  useEffect(() => { activeRef.current = active; }, [active]);
+  useEffect(() => { transitionRef.current = transitioning; }, [transitioning]);
 
-function Home({hover,setHover,nav}){let [pulse,setPulse]=useState(false),timer=useRef();let deep=()=>nav("core");
-return <main className={`home-orbit ${hover?"focused":""}`}><section className="orbit-stage"><i className="ambient a"/><i className="ambient b"/><i className="ambient c"/>
-<div className="orbital-frame">{NODES.map(n=><React.Fragment key={n.key}><span className={`spoke ${hover===n.key?"active":""}`} style={{"--a":`${n.angle}deg`}}><i/></span><div className="node-anchor" style={{"--a":`${n.angle}deg`}}><div className="angle-cancel"><div className="orbit-cancel"><button className={`hub-node ${hover===n.key?"active":""}`} onMouseEnter={()=>setHover(n.key)} onMouseLeave={()=>setHover(null)} onFocus={()=>setHover(n.key)} onBlur={()=>setHover(null)} onClick={e=>nav(n.key,e.currentTarget)}><em>{n.n}</em><Icon type={n.key}/><strong>{n.label}</strong><small>{n.micro}</small><b/></button></div></div></div></React.Fragment>)}</div>
-<button className={`core-node ${pulse?"pulse":""}`} onClick={()=>{setPulse(true);setTimeout(()=>setPulse(false),500)}} onDoubleClick={deep} onPointerDown={()=>timer.current=setTimeout(deep,700)} onPointerUp={()=>clearTimeout(timer.current)} onPointerLeave={()=>clearTimeout(timer.current)} onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();deep()}}} aria-label="Aixion Core. Double click, long press, or press Enter to enter neural space."><i/><i/><i/><Mark className="core-mark"/><span>AIXION CORE</span></button>
-</section><div className="idle-cue">EXPLORE THE SYSTEM</div></main>}
+  useEffect(() => {
+    const canvas = ref.current;
+    const ctx = canvas.getContext("2d");
+    let width = 0, height = 0, dpr = 1, raf = 0, last = performance.now();
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const points = Array.from({ length: 118 }, (_, i) => ({
+      x: ((i * 71 + 13) % 113) / 113,
+      y: ((i * 47 + 19) % 109) / 109,
+      phase: i * 0.63,
+      speed: 0.55 + (i % 9) * 0.07,
+      size: i % 13 === 0 ? 1.7 : 0.85,
+      hot: i % 13 === 0,
+    }));
+    const packets = Array.from({ length: 14 }, (_, i) => ({ a: i * 7 % points.length, b: (i * 7 + 5 + (i % 4)) % points.length, t: (i * 0.17) % 1, speed: 0.035 + (i % 5) * 0.009 }));
 
-function Portal({p}){return <div className={`portal ${p.back?"back":""}`} style={{"--x":`${p.x}px`,"--y":`${p.y}px`}} aria-hidden="true"><div className="portal-origin"><i/><i/><i/></div><div className="tunnel">{Array.from({length:18},(_,i)=><i key={i} style={{"--i":i}}/>)}</div><strong>{p.label}</strong><b/></div>}
+    const resize = () => {
+      dpr = Math.min(devicePixelRatio || 1, 1.55);
+      width = innerWidth; height = innerHeight;
+      canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
+      canvas.style.width = `${width}px`; canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    const move = (event) => { pointer.tx = event.clientX / Math.max(width, 1) - 0.5; pointer.ty = event.clientY / Math.max(height, 1) - 0.5; };
+    const draw = (now) => {
+      const dt = Math.min((now - last) / 1000, 0.035); last = now;
+      pointer.x += (pointer.tx - pointer.x) * 0.045; pointer.y += (pointer.ty - pointer.y) * 0.045;
+      ctx.clearRect(0, 0, width, height);
+      const activeBoost = activeRef.current ? 1.45 : 1;
+      const transitionBoost = transitionRef.current ? 1.8 : 1;
+      const modeBoost = modeRef.current === "deep" ? 1.8 : modeRef.current === "research" ? 1.2 : 1;
+      const energy = activeBoost * transitionBoost * modeBoost;
+      const glowX = width * (0.5 + pointer.x * 0.06), glowY = height * (0.48 + pointer.y * 0.05);
+      const gradient = ctx.createRadialGradient(glowX, glowY, 10, glowX, glowY, Math.max(width, height) * 0.68);
+      gradient.addColorStop(0, `rgba(255,52,65,${0.055 * energy})`);
+      gradient.addColorStop(0.35, "rgba(14,18,24,.055)"); gradient.addColorStop(1, "rgba(2,3,5,0)");
+      ctx.fillStyle = gradient; ctx.fillRect(0, 0, width, height);
+      const time = now * 0.001;
+      points.forEach((point, i) => {
+        const flowX = Math.sin(time * 0.32 * point.speed + point.phase) * 0.012;
+        const flowY = Math.cos(time * 0.27 * point.speed + point.phase * 1.3) * 0.009;
+        const spiral = modeRef.current === "research" ? Math.sin(time * 0.7 + i * 0.13) * 0.007 : 0;
+        point.px = (point.x + flowX + spiral) * width + pointer.x * (18 + (i % 5) * 2);
+        point.py = (point.y + flowY) * height + pointer.y * (13 + (i % 7));
+      });
+      for (let i = 0; i < points.length; i++) {
+        const a = points[i];
+        for (let j = i + 1; j < Math.min(points.length, i + 11); j++) {
+          const b = points[j];
+          const distance = Math.hypot(a.px - b.px, a.py - b.py);
+          if (distance > 155) continue;
+          ctx.strokeStyle = `rgba(255,70,80,${(1 - distance / 155) * 0.115 * energy})`; ctx.lineWidth = 0.55;
+          ctx.beginPath(); ctx.moveTo(a.px, a.py);
+          if (modeRef.current === "research") ctx.quadraticCurveTo((a.px + b.px) / 2 + Math.sin(time + i) * 18, (a.py + b.py) / 2 + Math.cos(time + j) * 12, b.px, b.py);
+          else ctx.lineTo(b.px, b.py);
+          ctx.stroke();
+        }
+      }
+      packets.forEach((packet) => {
+        if (!reduced) packet.t = (packet.t + packet.speed * dt * (transitionRef.current ? 4.2 : 1)) % 1;
+        const a = points[packet.a], b = points[packet.b];
+        const x = a.px + (b.px - a.px) * packet.t, y = a.py + (b.py - a.py) * packet.t;
+        ctx.fillStyle = `rgba(255,90,98,${0.42 * energy})`; ctx.beginPath(); ctx.arc(x, y, transitionRef.current ? 2.3 : 1.35, 0, Math.PI * 2); ctx.fill();
+      });
+      points.forEach((point) => { ctx.fillStyle = point.hot ? `rgba(255,80,90,${0.72 * energy})` : "rgba(232,238,246,.27)"; ctx.beginPath(); ctx.arc(point.px, point.py, point.size, 0, Math.PI * 2); ctx.fill(); });
+      raf = requestAnimationFrame(draw);
+    };
+    resize(); addEventListener("resize", resize); addEventListener("pointermove", move, { passive: true }); raf = requestAnimationFrame(draw);
+    return () => { cancelAnimationFrame(raf); removeEventListener("resize", resize); removeEventListener("pointermove", move); };
+  }, []);
+  return <canvas ref={ref} className="computational-field" aria-hidden="true" />;
+}
 
-const DATA={
-about:["ABOUT AIXION","Build ambitious systems. Prove what they actually do.","Aixion Lab is an engineering workspace for applied AI, intelligent automation, market intelligence, quality systems, and evidence-driven experimentation.","ENGINEER → CHALLENGE → PROVE"],
-journey:["ENGINEERING JOURNEY","The work changed. The standard did not.","The path moved from quality engineering into automation, systems reliability, applied AI, and governed research — but the central question stayed the same: what breaks, and how do we know?","QUALITY → AUTOMATION → SYSTEMS → AI → EVIDENCE"],
-projects:["PROJECTS","Systems, not screenshots.","Projects are presented through the problem, architecture, engineering decisions, failure modes, validation strategy, and evidence — not through a superficial feature checklist.","PROBLEM → ARCHITECTURE → FAILURE → EVIDENCE"],
-research:["RESEARCH","Attractive ideas go here to be challenged.","Structured experiments, replay, adversarial checks, and evidence gates separate plausible narratives from behavior that survives testing.","QUESTION → METHOD → EVIDENCE → NEXT GATE"],
-evidence:["EVIDENCE","Evidence before confidence.","A passing demo is not the same as a validated system. This layer shows how projects are tested, challenged, observed, and promoted.","VALIDATION → GOVERNANCE → RELIABILITY → REVIEW"],
-tower:["CONTROL TOWER","See the system without exposing the system.","A sanitized operational view across research, data, validation, and platform health — designed to demonstrate observability without publishing private controls.","SANITIZED PUBLIC OPERATIONS VIEW"],
-stack:["STACK","Tools matter less than the engineering decisions behind them.","The stack spans quality engineering, automation, data systems, applied AI, research infrastructure, and product development.","TECHNOLOGY BY ENGINEERING PURPOSE"],
-contact:["CONTACT","If the work is difficult, interesting, and worth proving — I want to hear about it.","Interested in engineering roles and collaborations across AI/ML testing, quality engineering, automation, applied AI, data systems, research tooling, and reliability-minded product work.","START A CONVERSATION"]};
+function App() {
+  const raw = pageFor(location.pathname);
+  const [page, setPage] = useState(raw === "core" ? "home" : raw);
+  const [entered, setEntered] = useState(() => sessionStorage.getItem("aixion-entered-v3") === "1");
+  const [hovered, setHovered] = useState(null);
+  const [portal, setPortal] = useState(null);
+  const [deep, setDeep] = useState(raw === "core");
+  const [menu, setMenu] = useState(false);
 
-function World({page,nav}){let d=DATA[page]||DATA.about;return <main className={`world-page world-${page}`}><section className="world-hero"><div>{META[page]?.n||"00"}</div><p>{d[0]}</p><h1>{d[1]}</h1><article>{d[2]}</article><small>{d[3]}</small></section><section className="world-content">{page==="about"?<About nav={nav}/>:page==="journey"?<Journey/>:page==="projects"?<Projects nav={nav}/>:page==="research"?<Research/>:page==="evidence"?<Evidence/>:page==="tower"?<Tower/>:page==="stack"?<Stack/>:<Contact/>}</section></main>}
+  useEffect(() => {
+    const pop = () => { const next = pageFor(location.pathname); if (next === "core") { setDeep(true); setPage("home"); return; } setDeep(false); setPage(next); };
+    addEventListener("popstate", pop); return () => removeEventListener("popstate", pop);
+  }, []);
+  useEffect(() => {
+    document.title = deep ? "AIXION CORE — AIXION LAB" : page === "home" ? "AIXION LAB — Engineering systems that survive reality" : `${page === "tradebot" ? "TradeBot" : META[page]?.label || page} — AIXION LAB`;
+    if (!deep) scrollTo(0, 0);
+  }, [page, deep]);
 
-function About({nav}){let x=[["Engineer","Build systems with explicit boundaries, observable behavior, and clear operational ownership."],["Challenge","Treat every strategy, model, and architectural assumption as something that must survive adversarial testing."],["Prove","Separate promising behavior from validated behavior. Evidence comes before promotion."]];return <><div className="principles">{x.map(([a,b],i)=><article key={a}><small>0{i+1}</small><h2>{a}</h2><p>{b}</p></article>)}</div><blockquote>“Quality engineering taught me to look for failure. Applied AI and systems work taught me to design for it.”</blockquote><button className="text-action" onClick={e=>nav("evidence",e.currentTarget)}>See how claims earn confidence <Icon type="arrow"/></button></>}
-function Journey(){let x=[["Quality Foundations","Failure became information: reproduce it, isolate it, explain it, and prevent silent recurrence."],["Automation","Moved repetitive verification into reusable systems and started thinking in state, coverage, and maintainability."],["Systems & Reliability","Expanded from test cases into feeds, runtimes, observability, failure boundaries, and operational behavior."],["Applied AI","Used machine learning and agent-assisted workflows while keeping evaluation, review, and human authority explicit."],["Market Intelligence","Built replay, options research, real-time data workflows, and hypothesis testing around difficult market behavior."],["Governed Engineering","Made exact-version authority, evidence capture, fail-closed gates, and reproducibility first-class concerns."],["Aixion Lab","Bringing projects, research, evidence, and the engineering journey together as one public system."]];return <div className="journey-stream">{x.map(([a,b],i)=><article key={a}><span>0{i+1}</span><div><h2>{a}</h2><p>{b}</p></div></article>)}</div>}
-function Projects({nav}){return <><article className="flagship"><small>FLAGSHIP / GOVERNED MARKET INTELLIGENCE</small><h2>TradeBot</h2><p>A governed market-intelligence and research platform for Indian index-options workflows, built around real-time data, replay, microstructure research, observability, validation, and explicit authority boundaries.</p><div>{["REAL-TIME DATA","RESEARCH","REPLAY","VALIDATION","GOVERNANCE","OBSERVABILITY"].map(x=><span key={x}>{x}</span>)}</div><button className="text-action" onClick={e=>nav("tradebot",e.currentTarget)}>Open engineering case study <Icon type="arrow"/></button></article><div className="project-stream">{[["Autonomous Research Loop","GOVERNANCE","Bounded hypotheses, validation evidence, independent review, and explicit promotion decisions."],["Aixion Control Tower","OPERATIONS","Project health, research state, evidence, and operational context without private execution controls."],["Evidence Kernel","VALIDATION","Claims connected to tests, exact versions, manifests, failures, reruns, and reviewable evidence."],["Market Microstructure Research","RESEARCH","Order flow, options depth, auction behavior, and short-horizon market mechanics."]].map(([a,b,c],i)=><article key={a}><span>0{i+2}</span><div><small>{b}</small><h3>{a}</h3><p>{c}</p></div></article>)}</div></>}
-function Research(){return <div className="research-branches">{[["Market microstructure","ACTIVE","Order flow, bid/ask behavior, options depth, and market mechanics indicators usually hide."],["Opening session","VALIDATING","Outcome-blind studies of early-session structure, context, constituents, futures, and recurrence."],["Closing Auction Session","OBSERVING","Auction behavior, constituent breadth, futures convergence, and options response."],["Options behavior","ACTIVE","Replay and microstructure analysis around strikes, IV, Greeks, liquidity, and short-horizon response."],["Regime & context","EXPLORING","Separating behavior by market conditions instead of assuming one rule works everywhere."],["Autonomous discovery","ENGINEERING","Bounded agents that propose and test hypotheses without being allowed to manufacture evidence."]].map(([a,b,c])=><article key={a}><small>{b}</small><h2>{a}</h2><p>{c}</p><em>Question → method → evidence → next gate</em></article>)}</div>}
-function Evidence(){let g=[["Validation",["Focused tests","Integration tests","Adversarial cases","Replay","Deterministic reruns"]],["Governance",["Exact authority","Immutable candidates","Promotion gates","Read-only/live separation","Fail-closed outcomes"]],["Reliability",["Feed health","Freshness","Reconnect behavior","Runtime supervision","Persistence"]],["Review",["CI","Independent review","Evidence manifests","Regression controls","Change authority"]]];return <div className="verification">{g.map(([a,b],i)=><article key={a}><small>0{i+1}</small><h2>{a}</h2><div>{b.map(x=><span key={x}>{x}</span>)}</div></article>)}<blockquote>“If a system cannot explain what it ran, what data it used, what changed, and why the result should be trusted, it is not finished.”</blockquote></div>}
-function Tower(){return <><div className="tower-note"><strong>DEMONSTRATION DATA</strong><span>This public surface demonstrates the operational model. It does not represent unrestricted production controls.</span></div><div className="telemetry">{[["PROJECT STATE","TradeBot","Observation / research"],["EVIDENCE GATES","Governed","Claims require explicit proof"],["RUNTIME AUTHORITY","Read-only","Public-safe representation"],["RESEARCH LANES","Active","Multiple bounded investigations"],["CI / BUILD","Public","Repository status only"],["EVENT STREAM","Sanitized","No credentials or private controls"]].map(([a,b,c],i)=><article key={a}><i style={{"--d":`${i*.3}s`}}/><small>{a}</small><h2>{b}</h2><p>{c}</p></article>)}</div></>}
-function Stack(){return <div className="stack-layers">{[["Quality & Automation",["Java","Selenium","Appium","Jira / Xray","Regression engineering","Integration testing"]],["Research & Applied AI",["Python","XGBoost","Time-series analysis","Experimentation","Replay tooling"]],["Data & Runtime",["WebSockets","Real-time feeds","Parquet","Event processing","Runtime supervision","Observability"]],["Engineering Workflow",["Git","GitHub","CI","pytest","Exact-version authority","Agent-assisted engineering"]],["Web / Product",["React","Vite","JavaScript","CSS","Canvas","Interaction engineering"]]].map(([a,b],i)=><article key={a} style={{"--i":i}}><h2>{a}</h2><div>{b.map(x=><span key={x}>{x}</span>)}</div></article>)}</div>}
-function Contact(){return <div className="contact-space"><div><small>AREAS OF INTEREST</small><p>AI/ML testing · quality engineering · automation · applied AI · data systems · research tooling · reliability engineering · AI systems engineering</p><a href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github"/> GitHub</a></div><form onSubmit={e=>e.preventDefault()}><label>Name<input placeholder="Your name"/></label><label>Email<input type="email" placeholder="you@company.com"/></label><label>Message<textarea rows="5" placeholder="What are you working on?"/></label><button>Contact integration pending</button></form></div>}
+  const navigate = (key, element) => {
+    if (key === "core") { history.pushState({}, "", "/core"); setDeep(true); return; }
+    if (key === page && !deep) return;
+    const start = clickOrigin(element), back = key === "home";
+    setMenu(false); setDeep(false); setPortal({ key, label: back ? "HOME" : META[key]?.label || (key === "tradebot" ? "TRADEBOT" : key), back, ...start });
+    window.setTimeout(() => { history.pushState({}, "", pathFor(key)); setPage(key); }, back ? 410 : 470);
+    window.setTimeout(() => setPortal(null), back ? 1120 : 1260);
+  };
+  const exitDeep = () => { setDeep(false); history.replaceState({}, "", "/"); setPage("home"); };
 
-function TradeBot({nav}){return <main className="world-page tradebot"><section className="tradebot-hero"><button onClick={e=>nav("projects",e.currentTarget)}>Projects / TradeBot</button><p>FLAGSHIP ENGINEERING CASE STUDY</p><h1>TradeBot — engineering market intelligence under real operational constraints.</h1><article>A governed market-intelligence and research platform for Indian index-options workflows. The engineering focus is not simply signal generation; it is knowing what data, runtime state, validation evidence, and authority produced a result.</article><small>PUBLIC ARCHITECTURE · PRIVATE STRATEGY LOGIC · NO CREDENTIALS · NO EXECUTION SECRETS</small></section><section className="tradebot-topology">{[["DATA PLANE","Real-time market feeds, quote/depth ingestion, historical/replay datasets, time-aligned market snapshots, persistence and evidence capture."],["RESEARCH PLANE","Hypothesis evaluation, causal/replay analysis, option-chain and microstructure studies, regime/context analysis, validation and ablation."],["GOVERNANCE PLANE","Explicit authority boundaries, read-only observation modes, promotion gates, evidence manifests, deterministic runs, fail-closed behavior."],["OBSERVABILITY PLANE","Feed health, freshness, reconnect behavior, runtime events, decision traces, session evidence, and process supervision."]].map(([a,b],i)=><article key={a}><small>0{i+1}</small><h2>{a}</h2><p>{b}</p></article>)}</section><section className="engineering-story"><p>The difficult part was never drawing another indicator on a chart.</p><h2>The difficult part was building enough engineering discipline to distinguish data failure from strategy failure, replay artifacts from live behavior, and promising hypotheses from evidence that could actually support a claim.</h2><div>{["SYMPTOM","ROOT CAUSE","GUARDRAIL","REPRODUCTION","EVIDENCE"].map((x,i)=><React.Fragment key={x}><span>{x}</span>{i<4&&<i/>}</React.Fragment>)}</div></section><section className="privacy"><h2>What stays private</h2><div>{["Broker credentials","API tokens","Private endpoints","Proprietary signal thresholds","Active entry/exit logic","Production write controls","Sensitive datasets","Private source code"].map(x=><span key={x}>{x}</span>)}</div></section></main>}
+  return <div className={`app page-${page} ${portal ? "is-transitioning" : ""} ${deep ? "is-deep" : ""}`}>
+    <ComputationalField mode={deep ? "deep" : hovered || page} active={hovered} transitioning={!!portal} />
+    {!entered ? <Entry enter={() => { sessionStorage.setItem("aixion-entered-v3", "1"); setEntered(true); }} /> : deep ? <DeepSpace exit={exitDeep} /> : <><Header page={page} navigate={navigate} menu={menu} setMenu={setMenu} />{page === "home" ? <Home hovered={hovered} setHovered={setHovered} navigate={navigate} /> : page === "tradebot" ? <TradeBot navigate={navigate} /> : <World page={page} navigate={navigate} />}</>}
+    {portal && <RipplePortal portal={portal} />}
+  </div>;
+}
 
-function Deep({exit}){const ref=useRef();useEffect(()=>{let c=ref.current,x=c.getContext("2d"),raf,W,H,D=1,p={x:0,y:0},reduced=matchMedia("(prefers-reduced-motion: reduce)").matches,depth=1500,pts=Array.from({length:reduced?70:190},(_,i)=>({x:((i*83)%211-105)*8,y:((i*47)%167-83)*7,z:40+(i*97)%1400,v:.7+(i%9)*.14,g:i%8}));
-let resize=()=>{D=Math.min(devicePixelRatio||1,1.55);W=innerWidth;H=innerHeight;c.width=W*D;c.height=H*D;c.style.width=W+"px";c.style.height=H+"px";x.setTransform(D,0,0,D,0,0)},move=e=>{p.x=(e.clientX/W-.5)*90;p.y=(e.clientY/H-.5)*70},proj=a=>{let s=520/Math.max(a.z,1);return{x:W/2+(a.x+p.x*a.z/depth)*s,y:H/2+(a.y+p.y*a.z/depth)*s,s}};
-let draw=()=>{x.fillStyle="rgba(1,2,4,.25)";x.fillRect(0,0,W,H);pts.forEach(a=>{if(!reduced){a.z-=a.v*2.4;if(a.z<20){a.z=depth;a.x=(Math.random()-.5)*1700;a.y=(Math.random()-.5)*1100}}});let q=pts.map(proj);for(let i=0;i<pts.length;i++)for(let j=i+1;j<Math.min(pts.length,i+7);j++)if(pts[i].g===pts[j].g){let d=Math.hypot(q[i].x-q[j].x,q[i].y-q[j].y);if(d<145){x.strokeStyle=`rgba(255,55,66,${(1-d/145)*.18*Math.min(q[i].s*3,1)})`;x.lineWidth=.6;x.beginPath();x.moveTo(q[i].x,q[i].y);x.lineTo(q[j].x,q[j].y);x.stroke()}}q.forEach((a,i)=>{x.fillStyle=i%11?"rgba(228,236,245,.5)":"rgba(255,65,76,.9)";x.beginPath();x.arc(a.x,a.y,Math.min(3,Math.max(.35,a.s*(i%11?1.2:2.3))),0,Math.PI*2);x.fill()});raf=requestAnimationFrame(draw)};resize();x.fillStyle="#010204";x.fillRect(0,0,W,H);addEventListener("resize",resize);addEventListener("pointermove",move,{passive:true});raf=requestAnimationFrame(draw);let key=e=>{if(e.key==="Escape"||e.key==="Enter")exit()};addEventListener("keydown",key);return()=>{cancelAnimationFrame(raf);removeEventListener("resize",resize);removeEventListener("pointermove",move);removeEventListener("keydown",key)}},[exit]);
-return <main className="deep-space" onClick={exit} role="button" tabIndex="0" aria-label="Aixion neural data space. Click or press Escape to return home."><canvas ref={ref}/><div/><Mark/><small>CLICK ANYWHERE OR PRESS ESC TO RETURN</small></main>}
+function Entry({ enter }) {
+  return <main className="entry-screen"><button className="entry-core" onClick={enter} aria-label="Enter Aixion Lab"><span className="entry-ring ring-a"/><span className="entry-ring ring-b"/><span className="entry-ring ring-c"/><Mark className="entry-mark"/><span className="entry-aura"/></button></main>;
+}
+
+function Header({ page, navigate, menu, setMenu }) {
+  return <header className="global-header">
+    <button className="brand-button" onClick={(e) => navigate("home", e.currentTarget)} aria-label="Aixion Lab home"><img src={BRAND} alt="AIXION LAB"/></button>
+    <nav className="desktop-nav" aria-label="Primary navigation"><button className={`home-morph ${page === "home" ? "home" : "mark"}`} onClick={(e) => navigate("home", e.currentTarget)} aria-label="Home"><span className="home-word">Home</span><Mark className="home-mark"/></button>{["projects", "research", "evidence", "contact"].map((key) => <button key={key} className={page === key ? "active" : ""} onClick={(e) => navigate(key, e.currentTarget)}>{META[key].label}</button>)}</nav>
+    <div className="header-actions"><a href={GITHUB} target="_blank" rel="noreferrer" className="icon-button" title="GitHub — Selected engineering work" aria-label="GitHub — Selected engineering work"><Icon type="github"/></a><button className="menu-button" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-label="Open navigation"><span/><span/></button></div>
+    {menu && <div className="mobile-menu">{["home", ...NODES.map((node) => node.key)].map((key) => <button key={key} onClick={(e) => navigate(key, e.currentTarget)}>{key === "home" ? "Home" : META[key].label}</button>)}<a href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github"/> GitHub</a></div>}
+  </header>;
+}
+
+function Home({ hovered, setHovered, navigate }) {
+  const [pulse, setPulse] = useState(false);
+  const pressTimer = useRef(null);
+  const enterDeep = () => navigate("core");
+  return <main className={`home-orbit ${hovered ? "focused" : ""}`}><section className="orbit-stage"><span className="ambient-ring ambient-a"/><span className="ambient-ring ambient-b"/><span className="ambient-ring ambient-c"/>
+    <div className="orbital-frame">{NODES.map((node) => <React.Fragment key={node.key}><span className={`spoke ${hovered === node.key ? "active" : ""}`} style={{ "--angle": `${node.angle}deg` }}><i/></span><div className="node-anchor" style={{ "--angle": `${node.angle}deg` }}><div className="angle-cancel"><div className="orbit-cancel"><button className={`hub-node ${hovered === node.key ? "active" : ""}`} onMouseEnter={() => setHovered(node.key)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(node.key)} onBlur={() => setHovered(null)} onClick={(e) => navigate(node.key, e.currentTarget)} aria-label={`Open ${node.label}`}><Icon type={node.key} size={24}/><strong>{node.label}</strong><small>{node.micro}</small><span className="node-aura"/></button></div></div></div></React.Fragment>)}</div>
+    <button className={`core-node ${pulse ? "pulse" : ""}`} onClick={() => { setPulse(true); setTimeout(() => setPulse(false), 520); }} onDoubleClick={enterDeep} onPointerDown={() => { pressTimer.current = setTimeout(enterDeep, 720); }} onPointerUp={() => clearTimeout(pressTimer.current)} onPointerLeave={() => clearTimeout(pressTimer.current)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); enterDeep(); } }} aria-label="Aixion Core. Double click, long press, or press Enter to enter neural space."><span className="core-ring core-ring-a"/><span className="core-ring core-ring-b"/><span className="core-ring core-ring-c"/><Mark className="core-mark"/></button>
+  </section><div className="idle-cue">EXPLORE THE SYSTEM</div></main>;
+}
+
+function RipplePortal({ portal }) {
+  return <div className={`ripple-portal ${portal.back ? "back" : ""}`} style={{ "--x": `${portal.x}px`, "--y": `${portal.y}px` }} aria-hidden="true"><span className="ripple ripple-a"/><span className="ripple ripple-b"/><span className="ripple ripple-c"/><span className="portal-bloom"/><span className="portal-veil"/><strong>{portal.label}</strong></div>;
+}
+
+const PAGE_DATA = {
+  about: { eyebrow: "ABOUT AIXION", title: "Build ambitious systems. Prove what they actually do.", intro: "Aixion Lab is an engineering workspace for applied AI, intelligent automation, market intelligence, quality systems, and evidence-driven experimentation.", signal: "ENGINEER → CHALLENGE → PROVE" },
+  journey: { eyebrow: "ENGINEERING JOURNEY", title: "The work changed. The standard did not.", intro: "The path moved from quality engineering into automation, systems reliability, applied AI, and governed research — but the central question stayed the same: what breaks, and how do we know?", signal: "QUALITY → AUTOMATION → SYSTEMS → AI → EVIDENCE" },
+  projects: { eyebrow: "PROJECTS", title: "Systems, not screenshots.", intro: "Projects are presented through the problem, architecture, engineering decisions, failure modes, validation strategy, and evidence — not through a superficial feature checklist.", signal: "PROBLEM → ARCHITECTURE → FAILURE → EVIDENCE" },
+  research: { eyebrow: "RESEARCH", title: "Attractive ideas go here to be challenged.", intro: "Structured experiments, replay, adversarial checks, and evidence gates separate plausible narratives from behavior that survives testing. Unsupported results stay visible.", signal: "QUESTION → METHOD → EVIDENCE → NEXT GATE" },
+  evidence: { eyebrow: "EVIDENCE", title: "Evidence before confidence.", intro: "A passing demo is not a validated system. Claims become stronger only when tests, runtime authority, reliability evidence, and review can support them.", signal: "VALIDATE → GOVERN → OBSERVE → REVIEW" },
+  tower: { eyebrow: "CONTROL TOWER", title: "See the system without exposing the system.", intro: "A public-safe operational view across research, data, validation, and platform health. Demonstration and sanitized states are labeled explicitly; no fake live status.", signal: "DEMONSTRATION DATA · PUBLIC-SAFE VIEW" },
+  stack: { eyebrow: "STACK", title: "Tools matter less than the engineering decisions behind them.", intro: "The stack spans quality engineering, automation, data systems, applied AI, research infrastructure, runtime reliability, and product development.", signal: "TECHNOLOGY BY ENGINEERING PURPOSE" },
+  contact: { eyebrow: "CONTACT", title: "If the work is difficult, interesting, and worth proving — I want to hear about it.", intro: "Open to engineering roles and collaborations across AI/ML testing, quality engineering, automation, applied AI, data systems, research tooling, and reliability-minded product work.", signal: "BUILD · TEST · PROVE" },
+};
+
+function World({ page, navigate }) {
+  const data = PAGE_DATA[page] || PAGE_DATA.about;
+  return <main className={`world-shell world-${page}`}><div className="world-orbit" aria-hidden="true"><i/><i/><i/></div><section className="world-hero"><p className="eyebrow">{data.eyebrow}</p><h1>{data.title}</h1><p className="world-intro">{data.intro}</p><div className="signal-line">{data.signal}</div></section><section className="world-content">{renderWorld(page, navigate)}</section></main>;
+}
+
+function renderWorld(page, navigate) {
+  if (page === "about") return <AboutContent navigate={navigate}/>;
+  if (page === "journey") return <JourneyContent/>;
+  if (page === "projects") return <ProjectsContent navigate={navigate}/>;
+  if (page === "research") return <ResearchContent/>;
+  if (page === "evidence") return <EvidenceContent/>;
+  if (page === "tower") return <TowerContent/>;
+  if (page === "stack") return <StackContent/>;
+  return <ContactContent/>;
+}
+
+function AboutContent({ navigate }) {
+  const items = [["Engineer", "Build systems with explicit boundaries, observable behavior, and clear operational ownership."], ["Challenge", "Treat strategies, models, and architectural assumptions as things that must survive adversarial testing."], ["Prove", "Separate promising behavior from validated behavior. Evidence comes before promotion."]];
+  return <><div className="editorial-grid">{items.map(([title, text]) => <article key={title}><span>{title}</span><p>{text}</p></article>)}</div><button className="text-action" onClick={(e) => navigate("evidence", e.currentTarget)}>See the evidence system <Icon type="arrow" size={18}/></button></>;
+}
+
+function JourneyContent() {
+  const steps = [["Quality Foundations", "Failure became information: reproduce it, isolate it, explain it, prevent it from silently returning."], ["Automation", "Moved repetitive verification into reusable systems and started thinking in state, coverage, and maintainability."], ["Systems & Reliability", "Expanded from test cases into feeds, runtimes, observability, failure boundaries, and operational behavior."], ["Applied AI", "Used machine learning and agent-assisted workflows while keeping evaluation, review, and human authority explicit."], ["Market Intelligence", "Built replay, options research, real-time data workflows, and hypothesis testing around difficult market behavior."], ["Governed Engineering", "Made exact-version authority, evidence capture, fail-closed gates, and reproducibility first-class concerns."], ["Aixion Lab", "Bringing projects, research, evidence, and the engineering journey together as one public system."]];
+  return <div className="journey-stream">{steps.map(([title, text], index) => <article key={title}><i/><span>{String(index + 1).padStart(2, "0")}</span><div><h2>{title}</h2><p>{text}</p></div></article>)}</div>;
+}
+
+function ProjectsContent({ navigate }) {
+  const projects = [["Autonomous Research Loop", "Governed research", "A bounded system for turning hypotheses into tasks, validation evidence, independent review, and explicit promotion decisions."], ["Aixion Control Tower", "Operational context", "A public-safe surface for understanding project health, research state, evidence, and operational context without exposing private execution controls."], ["Evidence Kernel", "Validation system", "A proof-oriented layer connecting claims to tests, exact versions, manifests, failures, reruns, and reviewable engineering evidence."]];
+  return <div className="project-landscape"><button className="flagship-project" onClick={(e) => navigate("tradebot", e.currentTarget)}><span>FLAGSHIP ENGINEERING SYSTEM</span><h2>TradeBot</h2><p>A governed market-intelligence and research platform built around real-time data, replay, market microstructure, validation, observability, and operational boundaries.</p><b>Open engineering case study <Icon type="arrow" size={18}/></b></button><div className="project-rail">{projects.map(([title, tag, text]) => <article key={title}><span>{tag}</span><h3>{title}</h3><p>{text}</p></article>)}</div></div>;
+}
+
+function ResearchContent() {
+  const lanes = [["Market microstructure", "Order flow, bid/ask behavior, options depth, and mechanics that indicators usually hide.", "ACTIVE"], ["Opening session", "Outcome-blind studies of early-session structure, context, constituents, futures, and recurrence.", "VALIDATING"], ["Closing Auction Session", "Auction behavior, constituent breadth, futures convergence, and options response.", "OBSERVING"], ["Options behavior", "Replay and microstructure analysis around strikes, IV, Greeks, liquidity, and short-horizon response.", "ACTIVE"], ["Regime & context", "Separating signal behavior by market conditions instead of pretending one rule works everywhere.", "EXPLORING"], ["Autonomous discovery", "Bounded agents proposing and testing hypotheses without being allowed to manufacture evidence.", "ENGINEERING"]];
+  return <div className="research-stream">{lanes.map(([title, text, status]) => <article key={title}><span>{status}</span><h3>{title}</h3><p>{text}</p><i/></article>)}</div>;
+}
+
+function EvidenceContent() {
+  const groups = [["Validation", "Focused tests · integration · adversarial cases · replay · deterministic reruns"], ["Governance", "Explicit authority · immutable candidates · promotion gates · fail-closed outcomes"], ["Reliability", "Feed health · stale-data detection · reconnect behavior · runtime supervision"], ["Review", "CI · independent review · evidence manifests · regression control"]];
+  return <div className="evidence-lattice">{groups.map(([title, text], index) => <article key={title}><span>{title}</span><p>{text}</p><div className="evidence-path"><i/><i/><i/><i/></div><b>{index === 0 ? "TEST" : index === 1 ? "AUTHORITY" : index === 2 ? "RUNTIME" : "REVIEW"}</b></article>)}</div>;
+}
+
+function TowerContent() {
+  const rows = [["Project state", "Sanitized / public-safe"], ["Research lanes", "Active + validating"], ["Evidence gates", "Demonstration data"], ["Runtime context", "No private controls exposed"]];
+  return <div className="tower-field"><div className="tower-label">DEMONSTRATION DATA</div>{rows.map(([label, value]) => <div className="tower-row" key={label}><span>{label}</span><strong>{value}</strong><i/></div>)}</div>;
+}
+
+function StackContent() {
+  const groups = [["Quality & Automation", "Java · Selenium · Appium · Jira · Xray · regression and integration engineering"], ["Research & Applied AI", "Python · XGBoost · time-series analysis · experimentation · replay tooling"], ["Data & Runtime", "WebSockets · market feeds · Parquet · event processing · supervision · observability"], ["Engineering Workflow", "Git · GitHub · CI · pytest · exact-version authority · agent-assisted development"], ["Web & Product", "React · Vite · JavaScript · CSS · Canvas · interaction engineering"]];
+  return <div className="stack-layers">{groups.map(([title, text], index) => <article key={title} style={{ "--depth": index }}><span>{title}</span><p>{text}</p></article>)}</div>;
+}
+
+function ContactContent() {
+  return <div className="contact-world"><div><span>AREAS OF INTEREST</span><p>AI/ML testing · quality engineering · automation · applied AI · data systems · research tooling · reliability engineering</p></div><a href={GITHUB} target="_blank" rel="noreferrer">View selected engineering work <Icon type="github" size={20}/></a><a href="mailto:contact@aixionlabs.com">Start a conversation <Icon type="arrow" size={19}/></a></div>;
+}
+
+function TradeBot({ navigate }) {
+  const planes = [["Data plane", "Real-time feeds, quote/depth ingestion, replay datasets, aligned snapshots, persistence, and evidence capture."], ["Research plane", "Hypothesis evaluation, causal replay, options microstructure studies, regime context, validation, and ablation."], ["Governance plane", "Explicit authority boundaries, read-only observation, promotion gates, deterministic runs, and fail-closed behavior."], ["Observability plane", "Feed health, freshness, reconnect behavior, runtime events, candidate traces, and session evidence."]];
+  return <main className="tradebot-world"><section className="tradebot-hero"><p className="eyebrow">FLAGSHIP · TRADEBOT</p><h1>Engineering market intelligence under real operational constraints.</h1><p>A governed market-intelligence and research platform for Indian index-options workflows. The difficult part was not drawing another indicator; it was proving what data, runtime state, and engineering boundaries produced a result.</p><div className="privacy-boundary">PUBLIC-SAFE ARCHITECTURE · PROPRIETARY LOGIC REMAINS PRIVATE</div></section><section className="tradebot-planes">{planes.map(([title, text]) => <article key={title}><span>{title}</span><p>{text}</p><i/></article>)}</section><section className="failure-story"><p className="eyebrow">ENGINEERING PATTERN</p><h2>Symptom → root cause → guardrail → proof.</h2><p>Feed reliability, runtime authority, freshness, deterministic replay, process supervision, and evidence integrity became first-class engineering concerns because strategy output is meaningless if the system cannot prove how it was produced.</p><button className="text-action" onClick={(e) => navigate("projects", e.currentTarget)}>Back to Projects <Icon type="arrow" size={18}/></button></section></main>;
+}
+
+function DeepSpace({ exit }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const canvas = ref.current, ctx = canvas.getContext("2d");
+    let width = 0, height = 0, dpr = 1, raf = 0, last = performance.now();
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const points = Array.from({ length: 190 }, (_, i) => ({ x: ((i * 73) % 127) / 127 * 2 - 1, y: ((i * 41 + 11) % 131) / 131 * 2 - 1, z: 0.15 + ((i * 29) % 100) / 100 }));
+    const resize = () => { dpr = Math.min(devicePixelRatio || 1, 1.45); width = innerWidth; height = innerHeight; canvas.width = width * dpr; canvas.height = height * dpr; canvas.style.width = `${width}px`; canvas.style.height = `${height}px`; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    const move = (e) => { pointer.tx = e.clientX / width - 0.5; pointer.ty = e.clientY / height - 0.5; };
+    const draw = (now) => { const dt = Math.min((now - last) / 1000, 0.04); last = now; pointer.x += (pointer.tx - pointer.x) * 0.04; pointer.y += (pointer.ty - pointer.y) * 0.04; ctx.fillStyle = "rgba(2,3,5,.22)"; ctx.fillRect(0, 0, width, height); const cx = width / 2 + pointer.x * 55, cy = height / 2 + pointer.y * 40; points.forEach((p) => { if (!reduced) { p.z -= dt * 0.055; if (p.z < 0.08) p.z = 1; } const scale = 1 / p.z; p.sx = cx + p.x * width * 0.32 * scale; p.sy = cy + p.y * height * 0.32 * scale; p.alpha = Math.min(1, (1.08 - p.z) * 0.8); }); for (let i = 0; i < points.length; i += 3) { const a = points[i], b = points[(i + 11) % points.length]; if (Math.abs(a.z - b.z) < 0.18) { ctx.strokeStyle = `rgba(255,65,76,${0.055 * a.alpha})`; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy); ctx.stroke(); } } points.forEach((p, i) => { ctx.fillStyle = i % 17 === 0 ? `rgba(255,90,98,${p.alpha})` : `rgba(228,236,245,${0.42 * p.alpha})`; ctx.beginPath(); ctx.arc(p.sx, p.sy, i % 17 === 0 ? 2 : 0.9, 0, Math.PI * 2); ctx.fill(); }); raf = requestAnimationFrame(draw); };
+    resize(); addEventListener("resize", resize); addEventListener("pointermove", move, { passive: true }); raf = requestAnimationFrame(draw); return () => { cancelAnimationFrame(raf); removeEventListener("resize", resize); removeEventListener("pointermove", move); };
+  }, []);
+  useEffect(() => { const key = (e) => { if (e.key === "Escape") exit(); }; addEventListener("keydown", key); return () => removeEventListener("keydown", key); }, [exit]);
+  return <main className="deep-space" onClick={exit} role="button" tabIndex={0} aria-label="Aixion neural space. Click or press Escape to return home."><canvas ref={ref}/><div className="deep-vignette"/><Mark className="deep-mark"/><span>CLICK ANYWHERE TO RETURN</span></main>;
+}
 
 createRoot(document.getElementById("root")).render(<App/>);
