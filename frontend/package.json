@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "visual:capture": "playwright test tests/visual/capture.spec.mjs --project=chromium",
+    "visual:validate": "playwright test --project=chromium"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.62.1",
     "vite": "^5.0.0"
   }
 }

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "branch": "website/radial-immersive-v1",
+  "baselineSha": "ae02867a87f4ebc87a32caf2b4ccc6de8587e062",
+  "designAuthority": "REFERENCE_AUTHORITY.md",
+  "states": {
+    "brand.authoritativeLockup": { "design": "LOCKED", "implementation": "VERIFY_EACH_RENDER" },
+    "home.radialArchitecture": { "design": "LOCKED", "implementation": "NEEDS_VISUAL_VERIFICATION" },
+    "home.eightDestinations": { "design": "LOCKED", "implementation": "AUTOMATED_CHECK" },
+    "home.coreEmblem": { "design": "LOCKED", "implementation": "AUTOMATED_AND_VISUAL_CHECK" },
+    "home.palette": { "design": "LOCKED_BLACK_RED", "implementation": "VERIFY_NO_DRIFT" },
+    "home.orbitalReadability": { "design": "LOCKED", "implementation": "NEEDS_VISUAL_VERIFICATION" },
+    "internal.noFullHomeWheel": { "design": "LOCKED", "implementation": "VERIFY_EACH_RENDER" },
+    "internal.spatialEditorialModel": { "design": "LOCKED", "implementation": "NEEDS_VISUAL_VERIFICATION" },
+    "navigation.browserHistory": { "design": "LOCKED", "implementation": "AUTOMATED_CHECK" },
+    "navigation.homeReturn": { "design": "LOCKED", "implementation": "AUTOMATED_CHECK" },
+    "core.keyboardEntry": { "design": "LOCKED", "implementation": "AUTOMATED_CHECK" },
+    "core.escapeExit": { "design": "LOCKED", "implementation": "AUTOMATED_CHECK" },
+    "github.persistentAccess": { "design": "LOCKED", "implementation": "AUTOMATED_CHECK" },
+    "mobile.noHorizontalOverflow": { "design": "LOCKED", "implementation": "AUTOMATED_CHECK" },
+    "truth.noFakeLiveClaims": { "design": "LOCKED", "implementation": "REVIEW_REQUIRED" },
+    "tradebot.publicPrivateBoundary": { "design": "LOCKED", "implementation": "REVIEW_REQUIRED" }
+  },
+  "allowedRepairClasses": [
+    "CSS geometry",
+    "SVG spoke/ring geometry",
+    "responsive layout",
+    "hover/focus behavior",
+    "route choreography",
+    "DOM structure",
+    "accessibility",
+    "content hierarchy",
+    "subtle particles/signals",
+    "page-specific spatial composition"
+  ],
+  "stopCondition": {
+    "P0": 0,
+    "P1": 0,
+    "majorP2": 0,
+    "node20Build": "PASS",
+    "visualEvidence": "PRESENT",
+    "interactionSuite": "PASS",
+    "humanOrModelVisualReview": "PASS"
+  }
+}

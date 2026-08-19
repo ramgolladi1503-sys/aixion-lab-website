@@ -1,0 +1,50 @@
+name: Visual Evidence
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capture-and-validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Capture and validate
+        env:
+          VISUAL_RUN_ID: ${{ github.sha }}
+        run: npm run visual:validate
+
+      - name: Upload visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aixion-visual-evidence-${{ github.sha }}
+          path: |
+            frontend/test-results/visual-evidence
+            frontend/playwright-report
+            frontend/test-results/playwright
+          if-no-files-found: warn
+          retention-days: 14
