@@ -1,8 +1,26 @@
 /*
- * AIXION LAB — visual convergence pass 02
+ * AIXION LAB — visual convergence pass 03
  * Geometry + depth authority for the radial V1 review branch.
- * Selectors deliberately outrank the base stylesheet injected by Vite.
+ * This remains isolated until owner visual approval, then accepted values should
+ * be folded into the base design system rather than kept as a permanent override.
  */
+
+/* Governed lockup at every viewport. The legacy WEBP has excessive internal
+   whitespace, so it remains preserved but is visually replaced by the compact
+   emblem + wordmark authority while this branch converges. */
+body .brand-button {
+  width: clamp(164px, 23vw, 330px);
+  height: clamp(48px, 8vw, 66px);
+  flex: 0 0 auto;
+  background: url('/brand/aixion-header-lockup.svg') left center / contain no-repeat !important;
+}
+
+body .brand-button img {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
 
 @media (min-width: 901px) {
   body .global-header {
@@ -12,21 +30,12 @@
   body .brand-button {
     width: clamp(250px, 20vw, 330px);
     height: 66px;
-    flex: 0 0 auto;
-    background: url('/brand/aixion-header-lockup.svg') left center / contain no-repeat !important;
-  }
-
-  body .brand-button img {
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    pointer-events: none;
   }
 
   .app .home-orbit {
     background:
-      radial-gradient(circle at 50% 51%, rgba(255, 57, 68, .085), transparent 26%),
-      radial-gradient(circle at 50% 51%, rgba(255, 57, 68, .026), transparent 54%);
+      radial-gradient(circle at 50% 51%, rgba(255, 57, 68, .09), transparent 26%),
+      radial-gradient(circle at 50% 51%, rgba(255, 57, 68, .028), transparent 54%);
   }
 
   .app .orbit-stage {
@@ -102,19 +111,31 @@
     border-color: rgba(255, 255, 255, .06);
   }
 
+  /* Static spokes must be readable enough to communicate a system, while the
+     active spoke gets unmistakable signal authority. */
+  .app .connection-map {
+    opacity: .94;
+    filter: drop-shadow(0 0 8px rgba(255, 57, 68, .045));
+  }
+
   .app .spoke-line {
-    stroke: rgba(238, 242, 246, .29);
-    stroke-width: .17;
+    stroke: rgba(255, 138, 145, .34);
+    stroke-width: .18;
   }
 
   .app .spoke-line.active {
-    stroke: rgba(255, 57, 68, .98);
-    stroke-width: .29;
-    filter: drop-shadow(0 0 5px rgba(255, 57, 68, .92));
+    stroke: rgba(255, 57, 68, 1);
+    stroke-width: .34;
+    filter: drop-shadow(0 0 7px rgba(255, 57, 68, .98));
   }
 
   .app .spoke-end {
-    fill: rgba(240, 244, 248, .84);
+    fill: rgba(244, 247, 250, .88);
+  }
+
+  .app .spoke-end.active {
+    fill: #ff3944;
+    filter: drop-shadow(0 0 6px rgba(255, 57, 68, 1));
   }
 
   .app .hub-node {
@@ -191,6 +212,34 @@
   .app .idle-cue {
     color: rgba(255, 255, 255, .36);
     letter-spacing: .32em;
+  }
+}
+
+@media (max-width: 880px) {
+  body .brand-button {
+    width: clamp(164px, 30vw, 210px);
+    height: 54px;
+  }
+}
+
+@media (max-width: 620px) {
+  body .brand-button {
+    width: clamp(154px, 42vw, 178px);
+    height: 50px;
+  }
+
+  /* Keep the phone composition intact; only give the hub slightly more viewport
+     authority without increasing node diameters enough to create overlap. */
+  .app .orbit-stage {
+    width: min(96vw, 620px);
+  }
+
+  .app .connection-map {
+    opacity: .84;
+  }
+
+  .app .spoke-line {
+    stroke: rgba(255, 124, 132, .30);
   }
 }
 
