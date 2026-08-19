@@ -32,7 +32,21 @@ async function stabilizeCanvasClock(page) {
 async function gotoState(page, route, selector = 'main') {
   await page.goto(route, { waitUntil: 'domcontentloaded' });
   await expect(page.locator(selector).first()).toBeVisible();
-  await page.waitForTimeout(450);
+  await page.waitForTimeout(350);
+}
+
+async function revealScrollableContent(page) {
+  const metrics = await page.evaluate(() => ({
+    height: document.documentElement.scrollHeight,
+    viewport: window.innerHeight,
+  }));
+  const step = Math.max(420, Math.round(metrics.viewport * .72));
+  for (let y = 0; y < metrics.height; y += step) {
+    await page.evaluate((top) => window.scrollTo(0, top), y);
+    await page.waitForTimeout(70);
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(180);
 }
 
 async function shot(page, name, fullPage = false) {
@@ -46,8 +60,6 @@ test('capture governed visual matrix', async ({ page }) => {
 
   await stabilizeCanvasClock(page);
 
-  // Entry state must be captured once without installing a persistent script
-  // that clears sessionStorage again on every later reload/navigation.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => sessionStorage.removeItem('aixion-entered-v4'));
   await page.reload({ waitUntil: 'domcontentloaded' });
@@ -73,6 +85,7 @@ test('capture governed visual matrix', async ({ page }) => {
 
   for (const [name, route] of ROUTES) {
     await gotoState(page, route, 'main');
+    await revealScrollableContent(page);
     await shot(page, name, true);
   }
 
@@ -97,7 +110,7 @@ test('capture governed visual matrix', async ({ page }) => {
     ],
     routeCount: ROUTES.length + 3,
     referenceAuthority: '../../docs/visual-validation/radial-v1/REFERENCE_AUTHORITY.md',
-    note: 'Screenshots are evidence for model/human comparison. They are not a pixel-equality claim against the concept artwork.',
+    note: 'Screenshots are evidence for model/human comparison. Scroll-revealed pages are captured only after their observer-driven content has been exercised.',
   };
   fs.writeFileSync(path.join(OUT, 'capture-manifest.json'), `${JSON.stringify(metadata, null, 2)}\n`);
 });
