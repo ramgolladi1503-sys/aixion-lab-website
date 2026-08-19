@@ -18,14 +18,7 @@ const NODES = [
 ].map(([key, label, angle]) => ({ key, label, angle }));
 
 const META = Object.fromEntries(NODES.map((n) => [n.key, n]));
-
-const pathFor = (key) => {
-  if (key === "home") return "/";
-  if (key === "tower") return "/control-tower";
-  if (key === "tradebot") return "/projects/tradebot";
-  return `/${key}`;
-};
-
+const pathFor = (key) => key === "home" ? "/" : key === "tower" ? "/control-tower" : key === "tradebot" ? "/projects/tradebot" : `/${key}`;
 const pageFor = (pathname) => {
   const p = pathname.replace(/\/+$/, "") || "/";
   if (p === "/") return "home";
@@ -64,29 +57,45 @@ function useReducedMotion() {
   return reduced;
 }
 
-function StandaloneEmblem({ className = "", alt = "" }) {
-  return <img className={`standalone-emblem ${className}`} src={EMBLEM} alt={alt} />;
+function Emblem({ className = "", alt = "" }) {
+  return <img className={`standalone-emblem ${className}`} src={EMBLEM} alt={alt}/>;
+}
+
+function MotionVariables() {
+  useEffect(() => {
+    const root = document.documentElement;
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+    const move = (e) => {
+      tx = e.clientX / Math.max(innerWidth, 1) - .5;
+      ty = e.clientY / Math.max(innerHeight, 1) - .5;
+    };
+    const tick = () => {
+      cx += (tx - cx) * .055;
+      cy += (ty - cy) * .055;
+      root.style.setProperty("--mx", cx.toFixed(4));
+      root.style.setProperty("--my", cy.toFixed(4));
+      raf = requestAnimationFrame(tick);
+    };
+    addEventListener("pointermove", move, { passive: true });
+    raf = requestAnimationFrame(tick);
+    return () => { removeEventListener("pointermove", move); cancelAnimationFrame(raf); };
+  }, []);
+  return null;
 }
 
 function CursorSystem() {
   const dot = useRef(null);
   const halo = useRef(null);
   useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (matchMedia("(pointer: coarse)").matches) return;
     const move = (e) => {
-      if (dot.current) dot.current.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0)`;
-      if (halo.current) halo.current.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0)`;
+      dot.current && (dot.current.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0)`);
+      halo.current && (halo.current.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0)`);
     };
-    const over = (e) => {
-      const hot = e.target.closest("button,a,[data-cursor]");
-      halo.current?.classList.toggle("hot", !!hot);
-    };
-    window.addEventListener("pointermove", move, { passive: true });
+    const over = (e) => halo.current?.classList.toggle("hot", !!e.target.closest("button,a,[data-cursor]"));
+    addEventListener("pointermove", move, { passive: true });
     document.addEventListener("pointerover", over, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", move);
-      document.removeEventListener("pointerover", over);
-    };
+    return () => { removeEventListener("pointermove", move); document.removeEventListener("pointerover", over); };
   }, []);
   return <><i ref={dot} className="cursor-dot"/><i ref={halo} className="cursor-halo"/></>;
 }
@@ -100,540 +109,253 @@ function ComputationalField({ mode = "home", boost = false }) {
   useEffect(() => {
     const canvas = ref.current;
     const ctx = canvas.getContext("2d");
-    let raf = 0;
-    let W = 0;
-    let H = 0;
-    let DPR = 1;
+    let raf = 0, W = 0, H = 0, DPR = 1;
     const pointer = { x: 0, y: 0 };
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const points = Array.from({ length: 132 }, (_, i) => ({
-      x: ((i * 59 + 13) % 137) / 137,
-      y: ((i * 83 + 31) % 149) / 149,
-      vx: (((i * 7) % 11) - 5) * 0.000018,
-      vy: (((i * 5) % 13) - 6) * 0.000016,
-      phase: i * 0.63,
-      accent: i % 13 === 0,
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const points = Array.from({ length: 148 }, (_, i) => ({
+      x: ((i * 59 + 13) % 157) / 157,
+      y: ((i * 83 + 31) % 163) / 163,
+      vx: (((i * 7) % 11) - 5) * .000022,
+      vy: (((i * 5) % 13) - 6) * .000019,
+      phase: i * .63,
+      accent: i % 11 === 0,
     }));
     const resize = () => {
-      DPR = Math.min(window.devicePixelRatio || 1, 1.55);
-      W = window.innerWidth;
-      H = window.innerHeight;
-      canvas.width = W * DPR;
-      canvas.height = H * DPR;
-      canvas.style.width = `${W}px`;
-      canvas.style.height = `${H}px`;
+      DPR = Math.min(devicePixelRatio || 1, 1.5);
+      W = innerWidth; H = innerHeight;
+      canvas.width = W * DPR; canvas.height = H * DPR;
+      canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     };
-    const pointerMove = (e) => {
-      pointer.x = e.clientX / Math.max(W, 1) - 0.5;
-      pointer.y = e.clientY / Math.max(H, 1) - 0.5;
-    };
+    const move = (e) => { pointer.x = e.clientX / Math.max(W,1) - .5; pointer.y = e.clientY / Math.max(H,1) - .5; };
     const draw = (t) => {
-      ctx.clearRect(0, 0, W, H);
-      const boostValue = boostRef.current ? 2.15 : 1;
-      const modeValue = modeRef.current === "research" ? 1.15 : modeRef.current === "evidence" ? 0.95 : 1;
+      ctx.clearRect(0,0,W,H);
+      const boostValue = boostRef.current ? 2.6 : 1;
+      const modeValue = modeRef.current === "research" ? 1.22 : modeRef.current === "projects" ? 1.12 : modeRef.current === "evidence" ? .96 : 1;
       const speed = boostValue * modeValue;
-      const glow = ctx.createRadialGradient(W * (0.5 + pointer.x * 0.05), H * (0.47 + pointer.y * 0.05), 0, W / 2, H / 2, Math.max(W, H) * 0.72);
-      glow.addColorStop(0, `rgba(255,57,68,${0.052 * boostValue})`);
-      glow.addColorStop(0.38, "rgba(19,25,34,.10)");
-      glow.addColorStop(1, "rgba(2,3,5,0)");
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, W, H);
-
+      const glow = ctx.createRadialGradient(W*(.5+pointer.x*.05),H*(.47+pointer.y*.05),0,W/2,H/2,Math.max(W,H)*.74);
+      glow.addColorStop(0,`rgba(255,57,68,${.052*boostValue})`); glow.addColorStop(.38,"rgba(16,21,29,.13)"); glow.addColorStop(1,"rgba(2,3,5,0)");
+      ctx.fillStyle = glow; ctx.fillRect(0,0,W,H);
       points.forEach((p) => {
         if (!reduced) {
-          p.x += p.vx * speed;
-          p.y += p.vy * speed;
-          if (p.x < -0.03) p.x = 1.03;
-          if (p.x > 1.03) p.x = -0.03;
-          if (p.y < -0.03) p.y = 1.03;
-          if (p.y > 1.03) p.y = -0.03;
+          p.x += p.vx*speed; p.y += p.vy*speed;
+          if (p.x < -.04) p.x = 1.04; if (p.x > 1.04) p.x = -.04; if (p.y < -.04) p.y = 1.04; if (p.y > 1.04) p.y = -.04;
         }
-        p.px = p.x * W + Math.sin(t * 0.0011 * speed + p.phase) * 9 + pointer.x * 22;
-        p.py = p.y * H + Math.cos(t * 0.00085 * speed + p.phase) * 7 + pointer.y * 16;
+        p.px = p.x*W + Math.sin(t*.00125*speed+p.phase)*11 + pointer.x*26;
+        p.py = p.y*H + Math.cos(t*.00102*speed+p.phase)*8 + pointer.y*19;
       });
-
-      for (let i = 0; i < points.length; i++) {
-        for (let j = i + 1; j < Math.min(points.length, i + 10); j++) {
-          const a = points[i];
-          const b = points[j];
-          const d = Math.hypot(a.px - b.px, a.py - b.py);
-          if (d < 145) {
-            const alpha = (1 - d / 145) * 0.13 * boostValue;
-            ctx.strokeStyle = modeRef.current === "evidence" ? `rgba(240,244,248,${alpha * 0.65})` : `rgba(255,65,76,${alpha})`;
-            ctx.lineWidth = 0.6;
-            ctx.beginPath();
-            ctx.moveTo(a.px, a.py);
-            if (modeRef.current === "research") {
-              ctx.quadraticCurveTo((a.px + b.px) / 2 + 18, (a.py + b.py) / 2 - 14, b.px, b.py);
-            } else {
-              ctx.lineTo(b.px, b.py);
-            }
-            ctx.stroke();
-          }
+      for (let i=0;i<points.length;i++) for (let j=i+1;j<Math.min(points.length,i+10);j++) {
+        const a=points[i], b=points[j], d=Math.hypot(a.px-b.px,a.py-b.py);
+        if (d<150) {
+          const alpha=(1-d/150)*.135*boostValue;
+          ctx.strokeStyle = modeRef.current === "evidence" ? `rgba(240,244,248,${alpha*.66})` : `rgba(255,65,76,${alpha})`;
+          ctx.lineWidth=.6; ctx.beginPath(); ctx.moveTo(a.px,a.py);
+          modeRef.current === "research" ? ctx.quadraticCurveTo((a.px+b.px)/2+22,(a.py+b.py)/2-16,b.px,b.py) : ctx.lineTo(b.px,b.py);
+          ctx.stroke();
         }
       }
-
-      for (let i = 0; i < 24; i++) {
-        const y = ((i * 97 + t * 0.052 * speed) % (H + 180)) - 90;
-        const x = ((i * 181 + t * 0.13 * speed) % (W + 360)) - 180;
-        const len = 26 + (i % 6) * 18;
-        const g = ctx.createLinearGradient(x - len, y, x + len, y);
-        g.addColorStop(0, "rgba(255,57,68,0)");
-        g.addColorStop(0.55, `rgba(255,73,83,${0.11 * boostValue})`);
-        g.addColorStop(1, "rgba(255,255,255,0)");
-        ctx.strokeStyle = g;
-        ctx.lineWidth = i % 5 === 0 ? 1.1 : 0.6;
-        ctx.beginPath();
-        ctx.moveTo(x - len, y);
-        ctx.lineTo(x + len, y);
-        ctx.stroke();
+      for (let i=0;i<30;i++) {
+        const y=((i*97+t*.075*speed)%(H+200))-100, x=((i*181+t*.17*speed)%(W+420))-210, len=34+(i%7)*20;
+        const g=ctx.createLinearGradient(x-len,y,x+len,y); g.addColorStop(0,"rgba(255,57,68,0)"); g.addColorStop(.5,`rgba(255,78,88,${.12*boostValue})`); g.addColorStop(1,"rgba(255,255,255,0)");
+        ctx.strokeStyle=g; ctx.lineWidth=i%6===0?1.2:.55; ctx.beginPath(); ctx.moveTo(x-len,y); ctx.lineTo(x+len,y); ctx.stroke();
       }
-
-      points.forEach((p) => {
-        ctx.fillStyle = p.accent ? "rgba(255,72,82,.72)" : "rgba(235,240,245,.28)";
-        ctx.beginPath();
-        ctx.arc(p.px, p.py, p.accent ? 1.7 : 0.8, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      raf = requestAnimationFrame(draw);
+      points.forEach((p) => { ctx.fillStyle=p.accent?"rgba(255,72,82,.76)":"rgba(235,240,245,.29)"; ctx.beginPath(); ctx.arc(p.px,p.py,p.accent?1.75:.8,0,Math.PI*2); ctx.fill(); });
+      raf=requestAnimationFrame(draw);
     };
-    resize();
-    window.addEventListener("resize", resize);
-    window.addEventListener("pointermove", pointerMove, { passive: true });
-    raf = requestAnimationFrame(draw);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("pointermove", pointerMove);
-    };
+    resize(); addEventListener("resize",resize); addEventListener("pointermove",move,{passive:true}); raf=requestAnimationFrame(draw);
+    return () => { cancelAnimationFrame(raf); removeEventListener("resize",resize); removeEventListener("pointermove",move); };
   }, []);
   return <canvas ref={ref} className="computational-field" aria-hidden="true"/>;
 }
 
 function App() {
-  const initial = pageFor(window.location.pathname);
-  const [page, setPage] = useState(initial === "core" ? "home" : initial);
-  const [entered, setEntered] = useState(() => sessionStorage.getItem("aixion-entered-v3") === "1");
-  const [hovered, setHovered] = useState(null);
-  const [routing, setRouting] = useState(null);
-  const [deep, setDeep] = useState(initial === "core");
-  const [menu, setMenu] = useState(false);
-
+  const initial = pageFor(location.pathname);
+  const [page,setPage] = useState(initial === "core" ? "home" : initial);
+  const [entered,setEntered] = useState(() => sessionStorage.getItem("aixion-entered-v4") === "1");
+  const [hovered,setHovered] = useState(null);
+  const [routing,setRouting] = useState(null);
+  const [deep,setDeep] = useState(initial === "core");
+  const [menu,setMenu] = useState(false);
   useEffect(() => {
-    const pop = () => {
-      const next = pageFor(window.location.pathname);
-      if (next === "core") {
-        setDeep(true);
-        setPage("home");
-        return;
-      }
-      setDeep(false);
-      setPage(next);
-    };
-    window.addEventListener("popstate", pop);
-    return () => window.removeEventListener("popstate", pop);
-  }, []);
-
+    const pop = () => { const next=pageFor(location.pathname); if(next==="core"){setDeep(true);setPage("home");} else {setDeep(false);setPage(next);} };
+    addEventListener("popstate",pop); return()=>removeEventListener("popstate",pop);
+  },[]);
   useEffect(() => {
-    const label = deep ? "AIXION CORE" : page === "home" ? "AIXION LAB" : page === "tradebot" ? "TradeBot" : META[page]?.label || page;
-    document.title = `${label} — AIXION LAB`;
-    if (!deep) window.scrollTo(0, 0);
-  }, [page, deep]);
-
-  const navigate = (key, el) => {
-    if (key === "core") {
-      window.history.pushState({}, "", "/core");
-      setDeep(true);
-      return;
-    }
-    if (key === page && !deep) return;
-    const rect = el?.getBoundingClientRect?.();
-    const x = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
-    const y = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
-    const nextLabel = key === "home" ? "HOME" : key === "tradebot" ? "TRADEBOT" : META[key]?.label || key;
-    setMenu(false);
-    setDeep(false);
-    setRouting({ x, y, label: nextLabel, back: key === "home" });
-    window.setTimeout(() => {
-      window.history.pushState({}, "", pathFor(key));
-      setPage(key);
-    }, 310);
-    window.setTimeout(() => setRouting(null), 820);
+    const label=deep?"AIXION CORE":page==="home"?"AIXION LAB":page==="tradebot"?"TradeBot":META[page]?.label||page;
+    document.title=`${label} — AIXION LAB`; if(!deep) scrollTo(0,0);
+  },[page,deep]);
+  const navigate=(key,el)=>{
+    if(key==="core"){history.pushState({},"","/core");setDeep(true);return;}
+    if(key===page&&!deep)return;
+    const r=el?.getBoundingClientRect?.(); const x=r?r.left+r.width/2:innerWidth/2; const y=r?r.top+r.height/2:innerHeight/2;
+    setMenu(false); setDeep(false); setRouting({x,y,label:key==="home"?"HOME":key==="tradebot"?"TRADEBOT":META[key]?.label||key,back:key==="home"});
+    setTimeout(()=>{history.pushState({},"",pathFor(key));setPage(key);},300);
+    setTimeout(()=>setRouting(null),760);
   };
-
-  const exitDeep = () => {
-    setDeep(false);
-    window.history.replaceState({}, "", "/");
-    setPage("home");
-  };
-
-  return <div className={`app page-${page} ${routing ? "is-routing" : ""} ${deep ? "is-deep" : ""}`}>
-    <ComputationalField mode={deep ? "deep" : hovered || page} boost={!!hovered || !!routing || deep}/>
-    <CursorSystem/>
-    {!entered ? (
-      <Entry onEnter={() => {
-        sessionStorage.setItem("aixion-entered-v3", "1");
-        setEntered(true);
-      }}/>
-    ) : deep ? (
-      <DeepSpace onExit={exitDeep}/>
-    ) : (
-      <div className="scene">
-        <Header page={page} navigate={navigate} menu={menu} setMenu={setMenu}/>
-        {page === "home" ? <HomeHub hovered={hovered} setHovered={setHovered} navigate={navigate}/> : page === "tradebot" ? <TradeBotPage navigate={navigate}/> : <WorldPage page={page} navigate={navigate}/>} 
-      </div>
-    )}
-    {routing && <RouteRipple state={routing}/>} 
+  const exitDeep=()=>{setDeep(false);history.replaceState({},"","/");setPage("home")};
+  return <div className={`app page-${page} ${routing?"is-routing":""} ${deep?"is-deep":""}`}>
+    <ComputationalField mode={deep?"deep":hovered||page} boost={!!hovered||!!routing||deep}/><MotionVariables/><CursorSystem/>
+    {!entered ? <Entry onEnter={()=>{sessionStorage.setItem("aixion-entered-v4","1");setEntered(true)}}/> : deep ? <DeepSpace onExit={exitDeep}/> : <div className="scene"><Header page={page} navigate={navigate} menu={menu} setMenu={setMenu}/>{page==="home"?<HomeHub hovered={hovered} setHovered={setHovered} navigate={navigate}/>:page==="tradebot"?<TradeBotPage navigate={navigate}/>:<WorldPage page={page} navigate={navigate}/>}</div>}
+    {routing&&<RouteRipple state={routing}/>} 
   </div>;
 }
 
-function Entry({ onEnter }) {
-  return <main className="entry-screen">
-    <button className="entry-core" onClick={onEnter} aria-label="Enter Aixion Lab" data-cursor>
-      <i/><i/><i/>
-      <span className="entry-emblem-shell"><StandaloneEmblem className="entry-emblem"/></span>
-      <b/>
-    </button>
-  </main>;
+function Entry({onEnter}) {
+  return <main className="entry-screen"><button className="entry-core" onClick={onEnter} aria-label="Enter Aixion Lab" data-cursor><i/><i/><i/><span className="entry-emblem-shell"><Emblem className="entry-emblem"/></span><b/></button></main>;
 }
 
-function Header({ page, navigate, menu, setMenu }) {
-  const internal = page !== "home";
+function Header({page,navigate,menu,setMenu}) {
+  const internal=page!=="home";
   return <header className="global-header">
-    <button className="brand-button" onClick={(e) => navigate("home", e.currentTarget)} aria-label="Aixion Lab home" data-cursor>
-      <img src={BRAND} alt="AIXION LAB"/>
-    </button>
+    <button className="brand-button" onClick={(e)=>navigate("home",e.currentTarget)} aria-label="Aixion Lab home" data-cursor><img src={BRAND} alt="AIXION LAB"/></button>
     <nav className="desktop-nav" aria-label="Primary navigation">
-      <button className={`home-control ${internal ? "emblem-mode" : "text-mode"}`} onClick={(e) => navigate("home", e.currentTarget)} aria-label="Home" data-cursor>
-        <span>Home</span>
-        <StandaloneEmblem/>
-      </button>
-      {["projects", "research", "evidence", "contact"].map((key) => <button key={key} className={page === key ? "active" : ""} onClick={(e) => navigate(key, e.currentTarget)} data-cursor>{META[key].label}</button>)}
+      <button className={`home-control ${internal?"emblem-mode":"text-mode"}`} onClick={(e)=>navigate("home",e.currentTarget)} aria-label="Home" data-cursor><span>Home</span><Emblem/></button>
+      {["projects","research","evidence","contact"].map((key)=><button key={key} className={page===key?"active":""} onClick={(e)=>navigate(key,e.currentTarget)} data-cursor>{META[key].label}</button>)}
     </nav>
-    <div className="header-actions">
-      <a href={GITHUB} target="_blank" rel="noreferrer" className="github-button" aria-label="GitHub — selected engineering work" title="GitHub — Selected engineering work" data-cursor><Icon type="github" size={21}/></a>
-      <button className="menu-button" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-label="Open navigation"><span/><span/></button>
-    </div>
-    {menu && <div className="mobile-menu">{["home", ...NODES.map((n) => n.key)].map((key) => <button key={key} onClick={(e) => navigate(key, e.currentTarget)}>{key === "home" ? "Home" : META[key].label}</button>)}<a href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github" size={18}/>GitHub</a></div>}
+    <div className="header-actions"><a href={GITHUB} target="_blank" rel="noreferrer" className="github-button" aria-label="GitHub — selected engineering work" data-cursor><Icon type="github" size={21}/></a><button className="menu-button" onClick={()=>setMenu(!menu)} aria-expanded={menu} aria-label="Open navigation"><span/><span/></button></div>
+    {menu&&<div className="mobile-menu">{["home",...NODES.map((n)=>n.key)].map((key)=><button key={key} onClick={(e)=>navigate(key,e.currentTarget)}>{key==="home"?"Home":META[key].label}</button>)}<a href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github" size={18}/>GitHub</a></div>}
   </header>;
 }
 
-function HomeHub({ hovered, setHovered, navigate }) {
-  const [pulse, setPulse] = useState(false);
-  const longPress = useRef(null);
-  const enterCore = () => navigate("core");
-  const positions = useMemo(() => NODES.map((n) => {
-    const rad = n.angle * Math.PI / 180;
-    const radius = 39;
-    return { ...n, x: 50 + Math.cos(rad) * radius, y: 50 + Math.sin(rad) * radius };
-  }), []);
-  return <main className={`home-orbit ${hovered ? "focused" : ""}`}>
-    <section className="orbit-stage">
-      <i className="ambient-ring ring-a"/><i className="ambient-ring ring-b"/><i className="ambient-ring ring-c"/>
-      <div className="orbit-system">
-        <svg className="connection-map" viewBox="0 0 100 100" aria-hidden="true">
-          {positions.map((n) => <React.Fragment key={n.key}>
-            <line className={`spoke-line ${hovered === n.key ? "active" : ""}`} x1="50" y1="50" x2={n.x} y2={n.y} pathLength="1"/>
-            <circle className={`spoke-end ${hovered === n.key ? "active" : ""}`} cx={n.x} cy={n.y} r="0.45"/>
-          </React.Fragment>)}
-        </svg>
-        {positions.map((n) => <div key={n.key} className="node-position" style={{ left: `${n.x}%`, top: `${n.y}%` }}>
-          <div className="node-counterspin">
-            <button className={`hub-node ${hovered === n.key ? "active" : ""}`} onMouseEnter={() => setHovered(n.key)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(n.key)} onBlur={() => setHovered(null)} onClick={(e) => navigate(n.key, e.currentTarget)} aria-label={`Open ${n.label}`} data-cursor>
-              <Icon type={n.key} size={23}/><strong>{n.label}</strong><i/>
-            </button>
-          </div>
-        </div>)}
-      </div>
-      <button className={`core-node ${pulse ? "pulse" : ""}`} onClick={() => { setPulse(true); window.setTimeout(() => setPulse(false), 420); }} onDoubleClick={enterCore} onPointerDown={() => { longPress.current = window.setTimeout(enterCore, 720); }} onPointerUp={() => window.clearTimeout(longPress.current)} onPointerLeave={() => window.clearTimeout(longPress.current)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); enterCore(); } }} aria-label="Aixion Core. Double click, long press, or press Enter to enter Deep Space" data-cursor>
-        <i/><i/><i/>
-        <span className="core-emblem-shell"><StandaloneEmblem className="core-emblem"/></span>
-      </button>
-    </section>
-    <div className="idle-cue">EXPLORE THE SYSTEM</div>
-  </main>;
+function HomeHub({hovered,setHovered,navigate}) {
+  const [pulse,setPulse]=useState(false); const longPress=useRef(null);
+  const positions=useMemo(()=>NODES.map((n)=>{const rad=n.angle*Math.PI/180,radius=39;return{...n,x:50+Math.cos(rad)*radius,y:50+Math.sin(rad)*radius}}),[]);
+  return <main className={`home-orbit ${hovered?"focused":""}`}><section className="orbit-stage"><div className="depth-disc disc-a"/><div className="depth-disc disc-b"/><i className="ambient-ring ring-a"/><i className="ambient-ring ring-b"/><i className="ambient-ring ring-c"/>
+    <div className="orbit-system"><svg className="connection-map" viewBox="0 0 100 100" aria-hidden="true">{positions.map((n)=><React.Fragment key={n.key}><line className={`spoke-line ${hovered===n.key?"active":""}`} x1="50" y1="50" x2={n.x} y2={n.y} pathLength="1"/><circle className={`spoke-end ${hovered===n.key?"active":""}`} cx={n.x} cy={n.y} r=".45"/></React.Fragment>)}</svg>
+    {positions.map((n)=><div key={n.key} className="node-position" style={{left:`${n.x}%`,top:`${n.y}%`}}><div className="node-counterspin"><button className={`hub-node ${hovered===n.key?"active":""}`} onMouseEnter={()=>setHovered(n.key)} onMouseLeave={()=>setHovered(null)} onFocus={()=>setHovered(n.key)} onBlur={()=>setHovered(null)} onClick={(e)=>navigate(n.key,e.currentTarget)} aria-label={`Open ${n.label}`} data-cursor><Icon type={n.key} size={23}/><strong>{n.label}</strong><i/></button></div></div>)}</div>
+    <button className={`core-node ${pulse?"pulse":""}`} onClick={()=>{setPulse(true);setTimeout(()=>setPulse(false),420)}} onDoubleClick={()=>navigate("core")} onPointerDown={()=>{longPress.current=setTimeout(()=>navigate("core"),720)}} onPointerUp={()=>clearTimeout(longPress.current)} onPointerLeave={()=>clearTimeout(longPress.current)} onKeyDown={(e)=>{if(e.key==="Enter"){e.preventDefault();navigate("core")}}} aria-label="Aixion Core. Double click, long press, or press Enter to enter Deep Space" data-cursor><i/><i/><i/><span className="core-emblem-shell"><Emblem className="core-emblem"/></span></button>
+    <span className="orbit-caption caption-a">SYSTEMS / RESEARCH / EVIDENCE</span><span className="orbit-caption caption-b">AIXION SIGNAL UNIVERSE</span>
+  </section><div className="idle-cue">EXPLORE THE SYSTEM</div></main>;
 }
 
-function RouteRipple({ state }) {
-  return <div className={`route-ripple ${state.back ? "reverse" : ""}`} style={{ "--x": `${state.x}px`, "--y": `${state.y}px` }} aria-hidden="true">
-    <i/><i/><i/>
-    <span/>
-    <b>{state.label}</b>
-  </div>;
-}
+function RouteRipple({state}) { return <div className={`route-ripple ${state.back?"reverse":""}`} style={{"--x":`${state.x}px`,"--y":`${state.y}px`}} aria-hidden="true"><i/><i/><i/><span/><b>{state.label}</b></div>; }
 
-function SectionRail({ sections }) {
-  const [active, setActive] = useState(sections[0]?.id);
-  const reduced = useReducedMotion();
-  useEffect(() => {
-    const nodes = sections.map((s) => document.getElementById(s.id)).filter(Boolean);
-    if (!nodes.length) return;
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible?.target?.id) setActive(visible.target.id);
-    }, { rootMargin: "-28% 0px -56% 0px", threshold: [0, .15, .35, .55] });
-    nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
-  }, [sections]);
-  return <nav className="chapter-rail" aria-label="Page chapters">{sections.map((s) => <button key={s.id} className={active === s.id ? "active" : ""} onClick={() => document.getElementById(s.id)?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" })}>{s.label}</button>)}</nav>;
-}
-
-function Reveal({ children, className = "" }) {
-  const ref = useRef(null);
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        node.classList.add("visible");
-        observer.disconnect();
-      }
-    }, { threshold: .14 });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
+function Reveal({children,className=""}) {
+  const ref=useRef(null);
+  useEffect(()=>{const node=ref.current;if(!node)return;const observer=new IntersectionObserver(([entry])=>{if(entry.isIntersecting){node.classList.add("visible");observer.disconnect()}},{threshold:.12});observer.observe(node);return()=>observer.disconnect()},[]);
   return <div ref={ref} className={`reveal ${className}`}>{children}</div>;
 }
 
+function SectionRail({sections}) {
+  const [active,setActive]=useState(sections[0]?.id); const reduced=useReducedMotion();
+  useEffect(()=>{const nodes=sections.map((s)=>document.getElementById(s.id)).filter(Boolean);if(!nodes.length)return;const observer=new IntersectionObserver((entries)=>{const visible=entries.filter((e)=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(visible?.target?.id)setActive(visible.target.id)},{rootMargin:"-25% 0px -58% 0px",threshold:[0,.15,.35,.6]});nodes.forEach((n)=>observer.observe(n));return()=>observer.disconnect()},[sections]);
+  return <nav className="chapter-rail" aria-label="Page chapters">{sections.map((s)=><button key={s.id} className={active===s.id?"active":""} onClick={()=>document.getElementById(s.id)?.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"})}>{s.label}</button>)}</nav>;
+}
+
 const STORY_META = {
-  about: {
-    eyebrow: "ABOUT AIXION LAB",
-    title: "I build systems where failure is observable, authority is explicit, and claims have to earn their confidence.",
-    intro: "Aixion Lab is the public surface of a much larger engineering journey across quality, automation, applied AI, real-time data, market-intelligence research, runtime governance, and evidence-driven systems work.",
-  },
-  journey: {
-    eyebrow: "ENGINEERING JOURNEY",
-    title: "From testing software to engineering systems that explain themselves.",
-    intro: "The work expanded from quality assurance into automation, runtime reliability, applied AI, research infrastructure, and governed engineering. The standard stayed the same: find what breaks, understand why, and make the next failure harder to hide.",
-  },
-  projects: {
-    eyebrow: "SELECTED ENGINEERING SYSTEMS",
-    title: "A body of work built around difficult systems, not polished screenshots.",
-    intro: "The projects here are shown through architecture, constraints, failure modes, validation, governance, and operational evidence. TradeBot is the flagship because it forced all of those disciplines to meet in one system.",
-  },
-  research: {
-    eyebrow: "RESEARCH OPERATING SYSTEM",
-    title: "The job is not to produce attractive hypotheses. The job is to make weak ones fail quickly and visibly.",
-    intro: "Research at Aixion Lab is outcome-blind wherever possible: hypotheses are isolated, replayed, challenged, segmented by context, and retained even when the answer is negative. Unsupported ideas stay visible so they are not quietly recycled as conviction.",
-  },
-  evidence: {
-    eyebrow: "EVIDENCE & GOVERNANCE",
-    title: "A system is not finished when it works once. It is finished when we can explain what ran, what changed, and why the result deserves trust.",
-    intro: "Exact-version authority, deterministic reruns, fail-closed gates, CI, review, freshness checks, and explicit runtime boundaries turn engineering claims into inspectable evidence instead of confidence theater.",
-  },
-  tower: {
-    eyebrow: "AIXION CONTROL TOWER",
-    title: "Observability is part of the product, not an afterthought added when something breaks.",
-    intro: "Control Tower is a public-safe operational surface for understanding research state, validation gates, runtime health, evidence progression, and system context without exposing private execution controls or fabricating live status.",
-  },
-  stack: {
-    eyebrow: "ENGINEERING STACK",
-    title: "The stack is organized by the problems it had to solve, not by the logos it can display.",
-    intro: "Testing, automation, data ingestion, replay, applied AI, observability, runtime supervision, CI, and product engineering are connected here by engineering purpose rather than resume keywords.",
-  },
-  contact: {
-    eyebrow: "CONTACT",
-    title: "I am interested in difficult engineering work where reliability, AI, testing, data systems, and judgment all matter.",
-    intro: "If the role involves building, validating, observing, or governing systems that cannot afford to be confidently wrong, that is the kind of conversation I want to have.",
-  },
+  about:{eyebrow:"ABOUT AIXION LAB",title:"Engineering systems that can explain themselves when the easy demo is over.",intro:"Aixion Lab is where quality engineering, automation, applied AI, market-intelligence research, real-time data, observability, and runtime governance are treated as one systems problem: build useful behavior, expose failure, and make every serious claim inspectable."},
+  journey:{eyebrow:"ENGINEERING JOURNEY",title:"The work expanded from finding defects to designing systems that make defects, uncertainty, and authority visible.",intro:"The path began in hands-on quality engineering and automation. It grew into feeds, runtimes, models, replay, research infrastructure, operational supervision, agent-assisted engineering, and evidence systems. The through-line is the same: correctness has to survive contact with state, timing, data, and failure."},
+  projects:{eyebrow:"SELECTED ENGINEERING SYSTEMS",title:"Not a gallery of features. A portfolio of systems shaped by constraints, failure modes, and evidence.",intro:"The projects are presented as engineering systems rather than screenshots: what problem existed, what architecture emerged, what broke, how the failure was isolated, what was validated, what remains unproven, and how operational truth is preserved."},
+  research:{eyebrow:"RESEARCH OPERATING SYSTEM",title:"Hypotheses are cheap. The engineering work is making them survive causal data, replay, negative controls, and review.",intro:"Research is deliberately structured to make weak ideas fail early. Market microstructure, opening behavior, closing-auction structure, options response, context regimes, and autonomous discovery are separated into bounded questions with explicit evidence states."},
+  evidence:{eyebrow:"EVIDENCE & GOVERNANCE",title:"A passing run is not proof. Proof starts when the system can tell us exactly what ran, on what data, under what authority, and whether it can happen again.",intro:"Exact-version authority, deterministic reruns, immutable evidence, CI, focused tests, freshness checks, independent review, fail-closed promotion, and explicit runtime boundaries turn engineering confidence into something that can be inspected."},
+  tower:{eyebrow:"AIXION CONTROL TOWER",title:"Operational visibility should reduce uncertainty, not decorate it.",intro:"Control Tower is a public-safe way to expose project state, research lanes, runtime context, validation gates, and evidence progression without revealing private controls, credentials, proprietary logic, or pretending delayed/demo information is live."},
+  stack:{eyebrow:"ENGINEERING STACK",title:"The stack matters because each tool solved a specific failure mode or engineering constraint.",intro:"Testing, automation, event-driven data, replay, applied AI, model evaluation, observability, runtime supervision, CI, evidence capture, and product engineering are organized here by why they were needed—not by how many logos fit on a page."},
+  contact:{eyebrow:"CONTACT",title:"I am looking for hard engineering problems where quality, AI, data, reliability, and judgment all have to work together.",intro:"The strongest fit is work where systems cannot simply look correct: AI/ML quality, SDET and automation, applied AI platforms, research tooling, observability, data-intensive products, and reliability-minded engineering."},
 };
 
-function WorldPage({ page, navigate }) {
-  const meta = STORY_META[page] || STORY_META.about;
-  const sections = buildSections(page, navigate);
-  return <main className={`world-page world-${page}`}>
-    <SectionRail sections={sections}/>
-    <section className="world-hero" id={`${page}-intro`}>
-      <p className="eyebrow"><span>{meta.eyebrow}</span></p>
-      <h1>{meta.title}</h1>
-      <article>{meta.intro}</article>
-      <div className="hero-trace"><i/><span>{page === "contact" ? "OPEN TO THE RIGHT PROBLEM" : "SCROLL TO FOLLOW THE SYSTEM"}</span></div>
-    </section>
-    <div className="story-sections">
-      {sections.map((section) => <section id={section.id} className="story-section" key={section.id}>
-        <aside><span>{section.label}</span><small>{section.kicker}</small></aside>
-        <Reveal className="story-body"><h2>{section.title}</h2>{section.body}</Reveal>
-      </section>)}
-    </div>
-  </main>;
+function SpatialArtifact({type="system"}) {
+  return <div className={`spatial-artifact artifact-${type}`} aria-hidden="true"><span/><span/><span/><span/><i/><i/><b/></div>;
 }
 
-function buildSections(page, navigate) {
-  const S = {
-    about: [
-      { id: "about-standard", label: "Standard", kicker: "OPERATING MODEL", title: "Build. Challenge. Prove.", body: <><p>Every serious project moves through the same discipline: build a bounded system, challenge its assumptions and runtime behavior, then strengthen the language of the claim only when evidence supports it.</p><div className="three-columns"><article><strong>Build</strong><span>Architecture with explicit state, authority, data provenance, and failure boundaries.</span></article><article><strong>Challenge</strong><span>Replay, adversarial checks, failure injection, edge cases, and operational stress.</span></article><article><strong>Prove</strong><span>Deterministic evidence, reviewable outputs, reproducible versions, and honest unresolved states.</span></article></div></> },
-      { id: "about-failure", label: "Failure", kicker: "ENGINEERING PRINCIPLE", title: "Failure is not a footnote. It is one of the primary inputs to the architecture.", body: <><p>Quality engineering taught me to reproduce defects. Systems work taught me to expose the conditions that created them. Applied AI and research work added another requirement: know when the system itself is too uncertain to make a strong claim.</p><blockquote>Reliable systems do not hide uncertainty. They make it inspectable.</blockquote></> },
-      { id: "about-domain", label: "Domain", kicker: "WHERE THE WORK CONVERGES", title: "AI, testing, automation, data, markets, observability, and governance are not separate interests here.", body: <><p>They meet in the same engineering question: can a complex system behave usefully under real constraints, and can we prove what it actually did?</p><div className="tag-field">{["AI/ML quality", "QA automation", "real-time data", "market microstructure", "replay", "runtime supervision", "evidence systems", "governed agents"].map((x) => <span key={x}>{x}</span>)}</div></> },
+function WorldPage({page,navigate}) {
+  const meta=STORY_META[page]||STORY_META.about; const sections=buildSections(page,navigate);
+  return <main className={`world-page world-${page}`}><SectionRail sections={sections}/><section className="world-hero" id={`${page}-intro`}><div className="hero-copy"><p className="eyebrow"><span>{meta.eyebrow}</span></p><h1>{meta.title}</h1><article>{meta.intro}</article><div className="hero-trace"><i/><span>{page==="contact"?"OPEN TO THE RIGHT PROBLEM":"SCROLL TO FOLLOW THE SYSTEM"}</span></div></div><SpatialArtifact type={page}/></section>
+    <div className="story-sections">{sections.map((section,i)=><section id={section.id} className={`story-section story-${i%2?"right":"left"}`} key={section.id}><aside><span>{section.label}</span><small>{section.kicker}</small></aside><Reveal className="story-body"><h2>{section.title}</h2>{section.body}</Reveal><div className="section-artefact"><SpatialArtifact type={section.visual||page}/></div></section>)}</div></main>;
+}
+
+function buildSections(page,navigate) {
+  const S={
+    about:[
+      {id:"about-standard",label:"Standard",kicker:"OPERATING MODEL",title:"Build. Challenge. Prove. Then keep the unresolved parts visible.",visual:"evidence",body:<><p>Every serious project moves through the same discipline: bound the system, define authority, expose the data path, challenge assumptions, reproduce failure, and only strengthen the claim when evidence supports it.</p><div className="three-columns"><article><strong>Build</strong><span>Explicit state, provenance, interfaces, runtime boundaries, and operational ownership.</span></article><article><strong>Challenge</strong><span>Replay, adversarial checks, stale-data cases, failure injection, edge conditions, and review.</span></article><article><strong>Prove</strong><span>Exact versions, deterministic outputs, manifests, CI, independent evidence, and honest unknowns.</span></article></div></>},
+      {id:"about-failure",label:"Failure",kicker:"ENGINEERING PRINCIPLE",title:"Failure is architecture information—not something to hide below the success state.",visual:"research",body:<><p>Quality engineering taught me to reproduce defects. Systems engineering made the question broader: which data, state, timing, authority, or runtime condition produced the behavior? Applied AI added another requirement—detect when confidence itself is unsupported.</p><blockquote>Reliable systems do not eliminate uncertainty. They make uncertainty inspectable and governable.</blockquote></>},
+      {id:"about-domain",label:"Domain",kicker:"WHERE THE WORK CONVERGES",title:"AI, testing, real-time data, markets, automation, observability, and governance meet in the same systems question.",visual:"stack",body:<><p>Can a complex system remain useful when the data is imperfect, the runtime changes, assumptions fail, and humans still need to understand what happened?</p><div className="tag-field">{["AI/ML quality","QA automation","real-time data","market microstructure","replay","runtime supervision","evidence systems","governed agents"].map((x)=><span key={x}>{x}</span>)}</div></>},
     ],
-    journey: [
-      { id: "journey-foundation", label: "Foundation", kicker: "QUALITY → AUTOMATION", title: "The first skill was learning to distrust a clean demo.", body: <><p>Manual and automated quality work built the habit of asking what changed, what was not covered, whether a failure could be reproduced, and whether a passing result was actually meaningful.</p><div className="journey-line"><span>Quality engineering</span><i/><span>Automation</span><i/><span>Systems thinking</span></div></> },
-      { id: "journey-expansion", label: "Expansion", kicker: "SYSTEMS → APPLIED AI", title: "The scope moved from test cases into feeds, runtimes, models, state, supervision, and failure boundaries.", body: <><p>That shift changed the work from verifying isolated behavior to engineering environments where data freshness, version authority, runtime state, model evaluation, and observability all affect whether a result can be trusted.</p></> },
-      { id: "journey-aixion", label: "Aixion", kicker: "RESEARCH → GOVERNED ENGINEERING", title: "Aixion Lab is where those disciplines became one engineering language.", body: <><p>TradeBot, the autonomous research loop, evidence tooling, Control Tower, market-structure research, and the public site are different systems, but they share the same principles: inspectable data, explicit authority, visible failure, and reproducible evidence.</p></> },
+    journey:[
+      {id:"journey-foundation",label:"Foundation",kicker:"QUALITY → AUTOMATION",title:"The first discipline was learning not to confuse a passing test with a trustworthy system.",visual:"journey",body:<><p>Manual and automated QA built the habit of asking what changed, what was not covered, whether a failure was reproducible, whether the environment mattered, and whether a green result actually represented the user-visible behavior.</p><div className="journey-line"><span>Quality engineering</span><i/><span>Automation</span><i/><span>Systems thinking</span></div></>},
+      {id:"journey-expansion",label:"Expansion",kicker:"SYSTEMS → APPLIED AI",title:"The scope moved from test cases into feeds, runtimes, models, state, supervision, and evidence.",visual:"projects",body:<><p>Real-time systems changed the definition of correctness. Data freshness, reconnect behavior, runtime ownership, model evaluation, replay integrity, process supervision, and operational authority became part of whether a result could be trusted.</p></>},
+      {id:"journey-aixion",label:"Aixion",kicker:"RESEARCH → GOVERNED ENGINEERING",title:"Aixion Lab is where those disciplines became one engineering language.",visual:"evidence",body:<><p>TradeBot, autonomous research, evidence tooling, Control Tower, microstructure studies, AI-quality work, and this public experience are different projects, but they share the same principles: inspectable data, explicit authority, visible failure, reproducible evidence, and disciplined claims.</p></>},
     ],
-    projects: [
-      { id: "projects-tradebot", label: "Flagship", kicker: "TRADEBOT", title: "A market-intelligence platform that became a systems-engineering problem.", body: <><p>TradeBot began around Indian index-options workflows and evolved into a governed research and observation platform spanning real-time feeds, options microstructure, replay, hypothesis evaluation, runtime authority, data freshness, observability, and evidence capture.</p><button className="text-action" onClick={(e) => navigate("tradebot", e.currentTarget)}>Open the engineering case study <Icon type="arrow" size={18}/></button></> },
-      { id: "projects-systems", label: "Systems", kicker: "PROGRAMS AROUND THE FLAGSHIP", title: "The surrounding systems became as important as the original application.", body: <div className="system-list"><article><strong>Autonomous Research Loop</strong><p>Turns broad research goals into bounded work, evidence, review, and explicit promotion states without letting automation manufacture confidence.</p></article><article><strong>Evidence Kernel</strong><p>Connects claims to exact versions, focused tests, reruns, manifests, freshness, and independent review.</p></article><article><strong>Aixion Control Tower</strong><p>Surfaces operational state, research lanes, validation progress, and public-safe system context.</p></article></div> },
-      { id: "projects-method", label: "Method", kicker: "WHY THESE PROJECTS MATTER", title: "The recurring work is architecture under uncertainty.", body: <><p>Feed outages, stale data, replay integrity, authority conflicts, invalid research assumptions, model overconfidence, and operational state all create ways for a system to look correct while being wrong. The engineering value is in making those failure modes visible and governable.</p></> },
+    projects:[
+      {id:"projects-tradebot",label:"Flagship",kicker:"TRADEBOT",title:"A market-intelligence platform that became a real-time systems, research, governance, and observability problem.",visual:"tradebot",body:<><p>TradeBot evolved from Indian index-options workflows into a governed research and observation platform spanning real-time feeds, options microstructure, replay, hypothesis evaluation, runtime authority, freshness, supervision, evidence capture, and failure analysis.</p><button className="text-action" onClick={(e)=>navigate("tradebot",e.currentTarget)}>Open the engineering case study <Icon type="arrow" size={18}/></button></>},
+      {id:"projects-systems",label:"Systems",kicker:"PROGRAMS AROUND THE FLAGSHIP",title:"The surrounding systems became as important as the original application.",visual:"projects",body:<div className="system-list"><article><strong>Autonomous Research Loop</strong><p>Turns broad research goals into bounded tasks, evidence, review, and explicit promotion states without allowing automation to manufacture confidence.</p></article><article><strong>Evidence Kernel</strong><p>Connects claims to exact versions, focused tests, deterministic reruns, manifests, freshness, and independent review.</p></article><article><strong>Aixion Control Tower</strong><p>Surfaces project authority, research state, validation progress, operational context, and public-safe system health.</p></article></div>},
+      {id:"projects-method",label:"Method",kicker:"WHY THE WORK IS HARD",title:"The recurring engineering problem is architecture under uncertainty.",visual:"evidence",body:<><p>Feed outages, stale quotes, replay artifacts, dirty runtime authority, environment differences, invalid research assumptions, model overconfidence, process duplication, and incomplete evidence all create ways for a system to look correct while being wrong. The work is to make those states observable and governable.</p></>},
     ],
-    research: [
-      { id: "research-lanes", label: "Lanes", kicker: "CURRENT RESEARCH FAMILIES", title: "Research is separated into questions that can fail independently.", body: <div className="research-lanes"><article><strong>Opening-session structure</strong><span>Context, constituents, futures, early-session behavior, and recurrence.</span></article><article><strong>Closing Auction Session</strong><span>Auction imbalance, breadth, futures convergence, and option response around the close.</span></article><article><strong>Options microstructure</strong><span>Bid/ask, liquidity, strikes, IV, Greeks, and short-horizon behavior.</span></article><article><strong>Regime & context</strong><span>When behavior changes because the surrounding market state changed.</span></article></div> },
-      { id: "research-method", label: "Method", kicker: "OUTCOME-BLIND DISCIPLINE", title: "A plausible story is not evidence.", body: <><p>Research lanes are designed around causal cutoffs, replay, holdout logic, adversarial checks, segmentation, and negative controls. When an idea fails, the failure remains part of the research record instead of disappearing from the narrative.</p><blockquote>Negative evidence is still engineering progress when it prevents a weak idea from being promoted later.</blockquote></> },
-      { id: "research-agents", label: "Agents", kicker: "AUTONOMOUS DISCOVERY", title: "Automation can expand search. It cannot be allowed to lower the standard of proof.", body: <><p>Agent-assisted research is useful when task boundaries, version authority, evidence requirements, and review states are explicit. The goal is not autonomous confidence. The goal is autonomous exploration inside governed limits.</p></> },
+    research:[
+      {id:"research-lanes",label:"Lanes",kicker:"CURRENT RESEARCH FAMILIES",title:"Research is separated into questions that can fail independently instead of one giant strategy narrative.",visual:"research",body:<div className="research-lanes"><article><strong>Opening-session structure</strong><span>Context, constituents, futures, early-session behavior, recurrence, and causal cutoffs.</span></article><article><strong>Closing Auction Session</strong><span>Auction imbalance, breadth, futures convergence, structural breakpoints, and option response.</span></article><article><strong>Options microstructure</strong><span>Bid/ask, liquidity, strikes, IV, Greeks, depth, and short-horizon behavior.</span></article><article><strong>Regime & context</strong><span>When signal behavior changes because the surrounding market state changed.</span></article></div>},
+      {id:"research-method",label:"Method",kicker:"OUTCOME-BLIND DISCIPLINE",title:"A plausible explanation is not evidence until the data path and timing survive challenge.",visual:"evidence",body:<><p>Research lanes use causal cutoffs, replay, holdout logic, segmentation, negative controls, adversarial checks, and explicit unsupported states. When an idea fails, the failure remains part of the research record instead of disappearing from the narrative.</p><blockquote>Negative evidence is engineering progress when it prevents a weak idea from being recycled later as conviction.</blockquote></>},
+      {id:"research-agents",label:"Agents",kicker:"AUTONOMOUS DISCOVERY",title:"Automation can expand the search space. It cannot be allowed to lower the standard of proof.",visual:"stack",body:<><p>Agent-assisted research is valuable when task boundaries, exact-version authority, evidence requirements, collision avoidance, and independent review are explicit. The goal is not autonomous confidence. It is autonomous exploration inside governed limits.</p></>},
     ],
-    evidence: [
-      { id: "evidence-version", label: "Authority", kicker: "EXACT VERSION TRUTH", title: "Every important result needs an exact answer to: what code actually ran?", body: <><p>Exact commit authority, clean checkouts, frozen candidates, immutable evidence, and explicit runtime ownership prevent a passing result from being silently separated from the software that produced it.</p></> },
-      { id: "evidence-replay", label: "Replay", kicker: "REPRODUCIBILITY", title: "A result that cannot survive a deterministic rerun is not a strong result.", body: <><p>Replay, deterministic outputs, freshness checks, fixtures, manifests, and focused regression testing are used to distinguish a real behavior change from an artifact of data, runtime, or environment.</p></> },
-      { id: "evidence-gates", label: "Gates", kicker: "FAIL CLOSED", title: "Unknown is allowed to remain unknown.", body: <><p>Promotion gates, CI, independent review, read-only/live separation, stale-data rejection, and explicit safety flags are designed to stop unsupported states from turning into optimistic labels.</p><div className="evidence-path"><span>Implementation</span><i/><span>Adversarial</span><i/><span>Integration</span><i/><span>Evidence</span><i/><span>Review</span></div></> },
+    evidence:[
+      {id:"evidence-version",label:"Authority",kicker:"EXACT VERSION TRUTH",title:"Every important result needs an exact answer to one question: what code actually ran?",visual:"evidence",body:<><p>Clean checkouts, exact commit authority, frozen candidates, immutable evidence, explicit runtime ownership, and controlled promotion prevent a passing result from becoming detached from the software that produced it.</p></>},
+      {id:"evidence-replay",label:"Replay",kicker:"REPRODUCIBILITY",title:"A result that cannot survive a deterministic rerun is not a strong result.",visual:"research",body:<><p>Replay, deterministic outputs, fixtures, manifests, freshness checks, focused regression testing, and environment comparison are used to separate a real behavior change from an artifact of data, runtime, or setup.</p></>},
+      {id:"evidence-gates",label:"Gates",kicker:"FAIL CLOSED",title:"Unknown is allowed to remain unknown—and that is a feature, not a failure of presentation.",visual:"tower",body:<><p>Promotion gates, CI, independent review, read-only/live separation, stale-data rejection, explicit authority flags, and evidence freshness are designed to stop unsupported states from being promoted into optimistic labels.</p><div className="evidence-path"><span>Implementation</span><i/><span>Adversarial</span><i/><span>Integration</span><i/><span>Evidence</span><i/><span>Review</span></div></>},
     ],
-    tower: [
-      { id: "tower-purpose", label: "Purpose", kicker: "PUBLIC-SAFE OBSERVABILITY", title: "Understand the system without exposing the system.", body: <><p>Control Tower is meant to show the shape of operational engineering: project state, research lanes, evidence gates, build status, observation mode, and public-safe health indicators without publishing credentials, private controls, or proprietary strategy logic.</p></> },
-      { id: "tower-truth", label: "Truth", kicker: "NO FAKE LIVE STATUS", title: "Operational visuals are useful only when their truth boundary is visible.", body: <><p>Any non-live state must be labeled as demonstration, sanitized, delayed, offline replay, research, or public status. The interface should never imply production authority it does not actually have.</p><div className="tag-field">{["DEMONSTRATION DATA", "SANITIZED", "OFFLINE REPLAY", "RESEARCH", "PUBLIC STATUS"].map((x) => <span key={x}>{x}</span>)}</div></> },
-      { id: "tower-next", label: "Next", kicker: "CONTROL SURFACE", title: "The long-term idea is a governed view across systems, not another dashboard full of decorative metrics.", body: <><p>The useful version of Control Tower connects project authority, system health, research evidence, runtime events, and human approval points into one explainable surface.</p></> },
+    tower:[
+      {id:"tower-purpose",label:"Purpose",kicker:"PUBLIC-SAFE OBSERVABILITY",title:"Understand the system without exposing the system.",visual:"tower",body:<><p>Control Tower is designed to show project authority, research state, evidence gates, build status, observation mode, runtime health, and public-safe operational context without publishing credentials, private controls, or proprietary strategy logic.</p></>},
+      {id:"tower-truth",label:"Truth",kicker:"NO FAKE LIVE STATUS",title:"Operational visuals are useful only when their truth boundary is visible.",visual:"evidence",body:<><p>Every non-live state must be labeled honestly: demonstration, sanitized, delayed, offline replay, research, or public status. The interface should never imply production authority or live execution that it does not actually have.</p><div className="tag-field">{["DEMONSTRATION DATA","SANITIZED","OFFLINE REPLAY","RESEARCH","PUBLIC STATUS"].map((x)=><span key={x}>{x}</span>)}</div></>},
+      {id:"tower-next",label:"Next",kicker:"CONTROL SURFACE",title:"The goal is not another dashboard full of decorative metrics. It is one explainable surface across authority, evidence, runtime state, and human decisions.",visual:"projects",body:<><p>The useful Control Tower connects project authority, system health, research evidence, runtime events, validation state, and human approval points so operational judgment has context rather than just numbers.</p></>},
     ],
-    stack: [
-      { id: "stack-quality", label: "Quality", kicker: "QUALITY & AUTOMATION", title: "Testing is where the engineering discipline started.", body: <div className="stack-groups"><article><strong>Quality & automation</strong><p>Java · Selenium · Appium · Jira/Xray · regression · integration · scenario design</p></article><article><strong>Research & applied AI</strong><p>Python · XGBoost · time-series analysis · replay · model evaluation · experimentation</p></article></div> },
-      { id: "stack-runtime", label: "Runtime", kicker: "DATA & SYSTEMS", title: "Real-time systems require a different definition of correctness.", body: <div className="stack-groups"><article><strong>Data & runtime</strong><p>WebSockets · real-time feeds · Parquet · event processing · freshness · supervision · observability</p></article><article><strong>Engineering workflow</strong><p>Git · GitHub · CI · pytest · exact-version authority · evidence manifests · agent-assisted engineering</p></article></div> },
-      { id: "stack-product", label: "Product", kicker: "WEB & EXPERIENCE", title: "The public product is being engineered with the same concern for state, motion, accessibility, and performance.", body: <><p>React, Vite, Canvas, SVG, animation systems, responsive interaction, reduced-motion fallbacks, and public/private information boundaries are used to make Aixion Lab itself part of the engineering portfolio.</p></> },
+    stack:[
+      {id:"stack-quality",label:"Quality",kicker:"QUALITY & AUTOMATION",title:"Testing is where the engineering discipline started, but it did not stay limited to test execution.",visual:"stack",body:<div className="stack-groups"><article><strong>Quality & automation</strong><p>Java · Selenium · Appium · Jira/Xray · regression · integration · scenario design · failure reproduction</p></article><article><strong>Research & applied AI</strong><p>Python · XGBoost · time-series analysis · replay · model evaluation · experimentation · agent-assisted workflows</p></article></div>},
+      {id:"stack-runtime",label:"Runtime",kicker:"DATA & SYSTEMS",title:"Real-time systems require a different definition of correctness: freshness, timing, state, and recovery matter.",visual:"projects",body:<div className="stack-groups"><article><strong>Data & runtime</strong><p>WebSockets · real-time feeds · Parquet · event processing · freshness · supervision · observability · replay</p></article><article><strong>Engineering workflow</strong><p>Git · GitHub · CI · pytest · exact-version authority · evidence manifests · review gates · agent-assisted engineering</p></article></div>},
+      {id:"stack-product",label:"Product",kicker:"WEB & EXPERIENCE",title:"The public experience is also an engineering system: state, motion, accessibility, performance, and truth boundaries all matter.",visual:"about",body:<><p>React, Vite, Canvas, SVG, scroll choreography, responsive interaction, reduced-motion fallbacks, semantic HTML, and public/private information boundaries are used to make Aixion Lab itself part of the engineering portfolio.</p></>},
     ],
-    contact: [
-      { id: "contact-work", label: "Work", kicker: "WHERE I FIT BEST", title: "Roles where quality engineering, AI systems, automation, data, and reliability overlap.", body: <><p>I am especially interested in AI/ML testing, quality engineering, SDET/automation, applied AI systems, research tooling, observability, platform reliability, and engineering roles where difficult systems need strong validation.</p></> },
-      { id: "contact-proof", label: "Proof", kicker: "START WITH THE WORK", title: "The fastest way to understand the engineering is to follow the projects and evidence.", body: <><a className="contact-link" href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github" size={19}/> Selected engineering work on GitHub</a><p>Private implementation details stay private. Public case studies focus on architecture, constraints, failure modes, validation, and what the work taught me.</p></> },
-      { id: "contact-talk", label: "Talk", kicker: "CONTACT", title: "If the problem is difficult enough to require engineering judgment, I am interested in the conversation.", body: <form className="contact-form" onSubmit={(e) => e.preventDefault()}><label>Name<input placeholder="Your name"/></label><label>Email<input type="email" placeholder="you@company.com"/></label><label>What are you building?<textarea rows="4" placeholder="A role, a system, a research problem, or a collaboration..."/></label><button type="submit">Contact flow — connect email before launch</button></form> },
+    contact:[
+      {id:"contact-work",label:"Work",kicker:"WHERE I FIT BEST",title:"Roles where quality engineering, AI systems, automation, data, and reliability overlap.",visual:"contact",body:<><p>I am especially interested in AI/ML testing, SDET and automation, applied AI systems, research tooling, observability, platform reliability, and engineering work where complex behavior has to be validated rather than assumed.</p></>},
+      {id:"contact-proof",label:"Proof",kicker:"START WITH THE WORK",title:"The fastest way to understand the engineering is to follow the projects, failures, and evidence.",visual:"projects",body:<><a className="contact-link" href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github" size={19}/> Selected engineering work on GitHub</a><p>Private implementation details stay private. Public case studies focus on architecture, constraints, failure modes, validation, governance, observability, and what the work actually proved.</p></>},
+      {id:"contact-talk",label:"Talk",kicker:"CONTACT",title:"If the problem is difficult enough to require engineering judgment, I am interested in the conversation.",visual:"contact",body:<div className="contact-actions"><a href="mailto:contact@aixionlabs.com">contact@aixionlabs.com</a><a href={GITHUB} target="_blank" rel="noreferrer">GitHub <Icon type="arrow" size={16}/></a></div>},
     ],
   };
-  return S[page] || S.about;
+  return S[page]||S.about;
 }
 
-function TradeBotPage({ navigate }) {
-  const sections = [
-    { id: "tradebot-problem", label: "Problem" },
-    { id: "tradebot-system", label: "System" },
-    { id: "tradebot-failure", label: "Failure" },
-    { id: "tradebot-evidence", label: "Evidence" },
+function useActiveStage(ids) {
+  const [active,setActive]=useState(0);
+  useEffect(()=>{
+    const onScroll=()=>{
+      const target=innerHeight*.48;
+      let best=0,bestDist=Infinity;
+      ids.forEach((id,i)=>{const el=document.getElementById(id);if(!el)return;const r=el.getBoundingClientRect();const center=r.top+r.height*.42;const d=Math.abs(center-target);if(d<bestDist){bestDist=d;best=i}});
+      setActive(best);
+    };
+    onScroll(); addEventListener("scroll",onScroll,{passive:true}); addEventListener("resize",onScroll); return()=>{removeEventListener("scroll",onScroll);removeEventListener("resize",onScroll)};
+  },[ids]);
+  return active;
+}
+
+function TradeBotVisual({active}) {
+  const labels=["INGEST","RESEARCH","GOVERN","OBSERVE","PROVE"];
+  return <div className={`tradebot-visual stage-${active}`} aria-hidden="true"><div className="visual-orbit orbit-one"/><div className="visual-orbit orbit-two"/><div className="visual-core"><Emblem/><span>TRADEBOT</span></div><div className="visual-flow">{labels.map((l,i)=><div key={l} className={`visual-node n-${i} ${i<=active?"lit":""}`}><i/><strong>{l}</strong></div>)}</div><div className="packet-field">{Array.from({length:18},(_,i)=><i key={i} style={{"--i":i}}/>)}</div><div className="stage-caption"><span>{String(active+1).padStart(2,"0")}</span><strong>{labels[active]}</strong></div></div>;
+}
+
+function TradeBotPage({navigate}) {
+  const stages=[
+    {id:"tradebot-problem",label:"01 / Constraint",kicker:"REAL-TIME INPUT",title:"A signal is meaningless if the system cannot prove what data reached the decision path.",body:"The first engineering problem is feed truth: quote/depth ingestion, freshness, reconnect behavior, aligned snapshots, provenance, and the distinction between connected, fresh, verified, and actually usable market state."},
+    {id:"tradebot-research",label:"02 / Research",kicker:"HYPOTHESIS UNDER PRESSURE",title:"The research layer exists to make attractive explanations fail before they become strategy claims.",body:"Replay, causal cutoffs, option-chain and microstructure studies, context segmentation, negative controls, holdout logic, and explicit unsupported states are used to separate plausible stories from repeatable behavior."},
+    {id:"tradebot-govern",label:"03 / Govern",kicker:"AUTHORITY & PROMOTION",title:"The runtime must know not only what it can do—but what it is not authorized to do.",body:"Exact-version authority, clean candidate state, read-only observation, fail-closed promotion gates, explicit execution boundaries, and immutable evidence prevent research, runtime, and trading authority from collapsing into one ambiguous mode."},
+    {id:"tradebot-observe",label:"04 / Observe",kicker:"SYSTEM BEHAVIOR",title:"Failures in feeds, processes, freshness, evidence, and environment need to be visible before they are mistaken for strategy behavior.",body:"Observability covers feed health, stale-data detection, reconnect events, process supervision, runtime state, candidate traces, session evidence, and the operational incidents that explain why a system behaved differently from the model."},
+    {id:"tradebot-prove",label:"05 / Prove",kicker:"EVIDENCE BOUNDARY",title:"The end product is not a confident answer. It is an answer with a traceable reason to trust—or reject—it.",body:"Focused tests, deterministic reruns, manifests, exact commits, independent review, regression checks, and public/private boundaries make it possible to show engineering depth without exposing proprietary signal logic, credentials, strategy thresholds, or private code."},
   ];
-  return <main className="tradebot-page">
-    <SectionRail sections={sections}/>
-    <section className="tradebot-hero" id="tradebot-problem">
-      <button className="return-projects" onClick={(e) => navigate("projects", e.currentTarget)}>← Projects</button>
-      <p className="eyebrow"><span>FLAGSHIP SYSTEM · TRADEBOT</span></p>
-      <h1>Engineering market intelligence under real operational constraints.</h1>
-      <article>TradeBot is a governed market-intelligence and research platform for Indian index-options workflows. The interesting engineering is not the promise of a signal. It is the infrastructure required to know whether data, runtime state, replay, research logic, and evidence are trustworthy enough to support one.</article>
-    </section>
-    <section className="tradebot-section" id="tradebot-system"><aside><span>System</span><small>FOUR ENGINEERING PLANES</small></aside><Reveal className="story-body"><h2>Data, research, governance, and observability had to become first-class systems.</h2><div className="tradebot-planes"><article><strong>Data plane</strong><p>Real-time feeds, quote/depth ingestion, aligned snapshots, replay sources, persistence, freshness, and provenance.</p></article><article><strong>Research plane</strong><p>Hypothesis evaluation, options microstructure, causal cutoffs, replay analysis, regime/context work, and negative results.</p></article><article><strong>Governance plane</strong><p>Exact-version authority, read-only observation modes, fail-closed promotion gates, immutable evidence, and explicit execution boundaries.</p></article><article><strong>Observability plane</strong><p>Feed health, reconnect behavior, stale-data detection, runtime events, process supervision, candidate traces, and session evidence.</p></article></div></Reveal></section>
-    <section className="tradebot-section" id="tradebot-failure"><aside><span>Failure</span><small>WHAT MADE THE PROJECT HARD</small></aside><Reveal className="story-body"><h2>The difficult part was distinguishing strategy failure from system failure.</h2><p>Real engineering work appeared in the gaps: feed stalls, stale quotes, runtime authority conflicts, replay artifacts, inconsistent evidence, environment differences, dirty worktrees, process duplication, and research assumptions that looked convincing until they were challenged.</p><div className="failure-chain"><span>Symptom</span><i/><span>Root cause</span><i/><span>Guardrail</span><i/><span>Evidence</span></div><blockquote>The system became more valuable when it learned to say “not proven” for the right reasons.</blockquote></Reveal></section>
-    <section className="tradebot-section" id="tradebot-evidence"><aside><span>Evidence</span><small>PUBLIC / PRIVATE BOUNDARY</small></aside><Reveal className="story-body"><h2>Show the engineering depth without publishing the implementation that creates the edge.</h2><p>Public material can safely show architecture, methodology, failure modes, research questions, sanitized operational evidence, governance patterns, and engineering lessons.</p><div className="privacy-grid"><article><strong>Public</strong><span>Architecture · validation · observability · failure analysis · research method · lessons</span></article><article><strong>Private</strong><span>Credentials · private endpoints · proprietary signal logic · strategy thresholds · write controls · sensitive datasets · private code</span></article></div></Reveal></section>
+  const active=useActiveStage(stages.map((s)=>s.id));
+  return <main className="tradebot-page"><button className="return-projects" onClick={(e)=>navigate("projects",e.currentTarget)}>← Projects</button><section className="tradebot-opening"><p className="eyebrow"><span>FLAGSHIP ENGINEERING SYSTEM · TRADEBOT</span></p><h1>Market intelligence is easy to claim.<br/><em>Harder to prove.</em></h1><article>TradeBot is a governed market-intelligence and research platform for Indian index-options workflows. The engineering value is not a promise of prediction. It is the infrastructure required to distinguish feed failure from strategy failure, replay artifacts from live behavior, and promising hypotheses from evidence strong enough to support a claim.</article><div className="hero-trace"><i/><span>SCROLL THROUGH THE ENGINEERING PATH</span></div></section>
+    <div className="tradebot-narrative"><div className="tradebot-pin"><TradeBotVisual active={active}/></div><div className="tradebot-stages">{stages.map((s,i)=><section className={`tradebot-stage ${active===i?"active":""}`} id={s.id} key={s.id}><span>{s.label}</span><small>{s.kicker}</small><h2>{s.title}</h2><p>{s.body}</p>{i===4&&<div className="privacy-grid"><article><strong>Public</strong><span>Architecture · validation · observability · failure analysis · research method · lessons</span></article><article><strong>Private</strong><span>Credentials · private endpoints · proprietary signal logic · strategy thresholds · write controls · sensitive datasets · private code</span></article></div>}</section>)}</div></div>
   </main>;
 }
 
-function DeepSpace({ onExit }) {
-  const canvasRef = useRef(null);
-  const [tick, setTick] = useState(0);
-  const [armed, setArmed] = useState(false);
-  const words = ["END", "IS", "THE", "NEW", "BEGINNING"];
-  const word = words[tick % words.length];
-  const hold = word === "BEGINNING";
-
-  useEffect(() => {
-    const id = window.setTimeout(() => setTick((v) => v + 1), hold ? 2200 : 1350);
-    return () => window.clearTimeout(id);
-  }, [tick, hold]);
-
-  useEffect(() => {
-    const arm = window.setTimeout(() => setArmed(true), 850);
-    return () => window.clearTimeout(arm);
-  }, []);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    let raf = 0;
-    let W = 0;
-    let H = 0;
-    let DPR = 1;
-    const stars = Array.from({ length: 210 }, () => ({
-      x: (Math.random() - .5) * 1900,
-      y: (Math.random() - .5) * 1300,
-      z: Math.random() * 1700 + 60,
-      pz: 0,
-      red: Math.random() < .18,
-    }));
-    const reset = (s, far = true) => {
-      s.x = (Math.random() - .5) * 1900;
-      s.y = (Math.random() - .5) * 1300;
-      s.z = far ? 1700 : Math.random() * 1700 + 60;
-      s.pz = s.z;
-    };
-    const resize = () => {
-      DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-      W = window.innerWidth;
-      H = window.innerHeight;
-      canvas.width = W * DPR;
-      canvas.height = H * DPR;
-      canvas.style.width = `${W}px`;
-      canvas.style.height = `${H}px`;
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    };
-    const draw = (t) => {
-      ctx.fillStyle = "rgba(1,2,4,.30)";
-      ctx.fillRect(0, 0, W, H);
-      const fov = Math.min(W, H) * 0.95;
-      const cx = W / 2;
-      const cy = H / 2;
-      const speed = 17 + Math.sin(t * .0015) * 3;
-      stars.forEach((s) => {
-        s.pz = s.z;
-        s.z -= speed;
-        if (s.z < 16) reset(s, true);
-        const x = cx + (s.x / s.z) * fov;
-        const y = cy + (s.y / s.z) * fov;
-        const px = cx + (s.x / s.pz) * fov;
-        const py = cy + (s.y / s.pz) * fov;
-        if (x < -180 || x > W + 180 || y < -180 || y > H + 180) { reset(s, true); return; }
-        const alpha = Math.max(.08, 1 - s.z / 1750);
-        ctx.strokeStyle = s.red ? `rgba(255,58,69,${Math.min(.85, alpha + .18)})` : `rgba(235,242,255,${Math.min(.7, alpha)})`;
-        ctx.lineWidth = s.red ? 1.35 : .75;
-        ctx.beginPath();
-        ctx.moveTo(px, py);
-        ctx.lineTo(x, y);
-        ctx.stroke();
-      });
-      for (let i = 0; i < 7; i++) {
-        const a = t * .00022 + i * .9;
-        const r = 150 + i * 72 + Math.sin(t * .0007 + i) * 30;
-        const x = cx + Math.cos(a) * r;
-        const y = cy + Math.sin(a * 1.13) * r * .55;
-        ctx.strokeStyle = `rgba(255,57,68,${.025 + i * .004})`;
-        ctx.beginPath();
-        ctx.arc(x, y, 24 + i * 7, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-      raf = requestAnimationFrame(draw);
-    };
-    resize();
-    ctx.fillStyle = "#010204";
-    ctx.fillRect(0, 0, W, H);
-    window.addEventListener("resize", resize);
-    raf = requestAnimationFrame(draw);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  useEffect(() => {
-    const key = (e) => { if (e.key === "Escape" && armed) onExit(); };
-    window.addEventListener("keydown", key);
-    return () => window.removeEventListener("keydown", key);
-  }, [armed, onExit]);
-
-  return <main className="deep-space" onClick={() => armed && onExit()} role="button" tabIndex="0" aria-label="Aixion Deep Space. Click or press Escape to return Home">
-    <canvas ref={canvasRef}/>
-    <div className="deep-vignette"/>
-    <StandaloneEmblem className="deep-emblem"/>
-    <div className="deep-word-stage" aria-live="off"><span key={tick} className={`deep-word ${hold ? "hold" : ""}`}>{word}</span></div>
-    <small>CLICK ANYWHERE OR PRESS ESC TO RETURN</small>
-  </main>;
+function DeepSpace({onExit}) {
+  const canvasRef=useRef(null); const [tick,setTick]=useState(0); const [armed,setArmed]=useState(false); const words=["END","IS","THE","NEW","BEGINNING"]; const word=words[tick%words.length]; const hold=word==="BEGINNING";
+  useEffect(()=>{const id=setTimeout(()=>setTick((v)=>v+1),hold?2100:1120);return()=>clearTimeout(id)},[tick,hold]);
+  useEffect(()=>{const arm=setTimeout(()=>setArmed(true),900);return()=>clearTimeout(arm)},[]);
+  useEffect(()=>{
+    const canvas=canvasRef.current,ctx=canvas.getContext("2d"); let raf=0,W=0,H=0,DPR=1;
+    const stars=Array.from({length:250},()=>({x:(Math.random()-.5)*2100,y:(Math.random()-.5)*1450,z:Math.random()*1900+70,pz:0,red:Math.random()<.2}));
+    const reset=(s)=>{s.x=(Math.random()-.5)*2100;s.y=(Math.random()-.5)*1450;s.z=1900;s.pz=s.z};
+    const resize=()=>{DPR=Math.min(devicePixelRatio||1,1.5);W=innerWidth;H=innerHeight;canvas.width=W*DPR;canvas.height=H*DPR;canvas.style.width=`${W}px`;canvas.style.height=`${H}px`;ctx.setTransform(DPR,0,0,DPR,0,0)};
+    const draw=(t)=>{ctx.fillStyle="rgba(1,2,4,.26)";ctx.fillRect(0,0,W,H);const fov=Math.min(W,H)*1.04,cx=W/2,cy=H/2,speed=23+Math.sin(t*.0015)*4;stars.forEach((s)=>{s.pz=s.z;s.z-=speed;if(s.z<16)reset(s);const x=cx+(s.x/s.z)*fov,y=cy+(s.y/s.z)*fov,px=cx+(s.x/s.pz)*fov,py=cy+(s.y/s.pz)*fov;if(x<-220||x>W+220||y<-220||y>H+220){reset(s);return}const alpha=Math.max(.08,1-s.z/1950);ctx.strokeStyle=s.red?`rgba(255,58,69,${Math.min(.92,alpha+.2)})`:`rgba(235,242,255,${Math.min(.78,alpha)})`;ctx.lineWidth=s.red?1.45:.8;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(x,y);ctx.stroke()});raf=requestAnimationFrame(draw)};
+    resize();ctx.fillStyle="#010204";ctx.fillRect(0,0,W,H);addEventListener("resize",resize);raf=requestAnimationFrame(draw);return()=>{cancelAnimationFrame(raf);removeEventListener("resize",resize)};
+  },[]);
+  useEffect(()=>{const key=(e)=>{if(e.key==="Escape"&&armed)onExit()};addEventListener("keydown",key);return()=>removeEventListener("keydown",key)},[armed,onExit]);
+  return <main className="deep-space" onClick={()=>armed&&onExit()} role="button" tabIndex="0" aria-label="Aixion Deep Space. Click or press Escape to return Home"><canvas ref={canvasRef}/><div className="deep-vignette"/><Emblem className="deep-emblem"/><div className="deep-word-stage"><span key={tick} className={`deep-word ${hold?"hold":""}`}>{word}</span></div><small>CLICK ANYWHERE OR PRESS ESC TO RETURN</small></main>;
 }
 
 createRoot(document.getElementById("root")).render(<App/>);
