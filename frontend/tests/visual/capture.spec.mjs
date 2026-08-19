@@ -18,7 +18,7 @@ const ROUTES = [
 ];
 
 const TRADEBOT_STAGES = [
-  ['08a-tradebot-ingest-current.png', 'tradebot-ingest'],
+  ['08a-tradebot-constraint-current.png', 'tradebot-problem'],
   ['08b-tradebot-research-current.png', 'tradebot-research'],
   ['08c-tradebot-govern-current.png', 'tradebot-govern'],
   ['08d-tradebot-observe-current.png', 'tradebot-observe'],
