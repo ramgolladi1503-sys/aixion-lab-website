@@ -4,20 +4,20 @@ import "./styles.css";
 
 const GITHUB = "https://github.com/ramgolladi1503-sys";
 const BRAND = "/brand/aixion-lab-brand-lockup.webp";
-const ORBIT_SECONDS = 72;
+const EMBLEM = "/brand/aixion-emblem.svg";
 
 const NODES = [
-  { key: "about", label: "About", angle: -90 },
-  { key: "journey", label: "Journey", angle: -45 },
-  { key: "projects", label: "Projects", angle: 0 },
-  { key: "research", label: "Research", angle: 45 },
-  { key: "evidence", label: "Evidence", angle: 90 },
-  { key: "tower", label: "Control Tower", angle: 135 },
-  { key: "stack", label: "Stack", angle: 180 },
-  { key: "contact", label: "Contact", angle: 225 },
-];
+  ["about", "About", -90],
+  ["journey", "Journey", -45],
+  ["projects", "Projects", 0],
+  ["research", "Research", 45],
+  ["evidence", "Evidence", 90],
+  ["tower", "Control Tower", 135],
+  ["stack", "Stack", 180],
+  ["contact", "Contact", 225],
+].map(([key, label, angle]) => ({ key, label, angle }));
 
-const META = Object.fromEntries(NODES.map((node) => [node.key, node]));
+const META = Object.fromEntries(NODES.map((n) => [n.key, n]));
 
 const pathFor = (key) => {
   if (key === "home") return "/";
@@ -27,16 +27,16 @@ const pathFor = (key) => {
 };
 
 const pageFor = (pathname) => {
-  const path = pathname.replace(/\/+$/, "") || "/";
-  if (path === "/") return "home";
-  if (path === "/core") return "core";
-  if (path === "/control-tower") return "tower";
-  if (path === "/projects/tradebot") return "tradebot";
-  const key = path.slice(1);
+  const p = pathname.replace(/\/+$/, "") || "/";
+  if (p === "/") return "home";
+  if (p === "/core") return "core";
+  if (p === "/control-tower") return "tower";
+  if (p === "/projects/tradebot") return "tradebot";
+  const key = p.slice(1);
   return META[key] ? key : "home";
 };
 
-function Icon({ type, size = 21 }) {
+function Icon({ type, size = 20 }) {
   const paths = {
     about: <><circle cx="12" cy="8" r="3"/><path d="M5.5 20c.7-4.2 3-6.2 6.5-6.2s5.8 2 6.5 6.2"/></>,
     journey: <><path d="M4 18c2.2-5.6 5.2-8.3 9-8.3h6"/><path d="m16 6 3 3.7-3 3.7"/><circle cx="5" cy="18" r="1.5"/></>,
@@ -47,127 +47,125 @@ function Icon({ type, size = 21 }) {
     stack: <><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4M4 17l8 4 8-4"/></>,
     contact: <><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></>,
     github: <path d="M9 19c-4 1.2-4-2-5.5-2.5M14.5 21v-3.1c0-.9.1-1.5-.4-2.1 3-.3 6.2-1.5 6.2-6.7A5.2 5.2 0 0 0 19 5.5 4.8 4.8 0 0 0 18.9 2S17.8 1.7 15 3.4a12.2 12.2 0 0 0-6 0C6.2 1.7 5.1 2 5.1 2A4.8 4.8 0 0 0 5 5.5a5.2 5.2 0 0 0-1.3 3.6c0 5.2 3.2 6.4 6.2 6.7-.4.5-.6 1.2-.5 2.1V21"/>,
-    arrow: <path d="M5 12h14M14 7l5 5-5 5"/>,
+    arrow: <><path d="M5 12h14M14 7l5 5-5 5"/></>,
   };
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {paths[type] || paths.projects}
-    </svg>
-  );
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.55" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[type] || paths.projects}</svg>;
 }
 
-function Mark({ className = "" }) {
-  return <span className={`brand-mark ${className}`} aria-hidden="true"><img src={BRAND} alt="" /></span>;
-}
-
-function BrandLockup({ className = "" }) {
-  return <img className={`brand-lockup ${className}`} src={BRAND} alt="AIXION LAB — End is the new beginning" />;
-}
-
-function getOrigin(element) {
-  if (!element) return { x: innerWidth / 2, y: innerHeight / 2 };
-  const rect = element.getBoundingClientRect();
-  return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-}
-
-function ComputationalField({ mode = "home", hot = false, transitioning = false }) {
-  const canvasRef = useRef(null);
-  const modeRef = useRef(mode);
-  const hotRef = useRef(hot);
-  const transitionRef = useRef(transitioning);
-
-  useEffect(() => { modeRef.current = mode; }, [mode]);
-  useEffect(() => { hotRef.current = hot; }, [hot]);
-  useEffect(() => { transitionRef.current = transitioning; }, [transitioning]);
-
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(false);
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
+  return reduced;
+}
+
+function StandaloneEmblem({ className = "", alt = "" }) {
+  return <img className={`standalone-emblem ${className}`} src={EMBLEM} alt={alt} />;
+}
+
+function CursorSystem() {
+  const dot = useRef(null);
+  const halo = useRef(null);
+  useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    const move = (e) => {
+      if (dot.current) dot.current.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0)`;
+      if (halo.current) halo.current.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0)`;
+    };
+    const over = (e) => {
+      const hot = e.target.closest("button,a,[data-cursor]");
+      halo.current?.classList.toggle("hot", !!hot);
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    document.addEventListener("pointerover", over, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerover", over);
+    };
+  }, []);
+  return <><i ref={dot} className="cursor-dot"/><i ref={halo} className="cursor-halo"/></>;
+}
+
+function ComputationalField({ mode = "home", boost = false }) {
+  const ref = useRef(null);
+  const modeRef = useRef(mode);
+  const boostRef = useRef(boost);
+  useEffect(() => { modeRef.current = mode; }, [mode]);
+  useEffect(() => { boostRef.current = boost; }, [boost]);
+  useEffect(() => {
+    const canvas = ref.current;
     const ctx = canvas.getContext("2d");
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     let raf = 0;
-    let width = 0;
-    let height = 0;
-    let dpr = 1;
+    let W = 0;
+    let H = 0;
+    let DPR = 1;
     const pointer = { x: 0, y: 0 };
-    const count = innerWidth < 700 ? 78 : 126;
-
-    const points = Array.from({ length: count }, (_, i) => ({
-      x: ((i * 67 + 13) % 101) / 101,
-      y: ((i * 43 + 19) % 97) / 97,
-      vx: (((i % 9) - 4) || 1) * 0.000038,
-      vy: ((((i * 5) % 9) - 4) || -1) * 0.000034,
-      seed: i * 0.71,
-      hot: i % 13 === 0,
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const points = Array.from({ length: 132 }, (_, i) => ({
+      x: ((i * 59 + 13) % 137) / 137,
+      y: ((i * 83 + 31) % 149) / 149,
+      vx: (((i * 7) % 11) - 5) * 0.000018,
+      vy: (((i * 5) % 13) - 6) * 0.000016,
+      phase: i * 0.63,
+      accent: i % 13 === 0,
     }));
-
-    const streams = Array.from({ length: innerWidth < 700 ? 5 : 11 }, (_, i) => ({
-      y: (i + 1) / 12,
-      speed: 0.00012 + (i % 5) * 0.000035,
-      phase: i * 0.17,
-      direction: i % 2 ? 1 : -1,
-    }));
-
     const resize = () => {
-      dpr = Math.min(devicePixelRatio || 1, innerWidth < 700 ? 1.25 : 1.6);
-      width = innerWidth;
-      height = innerHeight;
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      DPR = Math.min(window.devicePixelRatio || 1, 1.55);
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = W * DPR;
+      canvas.height = H * DPR;
+      canvas.style.width = `${W}px`;
+      canvas.style.height = `${H}px`;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     };
-
-    const move = (event) => {
-      pointer.x = event.clientX / Math.max(width, 1) - 0.5;
-      pointer.y = event.clientY / Math.max(height, 1) - 0.5;
+    const pointerMove = (e) => {
+      pointer.x = e.clientX / Math.max(W, 1) - 0.5;
+      pointer.y = e.clientY / Math.max(H, 1) - 0.5;
     };
-
-    const draw = (time) => {
-      ctx.clearRect(0, 0, width, height);
-      const energy = transitionRef.current ? 2.4 : hotRef.current ? 1.55 : 1;
-      const driftBoost = transitionRef.current ? 2.2 : modeRef.current === "home" ? 1.25 : 1;
-
-      const glow = ctx.createRadialGradient(
-        width * (0.5 + pointer.x * 0.06),
-        height * (0.46 + pointer.y * 0.05),
-        0,
-        width * 0.5,
-        height * 0.5,
-        Math.max(width, height) * 0.72
-      );
-      glow.addColorStop(0, `rgba(255,48,61,${0.05 * energy})`);
-      glow.addColorStop(0.42, "rgba(16,18,24,.12)");
+    const draw = (t) => {
+      ctx.clearRect(0, 0, W, H);
+      const boostValue = boostRef.current ? 2.15 : 1;
+      const modeValue = modeRef.current === "research" ? 1.15 : modeRef.current === "evidence" ? 0.95 : 1;
+      const speed = boostValue * modeValue;
+      const glow = ctx.createRadialGradient(W * (0.5 + pointer.x * 0.05), H * (0.47 + pointer.y * 0.05), 0, W / 2, H / 2, Math.max(W, H) * 0.72);
+      glow.addColorStop(0, `rgba(255,57,68,${0.052 * boostValue})`);
+      glow.addColorStop(0.38, "rgba(19,25,34,.10)");
       glow.addColorStop(1, "rgba(2,3,5,0)");
       ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, width, height);
+      ctx.fillRect(0, 0, W, H);
 
-      points.forEach((point) => {
+      points.forEach((p) => {
         if (!reduced) {
-          point.x += point.vx * driftBoost;
-          point.y += point.vy * driftBoost;
-          if (point.x < -0.03) point.x = 1.03;
-          if (point.x > 1.03) point.x = -0.03;
-          if (point.y < -0.03) point.y = 1.03;
-          if (point.y > 1.03) point.y = -0.03;
+          p.x += p.vx * speed;
+          p.y += p.vy * speed;
+          if (p.x < -0.03) p.x = 1.03;
+          if (p.x > 1.03) p.x = -0.03;
+          if (p.y < -0.03) p.y = 1.03;
+          if (p.y > 1.03) p.y = -0.03;
         }
-        point.px = point.x * width + Math.sin(time * 0.0011 + point.seed) * 9 + pointer.x * 18;
-        point.py = point.y * height + Math.cos(time * 0.0009 + point.seed) * 7 + pointer.y * 14;
+        p.px = p.x * W + Math.sin(t * 0.0011 * speed + p.phase) * 9 + pointer.x * 22;
+        p.py = p.y * H + Math.cos(t * 0.00085 * speed + p.phase) * 7 + pointer.y * 16;
       });
 
-      for (let i = 0; i < points.length; i += 1) {
-        const a = points[i];
-        for (let j = i + 1; j < Math.min(points.length, i + 10); j += 1) {
+      for (let i = 0; i < points.length; i++) {
+        for (let j = i + 1; j < Math.min(points.length, i + 10); j++) {
+          const a = points[i];
           const b = points[j];
-          const distance = Math.hypot(a.px - b.px, a.py - b.py);
-          if (distance < 150) {
-            const alpha = (1 - distance / 150) * 0.12 * energy;
-            ctx.strokeStyle = `rgba(255,60,73,${alpha})`;
-            ctx.lineWidth = 0.65;
+          const d = Math.hypot(a.px - b.px, a.py - b.py);
+          if (d < 145) {
+            const alpha = (1 - d / 145) * 0.13 * boostValue;
+            ctx.strokeStyle = modeRef.current === "evidence" ? `rgba(240,244,248,${alpha * 0.65})` : `rgba(255,65,76,${alpha})`;
+            ctx.lineWidth = 0.6;
             ctx.beginPath();
             ctx.moveTo(a.px, a.py);
             if (modeRef.current === "research") {
-              ctx.quadraticCurveTo((a.px + b.px) / 2 + 18, (a.py + b.py) / 2 - 11, b.px, b.py);
+              ctx.quadraticCurveTo((a.px + b.px) / 2 + 18, (a.py + b.py) / 2 - 14, b.px, b.py);
             } else {
               ctx.lineTo(b.px, b.py);
             }
@@ -176,59 +174,55 @@ function ComputationalField({ mode = "home", hot = false, transitioning = false 
         }
       }
 
-      streams.forEach((stream, index) => {
-        const travel = ((time * stream.speed * (transitionRef.current ? 2.6 : 1) + stream.phase) % 1.25) - 0.12;
-        const x = stream.direction > 0 ? travel * width : width - travel * width;
-        const y = height * stream.y + Math.sin(time * 0.001 + index) * 18;
-        const length = transitionRef.current ? 150 : 84;
-        const gradient = ctx.createLinearGradient(x - length, y, x + length, y);
-        gradient.addColorStop(0, "rgba(255,61,74,0)");
-        gradient.addColorStop(0.5, `rgba(255,82,92,${0.12 * energy})`);
-        gradient.addColorStop(1, "rgba(255,61,74,0)");
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = transitionRef.current ? 1.2 : 0.7;
+      for (let i = 0; i < 24; i++) {
+        const y = ((i * 97 + t * 0.052 * speed) % (H + 180)) - 90;
+        const x = ((i * 181 + t * 0.13 * speed) % (W + 360)) - 180;
+        const len = 26 + (i % 6) * 18;
+        const g = ctx.createLinearGradient(x - len, y, x + len, y);
+        g.addColorStop(0, "rgba(255,57,68,0)");
+        g.addColorStop(0.55, `rgba(255,73,83,${0.11 * boostValue})`);
+        g.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.strokeStyle = g;
+        ctx.lineWidth = i % 5 === 0 ? 1.1 : 0.6;
         ctx.beginPath();
-        ctx.moveTo(x - length, y);
-        ctx.lineTo(x + length, y + pointer.y * 22);
+        ctx.moveTo(x - len, y);
+        ctx.lineTo(x + len, y);
         ctx.stroke();
-      });
+      }
 
-      points.forEach((point) => {
-        ctx.fillStyle = point.hot ? `rgba(255,66,78,${0.66 * energy})` : "rgba(235,240,245,.25)";
+      points.forEach((p) => {
+        ctx.fillStyle = p.accent ? "rgba(255,72,82,.72)" : "rgba(235,240,245,.28)";
         ctx.beginPath();
-        ctx.arc(point.px, point.py, point.hot ? 1.7 : 0.85, 0, Math.PI * 2);
+        ctx.arc(p.px, p.py, p.accent ? 1.7 : 0.8, 0, Math.PI * 2);
         ctx.fill();
       });
-
       raf = requestAnimationFrame(draw);
     };
-
     resize();
-    addEventListener("resize", resize);
-    addEventListener("pointermove", move, { passive: true });
+    window.addEventListener("resize", resize);
+    window.addEventListener("pointermove", pointerMove, { passive: true });
     raf = requestAnimationFrame(draw);
     return () => {
       cancelAnimationFrame(raf);
-      removeEventListener("resize", resize);
-      removeEventListener("pointermove", move);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", pointerMove);
     };
   }, []);
-
-  return <canvas ref={canvasRef} className="computational-field" aria-hidden="true" />;
+  return <canvas ref={ref} className="computational-field" aria-hidden="true"/>;
 }
 
 function App() {
-  const raw = pageFor(location.pathname);
-  const [page, setPage] = useState(raw === "core" ? "home" : raw);
+  const initial = pageFor(window.location.pathname);
+  const [page, setPage] = useState(initial === "core" ? "home" : initial);
   const [entered, setEntered] = useState(() => sessionStorage.getItem("aixion-entered-v3") === "1");
-  const [hover, setHover] = useState(null);
-  const [transition, setTransition] = useState(null);
-  const [deep, setDeep] = useState(raw === "core");
+  const [hovered, setHovered] = useState(null);
+  const [routing, setRouting] = useState(null);
+  const [deep, setDeep] = useState(initial === "core");
   const [menu, setMenu] = useState(false);
 
   useEffect(() => {
-    const onPop = () => {
-      const next = pageFor(location.pathname);
+    const pop = () => {
+      const next = pageFor(window.location.pathname);
       if (next === "core") {
         setDeep(true);
         setPage("home");
@@ -237,598 +231,409 @@ function App() {
       setDeep(false);
       setPage(next);
     };
-    addEventListener("popstate", onPop);
-    return () => removeEventListener("popstate", onPop);
+    window.addEventListener("popstate", pop);
+    return () => window.removeEventListener("popstate", pop);
   }, []);
 
   useEffect(() => {
-    document.title = deep
-      ? "AIXION CORE — AIXION LAB"
-      : page === "home"
-        ? "AIXION LAB — Engineering systems that survive reality"
-        : `${page === "tradebot" ? "TradeBot" : META[page]?.label || page} — AIXION LAB`;
+    const label = deep ? "AIXION CORE" : page === "home" ? "AIXION LAB" : page === "tradebot" ? "TradeBot" : META[page]?.label || page;
+    document.title = `${label} — AIXION LAB`;
+    if (!deep) window.scrollTo(0, 0);
   }, [page, deep]);
 
-  const navigate = (key, element) => {
+  const navigate = (key, el) => {
     if (key === "core") {
-      history.pushState({}, "", "/core");
+      window.history.pushState({}, "", "/core");
       setDeep(true);
       return;
     }
     if (key === page && !deep) return;
-
-    const origin = getOrigin(element);
-    const back = key === "home";
+    const rect = el?.getBoundingClientRect?.();
+    const x = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
+    const y = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
+    const nextLabel = key === "home" ? "HOME" : key === "tradebot" ? "TRADEBOT" : META[key]?.label || key;
     setMenu(false);
     setDeep(false);
-    setTransition({ key, back, ...origin });
-
+    setRouting({ x, y, label: nextLabel, back: key === "home" });
     window.setTimeout(() => {
-      history.pushState({}, "", pathFor(key));
+      window.history.pushState({}, "", pathFor(key));
       setPage(key);
-      scrollTo({ top: 0, behavior: "auto" });
-    }, 330);
-
-    window.setTimeout(() => setTransition(null), 880);
+    }, 310);
+    window.setTimeout(() => setRouting(null), 820);
   };
 
   const exitDeep = () => {
     setDeep(false);
-    history.replaceState({}, "", "/");
+    window.history.replaceState({}, "", "/");
     setPage("home");
   };
 
-  return (
-    <div className={`app page-${page} ${deep ? "is-deep" : ""}`}>
-      <ComputationalField mode={deep ? "deep" : hover || page} hot={!!hover} transitioning={!!transition || deep} />
-      {!entered ? (
-        <Entry enter={() => { sessionStorage.setItem("aixion-entered-v3", "1"); setEntered(true); }} />
-      ) : deep ? (
-        <DeepSpace exit={exitDeep} />
-      ) : (
-        <>
-          <Header page={page} navigate={navigate} menu={menu} setMenu={setMenu} />
-          {page === "home" ? (
-            <Home hover={hover} setHover={setHover} navigate={navigate} />
-          ) : page === "tradebot" ? (
-            <TradeBot navigate={navigate} />
-          ) : (
-            <World page={page} navigate={navigate} />
-          )}
-        </>
-      )}
-      {transition && <RippleTransition transition={transition} />}
-    </div>
-  );
+  return <div className={`app page-${page} ${routing ? "is-routing" : ""} ${deep ? "is-deep" : ""}`}>
+    <ComputationalField mode={deep ? "deep" : hovered || page} boost={!!hovered || !!routing || deep}/>
+    <CursorSystem/>
+    {!entered ? (
+      <Entry onEnter={() => {
+        sessionStorage.setItem("aixion-entered-v3", "1");
+        setEntered(true);
+      }}/>
+    ) : deep ? (
+      <DeepSpace onExit={exitDeep}/>
+    ) : (
+      <div className="scene">
+        <Header page={page} navigate={navigate} menu={menu} setMenu={setMenu}/>
+        {page === "home" ? <HomeHub hovered={hovered} setHovered={setHovered} navigate={navigate}/> : page === "tradebot" ? <TradeBotPage navigate={navigate}/> : <WorldPage page={page} navigate={navigate}/>} 
+      </div>
+    )}
+    {routing && <RouteRipple state={routing}/>} 
+  </div>;
 }
 
-function Entry({ enter }) {
-  return (
-    <main className="entry-screen">
-      <button className="entry-core" onClick={enter} aria-label="Enter Aixion Lab">
-        <i className="entry-ring ring-a" />
-        <i className="entry-ring ring-b" />
-        <i className="entry-ring ring-c" />
-        <Mark className="entry-mark" />
-      </button>
-    </main>
-  );
+function Entry({ onEnter }) {
+  return <main className="entry-screen">
+    <button className="entry-core" onClick={onEnter} aria-label="Enter Aixion Lab" data-cursor>
+      <i/><i/><i/>
+      <span className="entry-emblem-shell"><StandaloneEmblem className="entry-emblem"/></span>
+      <b/>
+    </button>
+  </main>;
 }
 
 function Header({ page, navigate, menu, setMenu }) {
-  return (
-    <header className="global-header">
-      <button className="brand-button" onClick={(event) => navigate("home", event.currentTarget)} aria-label="Aixion Lab home">
-        <BrandLockup />
+  const internal = page !== "home";
+  return <header className="global-header">
+    <button className="brand-button" onClick={(e) => navigate("home", e.currentTarget)} aria-label="Aixion Lab home" data-cursor>
+      <img src={BRAND} alt="AIXION LAB"/>
+    </button>
+    <nav className="desktop-nav" aria-label="Primary navigation">
+      <button className={`home-control ${internal ? "emblem-mode" : "text-mode"}`} onClick={(e) => navigate("home", e.currentTarget)} aria-label="Home" data-cursor>
+        <span>Home</span>
+        <StandaloneEmblem/>
       </button>
-
-      <nav className="desktop-nav" aria-label="Primary navigation">
-        <button className={`home-morph ${page === "home" ? "show-home" : "show-mark"}`} onClick={(event) => navigate("home", event.currentTarget)} aria-label="Home">
-          <span>Home</span>
-          <Mark className="header-home-mark" />
-        </button>
-        {["projects", "research", "evidence", "contact"].map((key) => (
-          <button key={key} className={page === key ? "active" : ""} onClick={(event) => navigate(key, event.currentTarget)}>
-            {META[key].label}
-          </button>
-        ))}
-      </nav>
-
-      <div className="header-actions">
-        <a href={GITHUB} target="_blank" rel="noreferrer" className="github-button" title="GitHub — Selected engineering work" aria-label="GitHub — Selected engineering work"><Icon type="github" /></a>
-        <button className="menu-button" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-label="Open navigation"><span /><span /></button>
-      </div>
-
-      {menu && (
-        <div className="mobile-menu">
-          {["home", ...NODES.map((node) => node.key)].map((key) => (
-            <button key={key} onClick={(event) => navigate(key, event.currentTarget)}>{key === "home" ? "Home" : META[key].label}</button>
-          ))}
-          <a href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github" /> GitHub</a>
-        </div>
-      )}
-    </header>
-  );
-}
-
-function Home({ hover, setHover, navigate }) {
-  const timer = useRef(null);
-  const points = useMemo(() => NODES.map((node) => {
-    const radius = 39;
-    const radians = node.angle * Math.PI / 180;
-    return {
-      ...node,
-      x: 50 + Math.cos(radians) * radius,
-      y: 50 + Math.sin(radians) * radius,
-      sx: 500 + Math.cos(radians) * 390,
-      sy: 500 + Math.sin(radians) * 390,
-    };
-  }), []);
-
-  const enterCore = () => navigate("core");
-
-  return (
-    <main className={`home-orbit ${hover ? "has-focus" : ""}`}>
-      <section className="orbit-stage">
-        <div className="ambient-ring ambient-a" />
-        <div className="ambient-ring ambient-b" />
-        <div className="ambient-ring ambient-c" />
-
-        <div className="orbital-frame" style={{ "--orbit-seconds": `${ORBIT_SECONDS}s` }}>
-          <svg className="wheel-spokes" viewBox="0 0 1000 1000" aria-hidden="true">
-            <g>
-              {points.map((node) => (
-                <line key={node.key} className={hover === node.key ? "active" : ""} x1="500" y1="500" x2={node.sx} y2={node.sy} />
-              ))}
-            </g>
-          </svg>
-
-          {points.map((node) => (
-            <div className="node-position" key={node.key} style={{ left: `${node.x}%`, top: `${node.y}%` }}>
-              <div className="node-upright" style={{ "--orbit-seconds": `${ORBIT_SECONDS}s` }}>
-                <button
-                  className={`hub-node ${hover === node.key ? "active" : ""}`}
-                  onMouseEnter={() => setHover(node.key)}
-                  onMouseLeave={() => setHover(null)}
-                  onFocus={() => setHover(node.key)}
-                  onBlur={() => setHover(null)}
-                  onClick={(event) => navigate(node.key, event.currentTarget)}
-                  aria-label={`Open ${node.label}`}
-                >
-                  <Icon type={node.key} size={24} />
-                  <strong>{node.label}</strong>
-                  <i className="node-scan" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <button
-          className="core-node"
-          onClick={() => {}}
-          onDoubleClick={enterCore}
-          onPointerDown={() => { timer.current = setTimeout(enterCore, 720); }}
-          onPointerUp={() => clearTimeout(timer.current)}
-          onPointerLeave={() => clearTimeout(timer.current)}
-          onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); enterCore(); } }}
-          aria-label="Aixion Core. Double click, long press, or press Enter to enter neural space."
-        >
-          <i className="core-ring core-a" />
-          <i className="core-ring core-b" />
-          <i className="core-ring core-c" />
-          <Mark className="core-mark" />
-        </button>
-      </section>
-      <div className="idle-cue">EXPLORE THE SYSTEM</div>
-    </main>
-  );
-}
-
-function RippleTransition({ transition }) {
-  return (
-    <div className={`ripple-transition ${transition.back ? "is-back" : ""}`} style={{ "--x": `${transition.x}px`, "--y": `${transition.y}px` }} aria-hidden="true">
-      <div className="ripple-ring ring-one" />
-      <div className="ripple-ring ring-two" />
-      <div className="ripple-ring ring-three" />
-      <div className="ripple-veil" />
+      {["projects", "research", "evidence", "contact"].map((key) => <button key={key} className={page === key ? "active" : ""} onClick={(e) => navigate(key, e.currentTarget)} data-cursor>{META[key].label}</button>)}
+    </nav>
+    <div className="header-actions">
+      <a href={GITHUB} target="_blank" rel="noreferrer" className="github-button" aria-label="GitHub — selected engineering work" title="GitHub — Selected engineering work" data-cursor><Icon type="github" size={21}/></a>
+      <button className="menu-button" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-label="Open navigation"><span/><span/></button>
     </div>
-  );
+    {menu && <div className="mobile-menu">{["home", ...NODES.map((n) => n.key)].map((key) => <button key={key} onClick={(e) => navigate(key, e.currentTarget)}>{key === "home" ? "Home" : META[key].label}</button>)}<a href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github" size={18}/>GitHub</a></div>}
+  </header>;
 }
 
-const PAGE_DATA = {
+function HomeHub({ hovered, setHovered, navigate }) {
+  const [pulse, setPulse] = useState(false);
+  const longPress = useRef(null);
+  const enterCore = () => navigate("core");
+  const positions = useMemo(() => NODES.map((n) => {
+    const rad = n.angle * Math.PI / 180;
+    const radius = 39;
+    return { ...n, x: 50 + Math.cos(rad) * radius, y: 50 + Math.sin(rad) * radius };
+  }), []);
+  return <main className={`home-orbit ${hovered ? "focused" : ""}`}>
+    <section className="orbit-stage">
+      <i className="ambient-ring ring-a"/><i className="ambient-ring ring-b"/><i className="ambient-ring ring-c"/>
+      <div className="orbit-system">
+        <svg className="connection-map" viewBox="0 0 100 100" aria-hidden="true">
+          {positions.map((n) => <React.Fragment key={n.key}>
+            <line className={`spoke-line ${hovered === n.key ? "active" : ""}`} x1="50" y1="50" x2={n.x} y2={n.y} pathLength="1"/>
+            <circle className={`spoke-end ${hovered === n.key ? "active" : ""}`} cx={n.x} cy={n.y} r="0.45"/>
+          </React.Fragment>)}
+        </svg>
+        {positions.map((n) => <div key={n.key} className="node-position" style={{ left: `${n.x}%`, top: `${n.y}%` }}>
+          <div className="node-counterspin">
+            <button className={`hub-node ${hovered === n.key ? "active" : ""}`} onMouseEnter={() => setHovered(n.key)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(n.key)} onBlur={() => setHovered(null)} onClick={(e) => navigate(n.key, e.currentTarget)} aria-label={`Open ${n.label}`} data-cursor>
+              <Icon type={n.key} size={23}/><strong>{n.label}</strong><i/>
+            </button>
+          </div>
+        </div>)}
+      </div>
+      <button className={`core-node ${pulse ? "pulse" : ""}`} onClick={() => { setPulse(true); window.setTimeout(() => setPulse(false), 420); }} onDoubleClick={enterCore} onPointerDown={() => { longPress.current = window.setTimeout(enterCore, 720); }} onPointerUp={() => window.clearTimeout(longPress.current)} onPointerLeave={() => window.clearTimeout(longPress.current)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); enterCore(); } }} aria-label="Aixion Core. Double click, long press, or press Enter to enter Deep Space" data-cursor>
+        <i/><i/><i/>
+        <span className="core-emblem-shell"><StandaloneEmblem className="core-emblem"/></span>
+      </button>
+    </section>
+    <div className="idle-cue">EXPLORE THE SYSTEM</div>
+  </main>;
+}
+
+function RouteRipple({ state }) {
+  return <div className={`route-ripple ${state.back ? "reverse" : ""}`} style={{ "--x": `${state.x}px`, "--y": `${state.y}px` }} aria-hidden="true">
+    <i/><i/><i/>
+    <span/>
+    <b>{state.label}</b>
+  </div>;
+}
+
+function SectionRail({ sections }) {
+  const [active, setActive] = useState(sections[0]?.id);
+  const reduced = useReducedMotion();
+  useEffect(() => {
+    const nodes = sections.map((s) => document.getElementById(s.id)).filter(Boolean);
+    if (!nodes.length) return;
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible?.target?.id) setActive(visible.target.id);
+    }, { rootMargin: "-28% 0px -56% 0px", threshold: [0, .15, .35, .55] });
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, [sections]);
+  return <nav className="chapter-rail" aria-label="Page chapters">{sections.map((s) => <button key={s.id} className={active === s.id ? "active" : ""} onClick={() => document.getElementById(s.id)?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" })}>{s.label}</button>)}</nav>;
+}
+
+function Reveal({ children, className = "" }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        node.classList.add("visible");
+        observer.disconnect();
+      }
+    }, { threshold: .14 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+  return <div ref={ref} className={`reveal ${className}`}>{children}</div>;
+}
+
+const STORY_META = {
   about: {
-    eyebrow: "ABOUT AIXION",
-    title: "Build ambitious systems. Prove what they actually do.",
-    intro: "Aixion Lab is an engineering workspace for applied AI, intelligent automation, market intelligence, quality systems, and evidence-driven experimentation.",
-    tabs: ["Introduction", "Principles", "Proof"],
+    eyebrow: "ABOUT AIXION LAB",
+    title: "I build systems where failure is observable, authority is explicit, and claims have to earn their confidence.",
+    intro: "Aixion Lab is the public surface of a much larger engineering journey across quality, automation, applied AI, real-time data, market-intelligence research, runtime governance, and evidence-driven systems work.",
   },
   journey: {
     eyebrow: "ENGINEERING JOURNEY",
-    title: "The work changed. The standard did not.",
-    intro: "The path moved from quality engineering into automation, systems reliability, applied AI, and governed research — while the standard stayed rooted in observable behavior and evidence.",
-    tabs: ["Introduction", "Progression", "Through-line"],
+    title: "From testing software to engineering systems that explain themselves.",
+    intro: "The work expanded from quality assurance into automation, runtime reliability, applied AI, research infrastructure, and governed engineering. The standard stayed the same: find what breaks, understand why, and make the next failure harder to hide.",
   },
   projects: {
-    eyebrow: "PROJECTS",
-    title: "Systems, not screenshots.",
-    intro: "Projects are presented through the problem, architecture, engineering decisions, failure modes, validation strategy, and evidence — not through a superficial feature checklist.",
-    tabs: ["Introduction", "Flagship", "Programs"],
+    eyebrow: "SELECTED ENGINEERING SYSTEMS",
+    title: "A body of work built around difficult systems, not polished screenshots.",
+    intro: "The projects here are shown through architecture, constraints, failure modes, validation, governance, and operational evidence. TradeBot is the flagship because it forced all of those disciplines to meet in one system.",
   },
   research: {
-    eyebrow: "RESEARCH",
-    title: "Attractive ideas go here to be challenged.",
-    intro: "Structured experiments, replay, adversarial checks, and evidence gates separate plausible narratives from behavior that survives testing.",
-    tabs: ["Introduction", "Lanes", "Method"],
+    eyebrow: "RESEARCH OPERATING SYSTEM",
+    title: "The job is not to produce attractive hypotheses. The job is to make weak ones fail quickly and visibly.",
+    intro: "Research at Aixion Lab is outcome-blind wherever possible: hypotheses are isolated, replayed, challenged, segmented by context, and retained even when the answer is negative. Unsupported ideas stay visible so they are not quietly recycled as conviction.",
   },
   evidence: {
-    eyebrow: "EVIDENCE",
-    title: "Evidence before confidence.",
-    intro: "A passing demo is not the same as a validated system. Claims should become stronger only when the evidence does.",
-    tabs: ["Introduction", "Layers", "Standard"],
+    eyebrow: "EVIDENCE & GOVERNANCE",
+    title: "A system is not finished when it works once. It is finished when we can explain what ran, what changed, and why the result deserves trust.",
+    intro: "Exact-version authority, deterministic reruns, fail-closed gates, CI, review, freshness checks, and explicit runtime boundaries turn engineering claims into inspectable evidence instead of confidence theater.",
   },
   tower: {
-    eyebrow: "CONTROL TOWER",
-    title: "See the system without exposing the system.",
-    intro: "A sanitized operational view across research, data, validation, and platform health — demonstrating observability without publishing private controls.",
-    tabs: ["Introduction", "Telemetry", "Boundary"],
+    eyebrow: "AIXION CONTROL TOWER",
+    title: "Observability is part of the product, not an afterthought added when something breaks.",
+    intro: "Control Tower is a public-safe operational surface for understanding research state, validation gates, runtime health, evidence progression, and system context without exposing private execution controls or fabricating live status.",
   },
   stack: {
-    eyebrow: "STACK",
-    title: "Tools matter less than the engineering decisions behind them.",
-    intro: "The stack spans quality engineering, automation, data systems, applied AI, research infrastructure, and product development.",
-    tabs: ["Introduction", "Layers", "Use"],
+    eyebrow: "ENGINEERING STACK",
+    title: "The stack is organized by the problems it had to solve, not by the logos it can display.",
+    intro: "Testing, automation, data ingestion, replay, applied AI, observability, runtime supervision, CI, and product engineering are connected here by engineering purpose rather than resume keywords.",
   },
   contact: {
     eyebrow: "CONTACT",
-    title: "Let’s talk about difficult systems worth building and proving.",
-    intro: "Open to engineering roles and collaborations across AI/ML testing, quality engineering, automation, applied AI, data systems, research tooling, and reliability-minded product work.",
-    tabs: ["Contact", "Interests", "GitHub"],
+    title: "I am interested in difficult engineering work where reliability, AI, testing, data systems, and judgment all matter.",
+    intro: "If the role involves building, validating, observing, or governing systems that cannot afford to be confidently wrong, that is the kind of conversation I want to have.",
   },
 };
 
-function SectionRail({ tabs }) {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const sections = tabs.map((_, index) => document.getElementById(`chapter-${index}`)).filter(Boolean);
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible) setActive(Number(visible.target.dataset.chapter));
-    }, { rootMargin: "-30% 0px -50% 0px", threshold: [0.08, 0.25, 0.55] });
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, [tabs]);
-
-  return (
-    <nav className="chapter-rail" aria-label="Page chapters">
-      {tabs.map((tab, index) => (
-        <button key={tab} className={active === index ? "active" : ""} onClick={() => document.getElementById(`chapter-${index}`)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
-          <span>{tab}</span><i />
-        </button>
-      ))}
-    </nav>
-  );
-}
-
-function World({ page, navigate }) {
-  const data = PAGE_DATA[page] || PAGE_DATA.about;
-  return (
-    <main className={`world-page world-${page}`}>
-      <SectionRail tabs={data.tabs} />
-      <section className="world-hero" id="chapter-0" data-chapter="0">
-        <p className="eyebrow">{data.eyebrow}</p>
-        <h1>{data.title}</h1>
-        <article>{data.intro}</article>
-      </section>
-      <WorldBody page={page} navigate={navigate} />
-    </main>
-  );
-}
-
-function WorldBody({ page, navigate }) {
-  if (page === "about") return <AboutBody navigate={navigate} />;
-  if (page === "journey") return <JourneyBody />;
-  if (page === "projects") return <ProjectsBody navigate={navigate} />;
-  if (page === "research") return <ResearchBody />;
-  if (page === "evidence") return <EvidenceBody />;
-  if (page === "tower") return <TowerBody />;
-  if (page === "stack") return <StackBody />;
-  return <ContactBody />;
-}
-
-function AboutBody({ navigate }) {
-  return (
-    <div className="world-content">
-      <section className="principle-flow" id="chapter-1" data-chapter="1">
-        {[["Engineer","Build systems with explicit boundaries, observable behavior, and clear operational ownership."],["Challenge","Treat strategies, models, and architectural assumptions as things that must survive adversarial testing."],["Prove","Separate promising behavior from validated behavior. Evidence comes before promotion."]].map(([title, body]) => (
-          <article key={title}><small>{title.toUpperCase()}</small><h2>{title}</h2><p>{body}</p></article>
-        ))}
-      </section>
-      <section className="statement-section" id="chapter-2" data-chapter="2">
-        <blockquote>Quality engineering taught me to look for failure. Applied AI and systems work taught me to design for it.</blockquote>
-        <button className="text-action" onClick={(event) => navigate("evidence", event.currentTarget)}>See the evidence system <Icon type="arrow" /></button>
-      </section>
+function WorldPage({ page, navigate }) {
+  const meta = STORY_META[page] || STORY_META.about;
+  const sections = buildSections(page, navigate);
+  return <main className={`world-page world-${page}`}>
+    <SectionRail sections={sections}/>
+    <section className="world-hero" id={`${page}-intro`}>
+      <p className="eyebrow"><span>{meta.eyebrow}</span></p>
+      <h1>{meta.title}</h1>
+      <article>{meta.intro}</article>
+      <div className="hero-trace"><i/><span>{page === "contact" ? "OPEN TO THE RIGHT PROBLEM" : "SCROLL TO FOLLOW THE SYSTEM"}</span></div>
+    </section>
+    <div className="story-sections">
+      {sections.map((section) => <section id={section.id} className="story-section" key={section.id}>
+        <aside><span>{section.label}</span><small>{section.kicker}</small></aside>
+        <Reveal className="story-body"><h2>{section.title}</h2>{section.body}</Reveal>
+      </section>)}
     </div>
-  );
+  </main>;
 }
 
-function JourneyBody() {
-  const steps = [
-    ["Quality Engineering", "Reproduce failure, isolate it, explain it, prevent silent regression."],
-    ["Automation", "Turn repetitive verification into reusable systems, state, coverage, and maintainability."],
-    ["Systems & Reliability", "Move from test cases into feeds, runtimes, observability, and failure boundaries."],
-    ["Applied AI", "Use models and agent-assisted workflows while keeping evaluation and human authority explicit."],
-    ["Market Intelligence", "Build replay, options research, real-time data workflows, and hypothesis testing."],
-    ["Governed Engineering", "Make exact-version authority, evidence capture, fail-closed gates, and reproducibility first-class."],
-    ["Aixion Lab", "Bring the work together as a public engineering system: projects, research, evidence, and journey."],
+function buildSections(page, navigate) {
+  const S = {
+    about: [
+      { id: "about-standard", label: "Standard", kicker: "OPERATING MODEL", title: "Build. Challenge. Prove.", body: <><p>Every serious project moves through the same discipline: build a bounded system, challenge its assumptions and runtime behavior, then strengthen the language of the claim only when evidence supports it.</p><div className="three-columns"><article><strong>Build</strong><span>Architecture with explicit state, authority, data provenance, and failure boundaries.</span></article><article><strong>Challenge</strong><span>Replay, adversarial checks, failure injection, edge cases, and operational stress.</span></article><article><strong>Prove</strong><span>Deterministic evidence, reviewable outputs, reproducible versions, and honest unresolved states.</span></article></div></> },
+      { id: "about-failure", label: "Failure", kicker: "ENGINEERING PRINCIPLE", title: "Failure is not a footnote. It is one of the primary inputs to the architecture.", body: <><p>Quality engineering taught me to reproduce defects. Systems work taught me to expose the conditions that created them. Applied AI and research work added another requirement: know when the system itself is too uncertain to make a strong claim.</p><blockquote>Reliable systems do not hide uncertainty. They make it inspectable.</blockquote></> },
+      { id: "about-domain", label: "Domain", kicker: "WHERE THE WORK CONVERGES", title: "AI, testing, automation, data, markets, observability, and governance are not separate interests here.", body: <><p>They meet in the same engineering question: can a complex system behave usefully under real constraints, and can we prove what it actually did?</p><div className="tag-field">{["AI/ML quality", "QA automation", "real-time data", "market microstructure", "replay", "runtime supervision", "evidence systems", "governed agents"].map((x) => <span key={x}>{x}</span>)}</div></> },
+    ],
+    journey: [
+      { id: "journey-foundation", label: "Foundation", kicker: "QUALITY → AUTOMATION", title: "The first skill was learning to distrust a clean demo.", body: <><p>Manual and automated quality work built the habit of asking what changed, what was not covered, whether a failure could be reproduced, and whether a passing result was actually meaningful.</p><div className="journey-line"><span>Quality engineering</span><i/><span>Automation</span><i/><span>Systems thinking</span></div></> },
+      { id: "journey-expansion", label: "Expansion", kicker: "SYSTEMS → APPLIED AI", title: "The scope moved from test cases into feeds, runtimes, models, state, supervision, and failure boundaries.", body: <><p>That shift changed the work from verifying isolated behavior to engineering environments where data freshness, version authority, runtime state, model evaluation, and observability all affect whether a result can be trusted.</p></> },
+      { id: "journey-aixion", label: "Aixion", kicker: "RESEARCH → GOVERNED ENGINEERING", title: "Aixion Lab is where those disciplines became one engineering language.", body: <><p>TradeBot, the autonomous research loop, evidence tooling, Control Tower, market-structure research, and the public site are different systems, but they share the same principles: inspectable data, explicit authority, visible failure, and reproducible evidence.</p></> },
+    ],
+    projects: [
+      { id: "projects-tradebot", label: "Flagship", kicker: "TRADEBOT", title: "A market-intelligence platform that became a systems-engineering problem.", body: <><p>TradeBot began around Indian index-options workflows and evolved into a governed research and observation platform spanning real-time feeds, options microstructure, replay, hypothesis evaluation, runtime authority, data freshness, observability, and evidence capture.</p><button className="text-action" onClick={(e) => navigate("tradebot", e.currentTarget)}>Open the engineering case study <Icon type="arrow" size={18}/></button></> },
+      { id: "projects-systems", label: "Systems", kicker: "PROGRAMS AROUND THE FLAGSHIP", title: "The surrounding systems became as important as the original application.", body: <div className="system-list"><article><strong>Autonomous Research Loop</strong><p>Turns broad research goals into bounded work, evidence, review, and explicit promotion states without letting automation manufacture confidence.</p></article><article><strong>Evidence Kernel</strong><p>Connects claims to exact versions, focused tests, reruns, manifests, freshness, and independent review.</p></article><article><strong>Aixion Control Tower</strong><p>Surfaces operational state, research lanes, validation progress, and public-safe system context.</p></article></div> },
+      { id: "projects-method", label: "Method", kicker: "WHY THESE PROJECTS MATTER", title: "The recurring work is architecture under uncertainty.", body: <><p>Feed outages, stale data, replay integrity, authority conflicts, invalid research assumptions, model overconfidence, and operational state all create ways for a system to look correct while being wrong. The engineering value is in making those failure modes visible and governable.</p></> },
+    ],
+    research: [
+      { id: "research-lanes", label: "Lanes", kicker: "CURRENT RESEARCH FAMILIES", title: "Research is separated into questions that can fail independently.", body: <div className="research-lanes"><article><strong>Opening-session structure</strong><span>Context, constituents, futures, early-session behavior, and recurrence.</span></article><article><strong>Closing Auction Session</strong><span>Auction imbalance, breadth, futures convergence, and option response around the close.</span></article><article><strong>Options microstructure</strong><span>Bid/ask, liquidity, strikes, IV, Greeks, and short-horizon behavior.</span></article><article><strong>Regime & context</strong><span>When behavior changes because the surrounding market state changed.</span></article></div> },
+      { id: "research-method", label: "Method", kicker: "OUTCOME-BLIND DISCIPLINE", title: "A plausible story is not evidence.", body: <><p>Research lanes are designed around causal cutoffs, replay, holdout logic, adversarial checks, segmentation, and negative controls. When an idea fails, the failure remains part of the research record instead of disappearing from the narrative.</p><blockquote>Negative evidence is still engineering progress when it prevents a weak idea from being promoted later.</blockquote></> },
+      { id: "research-agents", label: "Agents", kicker: "AUTONOMOUS DISCOVERY", title: "Automation can expand search. It cannot be allowed to lower the standard of proof.", body: <><p>Agent-assisted research is useful when task boundaries, version authority, evidence requirements, and review states are explicit. The goal is not autonomous confidence. The goal is autonomous exploration inside governed limits.</p></> },
+    ],
+    evidence: [
+      { id: "evidence-version", label: "Authority", kicker: "EXACT VERSION TRUTH", title: "Every important result needs an exact answer to: what code actually ran?", body: <><p>Exact commit authority, clean checkouts, frozen candidates, immutable evidence, and explicit runtime ownership prevent a passing result from being silently separated from the software that produced it.</p></> },
+      { id: "evidence-replay", label: "Replay", kicker: "REPRODUCIBILITY", title: "A result that cannot survive a deterministic rerun is not a strong result.", body: <><p>Replay, deterministic outputs, freshness checks, fixtures, manifests, and focused regression testing are used to distinguish a real behavior change from an artifact of data, runtime, or environment.</p></> },
+      { id: "evidence-gates", label: "Gates", kicker: "FAIL CLOSED", title: "Unknown is allowed to remain unknown.", body: <><p>Promotion gates, CI, independent review, read-only/live separation, stale-data rejection, and explicit safety flags are designed to stop unsupported states from turning into optimistic labels.</p><div className="evidence-path"><span>Implementation</span><i/><span>Adversarial</span><i/><span>Integration</span><i/><span>Evidence</span><i/><span>Review</span></div></> },
+    ],
+    tower: [
+      { id: "tower-purpose", label: "Purpose", kicker: "PUBLIC-SAFE OBSERVABILITY", title: "Understand the system without exposing the system.", body: <><p>Control Tower is meant to show the shape of operational engineering: project state, research lanes, evidence gates, build status, observation mode, and public-safe health indicators without publishing credentials, private controls, or proprietary strategy logic.</p></> },
+      { id: "tower-truth", label: "Truth", kicker: "NO FAKE LIVE STATUS", title: "Operational visuals are useful only when their truth boundary is visible.", body: <><p>Any non-live state must be labeled as demonstration, sanitized, delayed, offline replay, research, or public status. The interface should never imply production authority it does not actually have.</p><div className="tag-field">{["DEMONSTRATION DATA", "SANITIZED", "OFFLINE REPLAY", "RESEARCH", "PUBLIC STATUS"].map((x) => <span key={x}>{x}</span>)}</div></> },
+      { id: "tower-next", label: "Next", kicker: "CONTROL SURFACE", title: "The long-term idea is a governed view across systems, not another dashboard full of decorative metrics.", body: <><p>The useful version of Control Tower connects project authority, system health, research evidence, runtime events, and human approval points into one explainable surface.</p></> },
+    ],
+    stack: [
+      { id: "stack-quality", label: "Quality", kicker: "QUALITY & AUTOMATION", title: "Testing is where the engineering discipline started.", body: <div className="stack-groups"><article><strong>Quality & automation</strong><p>Java · Selenium · Appium · Jira/Xray · regression · integration · scenario design</p></article><article><strong>Research & applied AI</strong><p>Python · XGBoost · time-series analysis · replay · model evaluation · experimentation</p></article></div> },
+      { id: "stack-runtime", label: "Runtime", kicker: "DATA & SYSTEMS", title: "Real-time systems require a different definition of correctness.", body: <div className="stack-groups"><article><strong>Data & runtime</strong><p>WebSockets · real-time feeds · Parquet · event processing · freshness · supervision · observability</p></article><article><strong>Engineering workflow</strong><p>Git · GitHub · CI · pytest · exact-version authority · evidence manifests · agent-assisted engineering</p></article></div> },
+      { id: "stack-product", label: "Product", kicker: "WEB & EXPERIENCE", title: "The public product is being engineered with the same concern for state, motion, accessibility, and performance.", body: <><p>React, Vite, Canvas, SVG, animation systems, responsive interaction, reduced-motion fallbacks, and public/private information boundaries are used to make Aixion Lab itself part of the engineering portfolio.</p></> },
+    ],
+    contact: [
+      { id: "contact-work", label: "Work", kicker: "WHERE I FIT BEST", title: "Roles where quality engineering, AI systems, automation, data, and reliability overlap.", body: <><p>I am especially interested in AI/ML testing, quality engineering, SDET/automation, applied AI systems, research tooling, observability, platform reliability, and engineering roles where difficult systems need strong validation.</p></> },
+      { id: "contact-proof", label: "Proof", kicker: "START WITH THE WORK", title: "The fastest way to understand the engineering is to follow the projects and evidence.", body: <><a className="contact-link" href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github" size={19}/> Selected engineering work on GitHub</a><p>Private implementation details stay private. Public case studies focus on architecture, constraints, failure modes, validation, and what the work taught me.</p></> },
+      { id: "contact-talk", label: "Talk", kicker: "CONTACT", title: "If the problem is difficult enough to require engineering judgment, I am interested in the conversation.", body: <form className="contact-form" onSubmit={(e) => e.preventDefault()}><label>Name<input placeholder="Your name"/></label><label>Email<input type="email" placeholder="you@company.com"/></label><label>What are you building?<textarea rows="4" placeholder="A role, a system, a research problem, or a collaboration..."/></label><button type="submit">Contact flow — connect email before launch</button></form> },
+    ],
+  };
+  return S[page] || S.about;
+}
+
+function TradeBotPage({ navigate }) {
+  const sections = [
+    { id: "tradebot-problem", label: "Problem" },
+    { id: "tradebot-system", label: "System" },
+    { id: "tradebot-failure", label: "Failure" },
+    { id: "tradebot-evidence", label: "Evidence" },
   ];
-  return (
-    <div className="world-content">
-      <section className="journey-stream" id="chapter-1" data-chapter="1">
-        {steps.map(([title, body], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><div><h2>{title}</h2><p>{body}</p></div></article>)}
-      </section>
-      <section className="statement-section" id="chapter-2" data-chapter="2"><blockquote>What changed was the scale of the system. What stayed was the requirement to know what actually happened.</blockquote></section>
-    </div>
-  );
+  return <main className="tradebot-page">
+    <SectionRail sections={sections}/>
+    <section className="tradebot-hero" id="tradebot-problem">
+      <button className="return-projects" onClick={(e) => navigate("projects", e.currentTarget)}>← Projects</button>
+      <p className="eyebrow"><span>FLAGSHIP SYSTEM · TRADEBOT</span></p>
+      <h1>Engineering market intelligence under real operational constraints.</h1>
+      <article>TradeBot is a governed market-intelligence and research platform for Indian index-options workflows. The interesting engineering is not the promise of a signal. It is the infrastructure required to know whether data, runtime state, replay, research logic, and evidence are trustworthy enough to support one.</article>
+    </section>
+    <section className="tradebot-section" id="tradebot-system"><aside><span>System</span><small>FOUR ENGINEERING PLANES</small></aside><Reveal className="story-body"><h2>Data, research, governance, and observability had to become first-class systems.</h2><div className="tradebot-planes"><article><strong>Data plane</strong><p>Real-time feeds, quote/depth ingestion, aligned snapshots, replay sources, persistence, freshness, and provenance.</p></article><article><strong>Research plane</strong><p>Hypothesis evaluation, options microstructure, causal cutoffs, replay analysis, regime/context work, and negative results.</p></article><article><strong>Governance plane</strong><p>Exact-version authority, read-only observation modes, fail-closed promotion gates, immutable evidence, and explicit execution boundaries.</p></article><article><strong>Observability plane</strong><p>Feed health, reconnect behavior, stale-data detection, runtime events, process supervision, candidate traces, and session evidence.</p></article></div></Reveal></section>
+    <section className="tradebot-section" id="tradebot-failure"><aside><span>Failure</span><small>WHAT MADE THE PROJECT HARD</small></aside><Reveal className="story-body"><h2>The difficult part was distinguishing strategy failure from system failure.</h2><p>Real engineering work appeared in the gaps: feed stalls, stale quotes, runtime authority conflicts, replay artifacts, inconsistent evidence, environment differences, dirty worktrees, process duplication, and research assumptions that looked convincing until they were challenged.</p><div className="failure-chain"><span>Symptom</span><i/><span>Root cause</span><i/><span>Guardrail</span><i/><span>Evidence</span></div><blockquote>The system became more valuable when it learned to say “not proven” for the right reasons.</blockquote></Reveal></section>
+    <section className="tradebot-section" id="tradebot-evidence"><aside><span>Evidence</span><small>PUBLIC / PRIVATE BOUNDARY</small></aside><Reveal className="story-body"><h2>Show the engineering depth without publishing the implementation that creates the edge.</h2><p>Public material can safely show architecture, methodology, failure modes, research questions, sanitized operational evidence, governance patterns, and engineering lessons.</p><div className="privacy-grid"><article><strong>Public</strong><span>Architecture · validation · observability · failure analysis · research method · lessons</span></article><article><strong>Private</strong><span>Credentials · private endpoints · proprietary signal logic · strategy thresholds · write controls · sensitive datasets · private code</span></article></div></Reveal></section>
+  </main>;
 }
 
-function ProjectsBody({ navigate }) {
-  const programs = [
-    ["Autonomous Research Loop", "Bounded hypothesis generation, task qualification, evidence gates, and explicit promotion decisions."],
-    ["Aixion Control Tower", "Operational visibility across projects, research state, evidence, and public-safe system health."],
-    ["Evidence Kernel", "Claims connected to tests, exact versions, failures, deterministic reruns, and reviewable manifests."],
-  ];
-  return (
-    <div className="world-content">
-      <section className="flagship" id="chapter-1" data-chapter="1">
-        <small>FLAGSHIP ENGINEERING SYSTEM</small>
-        <h2>TradeBot</h2>
-        <p>A governed market-intelligence and research platform for Indian index-options workflows, built around real-time data, replay, microstructure research, observability, and evidence.</p>
-        <button className="text-action" onClick={(event) => navigate("tradebot", event.currentTarget)}>Open engineering case study <Icon type="arrow" /></button>
-      </section>
-      <section className="project-stream" id="chapter-2" data-chapter="2">
-        {programs.map(([title, body]) => <article key={title}><small>ENGINEERING PROGRAM</small><h3>{title}</h3><p>{body}</p></article>)}
-      </section>
-    </div>
-  );
-}
-
-function ResearchBody() {
-  const lanes = [
-    ["Market microstructure", "Order flow, bid/ask behavior, options depth, and mechanics that indicators usually hide."],
-    ["Opening session", "Outcome-blind studies of early-session structure, context, constituents, futures, and recurrence."],
-    ["Closing Auction Session", "Auction behavior, constituent breadth, futures convergence, and options response."],
-    ["Options behavior", "Replay and microstructure analysis around strikes, IV, Greeks, liquidity, and short-horizon response."],
-    ["Regime & context", "Separate signal behavior by market conditions instead of pretending one rule works everywhere."],
-    ["Autonomous discovery", "Bounded agents propose and test hypotheses without being allowed to manufacture evidence."],
-  ];
-  return (
-    <div className="world-content">
-      <section className="research-branches" id="chapter-1" data-chapter="1">
-        {lanes.map(([title, body]) => <article key={title}><small>ACTIVE RESEARCH LANE</small><h2>{title}</h2><p>{body}</p></article>)}
-      </section>
-      <section className="statement-section" id="chapter-2" data-chapter="2"><blockquote>Negative results stay visible. Unsupported ideas should not quietly return wearing a new name.</blockquote></section>
-    </div>
-  );
-}
-
-function EvidenceBody() {
-  const layers = [
-    ["Validation", ["Focused tests", "Integration tests", "Adversarial checks", "Deterministic replay"]],
-    ["Governance", ["Explicit authority", "Promotion gates", "Read-only separation", "Fail-closed behavior"]],
-    ["Reliability", ["Feed health", "Freshness", "Reconnect behavior", "Runtime supervision"]],
-    ["Review", ["CI", "Independent review", "Evidence manifests", "Regression control"]],
-  ];
-  return (
-    <div className="world-content">
-      <section className="verification" id="chapter-1" data-chapter="1">
-        {layers.map(([title, items]) => <article key={title}><small>PROOF LAYER</small><h2>{title}</h2><div>{items.map((item) => <span key={item}>{item}</span>)}</div></article>)}
-      </section>
-      <section className="statement-section" id="chapter-2" data-chapter="2"><blockquote>If a system cannot explain what ran, what data it used, what changed, and why the result should be trusted, it is not finished.</blockquote></section>
-    </div>
-  );
-}
-
-function TowerBody() {
-  const cards = [
-    ["Project state", "DEMONSTRATION DATA", "Public-safe portfolio state"],
-    ["Research lanes", "SANITIZED DATA", "Research classifications and next gates"],
-    ["Evidence gates", "PUBLIC STATUS", "Validation and review context"],
-    ["System health", "DEMONSTRATION DATA", "Illustrative runtime surface"],
-    ["Observation", "OFFLINE REPLAY", "No broker write authority implied"],
-    ["Milestones", "PUBLIC STATUS", "Selected engineering progress"],
-  ];
-  return (
-    <div className="world-content">
-      <section className="telemetry" id="chapter-1" data-chapter="1">
-        {cards.map(([title, label, body], index) => <article key={title} style={{ "--delay": `${index * .18}s` }}><i /><small>{label}</small><h2>{title}</h2><p>{body}</p></article>)}
-      </section>
-      <section className="statement-section boundary" id="chapter-2" data-chapter="2"><blockquote>Status is context, not theater.</blockquote><p>No fabricated live data. Demonstration, delayed, replay, and real public status remain clearly labeled.</p></section>
-    </div>
-  );
-}
-
-function StackBody() {
-  const groups = [
-    ["Quality & Automation", ["Java", "Selenium", "Appium", "Jira / Xray", "Regression & integration engineering"]],
-    ["Research & Applied AI", ["Python", "XGBoost", "Time-series analysis", "Experimentation", "Replay tooling"]],
-    ["Data & Runtime", ["WebSockets", "Real-time feeds", "Parquet", "Event processing", "Observability"]],
-    ["Engineering Workflow", ["Git", "GitHub", "CI", "pytest", "Exact-version authority", "Agent-assisted development"]],
-    ["Web / Product", ["React", "Vite", "Canvas", "Interaction engineering", "Responsive UI"]],
-  ];
-  return (
-    <div className="world-content">
-      <section className="stack-layers" id="chapter-1" data-chapter="1">
-        {groups.map(([title, items], index) => <article key={title} style={{ "--index": index }}><h2>{title}</h2><div>{items.map((item) => <span key={item}>{item}</span>)}</div></article>)}
-      </section>
-      <section className="statement-section" id="chapter-2" data-chapter="2"><blockquote>Tools are useful only when they solve a real engineering constraint.</blockquote></section>
-    </div>
-  );
-}
-
-function ContactBody() {
-  return (
-    <div className="world-content contact-content">
-      <section className="contact-space" id="chapter-1" data-chapter="1">
-        <div>
-          <small>AREAS OF INTEREST</small>
-          <p>AI/ML testing · quality engineering · automation · applied AI · data systems · research tooling · reliability engineering</p>
-          <a href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github" /> Selected engineering work</a>
-        </div>
-        <form onSubmit={(event) => event.preventDefault()}>
-          <label>Name<input name="name" autoComplete="name" /></label>
-          <label>Email<input name="email" type="email" autoComplete="email" /></label>
-          <label>What are you building?<textarea name="message" rows="4" /></label>
-          <button type="submit" disabled>Contact form wiring pending</button>
-        </form>
-      </section>
-      <section className="statement-section compact-statement" id="chapter-2" data-chapter="2"><blockquote>Hard problem? Good place to start.</blockquote></section>
-    </div>
-  );
-}
-
-function TradeBot({ navigate }) {
-  const tabs = ["Introduction", "Architecture", "Failure → Proof", "Boundary"];
-  return (
-    <main className="world-page tradebot-page">
-      <SectionRail tabs={tabs} />
-      <section className="tradebot-hero" id="chapter-0" data-chapter="0">
-        <p className="eyebrow">FLAGSHIP · TRADEBOT</p>
-        <h1>Engineering market intelligence under real operational constraints.</h1>
-        <article>A governed market-intelligence and research platform for Indian index-options workflows. The difficult part was not drawing another indicator; it was proving what data, runtime state, and evidence produced each result.</article>
-      </section>
-
-      <section className="tradebot-topology" id="chapter-1" data-chapter="1">
-        {[
-          ["Data plane", "Real-time feeds, quote/depth ingestion, replay data, aligned snapshots, persistence."],
-          ["Research plane", "Hypothesis evaluation, causal replay, options microstructure, context and ablation."],
-          ["Governance plane", "Authority boundaries, promotion gates, reproducible runs, fail-closed behavior."],
-          ["Observability plane", "Feed health, freshness, reconnects, runtime events, decision traces, evidence."],
-        ].map(([title, body]) => <article key={title}><small>ARCHITECTURE LAYER</small><h2>{title}</h2><p>{body}</p></article>)}
-      </section>
-
-      <section className="engineering-story" id="chapter-2" data-chapter="2">
-        <p>FAILURE → REPAIR → PROOF</p>
-        <h2>Feed reliability, runtime authority, data freshness, deterministic replay, process supervision, and evidence integrity became first-class engineering concerns.</h2>
-        <div><span>Symptom</span><i /><span>Root cause</span><i /><span>Guardrail</span><i /><span>Proof</span></div>
-      </section>
-
-      <section className="privacy" id="chapter-3" data-chapter="3">
-        <h2>Public architecture. Private implementation.</h2>
-        <div>{["No credentials", "No API tokens", "No proprietary signal thresholds", "No active entry/exit logic", "No write controls", "No private source code"].map((item) => <span key={item}>{item}</span>)}</div>
-        <button className="text-action" onClick={(event) => navigate("projects", event.currentTarget)}>Back to Projects <Icon type="arrow" /></button>
-      </section>
-    </main>
-  );
-}
-
-function DeepSpace({ exit }) {
+function DeepSpace({ onExit }) {
   const canvasRef = useRef(null);
-  const [ready, setReady] = useState(false);
+  const [tick, setTick] = useState(0);
+  const [armed, setArmed] = useState(false);
+  const words = ["END", "IS", "THE", "NEW", "BEGINNING"];
+  const word = words[tick % words.length];
+  const hold = word === "BEGINNING";
 
   useEffect(() => {
-    const timer = setTimeout(() => setReady(true), 1050);
-    return () => clearTimeout(timer);
+    const id = window.setTimeout(() => setTick((v) => v + 1), hold ? 2200 : 1350);
+    return () => window.clearTimeout(id);
+  }, [tick, hold]);
+
+  useEffect(() => {
+    const arm = window.setTimeout(() => setArmed(true), 850);
+    return () => window.clearTimeout(arm);
   }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     let raf = 0;
-    let width = 0;
-    let height = 0;
-    let dpr = 1;
-    const start = performance.now();
-    const pointer = { x: 0, y: 0 };
-    const stars = Array.from({ length: innerWidth < 700 ? 90 : 190 }, (_, i) => ({
-      x: ((i * 71) % 199) / 199 * 2 - 1,
-      y: ((i * 47 + 23) % 193) / 193 * 2 - 1,
-      z: ((i * 31) % 173) / 173 + 0.04,
-      pz: 1,
-      hue: i % 17 === 0,
+    let W = 0;
+    let H = 0;
+    let DPR = 1;
+    const stars = Array.from({ length: 210 }, () => ({
+      x: (Math.random() - .5) * 1900,
+      y: (Math.random() - .5) * 1300,
+      z: Math.random() * 1700 + 60,
+      pz: 0,
+      red: Math.random() < .18,
     }));
-
+    const reset = (s, far = true) => {
+      s.x = (Math.random() - .5) * 1900;
+      s.y = (Math.random() - .5) * 1300;
+      s.z = far ? 1700 : Math.random() * 1700 + 60;
+      s.pz = s.z;
+    };
     const resize = () => {
-      dpr = Math.min(devicePixelRatio || 1, 1.45);
-      width = innerWidth;
-      height = innerHeight;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = W * DPR;
+      canvas.height = H * DPR;
+      canvas.style.width = `${W}px`;
+      canvas.style.height = `${H}px`;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     };
-
-    const move = (event) => {
-      pointer.x = event.clientX / Math.max(width, 1) - 0.5;
-      pointer.y = event.clientY / Math.max(height, 1) - 0.5;
-    };
-
-    const project = (star, z) => {
-      const scale = 1 / Math.max(z, 0.025);
-      return {
-        x: width / 2 + (star.x + pointer.x * 0.18) * width * 0.28 * scale,
-        y: height / 2 + (star.y + pointer.y * 0.18) * height * 0.28 * scale,
-      };
-    };
-
-    const draw = (time) => {
-      const elapsed = time - start;
-      ctx.fillStyle = "rgba(1,2,4,.34)";
-      ctx.fillRect(0, 0, width, height);
-      const warp = reduced ? 0.008 : elapsed < 1200 ? 0.031 : 0.0065;
-
-      stars.forEach((star) => {
-        star.pz = star.z;
-        star.z -= warp;
-        if (star.z < 0.03) {
-          star.z = 1;
-          star.pz = 1.05;
-        }
-        const current = project(star, star.z);
-        const previous = project(star, star.pz);
-        const alpha = Math.min(0.9, (1 - star.z) * 0.85 + 0.12);
-        ctx.strokeStyle = star.hue ? `rgba(255,65,78,${alpha})` : `rgba(225,235,247,${alpha * 0.65})`;
-        ctx.lineWidth = elapsed < 1200 ? 1.5 : 0.65;
+    const draw = (t) => {
+      ctx.fillStyle = "rgba(1,2,4,.30)";
+      ctx.fillRect(0, 0, W, H);
+      const fov = Math.min(W, H) * 0.95;
+      const cx = W / 2;
+      const cy = H / 2;
+      const speed = 17 + Math.sin(t * .0015) * 3;
+      stars.forEach((s) => {
+        s.pz = s.z;
+        s.z -= speed;
+        if (s.z < 16) reset(s, true);
+        const x = cx + (s.x / s.z) * fov;
+        const y = cy + (s.y / s.z) * fov;
+        const px = cx + (s.x / s.pz) * fov;
+        const py = cy + (s.y / s.pz) * fov;
+        if (x < -180 || x > W + 180 || y < -180 || y > H + 180) { reset(s, true); return; }
+        const alpha = Math.max(.08, 1 - s.z / 1750);
+        ctx.strokeStyle = s.red ? `rgba(255,58,69,${Math.min(.85, alpha + .18)})` : `rgba(235,242,255,${Math.min(.7, alpha)})`;
+        ctx.lineWidth = s.red ? 1.35 : .75;
         ctx.beginPath();
-        ctx.moveTo(previous.x, previous.y);
-        ctx.lineTo(current.x, current.y);
+        ctx.moveTo(px, py);
+        ctx.lineTo(x, y);
         ctx.stroke();
       });
-
+      for (let i = 0; i < 7; i++) {
+        const a = t * .00022 + i * .9;
+        const r = 150 + i * 72 + Math.sin(t * .0007 + i) * 30;
+        const x = cx + Math.cos(a) * r;
+        const y = cy + Math.sin(a * 1.13) * r * .55;
+        ctx.strokeStyle = `rgba(255,57,68,${.025 + i * .004})`;
+        ctx.beginPath();
+        ctx.arc(x, y, 24 + i * 7, 0, Math.PI * 2);
+        ctx.stroke();
+      }
       raf = requestAnimationFrame(draw);
     };
-
     resize();
-    addEventListener("resize", resize);
-    addEventListener("pointermove", move, { passive: true });
+    ctx.fillStyle = "#010204";
+    ctx.fillRect(0, 0, W, H);
+    window.addEventListener("resize", resize);
     raf = requestAnimationFrame(draw);
     return () => {
       cancelAnimationFrame(raf);
-      removeEventListener("resize", resize);
-      removeEventListener("pointermove", move);
+      window.removeEventListener("resize", resize);
     };
   }, []);
 
   useEffect(() => {
-    const onKey = (event) => { if (event.key === "Escape" && ready) exit(); };
-    addEventListener("keydown", onKey);
-    return () => removeEventListener("keydown", onKey);
-  }, [exit, ready]);
+    const key = (e) => { if (e.key === "Escape" && armed) onExit(); };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  }, [armed, onExit]);
 
-  return (
-    <main className="deep-space" onClick={() => { if (ready) exit(); }} role="button" tabIndex="0" aria-label="Aixion neural data space. Click or press Escape to return home.">
-      <canvas ref={canvasRef} />
-      <div className="deep-vignette" />
-      <div className="warp-brand">
-        <BrandLockup />
-        <strong>END IS THE NEW BEGINNING</strong>
-      </div>
-      {ready && <small>CLICK ANYWHERE OR PRESS ESC TO RETURN</small>}
-    </main>
-  );
+  return <main className="deep-space" onClick={() => armed && onExit()} role="button" tabIndex="0" aria-label="Aixion Deep Space. Click or press Escape to return Home">
+    <canvas ref={canvasRef}/>
+    <div className="deep-vignette"/>
+    <StandaloneEmblem className="deep-emblem"/>
+    <div className="deep-word-stage" aria-live="off"><span key={tick} className={`deep-word ${hold ? "hold" : ""}`}>{word}</span></div>
+    <small>CLICK ANYWHERE OR PRESS ESC TO RETURN</small>
+  </main>;
 }
 
-createRoot(document.getElementById("root")).render(<App />);
+createRoot(document.getElementById("root")).render(<App/>);
