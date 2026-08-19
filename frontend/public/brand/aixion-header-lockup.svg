@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 88" role="img" aria-labelledby="title desc">
+  <title id="title">AIXION LAB</title>
+  <desc id="desc">Aixion emblem with AIXION LAB wordmark</desc>
+  <defs>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="1.35" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g transform="translate(5 5) scale(.76)" fill="none" stroke="#ff3944" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter" filter="url(#glow)">
+    <path d="M50 9 L18 66 L34 66 L50 38"/>
+    <path d="M50 9 L82 66 L66 66 L50 38"/>
+    <path d="M18 66 L31 88 L69 88 L82 66"/>
+    <path d="M35 64 H65"/>
+  </g>
+  <text x="92" y="55" fill="#f4f6f8" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="400" letter-spacing="5">AIXION</text>
+  <text x="263" y="55" fill="#ff3944" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="500" letter-spacing="3">LAB</text>
+</svg>

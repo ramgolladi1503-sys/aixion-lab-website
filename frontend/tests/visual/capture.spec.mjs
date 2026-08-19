@@ -21,13 +21,6 @@ function ensureOut() {
   fs.mkdirSync(OUT, { recursive: true });
 }
 
-async function setEntered(page, entered = true) {
-  await page.addInitScript((value) => {
-    if (value) sessionStorage.setItem('aixion-entered-v4', '1');
-    else sessionStorage.removeItem('aixion-entered-v4');
-  }, entered);
-}
-
 async function stabilizeCanvasClock(page) {
   await page.addInitScript(() => {
     const nativeSetTimeout = window.setTimeout.bind(window);
@@ -52,8 +45,14 @@ test('capture governed visual matrix', async ({ page }) => {
   ensureOut();
 
   await stabilizeCanvasClock(page);
-  await setEntered(page, false);
-  await gotoState(page, '/', '.entry-screen');
+
+  // Entry state must be captured once without installing a persistent script
+  // that clears sessionStorage again on every later reload/navigation.
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => sessionStorage.removeItem('aixion-entered-v4'));
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.entry-screen')).toBeVisible();
+  await page.waitForTimeout(350);
   await shot(page, '01-entry-current.png');
 
   await page.evaluate(() => sessionStorage.setItem('aixion-entered-v4', '1'));
@@ -63,12 +62,12 @@ test('capture governed visual matrix', async ({ page }) => {
   await shot(page, '02-home-current.png');
 
   const projects = page.getByRole('button', { name: 'Open Projects' });
-  await projects.hover();
+  await projects.hover({ force: true });
   await page.waitForTimeout(250);
   await shot(page, '03-projects-hover-current.png');
 
   const research = page.getByRole('button', { name: 'Open Research' });
-  await research.hover();
+  await research.hover({ force: true });
   await page.waitForTimeout(250);
   await shot(page, '04-research-hover-current.png');
 

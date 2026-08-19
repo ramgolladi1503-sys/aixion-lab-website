@@ -28,7 +28,11 @@ test('home has exactly eight governed destinations and no desktop overflow', asy
 
 test('primary navigation, browser back, and emblem home return work', async ({ page }) => {
   await openHome(page);
-  await page.getByRole('button', { name: 'Open Projects' }).click();
+
+  // Orbit nodes are intentionally moving targets in normal motion mode. Force the
+  // pointer action so Playwright validates the handler rather than waiting forever
+  // for a mathematically stationary circle.
+  await page.getByRole('button', { name: 'Open Projects' }).click({ force: true });
   await expect(page).toHaveURL(/\/projects$/);
   await expect(page.locator('.world-projects')).toBeVisible();
 
@@ -36,13 +40,13 @@ test('primary navigation, browser back, and emblem home return work', async ({ p
   await expect(page).toHaveURL(/\/$/);
   await expect(page.locator('.home-orbit')).toBeVisible();
 
-  await page.getByRole('button', { name: 'Open Evidence' }).click();
+  await page.getByRole('button', { name: 'Open Evidence' }).click({ force: true });
   await expect(page).toHaveURL(/\/evidence$/);
-  await page.getByRole('button', { name: 'Aixion Lab home' }).click();
+  await page.getByRole('button', { name: 'Aixion Lab home' }).click({ force: true });
   await expect(page).toHaveURL(/\/$/);
 });
 
-test('Aixion Core has an accessible keyboard path and Escape exit', async ({ page }) => {
+test('Aixion Core has an accessible keyboard path and immediate Escape exit', async ({ page }) => {
   await openHome(page);
   const core = page.getByRole('button', { name: /Aixion Core/i });
   await core.focus();
