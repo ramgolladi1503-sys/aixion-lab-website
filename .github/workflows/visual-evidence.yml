@@ -11,6 +11,7 @@ permissions:
 jobs:
   capture-and-validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: frontend
@@ -27,7 +28,8 @@ jobs:
         run: npm install
 
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+        timeout-minutes: 4
+        run: npx playwright install chromium
 
       - name: Build
         run: npm run build
