@@ -1,0 +1,88 @@
+/* V5.4 production polish — evidence-backed fixes only. */
+
+/* Entry + global navigation: improve orientation without stealing the scene. */
+.entry-context {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 122px);
+  transform: translateX(-50%);
+  display: grid;
+  gap: 8px;
+  width: min(82vw, 620px);
+  text-align: center;
+  pointer-events: none;
+}
+.entry-context strong {
+  font: 600 11px/1 var(--mono);
+  letter-spacing: .28em;
+  color: rgba(248,250,252,.82);
+}
+.entry-context span {
+  font: 400 12px/1.45 var(--sans);
+  letter-spacing: .04em;
+  color: rgba(232,237,243,.52);
+}
+.desktop-nav button { font-size: 12px; letter-spacing: .08em; }
+
+/* Internal worlds: tighten remaining dead vertical rhythm and preserve legibility. */
+.world-about .story-section { min-height: 46vh; }
+.world-journey .story-section { min-height: 40vh; }
+.world-projects .story-section { min-height: 50vh; }
+.world-evidence .story-section { min-height: 44vh; }
+.world-page .story-section:not(.active) .section-copy { opacity: .78; }
+.world-evidence .story-section:not(.active) { opacity: .82; }
+.world-evidence .story-section:not(.active) .section-copy { opacity: .86; }
+
+/* TradeBot: give each active chapter a clean viewport landing zone. */
+.tradebot-track { scroll-snap-type: y proximity; }
+.tradebot-stage {
+  scroll-snap-align: center;
+  scroll-margin-top: 15vh;
+  min-height: 72vh;
+  display: flex;
+  align-items: center;
+}
+.tradebot-stage:not(.active) { opacity: .76; }
+.tradebot-stage:not(.active) .tradebot-copy { opacity: .82; }
+.tradebot-stage.active .tradebot-copy { transform: translateY(0); }
+
+/* Mobile Home: replace cropped desktop dial with a contained, centered native composition. */
+@media (max-width: 620px) {
+  .home-orbit {
+    place-items: center;
+    min-height: 100svh;
+    padding: calc(var(--header-h) + 18px) 12px 54px;
+    overflow: hidden;
+  }
+  .home-orbit .orbit-stage {
+    width: min(94vw, 390px) !important;
+    height: min(94vw, 390px) !important;
+    max-width: 390px;
+    transform: translateY(3vh) scale(.82) !important;
+    transform-origin: center center;
+  }
+  .home-orbit .node-position .hub-node {
+    width: 76px;
+    min-height: 62px;
+    opacity: .92;
+  }
+  .home-orbit .node-position:nth-of-type(3) .hub-node { scale: 1.08; }
+  .home-orbit .node-position:nth-of-type(4) .hub-node,
+  .home-orbit .node-position:nth-of-type(5) .hub-node { scale: 1.025; }
+  .hub-node strong { font-size: 10px !important; max-width: 62px; }
+  .idle-cue {
+    bottom: 16px;
+    max-width: 90vw;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.45;
+  }
+  .entry-context { top: calc(50% + 104px); width: 86vw; }
+  .entry-context strong { font-size: 9px; letter-spacing: .22em; }
+  .entry-context span { font-size: 10px; }
+  .tradebot-stage { min-height: auto; scroll-snap-align: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tradebot-track { scroll-snap-type: none; }
+}
