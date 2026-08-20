@@ -5,6 +5,17 @@ html, body, #root, .app, .scene, .home-orbit {
   overflow-x: hidden;
 }
 
+/* Home idle state: keep the composition alive through pointer/hover reactions rather than
+   perpetual rotation. This protects frame pacing while preserving rich interaction motion. */
+.page-home .orbit-stage::before,
+.page-home .ambient-ring,
+.page-home .orbit-rotor,
+.page-home .node-counterspin,
+.page-home .core-node,
+.page-home .core-node::after {
+  animation: none !important;
+}
+
 /* Entry + global navigation: improve orientation without stealing the scene. */
 .entry-context {
   position: absolute;
