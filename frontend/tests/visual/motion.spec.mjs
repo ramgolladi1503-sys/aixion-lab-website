@@ -48,6 +48,12 @@ test('Deep Space uses an endless five-word depth sequence over an active warp fi
   await expect(page.locator('.deep-word')).toHaveCount(5);
   await expect(page.locator('.deep-word.word-0')).toHaveText('END');
   await expect(page.locator('.deep-word.word-4')).toHaveText('BEGINNING');
+
+  await page.waitForTimeout(140);
+  const initiallyVisibleWords = await page.locator('.deep-word').evaluateAll((nodes) => nodes.filter((node) => Number(getComputedStyle(node).opacity) > 0.05).map((node) => node.textContent));
+  expect(initiallyVisibleWords).toHaveLength(1);
+  expect(initiallyVisibleWords[0]).toBe('END');
+
   const canvas = page.locator('.deep-space canvas');
   const first = await canvas.screenshot();
   await page.waitForTimeout(360);
