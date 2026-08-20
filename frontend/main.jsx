@@ -113,8 +113,12 @@ function ComputationalField({ mode = "home", boost = false }) {
   const canvasRef = useRef(null);
   const modeRef = useRef(mode);
   const boostRef = useRef(boost);
+  const wakeRef = useRef(null);
   useEffect(() => { modeRef.current = mode; }, [mode]);
-  useEffect(() => { boostRef.current = boost; }, [boost]);
+  useEffect(() => {
+    boostRef.current = boost;
+    wakeRef.current?.();
+  }, [boost]);
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
@@ -149,8 +153,7 @@ function ComputationalField({ mode = "home", boost = false }) {
     };
     let lastPaint = 0;
     const draw = (time) => {
-      const paintInterval = boostRef.current ? 30 : 220;
-      if (!reduced && time - lastPaint < paintInterval) {
+      if (!reduced && boostRef.current && time - lastPaint < 30) {
         frame = requestAnimationFrame(draw);
         return;
       }
@@ -220,10 +223,11 @@ function ComputationalField({ mode = "home", boost = false }) {
         context.arc(point.px, point.py, point.accent ? 1.8 : 0.82, 0, Math.PI * 2);
         context.fill();
       });
-      if (!reduced) {
-        if (boostRef.current) frame = requestAnimationFrame(draw);
-        else window.setTimeout(() => { frame = requestAnimationFrame(draw); }, 2000);
-      }
+      if (!reduced && boostRef.current) frame = requestAnimationFrame(draw);
+    };
+
+    wakeRef.current = () => {
+      if (!reduced) frame = requestAnimationFrame(draw);
     };
 
     resize();
@@ -232,6 +236,7 @@ function ComputationalField({ mode = "home", boost = false }) {
     if (reduced) draw(0);
     else frame = requestAnimationFrame(draw);
     return () => {
+      wakeRef.current = null;
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", move);
