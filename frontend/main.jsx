@@ -292,6 +292,7 @@ function App() {
       setDeep(true);
       return;
     }
+    if (routingRef.current?.key === key) return;
     if (key === page && !deep && !routingRef.current) return;
     const rect = element?.getBoundingClientRect?.();
     const route = {
@@ -413,7 +414,7 @@ function HomeHub({ hovered, setHovered, navigate }) {
         </svg>
         {positions.map((node) => <div key={node.key} className="node-position" style={{ left: `${node.x / 10}%`, top: `${node.y / 10}%` }}>
           <div className={`node-counterspin ${reduced ? "reduced" : ""}`}>
-            <button className={`hub-node ${hovered === node.key ? "active" : ""}`} onMouseEnter={() => setHovered(node.key)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(node.key)} onBlur={() => setHovered(null)} onClick={(event) => navigate(node.key, event.currentTarget)} aria-label={`Open ${node.label}`} data-cursor>
+            <button className={`hub-node ${hovered === node.key ? "active" : ""}`} onMouseEnter={() => setHovered(node.key)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(node.key)} onBlur={() => setHovered(null)} onPointerUp={(event) => navigate(node.key, event.currentTarget)} onClick={(event) => navigate(node.key, event.currentTarget)} aria-label={`Open ${node.label}`} data-cursor>
               <Icon type={node.key} size={23}/><strong>{node.label}</strong><i className="node-signal"/>
             </button>
           </div>
