@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -7,7 +7,7 @@ import "./styles.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const GITHUB = "https://github.com/ramgolladi1503-sys";
-const BRAND = "/brand/aixion-lab-brand-lockup.webp";
+const BRAND = "/brand/aixion-header-lockup.svg";
 const EMBLEM = "/brand/aixion-emblem.svg";
 const CONTACT_EMAIL = "contact@aixionlabs.com";
 
@@ -252,6 +252,12 @@ function App() {
   const [menu, setMenu] = useState(false);
 
   useEffect(() => {
+    if (!window.history.state?.aixion) {
+      window.history.replaceState({ ...(window.history.state || {}), aixion: true, key: initial }, "", window.location.href);
+    }
+  }, [initial]);
+
+  useEffect(() => {
     const pop = () => {
       const next = pageFor(window.location.pathname);
       if (next === "core") {
@@ -276,7 +282,7 @@ function App() {
   const navigate = (key, element) => {
     if (routing) return;
     if (key === "core") {
-      window.history.pushState({}, "", "/core");
+      if (window.location.pathname !== "/core") window.history.pushState({ aixion: true, key: "core" }, "", "/core");
       setDeep(true);
       return;
     }
@@ -292,15 +298,20 @@ function App() {
     });
   };
 
-  const commitRoute = () => {
+  const commitRoute = useCallback(() => {
     if (!routing) return;
-    window.history.pushState({}, "", pathFor(routing.key));
+    const nextPath = pathFor(routing.key);
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({ aixion: true, key: routing.key }, "", nextPath);
+    }
     setPage(routing.key);
-  };
+  }, [routing]);
+
+  const completeRoute = useCallback(() => setRouting(null), []);
 
   const exitDeep = () => {
     setDeep(false);
-    window.history.replaceState({}, "", "/");
+    window.history.replaceState({ aixion: true, key: "home" }, "", "/");
     setPage("home");
   };
 
@@ -321,7 +332,7 @@ function App() {
         {page === "home" ? <HomeHub hovered={hovered} setHovered={setHovered} navigate={navigate}/> : page === "tradebot" ? <TradeBotPage navigate={navigate}/> : <WorldPage page={page} navigate={navigate}/>} 
       </div>
     )}
-    {routing && <RoutePortal state={routing} onCommit={commitRoute} onComplete={() => setRouting(null)}/>} 
+    {routing && <RoutePortal state={routing} onCommit={commitRoute} onComplete={completeRoute}/>} 
   </div>;
 }
 
@@ -574,7 +585,7 @@ function SystemArtifact({ page, words, active }) {
   </div>;
 }
 
-function WorldPage({ page }) {
+function WorldPage({ page, navigate }) {
   const story = STORIES[page] || STORIES.about;
   const sections = useMemo(() => story.sections.map((section, index) => ({
     id: `${page}-${index + 1}`,
@@ -604,7 +615,7 @@ function WorldPage({ page }) {
             <p className="section-kicker">{section.kicker}</p>
             <h2>{section.title}</h2>
             <p>{section.body}</p>
-            {page === "projects" && index === 0 && <a className="text-action" href="/projects/tradebot">Open the TradeBot engineering case study <Icon type="arrow" size={18}/></a>}
+            {page === "projects" && index === 0 && <button className="text-action" onClick={(event) => navigate("tradebot", event.currentTarget)}>Open the TradeBot engineering case study <Icon type="arrow" size={18}/></button>}
             {page === "contact" && index === 1 && <a className="contact-link" href={GITHUB} target="_blank" rel="noreferrer"><Icon type="github" size={18}/> Selected engineering work</a>}
             {page === "contact" && index === 2 && <a className="contact-link primary" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL} <Icon type="arrow" size={18}/></a>}
           </div>
