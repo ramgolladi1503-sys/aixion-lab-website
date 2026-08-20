@@ -1,0 +1,36 @@
+name: WebKit Route Repair
+
+on:
+  push:
+    branches: [website/radial-immersive-v1]
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: website/radial-immersive-v1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Apply exact bounded repair
+        run: python scripts/repair_webkit_route.py
+      - name: Validate diff
+        run: |
+          git diff --check
+          git diff --exit-code -- frontend/main.jsx || true
+      - name: Commit source repair if needed
+        run: |
+          if git diff --quiet -- frontend/main.jsx; then
+            echo 'No repair needed.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add frontend/main.jsx
+          git commit -m 'fix: make home route activation deterministic in WebKit'
+          git push origin HEAD:website/radial-immersive-v1
