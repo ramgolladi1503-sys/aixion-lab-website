@@ -8,6 +8,10 @@ async function openHome(page) {
   await seedEntered(page);
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.home-orbit')).toBeVisible();
+  await page.evaluate(async () => {
+    await document.fonts?.ready;
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
 }
 
 function collectPageErrors(page) {
@@ -18,6 +22,27 @@ function collectPageErrors(page) {
   page.on('pageerror', (error) => errors.push(error.message));
   return errors;
 }
+
+test('normal-motion Home maintains bounded animation-frame pacing', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium-motion', 'frame pacing is measured once in the canonical normal-motion Chromium lane');
+  await openHome(page);
+  const timing = await page.evaluate(async () => {
+    const stamps = [];
+    await new Promise((resolve) => {
+      const sample = (time) => {
+        stamps.push(time);
+        if (stamps.length >= 100) resolve();
+        else requestAnimationFrame(sample);
+      };
+      requestAnimationFrame(sample);
+    });
+    const gaps = stamps.slice(1).map((time, index) => time - stamps[index]).sort((a, b) => a - b);
+    const percentile = gaps[Math.min(gaps.length - 1, Math.floor(gaps.length * 0.95))];
+    return { p95: percentile, max: Math.max(...gaps) };
+  });
+  expect(timing.p95).toBeLessThan(50);
+  expect(timing.max).toBeLessThan(150);
+});
 
 test('home exposes exactly eight governed destinations with one geometry authority', async ({ page }) => {
   const errors = collectPageErrors(page);
@@ -129,25 +154,4 @@ test('mobile keeps every Home destination fully inside the viewport', async ({ p
     expect(box.top).toBeGreaterThanOrEqual(0);
     expect(box.bottom).toBeLessThanOrEqual(844);
   }
-});
-
-test('normal-motion Home maintains bounded animation-frame pacing', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium-motion', 'frame pacing is measured once in the canonical normal-motion Chromium lane');
-  await openHome(page);
-  const timing = await page.evaluate(async () => {
-    const stamps = [];
-    await new Promise((resolve) => {
-      const sample = (time) => {
-        stamps.push(time);
-        if (stamps.length >= 100) resolve();
-        else requestAnimationFrame(sample);
-      };
-      requestAnimationFrame(sample);
-    });
-    const gaps = stamps.slice(1).map((time, index) => time - stamps[index]).sort((a, b) => a - b);
-    const percentile = gaps[Math.min(gaps.length - 1, Math.floor(gaps.length * 0.95))];
-    return { p95: percentile, max: Math.max(...gaps) };
-  });
-  expect(timing.p95).toBeLessThan(50);
-  expect(timing.max).toBeLessThan(150);
 });
