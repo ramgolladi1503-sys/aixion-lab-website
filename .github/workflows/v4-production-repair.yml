@@ -1,9 +1,8 @@
 name: V4 One-Time Production Repair
 
 on:
-  push:
-    branches: [website/radial-immersive-v1]
-    paths: [.github/workflows/v4-production-repair.yml]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
