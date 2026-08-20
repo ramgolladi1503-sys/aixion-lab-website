@@ -15,6 +15,13 @@ html, body, #root, .app, .scene, .home-orbit {
 .page-home .core-node::after {
   animation: none !important;
 }
+.page-home .global-header {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: linear-gradient(180deg, rgba(2,3,5,.97), rgba(2,3,5,.72) 72%, transparent);
+}
+.page-home .connection-map { filter: none !important; }
+.page-home .orbit-stage { transition: transform .14s linear; }
 
 /* Entry + global navigation: improve orientation without stealing the scene. */
 .entry-context {
