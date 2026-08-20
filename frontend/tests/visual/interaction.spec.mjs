@@ -95,8 +95,8 @@ test('Contact uses a real mail surface rather than a non-functional form', async
   await seedEntered(page);
   await page.goto('/contact', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.world-contact')).toBeVisible();
-  const email = page.getByRole('link', { name: /contact@aixionlabs.com/i });
-  await expect(email).toHaveAttribute('href', 'mailto:contact@aixionlabs.com');
+  const email = page.getByRole('link', { name: /contact@aixionlab.com/i });
+  await expect(email).toHaveAttribute('href', 'mailto:contact@aixionlab.com');
   await expect(page.locator('form')).toHaveCount(0);
 });
 
