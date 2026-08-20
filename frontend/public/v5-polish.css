@@ -1,4 +1,4 @@
-/* V5.4 production polish — evidence-backed fixes only. */
+/* V5.5 production polish — evidence-backed visual convergence. */
 
 html, body, #root, .app, .scene, .home-orbit {
   max-width: 100%;
@@ -28,6 +28,21 @@ html, body, #root, .app, .scene, .home-orbit {
 .page-home .connection-map { filter: none !important; }
 .page-home .orbit-stage { transition: transform .14s linear; }
 
+/* Raster-source emblem: avoid adding blur on the most important brand object. */
+.core-emblem,
+.entry-emblem,
+.artifact-core .aixion-emblem,
+.home-control.emblem-mode .aixion-emblem {
+  filter: none !important;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+.core-emblem-shell,
+.entry-emblem-shell,
+.artifact-core {
+  box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 0 42px rgba(255,57,70,.12);
+}
+
 /* Entry + global navigation: improve orientation without stealing the scene. */
 .entry-context {
   position: absolute;
@@ -52,27 +67,108 @@ html, body, #root, .app, .scene, .home-orbit {
 }
 .desktop-nav button { font-size: 12px; letter-spacing: .08em; }
 
-/* Internal worlds: tighten remaining dead vertical rhythm and preserve legibility. */
-.world-about .story-section { min-height: 46vh; }
-.world-journey .story-section { min-height: 40vh; }
-.world-projects .story-section { min-height: 50vh; }
-.world-evidence .story-section { min-height: 44vh; }
-.world-page .story-section:not(.active) .section-copy { opacity: .78; }
-.world-evidence .story-section:not(.active) { opacity: .82; }
-.world-evidence .story-section:not(.active) .section-copy { opacity: .86; }
+/* Internal worlds: remove mockup-like dead scroll and keep inactive chapters readable. */
+.world-page .story-layout { padding-bottom: 10vh; }
+.world-page .story-track { padding-bottom: 2vh; }
+.world-page .story-section {
+  align-content: center;
+}
+.world-about .story-section { min-height: 38vh; }
+.world-journey .story-section { min-height: 34vh; }
+.world-projects .story-section { min-height: 42vh; }
+.world-evidence .story-section { min-height: 38vh; }
+.world-page .story-section:not(.active) .section-copy { opacity: .91; }
+.world-page .story-section:not(.active) .section-copy > p:last-of-type { color: rgba(233,238,244,.72); }
+.world-page .section-copy > p:last-of-type { color: rgba(233,238,244,.78); }
+.world-evidence .story-section:not(.active) { opacity: .92; }
+.world-evidence .story-section:not(.active) .section-copy { opacity: .96; }
+.world-about .story-track { gap: 1vh; }
+.world-about .story-section { padding-block: 38px; }
+.world-about .story-section:nth-child(2) { margin-left: 5vw; }
+.world-about .story-section:nth-child(3) { margin-left: 1.5vw; }
+.world-about .story-stage > small { color: rgba(255,255,255,.52); }
 
-/* TradeBot: give each active chapter a clean viewport landing zone. */
+/* Contact: make the final destination feel like a composed conversion surface, not an ending gap. */
+.world-contact .world-hero {
+  min-height: 50vh;
+  padding-top: calc(var(--header-h) + 6vh);
+  padding-bottom: 5vh;
+}
+.world-contact .story-layout { max-width: 1120px; }
+.world-contact .story-track {
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 34px;
+  padding-bottom: 10vh;
+}
+.world-contact .story-section {
+  padding: 34px 34px 38px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(255,255,255,.025), rgba(5,7,10,.34));
+}
+.world-contact .story-section:nth-child(3) {
+  margin-top: 18px;
+  padding: 54px 40px;
+  border-color: rgba(255,57,70,.22);
+  background: radial-gradient(circle at 50% 0%, rgba(255,57,70,.08), transparent 48%), rgba(5,7,10,.46);
+}
+.world-contact .story-section:nth-child(3) h2 { font-size: clamp(38px,4.4vw,64px); }
+.world-contact .contact-link.primary {
+  margin-top: 34px;
+  padding: 15px 20px 16px;
+  border: 1px solid rgba(255,57,70,.36);
+  border-radius: 999px;
+  background: rgba(255,57,70,.055);
+  font-size: clamp(22px,2.5vw,34px);
+  line-height: 1.05;
+}
+.world-contact .contact-link.primary:hover {
+  border-color: rgba(255,57,70,.72);
+  background: rgba(255,57,70,.10);
+}
+
+/* TradeBot: active stage now changes the visual system, not only the copy. */
 .tradebot-track { scroll-snap-type: y proximity; }
 .tradebot-stage {
   scroll-snap-align: center;
-  scroll-margin-top: 15vh;
-  min-height: 72vh;
+  scroll-margin-top: 13vh;
+  min-height: 64vh;
   display: flex;
   align-items: center;
 }
-.tradebot-stage:not(.active) { opacity: .76; }
-.tradebot-stage:not(.active) .tradebot-copy { opacity: .82; }
+.tradebot-stage:not(.active) { opacity: .88; }
+.tradebot-stage:not(.active) .tradebot-copy { opacity: .92; }
+.tradebot-stage:not(.active) .tradebot-copy > p:last-of-type { color: rgba(233,238,244,.72); }
 .tradebot-stage.active .tradebot-copy { transform: translateY(0); }
+.tradebot-system {
+  transition: border-color .45s, box-shadow .55s, background .55s, transform .45s var(--ease-out);
+}
+.tradebot-system .tb-line { opacity: .28; transition: opacity .4s, background .4s, box-shadow .4s; }
+.tradebot-system .tb-node { transition: color .4s, transform .45s var(--ease-out), opacity .4s; }
+.tradebot-system.stage-0 .line-0,
+.tradebot-system.stage-1 .line-1,
+.tradebot-system.stage-2 .line-2,
+.tradebot-system.stage-3 .line-3,
+.tradebot-system.stage-4 .line-4 {
+  opacity: 1;
+  background: linear-gradient(90deg, rgba(255,57,70,.95), rgba(255,255,255,.30));
+  box-shadow: 0 0 14px rgba(255,57,70,.32);
+}
+.tradebot-system.stage-0 .node-0,
+.tradebot-system.stage-1 .node-1,
+.tradebot-system.stage-2 .node-2,
+.tradebot-system.stage-3 .node-3,
+.tradebot-system.stage-4 .node-4 {
+  color: white;
+  transform: translateX(12px) scale(1.08);
+  text-shadow: 0 0 16px rgba(255,57,70,.45);
+}
+.tradebot-system.stage-0 { border-color: rgba(255,57,70,.18); box-shadow: inset 0 0 80px rgba(255,57,70,.025); }
+.tradebot-system.stage-1 { border-color: rgba(255,57,70,.24); box-shadow: inset 30px -20px 110px rgba(255,57,70,.035); }
+.tradebot-system.stage-2 { border-color: rgba(255,57,70,.34); box-shadow: 0 0 70px rgba(255,57,70,.07), inset 0 0 90px rgba(255,57,70,.045); }
+.tradebot-system.stage-3 { border-color: rgba(255,255,255,.16); box-shadow: inset -26px 18px 100px rgba(255,255,255,.025); }
+.tradebot-system.stage-4 { border-color: rgba(255,57,70,.48); box-shadow: 0 0 90px rgba(255,57,70,.10), inset 0 0 90px rgba(255,57,70,.055); }
+.tradebot-sticky > small { color: rgba(255,255,255,.54); }
 
 /* Mobile Home: contained, centered and fully viewport-safe. */
 @media (max-width: 620px) {
@@ -109,6 +205,23 @@ html, body, #root, .app, .scene, .home-orbit {
   .entry-context strong { font-size: 9px; letter-spacing: .22em; }
   .entry-context span { font-size: 10px; }
   .tradebot-stage { min-height: auto; scroll-snap-align: none; }
+}
+
+@media (max-width: 760px) {
+  .world-contact .story-section {
+    padding: 38px 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+  .world-contact .story-section:nth-child(3) { margin-top: 0; }
+  .world-contact .contact-link.primary {
+    width: 100%;
+    justify-content: space-between;
+    padding: 14px 16px;
+    font-size: clamp(19px,6vw,28px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
