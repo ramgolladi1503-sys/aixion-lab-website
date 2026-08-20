@@ -369,6 +369,10 @@ function Entry({ onEnter }) {
       <span className="entry-emblem-shell"><Emblem className="entry-emblem"/></span>
       <small>ENTER</small>
     </button>
+    <div className="entry-context" aria-hidden="true">
+      <strong>ENGINEERING · AI · RESEARCH</strong>
+      <span>Systems built to be challenged, observed and proven.</span>
+    </div>
   </main>;
 }
 
