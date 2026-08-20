@@ -248,6 +248,8 @@ function App() {
   const [entered, setEntered] = useState(() => sessionStorage.getItem("aixion-entered-v4") === "1");
   const [hovered, setHovered] = useState(null);
   const [routing, setRouting] = useState(null);
+  const routingRef = useRef(null);
+  const routeSequence = useRef(0);
   const [deep, setDeep] = useState(initial === "core");
   const [menu, setMenu] = useState(false);
 
@@ -260,6 +262,8 @@ function App() {
   useEffect(() => {
     const pop = () => {
       const next = pageFor(window.location.pathname);
+      routingRef.current = null;
+      setRouting(null);
       if (next === "core") {
         setPage("home");
         setDeep(true);
@@ -267,7 +271,6 @@ function App() {
         setPage(next);
         setDeep(false);
       }
-      setRouting(null);
     };
     window.addEventListener("popstate", pop);
     return () => window.removeEventListener("popstate", pop);
@@ -280,36 +283,46 @@ function App() {
   }, [page, deep, routing]);
 
   const navigate = (key, element) => {
-    if (routing) return;
     if (key === "core") {
+      routingRef.current = null;
+      setRouting(null);
       if (window.location.pathname !== "/core") window.history.pushState({ aixion: true, key: "core" }, "", "/core");
       setDeep(true);
       return;
     }
-    if (key === page && !deep) return;
+    if (key === page && !deep && !routingRef.current) return;
     const rect = element?.getBoundingClientRect?.();
-    setMenu(false);
-    setDeep(false);
-    setRouting({
+    const route = {
+      id: ++routeSequence.current,
       key,
       x: rect ? rect.left + rect.width / 2 : window.innerWidth / 2,
       y: rect ? rect.top + rect.height / 2 : window.innerHeight / 2,
       label: key === "home" ? "HOME" : key === "tradebot" ? "TRADEBOT" : META[key]?.label || key,
-    });
+    };
+    setMenu(false);
+    setDeep(false);
+    routingRef.current = route;
+    setRouting(route);
   };
 
-  const commitRoute = useCallback(() => {
-    if (!routing) return;
-    const nextPath = pathFor(routing.key);
+  const commitRoute = useCallback((route) => {
+    if (!route || routingRef.current?.id !== route.id) return;
+    const nextPath = pathFor(route.key);
     if (window.location.pathname !== nextPath) {
-      window.history.pushState({ aixion: true, key: routing.key }, "", nextPath);
+      window.history.pushState({ aixion: true, key: route.key }, "", nextPath);
     }
-    setPage(routing.key);
-  }, [routing]);
+    setPage(route.key);
+  }, []);
 
-  const completeRoute = useCallback(() => setRouting(null), []);
+  const completeRoute = useCallback((route) => {
+    if (!route || routingRef.current?.id !== route.id) return;
+    routingRef.current = null;
+    setRouting((current) => current?.id === route.id ? null : current);
+  }, []);
 
   const exitDeep = () => {
+    routingRef.current = null;
+    setRouting(null);
     setDeep(false);
     window.history.replaceState({ aixion: true, key: "home" }, "", "/");
     setPage("home");
@@ -421,27 +434,50 @@ function RoutePortal({ state, onCommit, onComplete }) {
     const wave = node.querySelector(".portal-wave");
     const veil = node.querySelector(".portal-veil");
     const label = node.querySelector(".portal-label");
+    let committed = false;
+    let completed = false;
+
+    const commit = () => {
+      if (committed) return;
+      committed = true;
+      onCommit(state);
+    };
+    const complete = () => {
+      if (completed) return;
+      completed = true;
+      onComplete(state);
+    };
+
+    const commitTimer = window.setTimeout(commit, reduced ? 90 : 430);
+    const completeTimer = window.setTimeout(complete, reduced ? 280 : 980);
+    let timeline;
+
     if (reduced) {
-      const timeline = gsap.timeline({ onComplete });
-      timeline.to(veil, { opacity: 1, duration: 0.08 }).call(onCommit).to(veil, { opacity: 0, duration: 0.12 });
-      return () => timeline.kill();
+      timeline = gsap.timeline({ onComplete: complete });
+      timeline.to(veil, { opacity: 1, duration: 0.08 }).call(commit).to(veil, { opacity: 0, duration: 0.12 });
+    } else {
+      const diameter = Math.hypot(window.innerWidth, window.innerHeight) * 2.35;
+      gsap.set(wave, { width: diameter, height: diameter, xPercent: -50, yPercent: -50, scale: 0.015, opacity: 1 });
+      gsap.set(veil, { opacity: 0 });
+      gsap.set(label, { opacity: 0, y: 8, letterSpacing: ".45em" });
+      timeline = gsap.timeline({ onComplete: complete });
+      timeline
+        .to(wave, { scale: 0.18, duration: 0.18, ease: "power2.out" }, 0)
+        .to(wave, { scale: 1.12, duration: 0.48, ease: "expo.in" }, 0.16)
+        .to(veil, { opacity: 1, duration: 0.22, ease: "power2.in" }, 0.25)
+        .to(label, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, 0.24)
+        .call(commit, [], 0.43)
+        .to(label, { opacity: 0, y: -8, duration: 0.17 }, 0.48)
+        .to(veil, { opacity: 0, duration: 0.33, ease: "power2.out" }, 0.54)
+        .to(wave, { scale: 1.42, opacity: 0, duration: 0.32, ease: "power2.out" }, 0.52);
     }
-    const diameter = Math.hypot(window.innerWidth, window.innerHeight) * 2.35;
-    gsap.set(wave, { width: diameter, height: diameter, xPercent: -50, yPercent: -50, scale: 0.015, opacity: 1 });
-    gsap.set(veil, { opacity: 0 });
-    gsap.set(label, { opacity: 0, y: 8, letterSpacing: ".45em" });
-    const timeline = gsap.timeline({ onComplete });
-    timeline
-      .to(wave, { scale: 0.18, duration: 0.18, ease: "power2.out" }, 0)
-      .to(wave, { scale: 1.12, duration: 0.48, ease: "expo.in" }, 0.16)
-      .to(veil, { opacity: 1, duration: 0.22, ease: "power2.in" }, 0.25)
-      .to(label, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, 0.24)
-      .call(onCommit, [], 0.43)
-      .to(label, { opacity: 0, y: -8, duration: 0.17 }, 0.48)
-      .to(veil, { opacity: 0, duration: 0.33, ease: "power2.out" }, 0.54)
-      .to(wave, { scale: 1.42, opacity: 0, duration: 0.32, ease: "power2.out" }, 0.52);
-    return () => timeline.kill();
-  }, [onCommit, onComplete, reduced]);
+
+    return () => {
+      window.clearTimeout(commitTimer);
+      window.clearTimeout(completeTimer);
+      timeline?.kill();
+    };
+  }, [state, onCommit, onComplete, reduced]);
   return <div ref={root} className="route-portal" style={{ "--portal-x": `${state.x}px`, "--portal-y": `${state.y}px` }} aria-hidden="true">
     <div className="portal-wave"/><div className="portal-ring ring-1"/><div className="portal-ring ring-2"/><div className="portal-veil"/><b className="portal-label">{state.label}</b>
   </div>;
