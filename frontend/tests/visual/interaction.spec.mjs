@@ -10,9 +10,21 @@ async function openHome(page) {
   await expect(page.locator('.home-orbit')).toBeVisible();
 }
 
-test('home has exactly eight governed destinations and no desktop overflow', async ({ page }) => {
+function collectPageErrors(page) {
+  const errors = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(message.text());
+  });
+  page.on('pageerror', (error) => errors.push(error.message));
+  return errors;
+}
+
+test('home exposes exactly eight governed destinations with one geometry authority', async ({ page }) => {
+  const errors = collectPageErrors(page);
   await openHome(page);
   await expect(page.locator('.hub-node')).toHaveCount(8);
+  await expect(page.locator('.spoke-line')).toHaveCount(8);
+  await expect(page.locator('.spoke-end')).toHaveCount(8);
   for (const name of ['About', 'Journey', 'Projects', 'Research', 'Evidence', 'Control Tower', 'Stack', 'Contact']) {
     await expect(page.getByRole('button', { name: `Open ${name}` })).toBeVisible();
   }
@@ -24,17 +36,19 @@ test('home has exactly eight governed destinations and no desktop overflow', asy
   }));
   expect(size.scrollWidth).toBeLessThanOrEqual(size.innerWidth + 2);
   expect(size.scrollHeight).toBeLessThanOrEqual(size.innerHeight + 2);
+  expect(errors).toEqual([]);
 });
 
-test('primary navigation, browser back, and emblem home return work', async ({ page }) => {
+test('cinematic route transition resolves, browser back works, and header home is visible', async ({ page }) => {
   await openHome(page);
+  const homeControl = page.getByRole('button', { name: 'Home' });
+  await expect(homeControl).toBeVisible();
 
-  // Orbit nodes are intentionally moving targets in normal motion mode. Force the
-  // pointer action so Playwright validates the handler rather than waiting forever
-  // for a mathematically stationary circle.
   await page.getByRole('button', { name: 'Open Projects' }).click({ force: true });
+  await expect(page.locator('.route-portal')).toBeVisible();
   await expect(page).toHaveURL(/\/projects$/);
   await expect(page.locator('.world-projects')).toBeVisible();
+  await expect(page.locator('.route-portal')).toBeHidden();
 
   await page.goBack();
   await expect(page).toHaveURL(/\/$/);
@@ -46,16 +60,37 @@ test('primary navigation, browser back, and emblem home return work', async ({ p
   await expect(page).toHaveURL(/\/$/);
 });
 
-test('Aixion Core has an accessible keyboard path and immediate Escape exit', async ({ page }) => {
+test('Aixion Core supports keyboard entry and immediate Escape exit', async ({ page }) => {
   await openHome(page);
   const core = page.getByRole('button', { name: /Aixion Core/i });
   await core.focus();
   await core.press('Enter');
   await expect(page).toHaveURL(/\/core$/);
   await expect(page.locator('.app.is-deep')).toBeVisible();
+  await expect(page.locator('.deep-word')).toHaveCount(5);
   await page.keyboard.press('Escape');
   await expect(page).toHaveURL(/\/$/);
   await expect(page.locator('.home-orbit')).toBeVisible();
+});
+
+test('TradeBot exposes all five governed narrative stages and public/private boundary', async ({ page }) => {
+  await seedEntered(page);
+  await page.goto('/projects/tradebot', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.tradebot-page')).toBeVisible();
+  for (const id of ['tradebot-ingest', 'tradebot-research', 'tradebot-govern', 'tradebot-observe', 'tradebot-prove']) {
+    await expect(page.locator(`#${id}`)).toBeAttached();
+  }
+  await expect(page.locator('.public-private')).toContainText('PUBLIC');
+  await expect(page.locator('.public-private')).toContainText('PRIVATE');
+});
+
+test('Contact uses a real mail surface rather than a non-functional form', async ({ page }) => {
+  await seedEntered(page);
+  await page.goto('/contact', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.world-contact')).toBeVisible();
+  const email = page.getByRole('link', { name: /contact@aixionlabs.com/i });
+  await expect(email).toHaveAttribute('href', 'mailto:contact@aixionlabs.com');
+  await expect(page.locator('form')).toHaveCount(0);
 });
 
 test('GitHub utility is visible and safely external', async ({ page }) => {
@@ -71,9 +106,7 @@ test('mobile keeps all destinations reachable without horizontal overflow', asyn
   await page.setViewportSize({ width: 390, height: 844 });
   await openHome(page);
   await expect(page.locator('.hub-node')).toHaveCount(8);
-  const size = await page.evaluate(() => ({
-    scrollWidth: document.documentElement.scrollWidth,
-    innerWidth: window.innerWidth,
-  }));
+  await expect(page.getByRole('button', { name: 'Open navigation' })).toBeVisible();
+  const size = await page.evaluate(() => ({ scrollWidth: document.documentElement.scrollWidth, innerWidth: window.innerWidth }));
   expect(size.scrollWidth).toBeLessThanOrEqual(size.innerWidth + 2);
 });
