@@ -7,15 +7,16 @@ async function seedEntered(page) {
 test('route portal completes quickly and reveals destination through one continuous transition', async ({ page }) => {
   await seedEntered(page);
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const start = Date.now();
+  const portal = page.locator('.route-portal');
   await page.getByRole('button', { name: 'Open Research' }).click({ force: true });
-  await expect(page.locator('.route-portal')).toBeVisible();
+  await expect(portal).toBeVisible();
+  const transitionStart = Date.now();
+  await expect(portal).toBeHidden();
+  const transitionElapsed = Date.now() - transitionStart;
+  expect(transitionElapsed).toBeGreaterThan(250);
+  expect(transitionElapsed).toBeLessThan(1400);
   await expect(page).toHaveURL(/\/research$/);
   await expect(page.locator('.world-research')).toBeVisible();
-  await expect(page.locator('.route-portal')).toBeHidden();
-  const elapsed = Date.now() - start;
-  expect(elapsed).toBeGreaterThan(300);
-  expect(elapsed).toBeLessThan(1800);
 });
 
 test('background field remains active in normal motion mode', async ({ page }) => {
