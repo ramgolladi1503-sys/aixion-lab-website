@@ -77,28 +77,14 @@ function Emblem({ className = "", alt = "" }) {
 function PointerVariables() {
   useEffect(() => {
     const root = document.documentElement;
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let frame = 0;
     const move = (event) => {
-      targetX = event.clientX / Math.max(window.innerWidth, 1) - 0.5;
-      targetY = event.clientY / Math.max(window.innerHeight, 1) - 0.5;
-    };
-    const tick = () => {
-      currentX += (targetX - currentX) * 0.065;
-      currentY += (targetY - currentY) * 0.065;
-      root.style.setProperty("--mx", currentX.toFixed(4));
-      root.style.setProperty("--my", currentY.toFixed(4));
-      frame = requestAnimationFrame(tick);
+      const x = event.clientX / Math.max(window.innerWidth, 1) - 0.5;
+      const y = event.clientY / Math.max(window.innerHeight, 1) - 0.5;
+      root.style.setProperty("--mx", x.toFixed(4));
+      root.style.setProperty("--my", y.toFixed(4));
     };
     window.addEventListener("pointermove", move, { passive: true });
-    frame = requestAnimationFrame(tick);
-    return () => {
-      window.removeEventListener("pointermove", move);
-      cancelAnimationFrame(frame);
-    };
+    return () => window.removeEventListener("pointermove", move);
   }, []);
   return null;
 }
@@ -163,7 +149,8 @@ function ComputationalField({ mode = "home", boost = false }) {
     };
     let lastPaint = 0;
     const draw = (time) => {
-      if (!reduced && time - lastPaint < 30) { frame = requestAnimationFrame(draw); return; }
+      const paintInterval = boostRef.current ? 30 : 180;
+      if (!reduced && time - lastPaint < paintInterval) { frame = requestAnimationFrame(draw); return; }
       lastPaint = time;
       context.clearRect(0, 0, width, height);
       const energy = boostRef.current ? 2.7 : 1;
@@ -464,7 +451,7 @@ function RoutePortal({ state, onCommit, onComplete }) {
 
     if (reduced) {
       timeline = gsap.timeline({ onComplete: complete });
-      timeline.to(veil, { opacity: 1, duration: 0.12 }).call(commit).to(veil, { opacity: 1, duration: 0.18 }).to(veil, { opacity: 0, duration: 0.24 });
+      timeline.to(veil, { opacity: 1, duration: 0.12 }).call(commit).to(veil, { opacity: 1, duration: 0.85 }).to(veil, { opacity: 0, duration: 0.20 });
     } else {
       const diameter = Math.hypot(window.innerWidth, window.innerHeight) * 2.35;
       gsap.set(wave, { width: diameter, height: diameter, xPercent: -50, yPercent: -50, scale: 0.015, opacity: 1 });
