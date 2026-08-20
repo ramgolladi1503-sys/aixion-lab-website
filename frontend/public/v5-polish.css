@@ -5,8 +5,8 @@ html, body, #root, .app, .scene, .home-orbit {
   overflow-x: hidden;
 }
 
-/* Home idle state: keep the composition alive through pointer/hover reactions rather than
-   perpetual rotation. This protects frame pacing while preserving rich interaction motion. */
+/* Home idle state: expensive loops stay asleep. A single transform-only ambient layer keeps
+   the scene alive and gives the compositor a stable cadence without canvas/filter churn. */
 .page-home .orbit-stage::before,
 .page-home .ambient-ring,
 .page-home .orbit-rotor,
@@ -14,6 +14,11 @@ html, body, #root, .app, .scene, .home-orbit {
 .page-home .core-node,
 .page-home .core-node::after {
   animation: none !important;
+}
+.page-home .orbit-depth.depth-one {
+  animation: v54-home-ambient 8s linear infinite;
+  will-change: transform;
+  transform-origin: center;
 }
 .page-home .global-header {
   -webkit-backdrop-filter: none;
@@ -107,5 +112,12 @@ html, body, #root, .app, .scene, .home-orbit {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .page-home .orbit-depth.depth-one { animation: none !important; }
   .tradebot-track { scroll-snap-type: none; }
+}
+
+@keyframes v54-home-ambient {
+  0% { transform: translate3d(0,0,0) scale(.998); }
+  50% { transform: translate3d(0,-2px,0) scale(1.004); }
+  100% { transform: translate3d(0,0,0) scale(.998); }
 }
