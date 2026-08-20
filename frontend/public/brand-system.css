@@ -1,6 +1,43 @@
-/* V4 presentation refinements.
-   Brand rendering is owned by the source-derived SVG assets referenced by React/CSS.
-   Do not hide or recrop those assets here: one visual authority prevents crop drift. */
+/* V4 source-derived brand rendering.
+   The authoritative 1200x900 WebP is the only raster source.
+   CSS crops are centralized here because external SVG <img> documents cannot
+   reliably load a nested WebP resource across browser engines. */
+
+/* Header: crop the native AIXION LAB wordmark from the authoritative source. */
+.brand-button {
+  width: clamp(220px, 19vw, 286px);
+  height: 58px;
+  aspect-ratio: auto;
+  background-color: transparent;
+  background-image: url('/brand/aixion-lab-brand-lockup.webp');
+  background-repeat: no-repeat;
+  background-size: 164.384% 608%;
+  background-position: 50% 70%;
+  filter: drop-shadow(0 0 14px rgba(255,57,70,.16));
+}
+.brand-button > img { opacity: 0 !important; }
+
+/* Emblem: crop x=445..755, y=215..525 from the same 1200x900 source. */
+.entry-emblem-shell,
+.core-emblem-shell,
+.artifact-core,
+.home-control.emblem-mode {
+  background-color: #000;
+  background-image: url('/brand/aixion-lab-brand-lockup.webp');
+  background-repeat: no-repeat;
+  background-size: 387.097% 290.323%;
+  background-position: 50% 36.441%;
+}
+.entry-emblem-shell .aixion-emblem,
+.core-emblem-shell .aixion-emblem,
+.artifact-core .aixion-emblem,
+.home-control.emblem-mode .aixion-emblem {
+  opacity: 0 !important;
+}
+.home-control.emblem-mode {
+  border-radius: 50%;
+  filter: drop-shadow(0 0 9px rgba(255,57,70,.46));
+}
 
 /* Remove decorative 01/02/03 numbering from the recruiter-facing experience. */
 .chapter-rail button {
@@ -55,7 +92,12 @@
   box-shadow: 0 0 24px rgba(255,57,70,.16);
 }
 
+@media (max-width: 860px) {
+  .brand-button { width: 205px; height: 52px; background-size: 164.384% 534%; }
+}
+
 @media (max-width: 620px) {
+  .brand-button { width: 176px; height: 46px; background-size: 164.384% 500%; }
   .hub-node strong { font-size: 12px; }
   .eyebrow span, .section-kicker { font-size: 11px; }
   .story-section, .tradebot-stage { grid-template-columns: 1fr; }
