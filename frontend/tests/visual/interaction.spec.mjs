@@ -41,7 +41,7 @@ test('home exposes exactly eight governed destinations with one geometry authori
 
 test('cinematic route transition resolves, browser back works, and header home is visible', async ({ page }) => {
   await openHome(page);
-  const homeControl = page.getByRole('button', { name: 'Home' });
+  const homeControl = page.getByRole('button', { name: 'Home', exact: true });
   await expect(homeControl).toBeVisible();
 
   await page.getByRole('button', { name: 'Open Projects' }).click({ force: true });
