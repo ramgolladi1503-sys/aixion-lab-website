@@ -1,12 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const chromiumForegroundArgs = [
-  '--disable-background-timer-throttling',
-  '--disable-renderer-backgrounding',
-  '--disable-backgrounding-occluded-windows',
-  '--disable-features=CalculateNativeWinOcclusion',
-];
-
 export default defineConfig({
   testDir: './tests/visual',
   timeout: 60_000,
@@ -35,19 +28,11 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium-motion',
-      use: {
-        ...devices['Desktop Chrome'],
-        reducedMotion: 'no-preference',
-        launchOptions: { args: chromiumForegroundArgs },
-      },
+      use: { ...devices['Desktop Chrome'], channel: 'chromium', reducedMotion: 'no-preference' },
     },
     {
       name: 'chromium-reduced',
-      use: {
-        ...devices['Desktop Chrome'],
-        reducedMotion: 'reduce',
-        launchOptions: { args: chromiumForegroundArgs },
-      },
+      use: { ...devices['Desktop Chrome'], channel: 'chromium', reducedMotion: 'reduce' },
     },
     {
       name: 'webkit-motion',
