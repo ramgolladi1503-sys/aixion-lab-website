@@ -7,36 +7,9 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  bounded-repair:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'website/radial-immersive-v1'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout exact feature branch
-        uses: actions/checkout@v4
-        with:
-          ref: website/radial-immersive-v1
-
-      - name: Apply bounded idle-scheduler repair
-        run: python scripts/repair_v54_ci_round6.py
-
-      - name: Validate bounded diff
-        run: git diff --check
-
-      - name: Commit source repair if needed
-        run: |
-          if git diff --quiet -- frontend/main.jsx; then
-            echo 'No repair needed.'
-            exit 0
-          fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- frontend/main.jsx
-          git commit -m 'perf: eliminate idle Home rAF loop'
-          git push origin HEAD:website/radial-immersive-v1
-
   production-gate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
