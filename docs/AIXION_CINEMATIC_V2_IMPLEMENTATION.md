@@ -1,69 +1,64 @@
-# AIXION LAB — Cinematic Immersive V2
+# AIXION LAB — Production Convergence V4
 
-## Locked implementation behavior
+## Status
 
-This branch implements the cinematic V2 direction for the public Aixion Lab experience.
+This branch is the production-convergence iteration of the Aixion Lab immersive website. It remains a draft PR and must not be merged until owner visual review accepts the actual render.
 
-### Landing
-- No left-side hero essay or right-side preview card.
-- The radial system is the landing-page hero.
-- The authoritative Aixion brand is enlarged in the top-left.
-- The center uses the Aixion brand mark cropped from the same authoritative lockup.
-- Eight outer destinations orbit clockwise while their readable faces counter-rotate.
-- Center orbital rings rotate anti-clockwise at independent speeds.
-- Spokes behave as signal paths and react on hover.
-- A Canvas computational field flows behind the navigation and reacts to focus.
+## What V4 changes
 
-### Navigation
-- Outer-node clicks initiate a portal/tunnel transition rather than a simple card reveal.
-- Internal pages remove the full radial wheel completely.
-- Internal content is rendered directly into an atmospheric canvas rather than one large paper/card container.
-- On Home the header control reads `Home`; on internal pages it morphs to the Aixion emblem and returns cinematically to Home.
-- Browser history and direct routes remain supported.
+V4 stops layering temporary visual patches and converges the experience onto one React + GSAP + CSS design/motion system.
 
-### Aixion Core / Deep Space
-- Single center click gives local feedback.
-- Double click enters the neural-data space.
-- Long press is the touch fallback.
-- Enter is the keyboard fallback when the center control is focused.
-- Deep Space renders a perspective neural/data field in Canvas.
-- Any click or Escape returns to the landing hub.
-- `/core` is supported as the Deep Space route.
+- `frontend/main.jsx` owns routing, Deep Space, pointer behavior, scroll choreography and runtime interaction.
+- `frontend/styles.css` is the single visual design-system authority.
+- Temporary `emblem.css`, `visual-convergence.css` and `runtime-contracts.js` layers are removed.
+- Entry/Core use a source-derived emblem crop from the authoritative `aixion-lab-brand-lockup.webp`, not reconstructed vector paths.
+- Home spokes and orbital nodes share one polar-coordinate geometry and one rotating parent, eliminating independent alignment drift.
+- Route changes use one GSAP portal timeline instead of independent CSS/timeouts.
+- Internal pages use a sticky spatial artifact plus scroll-led editorial sections inspired by the interaction principles discussed from Feed, Unseen and Dropify without copying their brand or layouts.
+- TradeBot is a five-stage engineering narrative: INGEST → RESEARCH → GOVERN → OBSERVE → PROVE.
+- Deep Space is an endless forward warp with sequential depth travel: END → IS → THE → NEW → BEGINNING.
+- Contact uses a real mail surface instead of a placeholder form.
 
-### Internal worlds
-- About: engineering philosophy and `Engineer → Challenge → Prove`.
-- Journey: QA → automation → systems/reliability → applied AI → market intelligence → governed engineering → Aixion Lab.
-- Projects: TradeBot is the flagship system; supporting programs remain visible.
-- Research: hypothesis lanes and negative-result discipline.
-- Evidence: validation, governance, reliability, and review.
-- Control Tower: explicitly labeled demonstration/public-safe operational context; no fake live claims.
-- Stack: tools grouped by engineering purpose rather than a logo wall.
-- Contact: recruiter/collaboration positioning plus persistent GitHub access.
-- TradeBot: public-safe architecture and engineering case study with explicit proprietary/private boundary.
+## Typography lock
 
-### Public/private boundary
-Never expose broker credentials, API tokens, private endpoints, proprietary signal thresholds, active entry/exit logic, production write controls, sensitive datasets, or private source code.
+- Display: Bricolage Grotesque
+- Body: DM Sans
+- Technical metadata: IBM Plex Mono
 
-### Accessibility and performance
-- `prefers-reduced-motion` disables continuous orbital/camera-style motion and simplifies portal effects.
-- GitHub has an accessible label.
-- Deep Space supports Escape/Enter and touch long-press.
-- Canvas DPR is capped.
-- No heavy 3D dependency was introduced for V2; the experience uses React, CSS/SVG/DOM behavior, and Canvas 2D.
+The type scale is bounded so internal pages remain readable and recruiter-facing rather than becoming oversized art direction.
 
-## Render gate
+## Public/private boundary
 
-Do not merge based only on CI. Render and visually inspect:
+TradeBot may expose architecture, engineering methodology, failure modes, validation strategy, sanitized operational evidence and lessons. It must not expose credentials, private endpoints, proprietary signal logic, private thresholds, write controls, sensitive datasets or private code.
 
-1. first entry
-2. Home idle orbit
-3. hover on Projects / Research / Evidence
-4. Home → Projects portal
-5. Projects → TradeBot
-6. internal header emblem → Home reconstruction
-7. center double-click → Deep Space → click/Escape Home
-8. 1440×900, 1024×768, 768×1024, and 390×844
-9. reduced motion
-10. keyboard navigation
+## Production gates
 
-If the brand-mark crop does not isolate the authoritative emblem correctly in the center/header morph, fix the crop or add a dedicated emblem asset before considering V2 visually complete.
+The branch is not production-ready merely because Vite compiles. Required gates now include:
+
+- production `vite build`
+- production `vite preview` browser tests
+- Chromium normal-motion interaction coverage
+- Chromium reduced-motion coverage
+- WebKit interaction coverage
+- normal-motion route choreography checks
+- Deep Space motion checks
+- responsive overflow checks
+- browser back / Home return checks
+- five-stage TradeBot scroll-state checks
+- real Contact surface validation
+- normal-motion visual evidence capture
+
+## Visual acceptance still required
+
+Automated gates cannot certify art direction. Owner render review must still accept:
+
+1. source-derived emblem crop and header lockup fidelity,
+2. exact wheel/spoke alignment during rotation,
+3. route portal speed and continuity,
+4. background energy and readability,
+5. typography hierarchy and text density,
+6. TradeBot pinned-story pacing,
+7. Deep Space word depth timing,
+8. tablet/mobile composition.
+
+Do not merge until those visual acceptance points are reviewed from the current exact branch head.
