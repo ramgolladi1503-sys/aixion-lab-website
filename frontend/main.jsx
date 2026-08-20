@@ -222,7 +222,7 @@ function ComputationalField({ mode = "home", boost = false }) {
       });
       if (!reduced) {
         if (boostRef.current) frame = requestAnimationFrame(draw);
-        else window.setTimeout(() => { frame = requestAnimationFrame(draw); }, 180);
+        else window.setTimeout(() => { frame = requestAnimationFrame(draw); }, 2000);
       }
     };
 
