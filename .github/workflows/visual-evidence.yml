@@ -39,10 +39,10 @@ jobs:
       - name: Capture normal-motion visual matrix
         env:
           VISUAL_RUN_ID: ${{ github.sha }}
-        run: xvfb-run -a npm run visual:capture
+        run: npm run visual:capture
 
       - name: Validate normal-motion choreography
-        run: xvfb-run -a npm run test:motion
+        run: npm run test:motion
 
       - name: Upload visual evidence
         if: always()
