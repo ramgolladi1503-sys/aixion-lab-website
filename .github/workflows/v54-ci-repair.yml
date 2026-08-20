@@ -29,3 +29,5 @@ jobs:
           git add frontend/main.jsx
           git commit -m 'fix: stabilize V5.4 routing and frame pacing'
           git push origin HEAD:website/radial-immersive-v1
+
+# one-time bounded repair trigger
