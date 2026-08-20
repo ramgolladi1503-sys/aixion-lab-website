@@ -149,8 +149,11 @@ function ComputationalField({ mode = "home", boost = false }) {
     };
     let lastPaint = 0;
     const draw = (time) => {
-      const paintInterval = boostRef.current ? 30 : 180;
-      if (!reduced && time - lastPaint < paintInterval) { frame = requestAnimationFrame(draw); return; }
+      const paintInterval = boostRef.current ? 30 : 220;
+      if (!reduced && time - lastPaint < paintInterval) {
+        frame = requestAnimationFrame(draw);
+        return;
+      }
       lastPaint = time;
       context.clearRect(0, 0, width, height);
       const energy = boostRef.current ? 2.7 : 1;
@@ -217,7 +220,10 @@ function ComputationalField({ mode = "home", boost = false }) {
         context.arc(point.px, point.py, point.accent ? 1.8 : 0.82, 0, Math.PI * 2);
         context.fill();
       });
-      if (!reduced) frame = requestAnimationFrame(draw);
+      if (!reduced) {
+        if (boostRef.current) frame = requestAnimationFrame(draw);
+        else window.setTimeout(() => { frame = requestAnimationFrame(draw); }, 180);
+      }
     };
 
     resize();
