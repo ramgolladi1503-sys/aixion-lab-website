@@ -55,9 +55,16 @@ test('cinematic route transition resolves, browser back works, and header home i
   await expect(page.locator('.home-orbit')).toBeVisible();
 
   await page.getByRole('button', { name: 'Open Evidence' }).click({ force: true });
+  await expect(page.locator('.route-portal')).toBeVisible();
   await expect(page).toHaveURL(/\/evidence$/);
+  await expect(page.locator('.world-evidence')).toBeVisible();
+  await expect(page.locator('.route-portal')).toBeHidden();
+
   await page.getByRole('button', { name: 'Aixion Lab home' }).click({ force: true });
+  await expect(page.locator('.route-portal')).toBeVisible();
   await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator('.home-orbit')).toBeVisible();
+  await expect(page.locator('.route-portal')).toBeHidden();
 });
 
 test('Aixion Core supports keyboard entry and immediate Escape exit', async ({ page }) => {
