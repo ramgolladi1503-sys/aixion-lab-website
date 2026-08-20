@@ -134,7 +134,7 @@ function ComputationalField({ mode = "home", boost = false }) {
     const context = canvas.getContext("2d");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const pointer = { x: 0, y: 0 };
-    const points = Array.from({ length: 96 }, (_, index) => ({
+    const points = Array.from({ length: 64 }, (_, index) => ({
       x: ((index * 61 + 17) % 173) / 173,
       y: ((index * 89 + 29) % 179) / 179,
       vx: (((index * 7) % 13) - 6) * 0.000029,
@@ -161,7 +161,10 @@ function ComputationalField({ mode = "home", boost = false }) {
       pointer.x = event.clientX / Math.max(width, 1) - 0.5;
       pointer.y = event.clientY / Math.max(height, 1) - 0.5;
     };
+    let lastPaint = 0;
     const draw = (time) => {
+      if (!reduced && time - lastPaint < 30) { frame = requestAnimationFrame(draw); return; }
+      lastPaint = time;
       context.clearRect(0, 0, width, height);
       const energy = boostRef.current ? 2.7 : 1;
       const modeScale = modeRef.current === "research" ? 1.25 : modeRef.current === "projects" ? 1.15 : modeRef.current === "deep" ? 1.6 : 1;
@@ -188,7 +191,7 @@ function ComputationalField({ mode = "home", boost = false }) {
       });
 
       for (let i = 0; i < points.length; i += 1) {
-        for (let j = i + 1; j < Math.min(points.length, i + 6); j += 1) {
+        for (let j = i + 1; j < Math.min(points.length, i + 5); j += 1) {
           const a = points[i];
           const b = points[j];
           const distance = Math.hypot(a.px - b.px, a.py - b.py);
@@ -205,7 +208,7 @@ function ComputationalField({ mode = "home", boost = false }) {
         }
       }
 
-      for (let index = 0; index < 18; index += 1) {
+      for (let index = 0; index < 10; index += 1) {
         const y = ((index * 91 + motionTime * 0.11 * speed) % (height + 220)) - 110;
         const x = ((index * 173 + motionTime * 0.24 * speed) % (width + 520)) - 260;
         const length = 42 + (index % 8) * 22;
@@ -418,7 +421,7 @@ function HomeHub({ hovered, setHovered, navigate }) {
         </svg>
         {positions.map((node) => <div key={node.key} className="node-position" style={{ left: `${node.x / 10}%`, top: `${node.y / 10}%` }}>
           <div className={`node-counterspin ${reduced ? "reduced" : ""}`}>
-            <button className={`hub-node ${hovered === node.key ? "active" : ""}`} onMouseEnter={() => setHovered(node.key)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(node.key)} onBlur={() => setHovered(null)} onPointerUp={(event) => navigate(node.key, event.currentTarget)} onClick={(event) => navigate(node.key, event.currentTarget)} aria-label={`Open ${node.label}`} data-cursor>
+            <button className={`hub-node ${hovered === node.key ? "active" : ""}`} onMouseEnter={() => setHovered(node.key)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(node.key)} onBlur={() => setHovered(null)} onPointerDown={(event) => navigate(node.key, event.currentTarget)} onClick={(event) => navigate(node.key, event.currentTarget)} aria-label={`Open ${node.label}`} data-cursor>
               <Icon type={node.key} size={23}/><strong>{node.label}</strong><i className="node-signal"/>
             </button>
           </div>
