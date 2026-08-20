@@ -170,6 +170,89 @@ html, body, #root, .app, .scene, .home-orbit {
 .tradebot-system.stage-4 { border-color: rgba(255,57,70,.48); box-shadow: 0 0 90px rgba(255,57,70,.10), inset 0 0 90px rgba(255,57,70,.055); }
 .tradebot-sticky > small { color: rgba(255,255,255,.54); }
 
+/* Final production micro-polish: evidence review 2026-08-21. */
+.world-page .story-section:not(.active) {
+  opacity: .78;
+  transform: scale(.995);
+}
+.world-page .story-section:not(.active) .section-copy {
+  opacity: 1;
+}
+.world-page .story-section:not(.active) .section-copy > p:last-of-type,
+.tradebot-stage:not(.active) .tradebot-copy > p:last-of-type {
+  color: rgba(240,243,247,.80);
+}
+.world-about .story-section:not(.active),
+.world-contact .story-section:not(.active) {
+  opacity: .88;
+}
+.world-contact .story-section:nth-child(2) {
+  border-color: rgba(255,255,255,.13);
+  background: linear-gradient(145deg, rgba(255,255,255,.04), rgba(5,7,10,.40));
+}
+.world-contact .story-section:nth-child(3) {
+  border-color: rgba(255,57,70,.42);
+  background: radial-gradient(circle at 50% 0%, rgba(255,57,70,.14), transparent 52%), rgba(8,8,11,.66);
+  box-shadow: 0 24px 70px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.035);
+}
+.world-contact .story-section:nth-child(3) .section-kicker {
+  color: rgba(255,112,124,.92);
+}
+.world-contact .contact-link.primary {
+  color: #fff;
+  border-color: rgba(255,74,88,.68);
+  background: linear-gradient(135deg, rgba(255,57,70,.18), rgba(255,57,70,.08));
+  box-shadow: 0 12px 36px rgba(0,0,0,.30), 0 0 30px rgba(255,57,70,.10);
+  font-weight: 600;
+}
+.world-contact .contact-link.primary::after {
+  opacity: .92;
+}
+
+/* Keep the raster crop optically crisp by reducing enlargement and framing it with a sharp edge. */
+.page-home .core-emblem-shell {
+  transform: translateZ(0) scale(.94);
+  background-size: 405% 304%;
+  background-position: 50% 36.45%;
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.92), 0 0 34px rgba(255,57,70,.14);
+}
+.page-home .core-node:hover .core-emblem-shell {
+  transform: translateZ(0) scale(.96);
+}
+
+/* Preserve a continuous engineering diagram across all five TradeBot chapters. */
+.tradebot-system .tb-line { opacity: .38; }
+.tradebot-system .tb-node { opacity: .76; }
+.tradebot-system.stage-0 .node-0,
+.tradebot-system.stage-1 .node-1,
+.tradebot-system.stage-2 .node-2,
+.tradebot-system.stage-3 .node-3,
+.tradebot-system.stage-4 .node-4 {
+  opacity: 1;
+}
+.tradebot-system.stage-0 .line-0,
+.tradebot-system.stage-1 .line-1,
+.tradebot-system.stage-2 .line-2,
+.tradebot-system.stage-3 .line-3,
+.tradebot-system.stage-4 .line-4 {
+  opacity: 1;
+}
+.tradebot-system::after {
+  content: 'INGEST  →  RESEARCH  →  GOVERN  →  OBSERVE  →  PROVE';
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 82%;
+  color: rgba(238,242,247,.50);
+  font: 500 9px/1.4 var(--mono);
+  letter-spacing: .12em;
+  text-align: center;
+  pointer-events: none;
+}
+
 /* Mobile Home: contained, centered and fully viewport-safe. */
 @media (max-width: 620px) {
   .home-orbit {
@@ -205,6 +288,8 @@ html, body, #root, .app, .scene, .home-orbit {
   .entry-context strong { font-size: 9px; letter-spacing: .22em; }
   .entry-context span { font-size: 10px; }
   .tradebot-stage { min-height: auto; scroll-snap-align: none; }
+  .tradebot-system::after { display: none; }
+  .page-home .core-emblem-shell { transform: translateZ(0) scale(.92); }
 }
 
 @media (max-width: 760px) {
