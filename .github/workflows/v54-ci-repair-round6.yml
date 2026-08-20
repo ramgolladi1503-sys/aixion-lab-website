@@ -29,3 +29,5 @@ jobs:
           git add frontend/main.jsx
           git commit -m 'perf: eliminate idle Home rAF loop'
           git push origin HEAD:website/radial-immersive-v1
+
+# trigger bounded repair
