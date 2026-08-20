@@ -1,0 +1,124 @@
+/* V5.3 world-composition pass.
+   Goal: stop internal pages from behaving like one repeated template.
+   TradeBot + Deep Space remain largely intact; each public world gets its own
+   information architecture while preserving the Aixion visual language. */
+
+/* Shared tightening: editorial rhythm without dead scroll. */
+.world-page .world-hero { padding-bottom: 6vh; }
+.world-page .story-layout { max-width: 1560px; margin-inline: auto; padding-inline: var(--gutter); }
+.world-page .story-track { position: relative; }
+.world-page .story-section { position: relative; overflow: visible; }
+.world-page .story-section::before { content:""; position:absolute; pointer-events:none; opacity:.55; }
+
+/* ABOUT — asymmetrical manifesto. Artifact becomes a quiet central thesis mark. */
+.world-about .world-hero { max-width: 1220px; margin-inline:auto; padding-left:8vw; padding-right:18vw; text-align:left; }
+.world-about .story-layout { grid-template-columns: .72fr 1.28fr; }
+.world-about .story-stage { transform: translateX(-5vw); }
+.world-about .system-artifact { width:min(38vw,520px); height:min(38vw,520px); opacity:.82; }
+.world-about .story-track { display:grid; gap:4vh; }
+.world-about .story-section { min-height:52vh; max-width:900px; }
+.world-about .story-section:nth-child(2) { margin-left:8vw; }
+.world-about .story-section:nth-child(3) { margin-left:3vw; }
+.world-about .story-section::before { inset:12% auto 12% -24px; width:1px; background:linear-gradient(transparent,rgba(255,57,70,.55),transparent); }
+
+/* JOURNEY — actual progression. Sections step across the canvas like milestones. */
+.world-journey .world-hero { text-align:center; max-width:1180px; margin:auto; }
+.world-journey .story-layout { grid-template-columns: 1fr; }
+.world-journey .story-stage { position:relative; top:auto; height:360px; margin:0 auto 2vh; width:min(900px,86vw); }
+.world-journey .system-artifact { width:340px; height:340px; margin:auto; }
+.world-journey .story-track { max-width:1180px; margin:auto; padding-left:7vw; }
+.world-journey .story-track::before { content:""; position:absolute; left:3vw; top:5%; bottom:8%; width:1px; background:linear-gradient(transparent,rgba(255,57,70,.48),rgba(255,255,255,.12),transparent); }
+.world-journey .story-section { min-height:44vh; max-width:820px; padding:50px 0 62px 72px; }
+.world-journey .story-section:nth-child(2) { margin-left:11vw; }
+.world-journey .story-section:nth-child(3) { margin-left:20vw; }
+.world-journey .story-section::after { content:""; position:absolute; left:-1px; top:64px; width:13px; height:13px; border-radius:50%; background:#05070a; border:1px solid rgba(255,57,70,.8); box-shadow:0 0 24px rgba(255,57,70,.28); }
+
+/* PROJECTS — constellation / portfolio field. Flagship occupies the visual center. */
+.world-projects .world-hero { max-width:1320px; margin:auto; padding-right:22vw; }
+.world-projects .story-layout { grid-template-columns: minmax(360px,.95fr) minmax(520px,1.05fr); align-items:start; }
+.world-projects .story-stage { top:14vh; height:72vh; }
+.world-projects .system-artifact { width:min(44vw,610px); height:min(44vw,610px); }
+.world-projects .story-track { padding-top:8vh; }
+.world-projects .story-section { min-height:56vh; padding:68px 7vw 68px 0; }
+.world-projects .story-section:first-child { transform:scale(1.04); }
+.world-projects .story-section:first-child .section-copy { padding:36px 42px; border:1px solid rgba(255,57,70,.2); border-radius:32px; background:linear-gradient(145deg,rgba(255,57,70,.055),rgba(7,9,13,.42)); box-shadow:0 24px 80px rgba(0,0,0,.26); }
+.world-projects .story-section:not(:first-child) .section-copy { border-top:1px solid rgba(255,255,255,.08); padding-top:34px; }
+
+/* RESEARCH — hypothesis funnel. Each section narrows and moves toward verdict. */
+.world-research .world-hero { max-width:1320px; margin:auto; text-align:center; }
+.world-research .story-layout { grid-template-columns: 1fr; }
+.world-research .story-stage { position:relative; top:auto; height:420px; margin:0 auto; width:min(980px,90vw); }
+.world-research .system-artifact { width:390px; height:390px; margin:auto; }
+.world-research .story-track { max-width:1120px; margin:auto; display:grid; gap:20px; }
+.world-research .story-section { min-height:auto; padding:44px 54px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(90deg,rgba(255,57,70,.035),rgba(5,7,10,.24)); }
+.world-research .story-section:nth-child(1) { width:100%; border-radius:30px 30px 12px 12px; }
+.world-research .story-section:nth-child(2) { width:86%; margin-inline:auto; }
+.world-research .story-section:nth-child(3) { width:70%; margin-inline:auto; border-radius:12px 12px 30px 30px; border-color:rgba(255,57,70,.22); }
+.world-research .story-section::before { inset:auto 10% -18px 10%; height:1px; background:linear-gradient(90deg,transparent,rgba(255,57,70,.35),transparent); }
+
+/* EVIDENCE — proof stack. Feels like sealed artifacts / layers instead of chapters. */
+.world-evidence .world-hero { max-width:1180px; margin:auto; padding-right:15vw; }
+.world-evidence .story-layout { grid-template-columns: .8fr 1.2fr; }
+.world-evidence .story-stage { top:18vh; }
+.world-evidence .story-track { perspective:1200px; padding-top:10vh; }
+.world-evidence .story-section { min-height:48vh; padding:48px; margin-bottom:-2vh; border:1px solid rgba(255,255,255,.09); border-radius:28px; background:rgba(5,7,10,.66); box-shadow:0 32px 90px rgba(0,0,0,.25); }
+.world-evidence .story-section:nth-child(1) { transform:rotateX(1deg) rotateY(-3deg); }
+.world-evidence .story-section:nth-child(2) { transform:translateX(5vw) rotateY(2deg); }
+.world-evidence .story-section:nth-child(3) { transform:translateX(1vw) rotateY(-1deg); border-color:rgba(255,57,70,.22); }
+
+/* CONTROL TOWER — operational control surface. Wider, denser, more infrastructural. */
+.world-tower .world-hero { max-width:1400px; margin:auto; padding-right:28vw; }
+.world-tower .story-layout { grid-template-columns: 1.05fr .95fr; max-width:1640px; }
+.world-tower .story-stage { top:12vh; height:76vh; }
+.world-tower .system-artifact { width:min(46vw,660px); height:min(46vw,660px); }
+.world-tower .story-stage::after { content:"SYSTEM STATE / HEALTH / AUTHORITY"; position:absolute; left:8%; right:8%; bottom:8%; font:10px var(--mono); letter-spacing:.19em; color:rgba(255,255,255,.38); text-align:center; }
+.world-tower .story-track { display:grid; gap:22px; padding-top:6vh; }
+.world-tower .story-section { min-height:auto; padding:38px 42px; border-left:1px solid rgba(255,57,70,.28); background:linear-gradient(90deg,rgba(255,57,70,.035),transparent 72%); }
+.world-tower .story-section.active { box-shadow:inset 20px 0 80px rgba(255,57,70,.025); }
+
+/* STACK — architectural layers, not a list of tools. */
+.world-stack .world-hero { text-align:center; max-width:1160px; margin:auto; }
+.world-stack .story-layout { grid-template-columns: 1fr; }
+.world-stack .story-stage { position:relative; top:auto; height:330px; margin:0 auto 4vh; }
+.world-stack .system-artifact { width:320px; height:320px; margin:auto; }
+.world-stack .story-track { max-width:1200px; margin:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; padding-bottom:14vh; }
+.world-stack .story-section { min-height:520px; padding:42px 34px; border:1px solid rgba(255,255,255,.08); border-radius:26px; background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(4,6,9,.5)); }
+.world-stack .story-section:nth-child(2) { transform:translateY(46px); }
+.world-stack .story-section:nth-child(3) { transform:translateY(92px); border-color:rgba(255,57,70,.18); }
+.world-stack .section-copy h2 { font-size:clamp(30px,3vw,48px); }
+
+/* CONTACT — deliberate quiet ending. Remove decorative bulk; emphasize direct action. */
+.world-contact { min-height:100svh; display:flex; flex-direction:column; }
+.world-contact .world-hero { min-height:58vh; max-width:980px; margin:auto; text-align:center; padding-bottom:2vh; }
+.world-contact .story-layout { grid-template-columns:1fr; max-width:980px; width:100%; }
+.world-contact .story-stage { display:none; }
+.world-contact .story-track { display:grid; grid-template-columns:1fr 1fr; gap:28px; padding:0 0 16vh; }
+.world-contact .story-section { min-height:auto; padding:38px; border-top:1px solid rgba(255,255,255,.09); }
+.world-contact .story-section:nth-child(3) { grid-column:1 / -1; text-align:center; padding-top:64px; border-top-color:rgba(255,57,70,.24); }
+.world-contact .story-section:nth-child(3) .section-copy { margin:auto; max-width:760px; }
+.world-contact .contact-link.primary { font-size:clamp(22px,3vw,40px); }
+
+/* Mobile: abandon desktop world mechanics. Each world becomes a compact native composition. */
+@media (max-width:760px) {
+  .world-page .world-hero { min-height:auto !important; padding:150px 24px 64px !important; text-align:left !important; }
+  .world-page .story-layout { display:block !important; padding-inline:24px; }
+  .world-page .story-stage { position:relative !important; top:auto !important; width:100% !important; height:240px !important; margin:0 0 32px !important; transform:none !important; }
+  .world-page .system-artifact { width:230px !important; height:230px !important; margin:auto !important; transform:none; }
+  .world-page .story-track { display:block !important; padding:0 0 80px !important; margin:0 !important; }
+  .world-page .story-section,
+  .world-page .story-section:nth-child(n) { width:100% !important; min-height:auto !important; margin:0 !important; padding:42px 0 !important; transform:none !important; border-radius:0 !important; background:transparent !important; box-shadow:none !important; border:0 !important; border-top:1px solid rgba(255,255,255,.08) !important; }
+  .world-page .section-copy { max-width:none !important; padding:0 !important; }
+  .world-page .section-copy h2 { font-size:clamp(34px,10vw,50px) !important; }
+  .world-journey .story-track::before,
+  .world-journey .story-section::after,
+  .world-tower .story-stage::after { display:none; }
+  .world-stack .story-stage,
+  .world-contact .story-stage { display:none !important; }
+  .world-contact .world-hero { padding-bottom:24px !important; }
+  .world-contact .story-track { display:block !important; }
+  .world-contact .story-section:nth-child(3) { text-align:left; padding-top:50px !important; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .world-page .story-section { transform:none !important; }
+}
