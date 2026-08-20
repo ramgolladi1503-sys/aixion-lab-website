@@ -109,11 +109,45 @@ test('GitHub utility is visible and safely external', async ({ page }) => {
   await expect(github).toHaveAttribute('rel', /noreferrer/);
 });
 
-test('mobile keeps all destinations reachable without horizontal overflow', async ({ page }) => {
+test('mobile keeps every Home destination fully inside the viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openHome(page);
   await expect(page.locator('.hub-node')).toHaveCount(8);
   await expect(page.getByRole('button', { name: 'Open navigation' })).toBeVisible();
-  const size = await page.evaluate(() => ({ scrollWidth: document.documentElement.scrollWidth, innerWidth: window.innerWidth }));
-  expect(size.scrollWidth).toBeLessThanOrEqual(size.innerWidth + 2);
+  const geometry = await page.locator('.hub-node').evaluateAll((nodes) => ({
+    viewportWidth: window.innerWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    boxes: nodes.map((node) => {
+      const rect = node.getBoundingClientRect();
+      return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
+    }),
+  }));
+  expect(geometry.scrollWidth).toBeLessThanOrEqual(geometry.viewportWidth + 2);
+  for (const box of geometry.boxes) {
+    expect(box.left).toBeGreaterThanOrEqual(0);
+    expect(box.right).toBeLessThanOrEqual(geometry.viewportWidth);
+    expect(box.top).toBeGreaterThanOrEqual(0);
+    expect(box.bottom).toBeLessThanOrEqual(844);
+  }
+});
+
+test('normal-motion Home maintains bounded animation-frame pacing', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium-motion', 'frame pacing is measured once in the canonical normal-motion Chromium lane');
+  await openHome(page);
+  const timing = await page.evaluate(async () => {
+    const stamps = [];
+    await new Promise((resolve) => {
+      const sample = (time) => {
+        stamps.push(time);
+        if (stamps.length >= 100) resolve();
+        else requestAnimationFrame(sample);
+      };
+      requestAnimationFrame(sample);
+    });
+    const gaps = stamps.slice(1).map((time, index) => time - stamps[index]).sort((a, b) => a - b);
+    const percentile = gaps[Math.min(gaps.length - 1, Math.floor(gaps.length * 0.95))];
+    return { p95: percentile, max: Math.max(...gaps) };
+  });
+  expect(timing.p95).toBeLessThan(50);
+  expect(timing.max).toBeLessThan(150);
 });
