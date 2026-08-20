@@ -19,15 +19,6 @@ new = '''  const modeRef = useRef(mode);
 assert text.count(old) == 1, f'boost authority mismatch: {text.count(old)}'
 text = text.replace(old, new, 1)
 
-old = '''    let frame = 0;
-
-    const resize = () => {'''
-new = '''    let frame = 0;
-
-    const resize = () => {'''
-assert text.count(old) >= 2, f'frame authority mismatch: {text.count(old)}'
-# no-op authority check; retained intentionally
-
 old = '''      const paintInterval = boostRef.current ? 30 : 220;
       if (!reduced && time - lastPaint < paintInterval) {
         frame = requestAnimationFrame(draw);
