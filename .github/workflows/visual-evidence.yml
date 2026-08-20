@@ -11,7 +11,7 @@ permissions:
 jobs:
   capture-and-validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     defaults:
       run:
         working-directory: frontend
@@ -29,15 +29,18 @@ jobs:
 
       - name: Install Chromium
         timeout-minutes: 4
-        run: npx playwright install chromium
+        run: npx playwright install --with-deps chromium
 
-      - name: Build
+      - name: Build production bundle
         run: npm run build
 
-      - name: Capture and validate
+      - name: Capture normal-motion visual matrix
         env:
           VISUAL_RUN_ID: ${{ github.sha }}
-        run: npm run visual:validate
+        run: npm run visual:capture
+
+      - name: Validate normal-motion choreography
+        run: npm run test:motion
 
       - name: Upload visual evidence
         if: always()
