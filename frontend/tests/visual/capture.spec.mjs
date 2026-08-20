@@ -53,13 +53,13 @@ async function captureTradeBotStages(page) {
   for (const [name, id] of TRADEBOT_STAGES) {
     const stage = page.locator(`#${id}`);
     await stage.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(320);
+    await page.waitForTimeout(420);
     await shot(page, name, false);
   }
   await page.evaluate(() => window.scrollTo(0, 0));
 }
 
-test('capture governed V4 visual matrix', async ({ page }, testInfo) => {
+test('capture governed V5.2 visual and motion matrix', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium-motion', 'Visual evidence is captured once in the authoritative normal-motion Chromium project.');
   test.setTimeout(180_000);
   ensureOut();
@@ -86,11 +86,11 @@ test('capture governed V4 visual matrix', async ({ page }, testInfo) => {
   await shot(page, '02-home-current.png');
 
   await page.getByRole('button', { name: 'Open Projects' }).hover({ force: true });
-  await page.waitForTimeout(240);
+  await page.waitForTimeout(320);
   await shot(page, '03-projects-hover-current.png');
 
   await page.getByRole('button', { name: 'Open Research' }).hover({ force: true });
-  await page.waitForTimeout(240);
+  await page.waitForTimeout(320);
   await shot(page, '04-research-hover-current.png');
 
   for (const [name, route] of ROUTES) {
@@ -101,8 +101,13 @@ test('capture governed V4 visual matrix', async ({ page }, testInfo) => {
   }
 
   await gotoState(page, '/core');
-  await page.waitForTimeout(500);
   await shot(page, '14-core-current.png');
+  await page.waitForTimeout(650);
+  await shot(page, '14a-core-motion-early.png');
+  await page.waitForTimeout(1050);
+  await shot(page, '14b-core-motion-mid.png');
+  await page.waitForTimeout(1650);
+  await shot(page, '14c-core-motion-late.png');
 
   await page.setViewportSize({ width: 768, height: 1024 });
   await gotoState(page, '/', '.home-orbit');
@@ -118,10 +123,11 @@ test('capture governed V4 visual matrix', async ({ page }, testInfo) => {
     motionMode: 'no-preference',
     primaryViewport: { width: 1440, height: 900 },
     responsiveViewports: [{ width: 768, height: 1024 }, { width: 390, height: 844 }],
-    screenshotCount: 22,
+    screenshotCount: 25,
     governedRoutes: ROUTES.length + 3,
     tradebotStageStates: TRADEBOT_STAGES.map(([, id]) => id),
-    note: 'V4 evidence includes the authoritative 1200x900 brand source plus production-preview captures with normal motion enabled. Reduced-motion behavior is tested separately.',
+    deepSpaceMotionStates: ['14-core-current.png','14a-core-motion-early.png','14b-core-motion-mid.png','14c-core-motion-late.png'],
+    note: 'V5.2 evidence includes desktop, responsive, five TradeBot system states, hover hierarchy, and four timed Deep Space motion states. Reduced-motion behavior remains tested separately.',
   };
   fs.writeFileSync(path.join(OUT, 'capture-manifest.json'), `${JSON.stringify(metadata, null, 2)}\n`);
 });
