@@ -41,7 +41,7 @@ jobs:
         run: npx playwright install --with-deps chromium webkit
 
       - name: Interaction gates — Chromium, reduced motion, WebKit
-        run: xvfb-run -a npm run test:interaction
+        run: npm run test:interaction
 
       - name: Normal-motion choreography gate
-        run: xvfb-run -a npm run test:motion
+        run: npm run test:motion
