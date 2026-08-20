@@ -1,16 +1,20 @@
 {
   "name": "aixion-lab-website",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "visual:capture": "playwright test tests/visual/capture.spec.mjs --project=chromium",
-    "visual:validate": "playwright test --project=chromium"
+    "test:interaction": "playwright test tests/visual/interaction.spec.mjs",
+    "test:motion": "playwright test tests/visual/motion.spec.mjs --project=chromium-motion",
+    "visual:capture": "playwright test tests/visual/capture.spec.mjs --project=chromium-motion",
+    "visual:validate": "playwright test",
+    "verify": "npm run build && npm run visual:validate"
   },
   "dependencies": {
+    "gsap": "^3.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
