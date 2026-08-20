@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   production-gate:
@@ -17,22 +17,18 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - name: Checkout draft branch for bounded repair
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: website/radial-immersive-v1
 
       - name: Setup Node 24
         uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
-      - name: Apply bounded production repair
-        working-directory: .
-        run: python scripts/v4_production_repair.py
-
-      - name: Install dependencies and generate lock
-        run: npm install
+      - name: Install deterministic dependencies
+        run: npm ci
 
       - name: Dependency security audit
         run: npm audit --audit-level=high
@@ -49,14 +45,3 @@ jobs:
 
       - name: Normal-motion choreography gate
         run: npm run test:motion
-
-      - name: Commit verified bounded repair
-        working-directory: .
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- frontend/main.jsx frontend/package-lock.json
-          git diff --cached --check
-          git diff --cached --quiet && exit 0
-          git commit -m "fix: close V4 production accessibility and reproducibility gaps"
-          git push origin HEAD:website/radial-immersive-v1
