@@ -64,6 +64,15 @@ test('capture governed V4 visual matrix', async ({ page }, testInfo) => {
   test.setTimeout(180_000);
   ensureOut();
 
+  await page.setViewportSize({ width: 1200, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.setContent(`<!doctype html><html><body style="margin:0;background:#000;overflow:hidden"><img id="brand-source" src="/brand/aixion-lab-brand-lockup.webp" width="1200" height="900" style="display:block;width:1200px;height:900px;object-fit:fill" /></body></html>`);
+  const brand = page.locator('#brand-source');
+  await expect(brand).toBeVisible();
+  await expect.poll(() => brand.evaluate((img) => img.complete && img.naturalWidth > 0)).toBe(true);
+  await shot(page, '00-brand-source.png');
+
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => sessionStorage.removeItem('aixion-entered-v4'));
   await page.reload({ waitUntil: 'domcontentloaded' });
@@ -109,10 +118,10 @@ test('capture governed V4 visual matrix', async ({ page }, testInfo) => {
     motionMode: 'no-preference',
     primaryViewport: { width: 1440, height: 900 },
     responsiveViewports: [{ width: 768, height: 1024 }, { width: 390, height: 844 }],
-    screenshotCount: 21,
+    screenshotCount: 22,
     governedRoutes: ROUTES.length + 3,
     tradebotStageStates: TRADEBOT_STAGES.map(([, id]) => id),
-    note: 'V4 evidence is captured against the production preview with normal motion enabled. Reduced-motion behavior is tested separately.',
+    note: 'V4 evidence includes the authoritative 1200x900 brand source plus production-preview captures with normal motion enabled. Reduced-motion behavior is tested separately.',
   };
   fs.writeFileSync(path.join(OUT, 'capture-manifest.json'), `${JSON.stringify(metadata, null, 2)}\n`);
 });
