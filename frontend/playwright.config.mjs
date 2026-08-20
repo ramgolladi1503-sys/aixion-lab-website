@@ -17,7 +17,7 @@ export default defineConfig({
     viewport: { width: 1440, height: 900 },
     colorScheme: 'dark',
     screenshot: 'only-on-failure',
-    trace: 'retain-on-failure',
+    trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
   },
   webServer: {
     command: 'npm run preview -- --host 127.0.0.1 --port 4173',
