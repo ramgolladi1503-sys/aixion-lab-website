@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const GITHUB = "https://github.com/ramgolladi1503-sys";
 const BRAND = "/brand/aixion-header-lockup.svg";
 const EMBLEM = "/brand/aixion-emblem.svg";
-const CONTACT_EMAIL = "contact@aixionlabs.com";
+const CONTACT_EMAIL = "contact@aixionlab.com";
 
 const NODES = [
   ["about", "About", -90],
@@ -166,6 +166,7 @@ function ComputationalField({ mode = "home", boost = false }) {
       const energy = boostRef.current ? 2.7 : 1;
       const modeScale = modeRef.current === "research" ? 1.25 : modeRef.current === "projects" ? 1.15 : modeRef.current === "deep" ? 1.6 : 1;
       const speed = energy * modeScale;
+      const motionTime = reduced ? 0 : time;
       const glow = context.createRadialGradient(width * (0.5 + pointer.x * 0.07), height * (0.48 + pointer.y * 0.07), 0, width / 2, height / 2, Math.max(width, height) * 0.72);
       glow.addColorStop(0, `rgba(255,49,62,${0.055 * energy})`);
       glow.addColorStop(0.38, "rgba(18,24,34,.12)");
@@ -182,8 +183,8 @@ function ComputationalField({ mode = "home", boost = false }) {
           if (point.y < -0.05) point.y = 1.05;
           if (point.y > 1.05) point.y = -0.05;
         }
-        point.px = point.x * width + Math.sin(time * 0.0015 * speed + point.phase) * 13 + pointer.x * 34;
-        point.py = point.y * height + Math.cos(time * 0.0012 * speed + point.phase) * 10 + pointer.y * 25;
+        point.px = point.x * width + Math.sin(motionTime * 0.0015 * speed + point.phase) * 13 + pointer.x * 34;
+        point.py = point.y * height + Math.cos(motionTime * 0.0012 * speed + point.phase) * 10 + pointer.y * 25;
       });
 
       for (let i = 0; i < points.length; i += 1) {
@@ -205,8 +206,8 @@ function ComputationalField({ mode = "home", boost = false }) {
       }
 
       for (let index = 0; index < 34; index += 1) {
-        const y = ((index * 91 + time * 0.11 * speed) % (height + 220)) - 110;
-        const x = ((index * 173 + time * 0.24 * speed) % (width + 520)) - 260;
+        const y = ((index * 91 + motionTime * 0.11 * speed) % (height + 220)) - 110;
+        const x = ((index * 173 + motionTime * 0.24 * speed) % (width + 520)) - 260;
         const length = 42 + (index % 8) * 22;
         const gradient = context.createLinearGradient(x - length, y, x + length, y);
         gradient.addColorStop(0, "rgba(255,50,64,0)");
@@ -226,13 +227,14 @@ function ComputationalField({ mode = "home", boost = false }) {
         context.arc(point.px, point.py, point.accent ? 1.8 : 0.82, 0, Math.PI * 2);
         context.fill();
       });
-      frame = requestAnimationFrame(draw);
+      if (!reduced) frame = requestAnimationFrame(draw);
     };
 
     resize();
     window.addEventListener("resize", resize);
-    window.addEventListener("pointermove", move, { passive: true });
-    frame = requestAnimationFrame(draw);
+    if (!reduced) window.addEventListener("pointermove", move, { passive: true });
+    if (reduced) draw(0);
+    else frame = requestAnimationFrame(draw);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", resize);
@@ -725,6 +727,12 @@ function DeepSpace({ onExit }) {
 
   useLayoutEffect(() => {
     const nodes = wordsRef.current.filter(Boolean);
+    if (reduced) {
+      gsap.set(nodes, { opacity: 0, z: 0, scale: 1, filter: "none" });
+      const finalNode = nodes[nodes.length - 1];
+      if (finalNode) gsap.set(finalNode, { opacity: 1 });
+      return () => gsap.set(nodes, { clearProps: "all" });
+    }
     const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0.08 });
     nodes.forEach((node, index) => {
       const beginning = index === words.length - 1;
@@ -738,7 +746,6 @@ function DeepSpace({ onExit }) {
         timeline.to(node, { z: 430, scale: 2.45, opacity: 0, filter: "blur(5px)", duration: 0.88, ease: "power3.in" });
       }
     });
-    if (reduced) timeline.timeScale(1.8);
     return () => timeline.kill();
   }, [reduced]);
 
@@ -783,7 +790,7 @@ function DeepSpace({ onExit }) {
       const centerX = width / 2;
       const centerY = height / 2;
       const fov = Math.min(width, height) * 1.04;
-      const speed = reduced ? 10 : 27 + Math.sin(time * 0.0017) * 5;
+      const speed = reduced ? 0 : 27 + Math.sin(time * 0.0017) * 5;
       stars.forEach((star) => {
         star.previousZ = star.z;
         star.z -= speed;
@@ -794,20 +801,27 @@ function DeepSpace({ onExit }) {
         const previousY = centerY + (star.y / star.previousZ) * fov;
         if (x < -220 || x > width + 220 || y < -220 || y > height + 220) { reset(star); return; }
         const alpha = Math.max(0.08, 1 - star.z / 1900);
-        context.strokeStyle = star.red ? `rgba(255,55,70,${Math.min(0.94, alpha + 0.25)})` : `rgba(236,244,255,${Math.min(0.78, alpha)})`;
-        context.lineWidth = star.red ? 1.45 : 0.78;
-        context.beginPath();
-        context.moveTo(previousX, previousY);
-        context.lineTo(x, y);
-        context.stroke();
+        if (reduced) {
+          context.fillStyle = star.red ? `rgba(255,55,70,${Math.min(0.94, alpha + 0.25)})` : `rgba(236,244,255,${Math.min(0.78, alpha)})`;
+          const size = star.red ? 1.6 : 1;
+          context.fillRect(x, y, size, size);
+        } else {
+          context.strokeStyle = star.red ? `rgba(255,55,70,${Math.min(0.94, alpha + 0.25)})` : `rgba(236,244,255,${Math.min(0.78, alpha)})`;
+          context.lineWidth = star.red ? 1.45 : 0.78;
+          context.beginPath();
+          context.moveTo(previousX, previousY);
+          context.lineTo(x, y);
+          context.stroke();
+        }
       });
-      frame = requestAnimationFrame(draw);
+      if (!reduced) frame = requestAnimationFrame(draw);
     };
     resize();
     context.fillStyle = "#010204";
     context.fillRect(0, 0, width, height);
     window.addEventListener("resize", resize);
-    frame = requestAnimationFrame(draw);
+    if (reduced) draw(0);
+    else frame = requestAnimationFrame(draw);
     return () => { cancelAnimationFrame(frame); window.removeEventListener("resize", resize); };
   }, [reduced]);
 
