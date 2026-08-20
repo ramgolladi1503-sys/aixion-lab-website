@@ -1,0 +1,221 @@
+/* V5.2 production-convergence motion layer.
+   Scope: evidence-driven hierarchy, page differentiation, flagship TradeBot storytelling,
+   mobile-specific composition, and richer physical motion. This layer is intentionally
+   isolated so it can be folded into styles.css after visual acceptance. */
+
+:root {
+  --v52-ease: cubic-bezier(.16,1,.3,1);
+  --v52-soft: cubic-bezier(.22,.61,.36,1);
+}
+
+/* HOME — establish a narrative hierarchy rather than eight equal destinations. */
+.home-orbit .orbit-stage { perspective: 1500px; }
+.home-orbit .node-position:nth-of-type(3) .hub-node {
+  scale: 1.13;
+  border-color: rgba(255,57,70,.64);
+  box-shadow: 0 26px 70px rgba(0,0,0,.5), 0 0 42px rgba(255,57,70,.16), inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.home-orbit .node-position:nth-of-type(4) .hub-node,
+.home-orbit .node-position:nth-of-type(5) .hub-node {
+  scale: 1.055;
+  border-color: rgba(255,255,255,.34);
+}
+.home-orbit .node-position:nth-of-type(1) .hub-node,
+.home-orbit .node-position:nth-of-type(2) .hub-node,
+.home-orbit .node-position:nth-of-type(6) .hub-node,
+.home-orbit .node-position:nth-of-type(7) .hub-node,
+.home-orbit .node-position:nth-of-type(8) .hub-node { opacity: .83; }
+.home-orbit.focused .node-position .hub-node { opacity: .28; }
+.home-orbit.focused .node-position .hub-node.active { opacity: 1; }
+.hub-node:hover,.hub-node.active,.hub-node:focus-visible {
+  transform: translate(-50%,-50%) translate3d(0,-9px,58px) scale(1.095) !important;
+  box-shadow: 0 30px 82px rgba(0,0,0,.54), 0 0 52px rgba(255,57,70,.22) !important;
+}
+.node-position:nth-of-type(3) .hub-node:hover,
+.node-position:nth-of-type(3) .hub-node.active {
+  transform: translate(-50%,-50%) translate3d(0,-12px,72px) scale(1.16) !important;
+}
+.core-node { animation-duration: 5.4s; }
+.core-node::after {
+  content: "";
+  position: absolute;
+  inset: -34%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,57,70,.12);
+  box-shadow: 0 0 80px rgba(255,57,70,.08), inset 0 0 60px rgba(255,57,70,.04);
+  animation: v52-core-wave 4.8s ease-in-out infinite;
+  pointer-events: none;
+}
+.connection-map { filter: drop-shadow(0 0 18px rgba(255,57,70,.04)); }
+
+/* INTERNAL WORLDS — reduce dead space and give each page a distinct spatial signature. */
+.world-hero { min-height: 78vh; }
+.story-layout { gap: clamp(36px,5vw,88px); }
+.story-stage { top: 17vh; height: 66vh; }
+.story-section { min-height: 62vh; padding-block: clamp(54px,7vh,94px); }
+.story-track { padding-bottom: 10vh; }
+.section-copy { max-width: 760px; }
+.section-copy h2 { font-size: clamp(34px,4.3vw,70px); line-height: .99; letter-spacing: -.045em; }
+.section-copy>p:last-of-type { color: rgba(239,243,248,.76); }
+
+.system-artifact::before,
+.system-artifact::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: .45;
+  transition: transform 1.1s var(--v52-ease), opacity .7s ease, filter .7s ease;
+}
+.system-artifact::before { border: 1px solid rgba(255,57,70,.10); transform: rotate(18deg) scale(.9); }
+.system-artifact::after { border: 1px dashed rgba(255,255,255,.08); transform: rotate(-24deg) scale(1.12); }
+.story-stage:hover .system-artifact::before { transform: rotate(38deg) scale(1.03); opacity: .7; }
+.story-stage:hover .system-artifact::after { transform: rotate(-48deg) scale(1.2); opacity: .62; }
+
+.world-about .system-artifact::before { border-radius: 38% 62% 54% 46%; animation: v52-morph 10s ease-in-out infinite; }
+.world-journey .system-artifact { animation-name: v52-journey-drift; }
+.world-projects .system-artifact { animation: v52-project-tilt 8s ease-in-out infinite; }
+.world-research .system-artifact::after { animation: v52-data-sweep 4.2s linear infinite; }
+.world-evidence .system-artifact::before { box-shadow: inset 0 0 42px rgba(255,57,70,.08); animation: v52-proof-pulse 5.2s ease-in-out infinite; }
+.world-tower .system-artifact { animation: v52-tower-lock 9s ease-in-out infinite; }
+.world-stack .artifact-word { transform-origin: center; }
+.world-stack .artifact-word.active { transform: translateZ(54px) translateY(-4px) scale(1.12); }
+.world-contact .system-artifact::after { border-style: solid; border-color: rgba(255,255,255,.06); animation: v52-contact-halo 7s ease-in-out infinite; }
+
+/* TRADEBOT — system visualization becomes the primary storytelling surface. */
+.tradebot-hero { min-height: 82vh; }
+.tradebot-story {
+  grid-template-columns: minmax(430px, .95fr) minmax(460px, 1.05fr);
+  gap: clamp(56px,7vw,118px);
+  align-items: start;
+}
+.tradebot-sticky {
+  top: 12vh;
+  height: 76vh;
+  display: grid;
+  place-items: center;
+}
+.tradebot-system {
+  width: min(42vw,620px);
+  height: min(42vw,620px);
+  transform: scale(1.28);
+  transition: transform 1.15s var(--v52-ease), filter .85s ease;
+}
+.tradebot-system.stage-0 { transform: scale(1.3) rotate(-1.2deg); }
+.tradebot-system.stage-1 { transform: scale(1.34) rotate(1.1deg); }
+.tradebot-system.stage-2 { transform: scale(1.38) rotate(-.7deg); filter: drop-shadow(0 0 42px rgba(255,57,70,.18)); }
+.tradebot-system.stage-3 { transform: scale(1.33) rotate(.8deg); }
+.tradebot-system.stage-4 { transform: scale(1.4); filter: drop-shadow(0 0 54px rgba(255,57,70,.22)); }
+.tb-core { transition: transform .9s var(--v52-ease), box-shadow .8s ease, border-color .7s ease; }
+.tradebot-system.stage-2 .tb-core,
+.tradebot-system.stage-4 .tb-core { transform: scale(1.08); box-shadow: 0 0 0 1px rgba(255,57,70,.38),0 0 58px rgba(255,57,70,.17); }
+.tb-node { opacity: .54 !important; filter: saturate(.75); }
+.tb-node.active { opacity: 1 !important; filter: none; }
+.tradebot-system.stage-0 .node-0,
+.tradebot-system.stage-1 .node-1,
+.tradebot-system.stage-2 .node-2,
+.tradebot-system.stage-3 .node-3,
+.tradebot-system.stage-4 .node-4 {
+  transform: scale(1.24) translateZ(36px);
+  text-shadow: 0 0 18px rgba(255,57,70,.34);
+}
+.tb-line { opacity: .26; }
+.tradebot-system.stage-0 .line-0,
+.tradebot-system.stage-1 .line-1,
+.tradebot-system.stage-2 .line-2,
+.tradebot-system.stage-3 .line-3,
+.tradebot-system.stage-4 .line-4 { opacity: 1; }
+.tb-packet { width: 8px; height: 8px; box-shadow: 0 0 16px rgba(255,57,70,.88); }
+.tradebot-stage { min-height: 64vh; padding-block: clamp(58px,7vh,92px); }
+.tradebot-stage:not(.active) { opacity: .64; transform: translateX(10px) scale(.99); }
+.tradebot-stage.active { opacity: 1; }
+.tradebot-copy h2 { font-size: clamp(34px,4.2vw,66px); line-height: 1; }
+.tradebot-copy>p:last-of-type { color: rgba(239,243,248,.78); max-width: 66ch; }
+
+/* ROUTE TRANSITIONS — add a second, subtler wave so travel feels spatial rather than like a fade. */
+.route-portal::before {
+  content: "";
+  position: absolute;
+  left: var(--portal-x);
+  top: var(--portal-y);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  border: 1px solid rgba(255,255,255,.46);
+  box-shadow: 0 0 24px rgba(255,57,70,.7),0 0 80px rgba(255,57,70,.22);
+  animation: v52-route-ripple .92s var(--v52-ease) both;
+}
+.portal-label { text-shadow: 0 0 26px rgba(255,57,70,.18); }
+
+/* MOBILE — deliberately recompose the orbit into a cropped interactive dial. */
+@media (max-width:620px) {
+  .home-orbit { place-items: end center; padding-top: var(--header-h); padding-bottom: 4vh; }
+  .home-orbit .orbit-stage {
+    width: 122vw !important;
+    max-width: none;
+    transform: translateY(8vh) scale(.94) !important;
+    transform-origin: center 56%;
+  }
+  .home-orbit .node-position .hub-node { width: 82px; opacity: .88; }
+  .home-orbit .node-position:nth-of-type(3) .hub-node { scale: 1.12; }
+  .home-orbit .node-position:nth-of-type(4) .hub-node,
+  .home-orbit .node-position:nth-of-type(5) .hub-node { scale: 1.04; }
+  .hub-node strong { font-size: 10px !important; line-height: 1.06; max-width: 68px; }
+  .hub-node svg { width: 18px; height: 18px; }
+  .idle-cue { bottom: 2.6vh; font-size: 8px; letter-spacing: .16em; }
+  .world-hero { min-height: 68vh; }
+  .story-stage { height: 270px; margin-bottom: 4vh; }
+  .story-section { padding-block: 42px; }
+  .section-copy h2,.tradebot-copy h2 { font-size: clamp(30px,10vw,46px); }
+  .tradebot-hero { min-height: 72vh; }
+  .tradebot-story { display: block; }
+  .tradebot-sticky { height: 380px; margin-bottom: 3vh; }
+  .tradebot-system { width: 330px; height: 330px; transform: scale(.98) !important; }
+  .tradebot-stage { min-height: auto; padding-block: 48px; opacity: .84 !important; transform: none !important; }
+  .tradebot-stage.active { opacity: 1 !important; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .core-node::after,
+  .system-artifact::before,
+  .system-artifact::after,
+  .route-portal::before { animation: none !important; }
+  .tradebot-system,.tb-core,.tb-node,.tb-line { transition-duration: .01ms !important; }
+}
+
+@keyframes v52-core-wave {
+  0%,100% { transform: scale(.84); opacity: .12; }
+  50% { transform: scale(1.12); opacity: .52; }
+}
+@keyframes v52-morph {
+  0%,100% { border-radius: 38% 62% 54% 46%; transform: rotate(8deg) scale(.94); }
+  50% { border-radius: 58% 42% 39% 61%; transform: rotate(-11deg) scale(1.05); }
+}
+@keyframes v52-journey-drift {
+  0%,100% { transform: translate3d(-4px,0,0) rotateY(-2deg); }
+  50% { transform: translate3d(10px,-12px,28px) rotateY(5deg); }
+}
+@keyframes v52-project-tilt {
+  0%,100% { transform: rotateY(-8deg) rotateX(1deg); }
+  50% { transform: rotateY(7deg) rotateX(-3deg) translateZ(26px); }
+}
+@keyframes v52-data-sweep { to { transform: rotate(360deg) scale(1.08); } }
+@keyframes v52-proof-pulse {
+  0%,100% { transform: scale(.9); opacity: .38; }
+  50% { transform: scale(1.08); opacity: .76; }
+}
+@keyframes v52-tower-lock {
+  0%,100% { transform: rotateX(2deg) rotateY(-3deg); }
+  50% { transform: rotateX(-2deg) rotateY(3deg) translateZ(18px); }
+}
+@keyframes v52-contact-halo {
+  0%,100% { transform: scale(.9); opacity: .22; }
+  50% { transform: scale(1.16); opacity: .58; }
+}
+@keyframes v52-route-ripple {
+  0% { transform: translate(-50%,-50%) scale(.2); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translate(-50%,-50%) scale(38); opacity: 0; }
+}
