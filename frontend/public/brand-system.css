@@ -1,0 +1,119 @@
+/* Source-derived brand rendering.
+   The authoritative 1200x900 WebP remains the only image source.
+   These crops mirror the approved crop rectangles without reconstructing the mark. */
+
+.brand-button {
+  width: clamp(220px, 19vw, 286px);
+  height: auto;
+  aspect-ratio: 1040 / 255;
+  background-image: url('/brand/aixion-lab-brand-lockup.webp');
+  background-repeat: no-repeat;
+  background-size: 115.384615% 352.941176%;
+  background-position: 50% 50%;
+  filter: drop-shadow(0 0 14px rgba(255,57,70,.16));
+}
+
+.brand-button > img { opacity: 0 !important; }
+
+.entry-emblem-shell,
+.core-emblem-shell,
+.artifact-core,
+.home-control.emblem-mode {
+  background-color: transparent;
+  background-image: url('/brand/aixion-lab-brand-lockup.webp');
+  background-repeat: no-repeat;
+  background-size: 400% 300%;
+  background-position: 13.333333% 47.5%;
+}
+
+.entry-emblem-shell {
+  width: 82%;
+  height: 82%;
+}
+
+.core-emblem-shell {
+  width: 82%;
+  height: 82%;
+}
+
+.entry-emblem-shell .aixion-emblem,
+.core-emblem-shell .aixion-emblem,
+.artifact-core .aixion-emblem,
+.home-control.emblem-mode .aixion-emblem {
+  opacity: 0 !important;
+}
+
+.home-control.emblem-mode {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-size: 400% 300%;
+  background-position: 13.333333% 47.5%;
+  filter: drop-shadow(0 0 9px rgba(255,57,70,.46));
+}
+
+/* Remove decorative 01/02/03 numbering from the recruiter-facing experience. */
+.chapter-rail button {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+.chapter-rail button > span,
+.section-index,
+.stage-number {
+  display: none;
+}
+.story-section,
+.tradebot-stage {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+/* Increase signal hierarchy without turning the interface into a dashboard. */
+.hub-node {
+  border-color: rgba(255,255,255,.25);
+  color: rgba(255,255,255,.96);
+}
+.hub-node strong {
+  font-size: clamp(15px, 1.65vmin, 18px);
+  font-weight: 600;
+  text-shadow: 0 2px 16px rgba(0,0,0,.96), 0 0 18px rgba(255,57,70,.08);
+}
+.eyebrow span,
+.section-kicker {
+  font-size: 13px;
+  letter-spacing: .12em;
+}
+
+/* One luminous wavefront is cleaner and more cinematic than stacked rings. */
+.portal-wave {
+  background:
+    radial-gradient(circle,
+      rgba(255,255,255,.055) 0 3%,
+      rgba(255,57,70,.16) 10%,
+      rgba(255,57,70,.055) 29%,
+      rgba(3,4,6,.86) 54%,
+      #020305 74%);
+  box-shadow:
+    0 0 0 1px rgba(255,72,84,.45),
+    0 0 110px rgba(255,57,70,.22),
+    inset 0 0 130px rgba(255,57,70,.085);
+  backdrop-filter: blur(4px);
+}
+.portal-ring.ring-2 { display: none; }
+.portal-ring.ring-1 {
+  border-color: rgba(255,105,116,.58);
+  box-shadow: 0 0 24px rgba(255,57,70,.16);
+}
+
+@media (max-width: 860px) {
+  .brand-button { width: 205px; height: auto; }
+}
+
+@media (max-width: 620px) {
+  .brand-button { width: 176px; height: auto; }
+  .entry-emblem-shell { width: 84%; height: 84%; }
+  .core-emblem-shell { width: 84%; height: 84%; }
+  .hub-node strong { font-size: 12px; }
+  .eyebrow span, .section-kicker { font-size: 11px; }
+  .story-section, .tradebot-stage { grid-template-columns: 1fr; }
+}
