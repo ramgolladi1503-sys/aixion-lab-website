@@ -134,7 +134,7 @@ function ComputationalField({ mode = "home", boost = false }) {
     const context = canvas.getContext("2d");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const pointer = { x: 0, y: 0 };
-    const points = Array.from({ length: 168 }, (_, index) => ({
+    const points = Array.from({ length: 96 }, (_, index) => ({
       x: ((index * 61 + 17) % 173) / 173,
       y: ((index * 89 + 29) % 179) / 179,
       vx: (((index * 7) % 13) - 6) * 0.000029,
@@ -148,7 +148,7 @@ function ComputationalField({ mode = "home", boost = false }) {
     let frame = 0;
 
     const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = width * dpr;
@@ -188,7 +188,7 @@ function ComputationalField({ mode = "home", boost = false }) {
       });
 
       for (let i = 0; i < points.length; i += 1) {
-        for (let j = i + 1; j < Math.min(points.length, i + 9); j += 1) {
+        for (let j = i + 1; j < Math.min(points.length, i + 6); j += 1) {
           const a = points[i];
           const b = points[j];
           const distance = Math.hypot(a.px - b.px, a.py - b.py);
@@ -205,7 +205,7 @@ function ComputationalField({ mode = "home", boost = false }) {
         }
       }
 
-      for (let index = 0; index < 34; index += 1) {
+      for (let index = 0; index < 18; index += 1) {
         const y = ((index * 91 + motionTime * 0.11 * speed) % (height + 220)) - 110;
         const x = ((index * 173 + motionTime * 0.24 * speed) % (width + 520)) - 260;
         const length = 42 + (index % 8) * 22;
@@ -293,7 +293,7 @@ function App() {
       return;
     }
     if (routingRef.current?.key === key) return;
-    if (key === page && !deep && !routingRef.current) return;
+    if (pathFor(key) === window.location.pathname && !deep && !routingRef.current) return;
     const rect = element?.getBoundingClientRect?.();
     const route = {
       id: ++routeSequence.current,
@@ -455,13 +455,13 @@ function RoutePortal({ state, onCommit, onComplete }) {
       onComplete(state);
     };
 
-    const commitTimer = window.setTimeout(commit, reduced ? 90 : 430);
-    const completeTimer = window.setTimeout(complete, reduced ? 280 : 980);
+    const commitTimer = window.setTimeout(commit, reduced ? 140 : 430);
+    const completeTimer = window.setTimeout(complete, reduced ? 680 : 980);
     let timeline;
 
     if (reduced) {
       timeline = gsap.timeline({ onComplete: complete });
-      timeline.to(veil, { opacity: 1, duration: 0.08 }).call(commit).to(veil, { opacity: 0, duration: 0.12 });
+      timeline.to(veil, { opacity: 1, duration: 0.12 }).call(commit).to(veil, { opacity: 1, duration: 0.18 }).to(veil, { opacity: 0, duration: 0.24 });
     } else {
       const diameter = Math.hypot(window.innerWidth, window.innerHeight) * 2.35;
       gsap.set(wave, { width: diameter, height: diameter, xPercent: -50, yPercent: -50, scale: 0.015, opacity: 1 });
