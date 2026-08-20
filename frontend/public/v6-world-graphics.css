@@ -1,0 +1,216 @@
+/* V6.1 page-specific system graphics.
+   One visual grammar, different information model per world. */
+
+/* Shared instrument labels remain small and operational. */
+.system-artifact .artifact-word { z-index: 6; }
+.system-artifact .artifact-core { z-index: 5; }
+.system-artifact .artifact-orbit { z-index: 2; }
+
+/* ABOUT — three disciplines orbit one operating principle. */
+.artifact-about .orbit-outer {
+  inset: 92px 54px 98px;
+  border: 0;
+  background:
+    linear-gradient(31deg, transparent 49.7%, rgba(255,255,255,.10) 50%, transparent 50.3%),
+    linear-gradient(-31deg, transparent 49.7%, rgba(255,255,255,.10) 50%, transparent 50.3%),
+    linear-gradient(90deg, transparent 49.7%, rgba(255,57,70,.16) 50%, transparent 50.3%);
+}
+.artifact-about .orbit-inner {
+  inset: 39% 39%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,57,70,.24);
+  background: radial-gradient(circle, rgba(255,57,70,.10), transparent 70%);
+}
+.artifact-about .artifact-word.word-0 { top: 25%; left: 50%; }
+.artifact-about .artifact-word.word-1 { top: 72%; left: 27%; }
+.artifact-about .artifact-word.word-2 { top: 72%; left: 73%; }
+
+/* JOURNEY — a real progression line with three milestones. */
+.artifact-journey .orbit-outer {
+  inset: 80px 70px;
+  border: 0;
+  background: linear-gradient(90deg, rgba(255,57,70,.18), rgba(255,255,255,.10));
+  height: 1px;
+  top: 52%;
+}
+.artifact-journey .orbit-inner {
+  inset: auto 70px 78px;
+  height: 42px;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.07) 0 1px, transparent 1px 32px);
+}
+.artifact-journey .artifact-core { width: 54px; height: 54px; left: 50%; top: 52%; }
+.artifact-journey .artifact-word.word-0 { left: 20%; top: 52%; }
+.artifact-journey .artifact-word.word-1 { left: 50%; top: 35%; }
+.artifact-journey .artifact-word.word-2 { left: 80%; top: 52%; }
+.artifact-journey .artifact-word::before {
+  content:"";
+  position:absolute;
+  left:50%;
+  top:calc(100% + 7px);
+  width:1px;
+  height:18px;
+  background:rgba(255,255,255,.12);
+}
+
+/* PROJECTS — portfolio topology: flagship in the center, supporting systems around it. */
+.artifact-projects .orbit-outer {
+  inset: 74px 44px 92px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.07);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,57,70,.09), transparent 20%),
+    radial-gradient(circle at 18% 28%, rgba(255,255,255,.045), transparent 16%),
+    radial-gradient(circle at 82% 72%, rgba(255,255,255,.04), transparent 18%);
+}
+.artifact-projects .orbit-inner {
+  inset: 124px 100px 140px;
+  border-radius: 12px;
+  border-color: rgba(255,57,70,.24);
+  background: linear-gradient(145deg, rgba(255,57,70,.08), rgba(255,255,255,.015));
+}
+.artifact-projects .artifact-word.word-0 { left: 50%; top: 27%; }
+.artifact-projects .artifact-word.word-1 { left: 24%; top: 72%; }
+.artifact-projects .artifact-word.word-2 { left: 76%; top: 72%; }
+.artifact-projects .artifact-core {
+  width: 84px;
+  height: 84px;
+  border-radius: 18px;
+  box-shadow: 0 0 0 1px rgba(255,57,70,.34), 0 0 52px rgba(255,57,70,.13);
+}
+
+/* RESEARCH — funnel from hypothesis to replay to verdict. */
+.artifact-research .orbit-outer {
+  inset: 78px 42px 84px;
+  border: 0;
+  clip-path: polygon(8% 0, 92% 0, 68% 100%, 32% 100%);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,57,70,.035)),
+    repeating-linear-gradient(180deg, transparent 0 53px, rgba(255,255,255,.07) 53px 54px);
+}
+.artifact-research .orbit-inner {
+  inset: auto 35% 92px;
+  height: 54px;
+  border-radius: 10px;
+  border-color: rgba(255,57,70,.30);
+  background: rgba(255,57,70,.06);
+}
+.artifact-research .artifact-word.word-0 { top: 27%; left: 50%; min-width: 112px; }
+.artifact-research .artifact-word.word-1 { top: 51%; left: 50%; min-width: 112px; }
+.artifact-research .artifact-word.word-2 { top: 75%; left: 50%; min-width: 112px; }
+.artifact-research .artifact-core { display:none; }
+.artifact-research .artifact-scan { animation-duration: 2.9s !important; }
+
+/* EVIDENCE — immutable ledger / verification stack. */
+.artifact-evidence .orbit-outer {
+  inset: 74px 36px 76px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.07);
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,.025) 0 50px, rgba(255,255,255,.075) 50px 51px);
+}
+.artifact-evidence .orbit-inner {
+  inset: 92px 54px 94px;
+  border-radius: 8px;
+  border-color: rgba(255,57,70,.14);
+  background: linear-gradient(90deg, transparent 72%, rgba(255,57,70,.045));
+}
+.artifact-evidence .artifact-core {
+  left: auto;
+  right: 62px;
+  top: 50%;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+}
+.artifact-evidence .artifact-word {
+  left: 76px !important;
+  min-width: 116px;
+  text-align: left;
+  transform: translateY(-50%) !important;
+}
+.artifact-evidence .artifact-word.word-0 { top: 31%; }
+.artifact-evidence .artifact-word.word-1 { top: 50%; }
+.artifact-evidence .artifact-word.word-2 { top: 69%; }
+.artifact-evidence .artifact-word::after {
+  content:"PASS";
+  position:absolute;
+  left:calc(100% + 12px);
+  top:50%;
+  transform:translateY(-50%);
+  color:rgba(255,91,102,.65);
+  font:500 8px/1 var(--mono);
+  letter-spacing:.12em;
+}
+
+/* CONTROL TOWER — health matrix with authority at the center. */
+.artifact-tower .orbit-outer {
+  inset: 78px 38px 84px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.07);
+  background:
+    linear-gradient(90deg, transparent 32.9%, rgba(255,255,255,.065) 33%, transparent 33.2%, transparent 66.5%, rgba(255,255,255,.065) 66.7%, transparent 66.9%),
+    linear-gradient(transparent 49.8%, rgba(255,255,255,.065) 50%, transparent 50.2%);
+}
+.artifact-tower .orbit-inner {
+  inset: 128px 98px 132px;
+  border-radius: 12px;
+  border-color: rgba(255,57,70,.24);
+  box-shadow: 0 0 36px rgba(255,57,70,.07);
+}
+.artifact-tower .artifact-core { width: 64px; height: 64px; }
+.artifact-tower .artifact-word.word-0 { left: 24%; top: 31%; }
+.artifact-tower .artifact-word.word-1 { left: 76%; top: 31%; }
+.artifact-tower .artifact-word.word-2 { left: 50%; top: 72%; }
+.artifact-tower .artifact-word::after {
+  content:"●";
+  margin-left:8px;
+  color:rgba(255,75,88,.72);
+}
+
+/* STACK — visible layers instead of an orbit. */
+.artifact-stack .orbit-outer,
+.artifact-stack .orbit-inner { border-radius: 12px; }
+.artifact-stack .orbit-outer {
+  inset: 92px 48px 84px;
+  border-color: rgba(255,255,255,.07);
+  transform: perspective(600px) rotateX(55deg) translateY(30px) !important;
+  background: rgba(255,255,255,.018);
+}
+.artifact-stack .orbit-inner {
+  inset: 126px 82px 116px;
+  border-color: rgba(255,57,70,.18);
+  transform: perspective(600px) rotateX(55deg) translateY(-4px) !important;
+  background: rgba(255,57,70,.025);
+}
+.artifact-stack .artifact-core {
+  top: 39%;
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+}
+.artifact-stack .artifact-word.word-0 { left: 50%; top: 66%; }
+.artifact-stack .artifact-word.word-1 { left: 50%; top: 77%; }
+.artifact-stack .artifact-word.word-2 { left: 50%; top: 88%; }
+
+/* Motion is state communication, never ambient decoration. */
+.story-section.active + .story-section { border-top-color: rgba(255,57,70,.13); }
+.story-stage .system-artifact { transition: border-color .28s ease, box-shadow .28s ease; }
+.story-stage:has(+ .story-track .story-section.active) .system-artifact {
+  border-color: rgba(255,255,255,.13);
+  box-shadow: inset 0 0 0 1px rgba(255,57,70,.035), 0 24px 80px rgba(0,0,0,.22);
+}
+
+@media (max-width:760px) {
+  .artifact-evidence .artifact-word { left:52px !important; }
+  .artifact-evidence .artifact-core { right:38px; }
+  .artifact-research .artifact-word { min-width:100px; }
+  .artifact-stack .artifact-word.word-0 { top:64%; }
+  .artifact-stack .artifact-word.word-1 { top:76%; }
+  .artifact-stack .artifact-word.word-2 { top:88%; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .system-artifact .artifact-scan { animation:none !important; }
+}
