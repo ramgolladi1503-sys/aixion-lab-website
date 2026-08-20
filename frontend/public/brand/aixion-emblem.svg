@@ -1,15 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="120 285 300 300" role="img" aria-labelledby="title desc">
   <title id="title">Aixion emblem</title>
-  <defs>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="1.8" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-  <g fill="none" stroke="#ff3944" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter" filter="url(#glow)">
-    <path d="M50 9 L18 66 L34 66 L50 38"/>
-    <path d="M50 9 L82 66 L66 66 L50 38"/>
-    <path d="M18 66 L31 88 L69 88 L82 66"/>
-    <path d="M35 64 H65"/>
-  </g>
+  <desc id="desc">Source-derived crop of the authoritative Aixion Lab brand lockup; no reconstructed paths or wordmark.</desc>
+  <image href="aixion-lab-brand-lockup.webp" x="0" y="0" width="1200" height="900" preserveAspectRatio="none"/>
 </svg>
