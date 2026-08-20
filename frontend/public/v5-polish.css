@@ -1,5 +1,10 @@
 /* V5.4 production polish — evidence-backed fixes only. */
 
+html, body, #root, .app, .scene, .home-orbit {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 /* Entry + global navigation: improve orientation without stealing the scene. */
 .entry-context {
   position: absolute;
@@ -46,33 +51,33 @@
 .tradebot-stage:not(.active) .tradebot-copy { opacity: .82; }
 .tradebot-stage.active .tradebot-copy { transform: translateY(0); }
 
-/* Mobile Home: replace cropped desktop dial with a contained, centered native composition. */
+/* Mobile Home: contained, centered and fully viewport-safe. */
 @media (max-width: 620px) {
   .home-orbit {
     place-items: center;
     min-height: 100svh;
-    padding: calc(var(--header-h) + 18px) 12px 54px;
+    padding: calc(var(--header-h) + 18px) 16px 58px;
     overflow: hidden;
   }
   .home-orbit .orbit-stage {
-    width: min(94vw, 390px) !important;
-    height: min(94vw, 390px) !important;
-    max-width: 390px;
-    transform: translateY(3vh) scale(.82) !important;
+    width: min(88vw, 356px) !important;
+    height: min(88vw, 356px) !important;
+    max-width: 356px;
+    transform: translateY(1vh) scale(.79) !important;
     transform-origin: center center;
   }
   .home-orbit .node-position .hub-node {
-    width: 76px;
-    min-height: 62px;
+    width: 72px;
+    min-height: 60px;
     opacity: .92;
   }
-  .home-orbit .node-position:nth-of-type(3) .hub-node { scale: 1.08; }
+  .home-orbit .node-position:nth-of-type(3) .hub-node { scale: 1.06; }
   .home-orbit .node-position:nth-of-type(4) .hub-node,
-  .home-orbit .node-position:nth-of-type(5) .hub-node { scale: 1.025; }
-  .hub-node strong { font-size: 10px !important; max-width: 62px; }
+  .home-orbit .node-position:nth-of-type(5) .hub-node { scale: 1.015; }
+  .hub-node strong { font-size: 9.5px !important; max-width: 60px; }
   .idle-cue {
-    bottom: 16px;
-    max-width: 90vw;
+    bottom: 18px;
+    max-width: 86vw;
     white-space: normal;
     text-align: center;
     line-height: 1.45;
