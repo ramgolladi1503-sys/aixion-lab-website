@@ -2,108 +2,137 @@
    The authoritative 1200x900 WebP is the only raster source.
    CSS crops are centralized here because external SVG <img> documents cannot
    reliably load a nested WebP resource across browser engines. */
-
-/* Header: crop the native AIXION LAB wordmark from the authoritative source. */
 .brand-button {
-  width: clamp(220px, 19vw, 286px);
-  height: 58px;
-  aspect-ratio: auto;
-  background-color: transparent;
-  background-image: url('/brand/aixion-lab-brand-lockup.webp');
-  background-repeat: no-repeat;
-  background-size: 164.384% 608%;
-  background-position: 50% 70%;
+  width: clamp(190px, 16vw, 244px); height: 54px; aspect-ratio: auto;
+  background: transparent url('/brand/aixion-lab-brand-lockup.webp') no-repeat 50% 70% / 164.384% 608%;
   filter: drop-shadow(0 0 14px rgba(255,57,70,.16));
+  transition: transform .7s cubic-bezier(.16,1,.3,1), filter .7s ease, opacity .5s ease;
 }
+.brand-button:hover { transform: translate3d(0,-2px,0) scale(1.025); filter: drop-shadow(0 0 24px rgba(255,57,70,.28)); }
 .brand-button > img { opacity: 0 !important; }
+.entry-emblem-shell,.core-emblem-shell,.artifact-core,.home-control.emblem-mode {
+  background: #000 url('/brand/aixion-lab-brand-lockup.webp') no-repeat 50% 36.441% / 387.097% 290.323%;
+}
+.entry-emblem-shell .aixion-emblem,.core-emblem-shell .aixion-emblem,.artifact-core .aixion-emblem,.home-control.emblem-mode .aixion-emblem { opacity:0!important; }
+.home-control.emblem-mode { border-radius:50%; filter:drop-shadow(0 0 9px rgba(255,57,70,.46)); }
+.deep-word { opacity:0; }
+.chapter-rail button { grid-template-columns:1fr; gap:0; }
+.chapter-rail button>span,.section-index,.stage-number { display:none; }
+.story-section,.tradebot-stage { grid-template-columns:1fr; gap:0; }
+.hub-node { border-color:rgba(255,255,255,.25); color:rgba(255,255,255,.96); }
+.hub-node strong { font-size:clamp(15px,1.65vmin,18px); font-weight:600; text-shadow:0 2px 16px rgba(0,0,0,.96),0 0 18px rgba(255,57,70,.08); }
+.eyebrow span,.section-kicker { font-size:13px; letter-spacing:.12em; }
+.portal-wave { background:radial-gradient(circle,rgba(255,255,255,.055) 0 3%,rgba(255,57,70,.16) 10%,rgba(255,57,70,.055) 29%,rgba(3,4,6,.86) 54%,#020305 74%); box-shadow:0 0 0 1px rgba(255,72,84,.45),0 0 110px rgba(255,57,70,.22),inset 0 0 130px rgba(255,57,70,.085); backdrop-filter:blur(4px); }
+.portal-ring.ring-2 { display:none; }
+.portal-ring.ring-1 { border-color:rgba(255,105,116,.58); box-shadow:0 0 24px rgba(255,57,70,.16); }
 
-/* Emblem: crop x=445..755, y=215..525 from the same 1200x900 source. */
-.entry-emblem-shell,
-.core-emblem-shell,
-.artifact-core,
-.home-control.emblem-mode {
-  background-color: #000;
-  background-image: url('/brand/aixion-lab-brand-lockup.webp');
-  background-repeat: no-repeat;
-  background-size: 387.097% 290.323%;
-  background-position: 50% 36.441%;
-}
-.entry-emblem-shell .aixion-emblem,
-.core-emblem-shell .aixion-emblem,
-.artifact-core .aixion-emblem,
-.home-control.emblem-mode .aixion-emblem {
-  opacity: 0 !important;
-}
-.home-control.emblem-mode {
-  border-radius: 50%;
-  filter: drop-shadow(0 0 9px rgba(255,57,70,.46));
-}
+/* V5 cinematic motion system — inspired by the interaction density of high-end
+   exploratory studios, while keeping Aixion's own radial/evidence identity. */
+:root { --cinematic:cubic-bezier(.16,1,.3,1); --cinematic-in:cubic-bezier(.7,0,.84,0); }
+.scene { perspective:1400px; }
+.global-header { transition:background .6s ease, transform .8s var(--cinematic); }
 
-/* Deep Space words are timeline-driven. Keep future words hidden until GSAP
-   explicitly reveals the active word so captures and first paint cannot show
-   several sequence states simultaneously. */
-.deep-word { opacity: 0; }
+/* Home: introduce depth, hierarchy and a slower physical response. */
+.orbit-stage { transform-style:preserve-3d; perspective:1200px; }
+.orbit-depth,.ambient-ring,.connection-map,.core-node,.hub-node { will-change:transform,opacity,filter; }
+.orbit-depth.depth-one { animation:aixion-breathe 9s ease-in-out infinite; }
+.orbit-depth.depth-two { animation:aixion-breathe 13s ease-in-out -4s infinite reverse; }
+.ambient-ring.ring-a { animation:aixion-ring-drift 18s linear infinite; }
+.ambient-ring.ring-b { animation:aixion-ring-drift 27s linear infinite reverse; }
+.ambient-ring.ring-c { animation:aixion-ring-drift 39s linear infinite; }
+.core-node { transition:transform .9s var(--cinematic),filter .9s ease; animation:aixion-core-float 6.5s ease-in-out infinite; }
+.core-node:hover { transform:translateZ(52px) scale(1.07); filter:drop-shadow(0 0 42px rgba(255,57,70,.34)); }
+.hub-node { transition:transform .8s var(--cinematic),border-color .5s ease,background .5s ease,box-shadow .8s ease,opacity .5s ease; backdrop-filter:blur(8px); }
+.hub-node:hover,.hub-node.active { transform:translate3d(0,-7px,42px) scale(1.08); box-shadow:0 18px 55px rgba(0,0,0,.42),0 0 35px rgba(255,57,70,.12); }
+.home-orbit.focused .hub-node:not(.active) { opacity:.42; transform:scale(.96); }
+.spoke-line { transition:opacity .5s ease,stroke-width .5s ease,filter .5s ease; }
+.spoke-line.active { filter:drop-shadow(0 0 7px rgba(255,57,70,.8)); }
 
-/* Remove decorative 01/02/03 numbering from the recruiter-facing experience. */
-.chapter-rail button {
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-.chapter-rail button > span,
-.section-index,
-.stage-number {
-  display: none;
-}
-.story-section,
-.tradebot-stage {
-  grid-template-columns: 1fr;
-  gap: 0;
-}
+/* Internal worlds: sticky artifact now behaves as an evolving instrument, not
+   a decorative image. Active chapter produces a distinct depth state. */
+.story-layout { align-items:stretch; }
+.story-stage { position:sticky; top:20vh; height:62vh; align-self:start; }
+.system-artifact { transform-style:preserve-3d; transition:transform 1.1s var(--cinematic),filter .8s ease; animation:aixion-artifact-float 8s ease-in-out infinite; }
+.story-stage:has(+ .story-track .story-section.active) .system-artifact { filter:drop-shadow(0 0 32px rgba(255,57,70,.12)); }
+.artifact-orbit { transition:transform 1.2s var(--cinematic),opacity .7s ease,border-color .7s ease; }
+.artifact-word { transition:opacity .65s ease,transform .9s var(--cinematic),filter .65s ease; }
+.artifact-word:not(.active) { opacity:.24; transform:scale(.92); filter:blur(.35px); }
+.artifact-word.active { transform:translateZ(38px) scale(1.08); filter:drop-shadow(0 0 14px rgba(255,57,70,.28)); }
+.artifact-scan { animation:aixion-scan 5.5s var(--cinematic) infinite; }
+.story-section { min-height:72vh; transition:opacity .7s ease,transform .9s var(--cinematic); }
+.story-section:not(.active) { opacity:.5; transform:scale(.985); }
+.story-section.active { opacity:1; transform:scale(1); }
+.section-copy h2 { text-wrap:balance; }
+.section-copy>p:last-of-type { font-size:clamp(16px,1.25vw,19px); line-height:1.72; max-width:68ch; }
 
-/* Increase signal hierarchy without turning the interface into a dashboard. */
-.hub-node {
-  border-color: rgba(255,255,255,.25);
-  color: rgba(255,255,255,.96);
-}
-.hub-node strong {
-  font-size: clamp(15px, 1.65vmin, 18px);
-  font-weight: 600;
-  text-shadow: 0 2px 16px rgba(0,0,0,.96), 0 0 18px rgba(255,57,70,.08);
-}
-.eyebrow span,
-.section-kicker {
-  font-size: 13px;
-  letter-spacing: .12em;
-}
+/* Give each world its own motion signature without abandoning the system. */
+.world-about .system-artifact { animation-duration:9s; }
+.world-journey .artifact-orbit.orbit-outer { animation:aixion-ring-drift 24s linear infinite; }
+.world-projects .system-artifact { transform:rotateY(-7deg); }
+.world-projects .artifact-orbit.orbit-inner { animation:aixion-pulse-orbit 4.8s ease-in-out infinite; }
+.world-research .artifact-scan { animation-duration:3.8s; }
+.world-evidence .artifact-core { box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0 45px rgba(255,57,70,.14); }
+.world-tower .artifact-orbit { border-style:dashed; }
+.world-stack .system-artifact { transform:rotateX(6deg) rotateY(-8deg); }
+.world-contact .system-artifact { animation-duration:11s; }
 
-/* One luminous wavefront is cleaner and more cinematic than stacked rings. */
-.portal-wave {
-  background:
-    radial-gradient(circle,
-      rgba(255,255,255,.055) 0 3%,
-      rgba(255,57,70,.16) 10%,
-      rgba(255,57,70,.055) 29%,
-      rgba(3,4,6,.86) 54%,
-      #020305 74%);
-  box-shadow:
-    0 0 0 1px rgba(255,72,84,.45),
-    0 0 110px rgba(255,57,70,.22),
-    inset 0 0 130px rgba(255,57,70,.085);
-  backdrop-filter: blur(4px);
-}
-.portal-ring.ring-2 { display: none; }
-.portal-ring.ring-1 {
-  border-color: rgba(255,105,116,.58);
-  box-shadow: 0 0 24px rgba(255,57,70,.16);
-}
+/* TradeBot: make the system the hero. */
+.tradebot-story { column-gap:clamp(48px,7vw,120px); }
+.tradebot-sticky { top:15vh; height:70vh; }
+.tradebot-system { transform:scale(1.16); transform-origin:center; transition:transform 1s var(--cinematic),filter .8s ease; filter:drop-shadow(0 0 24px rgba(255,57,70,.08)); }
+.tb-node { transition:opacity .55s ease,transform .8s var(--cinematic),color .5s ease; }
+.tb-node.active { transform:scale(1.12); }
+.tb-line { transition:opacity .6s ease,filter .6s ease; }
+.tradebot-system.stage-0 .line-0,.tradebot-system.stage-1 .line-1,.tradebot-system.stage-2 .line-2,.tradebot-system.stage-3 .line-3,.tradebot-system.stage-4 .line-4 { filter:drop-shadow(0 0 8px rgba(255,57,70,.75)); }
+.tb-packet { animation:aixion-packet 3.4s var(--cinematic) infinite; }
+.tb-packet.packet-b { animation-delay:-1.7s; }
+.tradebot-stage { min-height:78vh; transition:opacity .7s ease,transform .9s var(--cinematic); }
+.tradebot-stage:not(.active) { opacity:.42; transform:translateX(18px); }
+.tradebot-stage.active { opacity:1; transform:translateX(0); }
+.tradebot-copy>p:last-of-type { font-size:clamp(16px,1.25vw,19px); line-height:1.72; }
 
-@media (max-width: 860px) {
-  .brand-button { width: 205px; height: 52px; background-size: 164.384% 534%; }
-}
+/* Entry becomes a deliberate cinematic threshold rather than a loader. */
+.entry-screen::before { content:'ENGINEERING · AI · RESEARCH'; position:absolute; left:50%; top:calc(50% + 178px); transform:translateX(-50%); font-size:10px; letter-spacing:.34em; color:rgba(255,255,255,.42); white-space:nowrap; animation:aixion-entry-copy 1.4s .35s var(--cinematic) both; }
+.entry-core { transition:transform .9s var(--cinematic),filter .8s ease; }
+.entry-core:hover { transform:scale(1.045); filter:drop-shadow(0 0 46px rgba(255,57,70,.2)); }
+.entry-ring { animation:aixion-entry-ring 7s ease-in-out infinite; }
+.entry-ring.ring-two { animation-delay:-2.2s; }.entry-ring.ring-three { animation-delay:-4.4s; }
 
-@media (max-width: 620px) {
-  .brand-button { width: 176px; height: 46px; background-size: 164.384% 500%; }
-  .hub-node strong { font-size: 12px; }
-  .eyebrow span, .section-kicker { font-size: 11px; }
-  .story-section, .tradebot-stage { grid-template-columns: 1fr; }
+/* Deep Space: richer depth without increasing DOM complexity. */
+.deep-vignette { animation:aixion-vignette 6s ease-in-out infinite; }
+.deep-emblem { animation:aixion-deep-emblem 7s ease-in-out infinite; }
+.deep-word { text-shadow:0 0 26px rgba(255,255,255,.08),0 0 65px rgba(255,57,70,.08); }
+
+@keyframes aixion-breathe { 0%,100%{transform:translateZ(-40px) scale(.97);opacity:.46}50%{transform:translateZ(18px) scale(1.035);opacity:.72} }
+@keyframes aixion-ring-drift { to{transform:rotate(360deg)} }
+@keyframes aixion-core-float { 0%,100%{translate:0 0}50%{translate:0 -7px} }
+@keyframes aixion-artifact-float { 0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -10px;rotate:.7deg} }
+@keyframes aixion-scan { 0%{transform:translateY(-115%);opacity:0}18%{opacity:.55}72%{opacity:.2}100%{transform:translateY(115%);opacity:0} }
+@keyframes aixion-pulse-orbit { 0%,100%{transform:scale(.96);opacity:.42}50%{transform:scale(1.06);opacity:.9} }
+@keyframes aixion-packet { 0%{opacity:0;transform:translate3d(-16px,12px,0) scale(.7)}25%{opacity:1}70%{opacity:.8}100%{opacity:0;transform:translate3d(34px,-24px,0) scale(1.25)} }
+@keyframes aixion-entry-copy { from{opacity:0;transform:translate(-50%,18px);letter-spacing:.52em}to{opacity:1;transform:translate(-50%,0);letter-spacing:.34em} }
+@keyframes aixion-entry-ring { 0%,100%{opacity:.3;transform:scale(.96)}50%{opacity:.78;transform:scale(1.035)} }
+@keyframes aixion-vignette { 0%,100%{opacity:.72}50%{opacity:.9} }
+@keyframes aixion-deep-emblem { 0%,100%{opacity:.16;transform:scale(.94)}50%{opacity:.3;transform:scale(1.03)} }
+
+@media (max-width:860px) {
+  .brand-button{width:188px;height:50px;background-size:164.384% 534%}
+  .story-stage{top:16vh;height:48vh}
+  .tradebot-system{transform:scale(1.04)}
+}
+@media (max-width:620px) {
+  .brand-button{width:154px;height:42px;background-size:164.384% 500%}
+  .hub-node strong{font-size:11px}.eyebrow span,.section-kicker{font-size:11px}
+  .story-section,.tradebot-stage{grid-template-columns:1fr;min-height:auto}
+  .home-orbit .orbit-stage{transform:scale(.9)}
+  .hub-node{backdrop-filter:blur(4px)}
+  .story-stage{position:relative;top:auto;height:300px;margin-bottom:8vh}
+  .tradebot-sticky{position:relative;top:auto;height:360px;margin-bottom:7vh}
+  .tradebot-system{transform:scale(.96)}
+  .section-copy>p:last-of-type,.tradebot-copy>p:last-of-type{font-size:15px;line-height:1.68}
+  .entry-screen::before{top:calc(50% + 150px);font-size:8px;letter-spacing:.25em}
+}
+@media (prefers-reduced-motion:reduce) {
+  .orbit-depth,.ambient-ring,.core-node,.system-artifact,.artifact-orbit,.artifact-scan,.tb-packet,.entry-ring,.deep-vignette,.deep-emblem,.entry-screen::before{animation:none!important}
+  .hub-node,.story-section,.tradebot-stage,.artifact-word,.brand-button,.entry-core{transition-duration:.01ms!important}
 }
