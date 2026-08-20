@@ -28,11 +28,11 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium-motion',
-      use: { ...devices['Desktop Chrome'], channel: 'chromium', reducedMotion: 'no-preference' },
+      use: { ...devices['Desktop Chrome'], channel: 'chromium', headless: !process.env.CI, reducedMotion: 'no-preference' },
     },
     {
       name: 'chromium-reduced',
-      use: { ...devices['Desktop Chrome'], channel: 'chromium', reducedMotion: 'reduce' },
+      use: { ...devices['Desktop Chrome'], channel: 'chromium', headless: !process.env.CI, reducedMotion: 'reduce' },
     },
     {
       name: 'webkit-motion',
