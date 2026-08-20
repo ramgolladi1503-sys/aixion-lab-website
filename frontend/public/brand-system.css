@@ -39,6 +39,11 @@
   filter: drop-shadow(0 0 9px rgba(255,57,70,.46));
 }
 
+/* Deep Space words are timeline-driven. Keep future words hidden until GSAP
+   explicitly reveals the active word so captures and first paint cannot show
+   several sequence states simultaneously. */
+.deep-word { opacity: 0; }
+
 /* Remove decorative 01/02/03 numbering from the recruiter-facing experience. */
 .chapter-rail button {
   grid-template-columns: 1fr;
