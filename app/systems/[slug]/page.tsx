@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { systems } from "@/lib/site-data";
+import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { AbstractScene, ArchitectureFlow, CareerStrip, SectionHeading, StateTag } from "@/components/ui";
 
 const detail: Record<string, {
@@ -159,7 +160,16 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
               <div className="evidence-row" key={item.label}>
                 <span>{item.type}</span>
                 <strong>{item.label}</strong>
-                <StateTag state={item.state} />
+                <div className="evidence-actions">
+                  <StateTag state={item.state} />
+                  <EvidenceDrawer
+                    title={`${system.name} / ${item.label}`}
+                    type={item.type}
+                    result={item.state}
+                    scope={item.label}
+                    authority={item.type === "BOUNDARY" ? "Public/private boundary" : "Public-safe evidence summary"}
+                  />
+                </div>
               </div>
             ))}
           </div>
