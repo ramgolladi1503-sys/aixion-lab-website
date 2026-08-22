@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "visual": "playwright test"
   },
   "dependencies": {
     "next": "latest",
@@ -14,6 +15,7 @@
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@playwright/test": "latest",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
