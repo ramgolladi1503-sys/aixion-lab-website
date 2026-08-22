@@ -56,16 +56,18 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight" id="contact">
         <div className="shell contact-panel">
           <div className="panel contact-copy">
             <p className="eyebrow">CONTACT</p>
             <h2>Build, test or discuss something difficult.</h2>
             <p>Interested in an engineering role, applied AI, automation, data systems or the architecture behind one of the projects?</p>
             <div className="button-row">
-              <a className="button" href="mailto:hello@aixionlab.com">Email →</a>
-              <a className="button-secondary" href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              <a className="button" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">Open GitHub →</a>
+              <Link className="button-secondary" href="/resume">Career snapshot</Link>
             </div>
+            <p className="eyebrow" style={{ marginTop: 22 }}>DIRECT EMAIL / LINKEDIN</p>
+            <p>Exact public contact addresses will be wired only after the final published handles are confirmed; the site will not guess them.</p>
           </div>
           <div className="panel contact-copy career-only">
             <p className="eyebrow">CAREER MODE</p>
