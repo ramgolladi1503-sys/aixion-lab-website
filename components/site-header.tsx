@@ -21,6 +21,15 @@ export function SiteHeader() {
         <div className="header-actions">
           <ModeToggle />
           <a className="quiet-link" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <details className="mobile-menu">
+            <summary aria-label="Open navigation">Menu</summary>
+            <nav aria-label="Mobile navigation">
+              <Link href="/">Home</Link>
+              {nav.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
+              <Link href="/resume">Résumé</Link>
+              <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
+            </nav>
+          </details>
         </div>
       </div>
     </header>
