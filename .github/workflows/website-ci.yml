@@ -3,8 +3,6 @@ name: Website CI
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [website/blueprint-v1-pass1]
 
 permissions:
   contents: read
