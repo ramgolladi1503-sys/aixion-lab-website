@@ -12,4 +12,9 @@
 @media (max-width: 700px) {
   .header-actions { gap: 8px; }
   .mobile-menu nav { position: fixed; left: 12px; right: 12px; top: 72px; width: auto; }
+  .pulse-preview { overflow: hidden; }
+  .progress-lane { min-width: 0; }
+  .lane-track { min-width: 0 !important; width: 100%; overflow: visible !important; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .lane-stage { min-width: 0; }
+  .lane-stage span { font-size: 6px; line-height: 1.2; overflow-wrap: anywhere; }
 }
