@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { researchNotes } from "@/lib/site-data";
-import { SectionHeading, StateTag } from "@/components/ui";
+import { SectionHeading } from "@/components/ui";
+import { ResearchIndex } from "@/components/research-index";
 
 export const metadata: Metadata = {
   title: "Research Notes",
@@ -30,26 +29,7 @@ export default function ResearchPage() {
       <section className="section-tight">
         <div className="shell">
           <SectionHeading eyebrow="INDEX" title="Research is not a success gallery." copy="The public index keeps active, frozen and rejected work visible so the site reflects how engineering actually progresses." />
-          <div className="tabs" aria-label="Research status filters">
-            <button className="tab active">All</button>
-            <button className="tab">Active</button>
-            <button className="tab">Validating</button>
-            <button className="tab">Validated</button>
-            <button className="tab">Rejected</button>
-            <button className="tab">Archived</button>
-          </div>
-          <div className="research-list">
-            {researchNotes.map(note => (
-              <Link className="research-row" href={`/research/${note.slug}`} key={note.slug}>
-                <div>
-                  <h3>{note.title}</h3>
-                  <p>{note.question}</p>
-                </div>
-                <span className="research-domain">{note.domain}</span>
-                <StateTag state={note.state} />
-              </Link>
-            ))}
-          </div>
+          <ResearchIndex />
         </div>
       </section>
 
