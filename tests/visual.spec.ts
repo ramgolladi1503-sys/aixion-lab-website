@@ -22,6 +22,9 @@ for (const [name, route] of routes) {
     await expect(page.locator("header")).toBeVisible();
     await expect(page.locator("footer")).toBeVisible();
 
+    const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    expect(hasHorizontalOverflow, `${route} must not overflow horizontally`).toBe(false);
+
     const project = testInfo.project.name;
     const destination = path.join("test-results", "screenshots", project, `${name}.png`);
     await page.screenshot({ path: destination, fullPage: true });
