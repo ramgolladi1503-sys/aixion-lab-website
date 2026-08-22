@@ -1,63 +1,26 @@
-# AIXION LAB Website
+# Aixion Lab Website
 
-Official public website source for **AIXION LAB**.
+This repository has been reset to a single website authority.
 
-> END IS THE NEW BEGINNING
+## Source of truth
 
-This repository is the website authority. It is intentionally separated from the historical `axiom` repository so company branding, public product stories, and Google AI Studio work do not mix with legacy TradeBot/Axiom application code.
+`docs/website/AIXION_WEBSITE_MASTER_BLUEPRINT.md`
 
-## Current scope
+The previous website implementation and design experiments are preserved on:
 
-- AIXION LAB brand and landing page
-- Aixion Control Tower
-- MCP Shield
-- Veriforge
-- Financial Systems Research Lab
-- Founder story and engineering principles
-- Google AI Studio governed continuation prompt
+`archive/pre-blueprint-rebuild-20260823`
 
-## Website authority
+They are historical reference only and must not be used as implementation authority.
 
-The root Vite app is authoritative:
+## Current state
 
-```text
-index.html
-package.json
-src/main.jsx
-src/styles.css
-docs/AI_STUDIO_MASTER_PROMPT.md
-```
+- Website architecture: **LOCKED v1.0**
+- Implementation: **not started from the new authority yet**
+- Approved retained asset: `public/brand/aixion-lab-primary.png`
+- Old draft website PRs: superseded/closed
 
-The `frontend/` directory is historical carry-over and is **not** the source Google AI Studio should extend. It can be removed after the root app is validated.
+## Rule
 
-## Local development
+Build from the master blueprint in controlled passes: structure → visual system → interaction → evidence integration → production polish.
 
-```bash
-npm install
-npm run dev
-```
-
-Then open the Vite URL, normally `http://localhost:5173`.
-
-## Production build
-
-```bash
-npm install
-npm run build
-```
-
-## Google AI Studio
-
-Import this GitHub repository and use `docs/AI_STUDIO_MASTER_PROMPT.md` as the governing build instruction. Tell AI Studio to inspect the current root app before making changes.
-
-The official brand is **AIXION LAB** with the tagline **END IS THE NEW BEGINNING**. Preserve the supplied metallic logo lockup and do not invent a replacement logo.
-
-## Truth boundary
-
-Product maturity and company claims must remain evidence-based. Research projects must not be presented as commercial financial advice, signal-selling products, or automated trading services. No fabricated customers, revenue, partnerships, testimonials, certifications, performance metrics, or readiness claims.
-
-## Current validation status
-
-Repository structure: PRESENT
-Production build: NOT YET INDEPENDENTLY VALIDATED
-Brand asset migration into this repo: PENDING — the starter currently references the preserved brand asset from the historical public Axiom branch until the supplied logo image is copied into `public/brand/`.
+Do not reintroduce old radial, cinematic, ivory-world, AI Studio, anime, 3D-world or other superseded website models unless the master blueprint is explicitly revised first.
