@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { systems } from "@/lib/site-data";
+import labState from "@/content/lab-state.json";
 import { ProgressLane, SectionHeading, StateTag } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ export default function PulsePage() {
           </div>
           <div className="panel meta-board">
             <div><span>Source model</span><strong>Curated manifest</strong></div>
-            <div><span>Update rule</span><strong>Evidence before display</strong></div>
+            <div><span>Last manifest update</span><strong>{labState.updated_at}</strong></div>
             <div><span>Raw commits</span><strong>Not a progress metric</strong></div>
             <div><span>Completion %</span><strong>Not used</strong></div>
           </div>
@@ -29,26 +30,26 @@ export default function PulsePage() {
       <section className="section-tight">
         <div className="shell panel panel-pad">
           <SectionHeading eyebrow="SYSTEM MATURITY" title="Where each system sits in the engineering lifecycle" copy="State is categorical and evidence-led. We do not convert uncertain engineering work into arbitrary percentage bars." />
-          <ProgressLane label="TradeBot" stage="VALIDATING" />
-          <ProgressLane label="Control Core" stage="BUILDING" />
-          <ProgressLane label="Automation" stage="BUILDING" />
-          <ProgressLane label="Analytics Lab" stage="RESEARCH" />
+          {systems.map(system => (
+            <ProgressLane key={system.id} label={system.shortName} stage={system.state === "VALIDATING" || system.state === "BUILDING" || system.state === "OPERATING" ? system.state : "RESEARCH"} />
+          ))}
         </div>
       </section>
 
       <section className="section">
         <div className="shell">
-          <SectionHeading eyebrow="NOW" title="Current cycle" copy="Each system exposes a current focus and a next gate instead of a vague 'in progress' label." />
+          <SectionHeading eyebrow="NOW" title="Current cycle" copy="Each system exposes a current focus, latest public-safe milestone and next gate instead of a vague 'in progress' label." />
           <div className="detail-grid">
-            {systems.map(system => (
+            {labState.systems.map(system => (
               <article className="detail-card" key={system.id}>
                 <div className="system-card-top">
                   <span className="system-id">{system.id}</span>
                   <StateTag state={system.state} />
                 </div>
                 <h3>{system.name}</h3>
-                <p><strong>Current focus:</strong> {system.currentFocus}</p>
-                <p><strong>Next gate:</strong> {system.nextGate}</p>
+                <p><strong>Current focus:</strong> {system.current_focus}</p>
+                <p><strong>Latest milestone:</strong> {system.latest_milestone}</p>
+                <p><strong>Next gate:</strong> {system.next_gate}</p>
               </article>
             ))}
           </div>
