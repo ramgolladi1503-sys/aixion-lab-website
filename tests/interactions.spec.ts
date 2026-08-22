@@ -18,25 +18,27 @@ test("Research status filters are functional", async ({ page }) => {
 test("Evidence Drawer opens and closes", async ({ page }) => {
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "View record ↗" }).first().click();
-  const dialog = page.locator(".evidence-dialog");
-  await expect(dialog).toHaveAttribute("open", "");
-  await expect(page.getByText("Public boundary")).toBeVisible();
-  await page.getByRole("button", { name: "Close evidence" }).click();
-  await expect(dialog).not.toHaveAttribute("open", "");
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByText("Public boundary")).toBeVisible();
+  await dialog.getByRole("button", { name: "Close evidence" }).click();
+  await expect(dialog).toBeHidden();
 });
 
 test("Command palette finds system routes on desktop", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "Command palette trigger is intentionally desktop-only");
   await page.goto("/", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Open Aixion command palette" }).click();
-  await page.getByRole("textbox", { name: "Search Aixion pages" }).fill("TradeBot");
-  await expect(page.getByRole("link", { name: /TradeBot/ })).toBeVisible();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByRole("textbox", { name: "Search Aixion pages" }).fill("TradeBot");
+  await expect(dialog.getByRole("link", { name: "TradeBot System" })).toBeVisible();
 });
 
 test("Mobile navigation exposes the locked routes", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "mobile", "Mobile navigation test runs only in the mobile project");
   await page.goto("/", { waitUntil: "networkidle" });
   await page.getByText("Menu", { exact: true }).click();
-  await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Systems" }).last()).toBeVisible();
+  const navigation = page.getByRole("navigation", { name: "Mobile navigation" });
+  await expect(navigation).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Systems" })).toBeVisible();
 });
