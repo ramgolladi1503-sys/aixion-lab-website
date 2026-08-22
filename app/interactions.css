@@ -12,6 +12,7 @@
 .command-trigger:focus-visible,
 .evidence-trigger:hover,
 .evidence-trigger:focus-visible { color: var(--text); border-color: var(--line-strong); outline: none; }
+.evidence-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
 
 .command-dialog,
 .evidence-dialog {
@@ -58,4 +59,5 @@
   .evidence-dialog[open] { align-items: flex-end; }
   .evidence-drawer { width: 100vw; height: 88vh; border-left: 0; border-top: 1px solid var(--line); border-radius: 24px 24px 0 0; padding: 22px; }
   .evidence-detail-list div { grid-template-columns: 105px 1fr; }
+  .evidence-actions { justify-content: flex-start; }
 }
