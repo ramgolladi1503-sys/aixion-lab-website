@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ModeToggle } from "./mode-toggle";
+import { CommandPalette } from "./command-palette";
 import { nav } from "@/lib/site-data";
 
 export function SiteHeader() {
@@ -20,6 +21,7 @@ export function SiteHeader() {
         </nav>
         <div className="header-actions">
           <ModeToggle />
+          <CommandPalette />
           <a className="quiet-link" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
           <details className="mobile-menu">
             <summary aria-label="Open navigation">Menu</summary>
