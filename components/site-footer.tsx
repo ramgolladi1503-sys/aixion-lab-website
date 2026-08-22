@@ -17,7 +17,7 @@ export function SiteFooter() {
         <div className="footer-links">
           <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
           <Link href="/resume">Résumé</Link>
-          <a href="mailto:hello@aixionlab.com">Email</a>
+          <Link href="/about#contact">Contact</Link>
         </div>
       </div>
       <div className="shell build-line">
