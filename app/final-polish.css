@@ -4,8 +4,7 @@
 }
 
 html[data-view="lab"] .about-contact-panel {
-  grid-template-columns: minmax(0, 760px);
-  justify-content: start;
+  grid-template-columns: 1fr;
 }
 
 html[data-view="career"] .about-contact-panel {
