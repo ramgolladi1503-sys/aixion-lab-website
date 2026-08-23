@@ -3,10 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { systems } from "@/lib/site-data";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
-import { AbstractScene, ArchitectureFlow, CareerStrip, SectionHeading, StateTag } from "@/components/ui";
+import { CareerStrip, SectionHeading, StateTag } from "@/components/ui";
+import { AixionSignal, VisualForSystem } from "@/components/system-visuals";
 
 const detail: Record<string, {
-  architecture: string[];
   problem: string;
   challenge: string;
   built: string;
@@ -15,7 +15,6 @@ const detail: Record<string, {
   evidence: { type: string; label: string; state: string }[];
 }> = {
   tradebot: {
-    architecture: ["Market Data", "Market State", "Signal / Research", "Risk", "Governance", "Human Authority"],
     problem: "Intraday market signals are noisy, while live data can fail in ways that a simple connected/disconnected flag cannot explain.",
     challenge: "Separate data truth, research output, risk and execution authority while preserving reproducible evidence.",
     built: "A governed market-intelligence and validation system spanning real-time data, research candidates, risk controls and read-only/live observation.",
@@ -32,7 +31,6 @@ const detail: Record<string, {
     ],
   },
   "control-core": {
-    architecture: ["Intent", "Context", "Planner", "Agents", "Tools", "Evidence", "Policy / Human"],
     problem: "Useful agent systems can still become unreliable when context, tools, policy and authority are implicit.",
     challenge: "Coordinate autonomous capabilities while keeping execution observable, policy-bound and reviewable.",
     built: "An orchestration architecture for intent routing, context assembly, planning, agents, tool execution, evidence capture and explicit approval boundaries.",
@@ -44,12 +42,11 @@ const detail: Record<string, {
     ],
     evidence: [
       { type: "MVP", label: "Architecture and runtime implementation in active development", state: "BUILDING" },
-      { type: "DEMO", label: "Public site will use clearly labelled architecture demonstrations", state: "PLANNED" },
-      { type: "BOUNDARY", label: "Demo traces will never be presented as production telemetry", state: "ENFORCED" },
+      { type: "DEMO", label: "Public site uses clearly labelled architecture demonstrations", state: "DEMO" },
+      { type: "BOUNDARY", label: "Demo traces are never presented as production telemetry", state: "ENFORCED" },
     ],
   },
   automation: {
-    architecture: ["Trigger", "Capture", "Validate", "Process", "Act", "Report"],
     problem: "Operational workflows often repeat manual work while making failure handling and auditability hard to see.",
     challenge: "Automate repetitive work without turning failures, retries and state transitions into invisible behavior.",
     built: "Reusable workflow and RPA patterns shaped by quality-engineering principles: explicit inputs, validation, retries, evidence and reporting.",
@@ -66,7 +63,6 @@ const detail: Record<string, {
     ],
   },
   analytics: {
-    architecture: ["Question", "Data", "Transform", "Model / Logic", "Visualize", "Insight", "Validate"],
     problem: "Dashboards become decoration when the underlying question, data quality and decision path are not explicit.",
     challenge: "Turn operational data into views that support a specific decision and can explain how each insight was produced.",
     built: "A research area for Tableau, data-quality and operational analytics work that will promote only complete, evidence-backed case studies.",
@@ -84,15 +80,74 @@ const detail: Record<string, {
   },
 };
 
-export function generateStaticParams() {
-  return systems.map(system => ({ slug: system.slug }));
-}
+const tabs: Record<string, [string, string][]> = {
+  tradebot: [["Overview", "overview"], ["Architecture", "architecture"], ["Engineering", "engineering"], ["Research", "research"], ["Evidence", "evidence"], ["Timeline", "timeline"]],
+  "control-core": [["Overview", "overview"], ["Architecture", "architecture"], ["Capabilities", "capabilities"], ["MVP", "mvp"], ["Evidence", "evidence"], ["Roadmap", "roadmap"]],
+  automation: [["Overview", "overview"], ["Workflow", "architecture"], ["Engineering", "engineering"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
+  analytics: [["Overview", "overview"], ["Decision model", "architecture"], ["Engineering", "engineering"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
+};
+
+export function generateStaticParams() { return systems.map(system => ({ slug: system.slug })); }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const system = systems.find(item => item.slug === slug);
-  if (!system) return {};
-  return { title: system.name, description: system.descriptor };
+  return system ? { title: system.name, description: system.descriptor } : {};
+}
+
+function FlagshipSpecific({ slug }: { slug: string }) {
+  if (slug === "tradebot") return (
+    <>
+      <section className="section-tight anchor-section" id="research">
+        <div className="shell panel panel-pad">
+          <SectionHeading eyebrow="RESEARCH" title="Research is a gated lifecycle, not a shortcut to authority." copy="The public page explains method without publishing proprietary strategy mechanics." />
+          <AixionSignal />
+          <div className="detail-grid">
+            <div className="detail-card"><p className="eyebrow">METHOD</p><h3>Observe → hypothesize → freeze → test</h3><p>Candidate logic is frozen before evaluation so results cannot silently rewrite the question being tested.</p></div>
+            <div className="detail-card"><p className="eyebrow">BOUNDARY</p><h3>Holdout and live observation stay separate</h3><p>Research evidence can support a decision to continue testing; it does not automatically grant execution authority.</p></div>
+          </div>
+        </div>
+      </section>
+      <section className="section-tight anchor-section" id="timeline">
+        <div className="shell">
+          <SectionHeading eyebrow="TIMELINE" title="Milestones that changed the system" copy="Milestones are engineering decisions and evidence changes, not raw commit activity." />
+          <div className="evidence-list">
+            <div className="evidence-row"><span>DATA</span><strong>Feed health split into connection, freshness and subscription truth</strong><StateTag state="ENGINEERED" /></div>
+            <div className="evidence-row"><span>RESEARCH</span><strong>Research candidates isolated behind explicit validation gates</strong><StateTag state="GOVERNED" /></div>
+            <div className="evidence-row"><span>LIVE</span><strong>Read-only observation used to expose failure paths before authority</strong><StateTag state="EVIDENCE" /></div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+
+  if (slug === "control-core") return (
+    <>
+      <section className="section-tight anchor-section" id="capabilities">
+        <div className="shell">
+          <SectionHeading eyebrow="CAPABILITIES" title="The control plane is built from explicit capabilities." />
+          <div className="system-grid">
+            {["Intent routing", "Context assembly", "Planning", "Agent coordination", "Tool execution", "Policy boundaries", "Evidence capture", "Human approval"].map(item => <div className="detail-card" key={item}><h3>{item}</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></div>)}
+          </div>
+        </div>
+      </section>
+      <section className="section-tight anchor-section" id="mvp">
+        <div className="shell panel panel-pad">
+          <SectionHeading eyebrow="INTERACTIVE ARCHITECTURE DEMO" title="A labelled execution trace, not fake production telemetry." />
+          <div className="trace-preview trace-preview--page">
+            <span>10:42:11</span><b>INTENT</b><em>research current condition</em>
+            <span>10:42:14</span><b>PLANNER</b><em>tasks decomposed</em>
+            <span>10:42:19</span><b>TOOL</b><em>approved source queried</em>
+            <span>10:42:22</span><b>EVIDENCE</b><em>result captured</em>
+            <span>10:42:24</span><b>POLICY</b><em>review required</em>
+            <span>10:42:26</span><b>HUMAN</b><em>awaiting authority</em>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+
+  return null;
 }
 
 export default async function SystemDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -103,89 +158,73 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
 
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero anchor-section" id="overview">
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">{system.id} · {system.domain}</p>
             <h1>{system.name}</h1>
             <p className="lede">{system.descriptor}</p>
-            <div className="button-row">
-              <StateTag state={system.state} />
-              <Link className="button-secondary" href="#evidence">View evidence ↓</Link>
-            </div>
+            <div className="button-row"><StateTag state={system.state} /><Link className="button-secondary" href="#evidence">View evidence ↓</Link></div>
             <CareerStrip skills={system.competencies} />
           </div>
-          <AbstractScene variant={system.accent} />
+          <VisualForSystem system={system} />
         </div>
       </section>
 
-      <section className="section-tight">
-        <div className="shell panel panel-pad">
-          <p className="eyebrow">PUBLIC ARCHITECTURE</p>
-          <ArchitectureFlow nodes={spec.architecture} />
+      <div className="system-subnav-wrap">
+        <nav className="shell system-subnav" aria-label={`${system.name} page sections`}>
+          {tabs[slug].map(([label, id]) => <a href={`#${id}`} key={id}>{label}</a>)}
+        </nav>
+      </div>
+
+      <section className="section-tight anchor-section" id="architecture">
+        <div className="shell feature-split">
+          <div className="panel feature-copy">
+            <p className="eyebrow">PUBLIC ARCHITECTURE</p>
+            <h2>How the system makes state visible.</h2>
+            <p>The visual model is system-specific: it exposes boundaries and information flow without publishing private implementation mechanics.</p>
+            <p><strong>Current focus:</strong> {system.currentFocus}</p>
+            <p><strong>Next gate:</strong> {system.nextGate}</p>
+          </div>
+          <VisualForSystem system={system} />
         </div>
       </section>
 
-      <section className="section">
+      <section className="section anchor-section" id="engineering">
         <div className="shell">
-          <SectionHeading eyebrow="IMPACT FRAME" title="Problem → engineering challenge → build → outcome" copy="The point is not to lead with a technology stack. The page explains the engineering problem first, then shows what was built and what the current result actually supports." />
+          <SectionHeading eyebrow="IMPACT FRAME" title="Problem → challenge → build → outcome" copy="Engineering pages lead with the problem and proof, not a technology-logo wall." />
           <div className="detail-grid">
             <div className="detail-card"><p className="eyebrow">PROBLEM</p><h3>What makes this difficult?</h3><p>{spec.problem}</p></div>
-            <div className="detail-card"><p className="eyebrow">ENGINEERING CHALLENGE</p><h3>What has to be controlled?</h3><p>{spec.challenge}</p></div>
+            <div className="detail-card"><p className="eyebrow">ENGINEERING CHALLENGE</p><h3>What must remain controlled?</h3><p>{spec.challenge}</p></div>
             <div className="detail-card"><p className="eyebrow">WHAT I BUILT</p><h3>The system response</h3><p>{spec.built}</p></div>
             <div className="detail-card"><p className="eyebrow">OUTCOME</p><h3>What exists now</h3><p>{spec.outcome}</p></div>
           </div>
-        </div>
-      </section>
-
-      <section className="section-tight">
-        <div className="shell">
-          <SectionHeading eyebrow="ENGINEERING" title="The decisions underneath the interface" />
-          <div className="system-grid">
-            {spec.engineering.map(item => (
-              <article className="detail-card" key={item.title}>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-              </article>
-            ))}
+          <div className="system-grid section-inline">
+            {spec.engineering.map(item => <article className="detail-card" key={item.title}><h3>{item.title}</h3><p>{item.body}</p></article>)}
           </div>
         </div>
       </section>
 
-      <section className="section" id="evidence">
+      <FlagshipSpecific slug={slug} />
+
+      <section className="section anchor-section" id="evidence">
         <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="EVIDENCE" title="Claims stay bounded by what can be shown." copy="The public site exposes methods, milestones and sanitized proof only. Private logic, credentials and sensitive operational evidence stay outside the website." />
+          <SectionHeading eyebrow="EVIDENCE" title="Claims stay bounded by what can be shown." copy="Proof records are public-safe summaries. Sensitive logic and operational data stay outside the site." />
           <div className="evidence-list">
             {spec.evidence.map(item => (
               <div className="evidence-row" key={item.label}>
-                <span>{item.type}</span>
-                <strong>{item.label}</strong>
-                <div className="evidence-actions">
-                  <StateTag state={item.state} />
-                  <EvidenceDrawer
-                    title={`${system.name} / ${item.label}`}
-                    type={item.type}
-                    result={item.state}
-                    scope={item.label}
-                    authority={item.type === "BOUNDARY" ? "Public/private boundary" : "Public-safe evidence summary"}
-                  />
-                </div>
+                <span>{item.type}</span><strong>{item.label}</strong>
+                <div className="evidence-actions"><StateTag state={item.state} /><EvidenceDrawer title={`${system.name} / ${item.label}`} type={item.type} result={item.state} scope={item.label} authority={item.type === "BOUNDARY" ? "Public/private boundary" : "Public-safe evidence summary"} /></div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight anchor-section" id="roadmap">
         <div className="shell detail-grid">
-          <div className="detail-card">
-            <p className="eyebrow">CURRENT FOCUS</p>
-            <h3>{system.currentFocus}</h3>
-          </div>
-          <div className="detail-card">
-            <p className="eyebrow">NEXT GATE</p>
-            <h3>{system.nextGate}</h3>
-          </div>
+          <div className="detail-card"><p className="eyebrow">CURRENT FOCUS</p><h3>{system.currentFocus}</h3></div>
+          <div className="detail-card"><p className="eyebrow">NEXT GATE</p><h3>{system.nextGate}</h3></div>
         </div>
       </section>
     </>

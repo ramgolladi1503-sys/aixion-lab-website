@@ -20,9 +20,9 @@ export function ModeToggle() {
 
   return (
     <button className="mode-toggle" onClick={toggle} aria-pressed={career} aria-label="Toggle Lab and Career view">
-      <span className={!career ? "active" : ""}>Lab</span>
+      <span className="mode-label">View</span>
+      <strong>{career ? "Career" : "Lab"}</strong>
       <span className="mode-track" aria-hidden="true"><span className={career ? "mode-knob career" : "mode-knob"} /></span>
-      <span className={career ? "active" : ""}>Career</span>
     </button>
   );
 }

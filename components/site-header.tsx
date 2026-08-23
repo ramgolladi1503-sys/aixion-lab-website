@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ModeToggle } from "./mode-toggle";
 import { CommandPalette } from "./command-palette";
+import { ActiveNav } from "./active-nav";
 import { nav } from "@/lib/site-data";
 
 export function SiteHeader() {
@@ -13,16 +14,14 @@ export function SiteHeader() {
           </span>
           <span>
             <strong>AIXION LAB</strong>
-            <small>Applied intelligence. Built to explain itself.</small>
+            <small>Applied intelligence · evidence-led systems</small>
           </span>
         </Link>
-        <nav className="desktop-nav" aria-label="Primary navigation">
-          {nav.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
-        </nav>
+        <ActiveNav />
         <div className="header-actions">
           <ModeToggle />
           <CommandPalette />
-          <a className="quiet-link" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <a className="quiet-link header-github" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
           <details className="mobile-menu">
             <summary aria-label="Open navigation">Menu</summary>
             <nav aria-label="Mobile navigation">
