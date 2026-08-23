@@ -1,0 +1,20 @@
+.hero-grid {
+  min-height: 0;
+  align-items: center;
+}
+
+html[data-view="lab"] .about-contact-panel {
+  grid-template-columns: minmax(0, 760px);
+  justify-content: start;
+}
+
+html[data-view="career"] .about-contact-panel {
+  grid-template-columns: .82fr 1.18fr;
+}
+
+@media (max-width: 700px) {
+  html[data-view="lab"] .about-contact-panel,
+  html[data-view="career"] .about-contact-panel {
+    grid-template-columns: 1fr;
+  }
+}
