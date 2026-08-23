@@ -58,7 +58,7 @@ export default function AboutPage() {
       </section>
 
       <section className="section-tight" id="contact">
-        <div className="shell contact-panel">
+        <div className="shell contact-panel about-contact-panel">
           <div className="panel contact-copy">
             <p className="eyebrow">CONTACT</p>
             <h2>Build, test or discuss something difficult.</h2>
