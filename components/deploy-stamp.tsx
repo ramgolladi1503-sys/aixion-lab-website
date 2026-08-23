@@ -12,6 +12,9 @@ export function DeployStamp() {
   const [attestation, setAttestation] = useState<Attestation | null>(null);
 
   useEffect(() => {
+    const hostname = window.location.hostname;
+    if (hostname === "localhost" || hostname === "127.0.0.1") return;
+
     let active = true;
 
     fetch("/__aixion/build-attestation", { cache: "no-store" })
