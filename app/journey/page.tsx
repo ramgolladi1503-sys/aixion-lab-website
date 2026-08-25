@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function JourneyPage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero journey-hero">
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · JOURNEY</p>
@@ -23,7 +23,7 @@ export default function JourneyPage() {
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight journey-timeline-section">
         <div className="shell">
           <SectionHeading eyebrow="TIMELINE" title="Seven stages. One increasingly strict engineering philosophy." copy="This is not a second résumé. Each stage captures a change in how I think about reliability, evidence and authority." />
           <div className="journey-timeline">
@@ -38,7 +38,7 @@ export default function JourneyPage() {
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight journey-principles-section">
         <div className="shell panel panel-pad">
           <SectionHeading eyebrow="ENGINEERING PHILOSOPHY" title="The common thread is state, evidence and failure." copy="Testing software, automating workflows, working with data and building AI systems are different disciplines. Reliable systems still need explicit state, controlled authority and evidence when things go wrong." />
           <div className="principles-grid">

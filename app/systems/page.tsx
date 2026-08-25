@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function SystemsPage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero systems-hero">
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · SYSTEMS</p>
@@ -27,9 +27,9 @@ export default function SystemsPage() {
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight registry-section">
         <div className="shell">
-          <SectionHeading eyebrow="REGISTRY" title="One place to understand what exists and where it stands." copy="Each entry carries a system ID, maturity, current gate and public-safe focus so visitors do not have to infer project status from marketing copy." />
+          <SectionHeading eyebrow="REGISTRY" title="Four systems. Explicit maturity." copy="Each entry carries a system ID, maturity, current gate and public-safe focus so project status is immediately scannable." />
           <div className="registry">
             {systems.map(system => (
               <article className="registry-row" key={system.id}>

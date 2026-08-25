@@ -54,3 +54,41 @@ test("flagship pages use distinct visual grammars", async ({ page }) => {
   await page.goto("/systems/control-core", { waitUntil: "networkidle" });
   await expect(page.locator(".visual-core").first()).toBeVisible();
 });
+
+test("Career mode has one visible state indicator", async ({ page }) => {
+  await page.goto("/", { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Toggle Lab and Career view" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-view", "career");
+  const afterContent = await page.evaluate(() => getComputedStyle(document.body, "::after").content);
+  expect(afterContent === "none" || afterContent === "normal" || afterContent === '""').toBe(true);
+});
+
+test("Research method is compact and does not repeat the lifecycle as a giant title", async ({ page }, testInfo) => {
+  await page.goto("/research", { waitUntil: "networkidle" });
+  await expect(page.getByRole("heading", { name: "How a claim earns authority." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Question.*Observation.*Hypothesis.*Freeze.*Test.*Validation.*Decision/ })).toHaveCount(0);
+  await expect(page.locator(".research-method-flow .architecture-step")).toHaveCount(7);
+
+  if (testInfo.project.name !== "mobile") {
+    const method = await page.locator(".research-method-section").boundingBox();
+    const footer = await page.locator("footer").boundingBox();
+    expect(method).not.toBeNull();
+    expect(footer).not.toBeNull();
+    const gap = (footer?.y ?? 0) - ((method?.y ?? 0) + (method?.height ?? 0));
+    expect(gap).toBeLessThan(120);
+  }
+});
+
+test("Systems registry reaches the first system quickly on desktop", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
+  await page.goto("/systems", { waitUntil: "networkidle" });
+  const firstRow = await page.locator(".registry-row").first().boundingBox();
+  expect(firstRow).not.toBeNull();
+  expect(firstRow?.y ?? 99999).toBeLessThan(900);
+});
+
+test("Journey evolution labels remain readable rather than vertical", async ({ page }) => {
+  await page.goto("/journey", { waitUntil: "networkidle" });
+  const writingMode = await page.locator(".journey-visual-stage span").first().evaluate(node => getComputedStyle(node).writingMode);
+  expect(writingMode).toBe("horizontal-tb");
+});

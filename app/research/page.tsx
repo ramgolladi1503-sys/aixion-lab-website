@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function ResearchPage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero research-hero">
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · RESEARCH</p>
@@ -26,17 +26,17 @@ export default function ResearchPage() {
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight research-index-section">
         <div className="shell">
           <SectionHeading eyebrow="INDEX" title="Research is not a success gallery." copy="The public index keeps active, frozen and rejected work visible so the site reflects how engineering actually progresses." />
           <ResearchIndex />
         </div>
       </section>
 
-      <section className="section">
-        <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="METHOD" title="Question → Observation → Hypothesis → Freeze → Test → Validation → Decision" copy="Research moves forward through explicit gates. A candidate can be promoted, rejected or iterated, but the lifecycle remains visible." />
-          <div className="architecture-flow">
+      <section className="section-tight research-method-section">
+        <div className="shell panel panel-pad research-method-panel">
+          <SectionHeading eyebrow="METHOD" title="How a claim earns authority." copy="Every candidate moves through explicit gates. The lifecycle makes promotion, rejection and iteration inspectable without repeating the research index above." />
+          <div className="architecture-flow research-method-flow" aria-label="Research validation lifecycle">
             {['Question','Observation','Hypothesis','Freeze','Test','Validation','Decision'].map((stage, index, stages) => (
               <div className="architecture-step" key={stage}><span>{stage}</span>{index < stages.length - 1 ? <b aria-hidden="true">→</b> : null}</div>
             ))}
