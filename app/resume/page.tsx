@@ -26,6 +26,7 @@ export default function ResumePage() {
             <div><span>Current direction</span><strong>QA · Automation · Applied AI</strong></div>
             <div><span>Flagship work</span><strong>TradeBot · Control Core</strong></div>
             <div><span>Public case studies</span><strong>MCP Shield · Algotradify</strong></div>
+            <div><span>Public résumé</span><strong>Live web version</strong></div>
             <div><span>Working style</span><strong>Evidence-led systems</strong></div>
           </div>
         </div>
