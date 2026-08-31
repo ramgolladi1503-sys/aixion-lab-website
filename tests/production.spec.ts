@@ -128,11 +128,35 @@ test("Control Core remains centered after first-load reveal", async ({ page }) =
   expect(dy).toBeLessThan(3);
 });
 
-test("footer closes with an authored principle instead of duplicate navigation", async ({ page }) => {
+test("footer closes with a wide two-line authored principle instead of duplicate navigation", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
   const footer = page.locator("footer.site-footer");
+  const manifesto = footer.locator(".footer-manifesto");
   await expect(footer.getByText(/Curiosity starts the question/)).toBeVisible();
   await expect(footer.getByText(/Build carefully\. Test what matters\. Learn from what fails\./)).toBeVisible();
   await expect(footer.locator('a[href^="/"]')).toHaveCount(0);
   await expect(footer.locator(".footer-links")).toHaveCount(0);
+
+  const fontFamily = await manifesto.evaluate(node => getComputedStyle(node).fontFamily);
+  expect(fontFamily).toMatch(/Iowan Old Style|Palatino|Book Antiqua|Georgia|serif/i);
+
+  if (testInfo.project.name === "desktop") {
+    const metrics = await manifesto.evaluate(node => {
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      const lineRects = Array.from(range.getClientRects())
+        .filter(rect => rect.width > 1 && rect.height > 1)
+        .map(rect => ({ width: rect.width, left: rect.left, right: rect.right }));
+      const box = node.getBoundingClientRect();
+      return {
+        lineCount: lineRects.length,
+        minCoverage: Math.min(...lineRects.map(rect => rect.width / box.width)),
+        width: box.width,
+      };
+    });
+
+    expect(metrics.width).toBeGreaterThan(1200);
+    expect(metrics.lineCount).toBe(2);
+    expect(metrics.minCoverage).toBeGreaterThan(0.78);
+  }
 });
