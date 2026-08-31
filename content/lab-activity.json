@@ -1,21 +1,33 @@
 {
-  "updated_at": "2026-08-31",
+  "updated_at": "2026-09-01",
   "principle": "Only meaningful, public-safe engineering work is published. Raw commits, private conversations, credentials, proprietary logic and unverified claims stay out of the public feed.",
   "active": [
     {
-      "id": "AX-WORK-2026-0831-05",
-      "date": "2026-08-31",
+      "id": "AX-WORK-2026-0901-02",
+      "date": "2026-09-01",
       "area": "AIXION LAB",
       "system_slug": "lab",
-      "type": "RELEASE",
+      "type": "HARDENING",
       "state": "VALIDATING",
-      "title": "Production cutover and live-domain verification",
-      "summary": "Promoting the validated interaction, first-load stability and public-worklog refinements to aixionlab.com while keeping the custom-domain release observable.",
-      "evidence": "The release candidate passed typecheck, static-export, browser, accessibility, interaction and visual regression gates before production promotion.",
-      "next_gate": "Deploy the validated head to aixionlab.com, verify the live custom-domain experience end to end and then close the launch cycle."
+      "title": "Discoverability, public proof and recruiter handoff hardening",
+      "summary": "Post-launch review is tightening how Aixion Lab is discovered, shared and trusted: production-facing placeholders are being removed, evidence summaries are becoming more explicit and the public identity is being strengthened without adding unverified claims.",
+      "evidence": "The review is being performed against production-tested desktop/mobile artifacts and existing accessibility, interaction and visual regression gates rather than repeated hosting previews.",
+      "next_gate": "Pass the strengthened metadata, evidence and recruiter-facing surfaces through the full production suite, then batch them into a single production deployment."
     }
   ],
   "entries": [
+    {
+      "id": "AX-WORK-2026-0901-01",
+      "date": "2026-09-01",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "UAT",
+      "state": "VALIDATED",
+      "title": "Editorial closing principle became a wide two-line signature",
+      "summary": "The closing statement was rebuilt from an oversized centered text block into two intentional, edge-spanning editorial lines with a quieter supporting sign-off.",
+      "evidence": "The production browser suite measures the footer width, line wrapping and horizontal coverage on desktop; the final typography candidate passed the complete build and browser suite.",
+      "next_gate": "Batch the validated footer with the remaining post-launch hardening work before the next production deploy."
+    },
     {
       "id": "AX-WORK-2026-0831-04",
       "date": "2026-08-31",
