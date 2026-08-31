@@ -34,34 +34,55 @@
              core-breathe 5s 900ms ease-in-out infinite;
 }
 
-/* Footer closes the story rather than repeating site navigation. */
+/* Footer closes the story rather than repeating site navigation.
+   The manifesto is deliberately wider and quieter than the previous poster-like
+   treatment: two broad editorial lines across the page on desktop. */
 .site-footer--statement {
   padding-top: 0;
 }
-.footer-closing {
-  padding: clamp(58px, 7vw, 94px) 0 clamp(48px, 6vw, 78px);
+.footer-closing.shell {
+  width: min(1540px, calc(100% - 72px));
+  padding: clamp(58px, 6vw, 86px) 0 clamp(46px, 5vw, 68px);
   border-top: 1px solid var(--line);
 }
 .footer-closing .eyebrow {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 .footer-manifesto {
-  max-width: 1040px;
+  width: 100%;
+  max-width: none;
   margin: 0;
   color: var(--text);
-  font: 400 clamp(32px, 4.3vw, 62px)/1.04 var(--serif);
-  letter-spacing: -.025em;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  font-size: clamp(28px, 2.2vw, 36px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.022em;
+  font-feature-settings: "kern" 1, "liga" 1;
   text-wrap: balance;
 }
 .footer-signoff {
-  max-width: 650px;
-  margin: 28px 0 0;
+  max-width: none;
+  margin: 26px 0 0;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.55;
+  letter-spacing: .005em;
 }
 .build-line--quiet {
+  width: min(1540px, calc(100% - 72px));
   color: #647069;
+}
+
+@media (max-width: 1100px) {
+  .footer-closing.shell,
+  .build-line--quiet {
+    width: min(100% - 48px, 980px);
+  }
+  .footer-manifesto {
+    font-size: clamp(28px, 3.3vw, 34px);
+    line-height: 1.1;
+  }
 }
 
 @media (max-width: 700px) {
@@ -70,12 +91,18 @@
     padding-inline: 10px;
     font-size: 9px;
   }
+  .footer-closing.shell,
+  .build-line--quiet {
+    width: calc(100% - 40px);
+  }
   .footer-closing {
     padding: 48px 0 42px;
   }
   .footer-manifesto {
-    font-size: clamp(30px, 10vw, 44px);
-    line-height: 1.06;
+    font-size: clamp(27px, 8.4vw, 36px);
+    line-height: 1.08;
+    letter-spacing: -.025em;
+    text-wrap: pretty;
   }
   .footer-signoff {
     margin-top: 22px;
