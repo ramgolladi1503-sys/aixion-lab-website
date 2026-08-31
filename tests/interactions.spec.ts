@@ -16,13 +16,16 @@ test("Research status filters are functional", async ({ page }) => {
   await expect(page.getByText("Opening-session market structure")).toBeHidden();
 });
 
-test("Evidence Drawer is proof-first and closes", async ({ page }) => {
+test("Evidence Drawer is proof-first, explicit about summary-only records and closes", async ({ page }) => {
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: /View record/ }).first().click();
+  await page.getByRole("button", { name: "Inspect evidence" }).first().click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
   await expect(dialog.getByText("RESULT / STATE")).toBeVisible();
-  await expect(dialog.getByText("PUBLIC PROOF")).toBeVisible();
+  await expect(dialog.getByText("PUBLIC PROOF STATUS")).toBeVisible();
+  await expect(dialog.getByText("Summary only.", { exact: true })).toBeVisible();
+  await expect(dialog.getByText(/public claim is intentionally limited to the evidence summary/i)).toBeVisible();
+  await expect(dialog.getByText(/Proof link intentionally gated/i)).toHaveCount(0);
   await expect(dialog.getByText("Public boundary")).toBeVisible();
   const close = dialog.getByRole("button", { name: "Close evidence" });
   const box = await close.boundingBox();
