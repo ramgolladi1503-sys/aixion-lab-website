@@ -3,19 +3,43 @@
   "principle": "Only meaningful, public-safe engineering work is published. Raw commits, private conversations, credentials, proprietary logic and unverified claims stay out of the public feed.",
   "active": [
     {
+      "id": "AX-WORK-2026-0901-04",
+      "date": "2026-09-01",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "RELEASE",
+      "state": "VALIDATING",
+      "title": "Observable Temporal State Field production readiness",
+      "summary": "The locked homepage visual authority is being taken through final release verification: public system state drives the temporal field, rejected research remains visible, reduced-motion is static, and the existing evidence, career and system interactions remain intact.",
+      "evidence": "The current candidate passes static export, browser-error, WCAG A/AA, desktop/mobile interaction, state-binding, reduced-motion and visual-capture gates. Final artifact review is being used to reconcile public state before production promotion.",
+      "next_gate": "Complete the final state-consistency run and visual review, then promote the exact validated candidate in one production deployment."
+    }
+  ],
+  "entries": [
+    {
+      "id": "AX-WORK-2026-0901-03",
+      "date": "2026-09-01",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "DESIGN AUTHORITY",
+      "state": "LOCKED",
+      "title": "Observable Temporal State Field became the visual authority",
+      "summary": "The homepage moved from a light decorative field to a dark observable-system environment where visual structure is tied to public maturity, evidence and research state rather than arbitrary decoration.",
+      "evidence": "The implementation includes state-bound TradeBot, Control Core, Automation and Analytics bands, past/present/next framing, rejected-research traces, an explicit field explainer and responsive reduced-motion behavior.",
+      "next_gate": "Keep future visual changes subordinate to system truth, accessibility and public evidence boundaries."
+    },
+    {
       "id": "AX-WORK-2026-0901-02",
       "date": "2026-09-01",
       "area": "AIXION LAB",
       "system_slug": "lab",
       "type": "HARDENING",
-      "state": "VALIDATING",
+      "state": "VALIDATED",
       "title": "Discoverability, public proof and recruiter handoff hardening",
-      "summary": "Post-launch review is tightening how Aixion Lab is discovered, shared and trusted: production-facing placeholders are being removed, evidence summaries are becoming more explicit and the public identity is being strengthened without adding unverified claims.",
-      "evidence": "The review is being performed against production-tested desktop/mobile artifacts and existing accessibility, interaction and visual regression gates rather than repeated hosting previews.",
-      "next_gate": "Pass the strengthened metadata, evidence and recruiter-facing surfaces through the full production suite, then batch them into a single production deployment."
-    }
-  ],
-  "entries": [
+      "summary": "Post-launch review tightened how Aixion Lab is discovered, shared and trusted: production-facing placeholders were removed, evidence summaries became more explicit and public identity was strengthened without adding unverified claims.",
+      "evidence": "The review used production-tested desktop/mobile artifacts and existing accessibility, interaction and visual regression gates rather than repeated hosting previews.",
+      "next_gate": "Continue publishing only evidence-backed recruiter and public-proof improvements."
+    },
     {
       "id": "AX-WORK-2026-0901-01",
       "date": "2026-09-01",
@@ -26,7 +50,7 @@
       "title": "Editorial closing principle became a wide two-line signature",
       "summary": "The closing statement was rebuilt from an oversized centered text block into two intentional, edge-spanning editorial lines with a quieter supporting sign-off.",
       "evidence": "The production browser suite measures the footer width, line wrapping and horizontal coverage on desktop; the final typography candidate passed the complete build and browser suite.",
-      "next_gate": "Batch the validated footer with the remaining post-launch hardening work before the next production deploy."
+      "next_gate": "Preserve the closing principle as the authored endpoint of the site."
     },
     {
       "id": "AX-WORK-2026-0831-04",
@@ -61,8 +85,8 @@
       "state": "VALIDATED",
       "title": "Production candidate passed release gates",
       "summary": "The launch candidate passed static-export, browser, accessibility, internal-link, reduced-motion and production-content checks before promotion.",
-      "evidence": "92 browser tests passed with 8 intentional project-specific skips on the validated candidate.",
-      "next_gate": "Complete custom-domain DNS and HTTPS propagation and monitor the production site."
+      "evidence": "The release suite passed its browser and production gates on the validated candidate.",
+      "next_gate": "Preserve the same release discipline for subsequent visual and evidence changes."
     },
     {
       "id": "AX-WORK-2026-0831-01",
@@ -72,9 +96,9 @@
       "type": "INTERACTION",
       "state": "VALIDATED",
       "title": "Aixion Signal became the interaction language",
-      "summary": "The site now uses state-driven motion, interactive system-field paths, architecture-specific reveal patterns and reduced-motion fallbacks instead of generic decorative animation.",
-      "evidence": "Award-motion acceptance tests and desktop/mobile renders passed in the production suite.",
-      "next_gate": "Judge the live-browser feel and keep future motion changes evidence-led."
+      "summary": "The site now uses state-driven motion, architecture-specific reveal patterns and reduced-motion fallbacks instead of generic decorative animation.",
+      "evidence": "Interaction acceptance tests and desktop/mobile renders passed in the production suite.",
+      "next_gate": "Keep future motion changes subordinate to usability and state communication."
     },
     {
       "id": "AX-WORK-2026-0823-03",
@@ -82,11 +106,11 @@
       "area": "AIXION LAB",
       "system_slug": "lab",
       "type": "DESIGN AUTHORITY",
-      "state": "LOCKED",
-      "title": "Website architecture and visual authority frozen",
-      "summary": "The rebuild was anchored to a single public architecture, state vocabulary and light-mineral visual system before implementation continued.",
-      "evidence": "The master blueprint and visual authority became the implementation boundary for the clean rebuild.",
-      "next_gate": "Translate the authority into production components without reintroducing superseded visual directions."
+      "state": "ARCHIVED",
+      "title": "Initial light-mineral website authority",
+      "summary": "The clean rebuild was initially anchored to a light-mineral visual system and the current public architecture. The architecture and evidence rules remain authoritative, while the visual layer was later superseded by the Observable Temporal State Field.",
+      "evidence": "The original master blueprint established the page architecture, state vocabulary, evidence boundaries and accessibility expectations that remain preserved.",
+      "next_gate": "Retain the architecture and governance rules while treating the observable field as the current visual authority."
     },
     {
       "id": "AX-WORK-2026-0823-02",
