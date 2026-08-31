@@ -5,6 +5,21 @@
 .journey-step .journey-question { max-width: 760px; margin-top: 8px; }
 .command-meta { white-space: nowrap; }
 
+/* Hover/focus state must win over the completed path-draw animation. */
+.lab-field-visual:has(.node-tradebot:is(:hover,:focus-visible)) .field-path:not(.field-path-tradebot),
+.lab-field-visual:has(.node-core:is(:hover,:focus-visible)) .field-path:not(.field-path-core),
+.lab-field-visual:has(.node-auto:is(:hover,:focus-visible)) .field-path:not(.field-path-auto),
+.lab-field-visual:has(.node-analytics:is(:hover,:focus-visible)) .field-path:not(.field-path-analytics) {
+  opacity: .1 !important;
+}
+.lab-field-visual:has(.node-tradebot:is(:hover,:focus-visible)) .field-path-tradebot,
+.lab-field-visual:has(.node-core:is(:hover,:focus-visible)) .field-path-core,
+.lab-field-visual:has(.node-auto:is(:hover,:focus-visible)) .field-path-auto,
+.lab-field-visual:has(.node-analytics:is(:hover,:focus-visible)) .field-path-analytics {
+  opacity: 1 !important;
+  stroke-width: 2.4 !important;
+}
+
 @media (max-width: 980px) {
   .journey-step { grid-template-columns: 86px minmax(0, 1fr); }
 }
