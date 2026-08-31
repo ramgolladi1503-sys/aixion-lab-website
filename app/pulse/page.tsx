@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { systems } from "@/lib/site-data";
 import labState from "@/content/lab-state.json";
+import labActivity from "@/content/lab-activity.json";
 import { ProgressLane, SectionHeading, StateTag } from "@/components/ui";
 import { AixionSignal } from "@/components/system-visuals";
 
@@ -17,15 +18,39 @@ export default function PulsePage() {
           <div>
             <p className="eyebrow">AIXION LAB · PULSE</p>
             <h1>The operational pulse of the lab.</h1>
-            <p className="lede">Current focus, latest public-safe milestone and next gate for each system. Pulse is curated engineering state—not raw repository activity.</p>
+            <p className="lede">Current work, system state, public-safe evidence and next gates. Pulse is curated engineering state—not raw repository activity or conversation history.</p>
             <AixionSignal compact />
           </div>
           <div className="panel meta-board pulse-meta">
-            <div><span>Source model</span><strong>Curated manifest</strong></div>
-            <div><span>Last update</span><strong>{labState.updated_at}</strong></div>
-            <div><span>Raw commits</span><strong>Not a progress metric</strong></div>
+            <div><span>Source model</span><strong>Curated manifests</strong></div>
+            <div><span>Worklog update</span><strong>{labActivity.updated_at}</strong></div>
+            <div><span>Raw commits / chats</span><strong>Never published as progress</strong></div>
             <div><span>Completion %</span><strong>Not used</strong></div>
           </div>
+        </div>
+      </section>
+
+      <section className="section-tight" data-reveal="working-now">
+        <div className="shell">
+          <SectionHeading eyebrow="WORKING NOW" title="What is actively moving" copy="Meaningful work is published with its current state, the evidence we can safely show, and the next gate. Private details stay outside the public feed." />
+          <div className="worklog-grid">
+            {labActivity.active.map(item => (
+              <article className="detail-card worklog-card worklog-card--active" key={item.id}>
+                <div className="worklog-card-head">
+                  <span className="system-id">{item.id} · {item.date}</span>
+                  <StateTag state={item.state} />
+                </div>
+                <p className="eyebrow">{item.area} · {item.type}</p>
+                <h3>{item.title}</h3>
+                <p>{item.summary}</p>
+                <dl className="worklog-evidence">
+                  <div><dt>Public evidence</dt><dd>{item.evidence}</dd></div>
+                  <div><dt>Next gate</dt><dd>{item.next_gate}</dd></div>
+                </dl>
+              </article>
+            ))}
+          </div>
+          <p className="worklog-principle">{labActivity.principle}</p>
         </div>
       </section>
 
@@ -40,7 +65,7 @@ export default function PulsePage() {
 
       <section className="section">
         <div className="shell">
-          <SectionHeading eyebrow="NOW" title="Current cycle" copy="These cards answer four things quickly: state, current focus, latest milestone and next gate." />
+          <SectionHeading eyebrow="SYSTEM STATE" title="Current cycle" copy="These cards answer four things quickly: state, current focus, latest milestone and next gate." />
           <div className="pulse-now-grid">
             {labState.systems.map(system => (
               <article className="pulse-system-card" key={system.id}>
@@ -57,13 +82,25 @@ export default function PulsePage() {
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight" data-reveal="worklog-history">
         <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="SHIP LOG" title="Changes that meaningfully altered capability, evidence or authority" copy="The log deliberately ignores cosmetic commit volume." />
-          <div className="evidence-list">
-            <div className="evidence-row"><span>23 AUG 2026</span><strong>Website architecture and visual authority frozen for clean rebuild</strong><StateTag state="LOCKED" /></div>
-            <div className="evidence-row"><span>TRADEBOT</span><strong>Live and research evidence remain separated from proprietary strategy details</strong><StateTag state="BOUNDARY" /></div>
-            <div className="evidence-row"><span>CONTROL CORE</span><strong>MVP orchestration translated into inspectable stages and authority boundaries</strong><StateTag state="BUILDING" /></div>
+          <SectionHeading eyebrow="PUBLIC WORKLOG" title="Changes that meaningfully altered capability, evidence or authority" copy="This log records decisions and milestones worth understanding. Cosmetic commit volume, private implementation details and raw chat history are deliberately excluded." />
+          <div className="worklog-list">
+            {labActivity.entries.map(item => (
+              <article className="worklog-row" key={item.id}>
+                <div className="worklog-row-meta">
+                  <span>{item.date}</span>
+                  <span>{item.area}</span>
+                  <span>{item.type}</span>
+                </div>
+                <div className="worklog-row-copy">
+                  <h3>{item.title}</h3>
+                  <p>{item.summary}</p>
+                  <p className="worklog-next"><strong>Next gate:</strong> {item.next_gate}</p>
+                </div>
+                <StateTag state={item.state} />
+              </article>
+            ))}
           </div>
         </div>
       </section>
