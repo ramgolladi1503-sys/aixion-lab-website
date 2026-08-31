@@ -110,13 +110,13 @@ export const researchNotes = [
 ];
 
 export const journey = [
-  ["01", "Quality Engineering", "Learning to treat failure, reproducibility and state as first-class engineering concerns."],
-  ["02", "Automation", "Turning repeatable manual checks into controlled, observable workflows."],
-  ["03", "Software Engineering", "Moving from test surfaces into APIs, services, architecture and system behavior."],
-  ["04", "Data", "Using data quality, transformation and visualization to support better decisions."],
-  ["05", "ML Systems", "Exploring models as components inside governed systems rather than standalone demos."],
-  ["06", "Autonomous Systems", "Designing boundaries around agents, tools, evidence, policy and human authority."],
-  ["07", "Aixion Lab", "Bringing the work together as an evolving applied-engineering lab."],
+  ["01", "Quality Engineering", "Why did this fail — and can the system explain it?"],
+  ["02", "Automation", "Can this failure be prevented consistently without hiding the recovery path?"],
+  ["03", "Software Engineering", "What state is the system actually in, and which component owns that truth?"],
+  ["04", "Data", "Can that state be measured, transformed and trusted well enough to support a decision?"],
+  ["05", "ML Systems", "Can the system infer what happens next without hiding uncertainty behind a model score?"],
+  ["06", "Autonomous Systems", "Can it act safely while evidence, policy and human authority remain explicit?"],
+  ["07", "Aixion Lab", "Can intelligence operate while remaining observable, governed and accountable?"],
 ] as const;
 
 export const nav = [
