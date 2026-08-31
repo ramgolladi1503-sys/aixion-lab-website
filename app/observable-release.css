@@ -1,0 +1,167 @@
+/* Production hardening for the locked Observable Temporal State Field.
+   This file intentionally sits after observable-system.css so it can correct
+   accessibility and integration details without weakening the design authority. */
+
+body:has(.observable-home) {
+  background: #071015;
+  color: #edf1ec;
+}
+
+body:has(.observable-home) .site-header {
+  border-bottom-color: rgba(210, 228, 221, .12);
+  background: rgba(6, 14, 18, .92);
+  color: #edf1ec;
+}
+
+body:has(.observable-home) .brand strong,
+body:has(.observable-home) .desktop-nav a,
+body:has(.observable-home) .quiet-link,
+body:has(.observable-home) .command-trigger,
+body:has(.observable-home) .mobile-menu summary {
+  color: #d7e0dc;
+}
+
+body:has(.observable-home) .brand small,
+body:has(.observable-home) .mode-label {
+  color: #aab8b2;
+}
+
+body:has(.observable-home) .brand-mark i {
+  background: #a8d66f;
+  opacity: .88;
+}
+
+body:has(.observable-home) .mode-toggle,
+body:has(.observable-home) .command-trigger,
+body:has(.observable-home) .mobile-menu summary {
+  border-color: rgba(210, 228, 221, .24);
+  background: rgba(13, 25, 31, .84);
+}
+
+body:has(.observable-home) .mode-toggle strong {
+  color: #edf1ec;
+}
+
+body:has(.observable-home) .mode-track {
+  background: rgba(168, 214, 111, .18);
+}
+
+body:has(.observable-home) .mode-knob {
+  background: #a8d66f;
+}
+
+body:has(.observable-home) .desktop-nav a:hover,
+body:has(.observable-home) .desktop-nav a[aria-current="page"],
+body:has(.observable-home) .quiet-link:hover,
+body:has(.observable-home) .command-trigger:hover {
+  color: #ffffff;
+}
+
+body:has(.observable-home) .site-footer {
+  background: #071015;
+  color: #edf1ec;
+  border-top-color: rgba(210, 228, 221, .1);
+}
+
+body:has(.observable-home) .site-footer .eyebrow,
+body:has(.observable-home) .site-footer .footer-signoff,
+body:has(.observable-home) .site-footer .build-line {
+  color: #aab8b2;
+}
+
+/* Keep legacy system diagrams visually inside the same dark laboratory world
+   when they appear on the homepage. Their semantics and component structure
+   remain unchanged. */
+.observable-home .system-visual {
+  border-color: rgba(210, 228, 221, .14);
+  background: linear-gradient(150deg, rgba(12, 25, 31, .92), rgba(8, 18, 23, .82));
+  color: #dfe7e3;
+  box-shadow: inset 0 1px rgba(255,255,255,.025), 0 24px 70px rgba(0,0,0,.18);
+}
+
+.observable-home .system-visual .visual-kicker,
+.observable-home .system-visual small,
+.observable-home .system-visual em,
+.observable-home .system-visual .tradebot-index,
+.observable-home .system-visual .workflow-rule,
+.observable-home .system-visual .journey-visual-note {
+  color: #9eada7;
+}
+
+.observable-home .tradebot-stage,
+.observable-home .workflow-row,
+.observable-home .trace-preview,
+.observable-home .journey-visual-stage,
+.observable-home .analytics-metric,
+.observable-home .core-node,
+.observable-home .core-center {
+  border-color: rgba(210, 228, 221, .14);
+  background: rgba(8, 18, 23, .8);
+  color: #dfe7e3;
+}
+
+.observable-home .tradebot-wave path,
+.observable-home .analytics-chart svg path {
+  stroke: #8fc6ae;
+}
+
+.observable-home .visual-core .core-center {
+  box-shadow: 0 0 0 1px rgba(168,214,111,.16), 0 0 36px rgba(168,214,111,.08);
+}
+
+.observable-home .feature-copy,
+.observable-home .contact-copy {
+  background: rgba(10, 20, 25, .76);
+}
+
+.observable-home .career-strip,
+.observable-home .home-worklog-strip {
+  color: #c9d4cf;
+}
+
+.observable-home .research-domain {
+  color: #aab8b2;
+}
+
+/* Reduced motion is a true static mode, not merely an extremely short animation. */
+@media (prefers-reduced-motion: reduce) {
+  .observable-home .state-band-line,
+  .observable-home .research-markers .marker-ring,
+  .observable-home [data-motion-visual],
+  .observable-home [data-reveal],
+  .observable-home .signal-node,
+  .observable-home .tradebot-stage,
+  .observable-home .core-node,
+  .observable-home .workflow-row,
+  .observable-home .journey-visual-stage {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  body:has(.observable-home) .site-header {
+    background: rgba(6, 14, 18, .96);
+  }
+
+  body:has(.observable-home) .mobile-menu summary {
+    color: #edf1ec;
+    background: #111f25;
+  }
+
+  body:has(.observable-home) .mobile-menu[open] > div {
+    background: #0b171c;
+    border-color: rgba(210, 228, 221, .16);
+  }
+
+  body:has(.observable-home) .mobile-menu a {
+    color: #d7e0dc;
+    border-color: rgba(210, 228, 221, .1);
+  }
+
+  .observable-home .observable-copy .lede,
+  .observable-home .observable-copy .hero-philosophy {
+    color: #acbab4;
+  }
+}
