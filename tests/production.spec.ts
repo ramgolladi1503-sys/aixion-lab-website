@@ -128,11 +128,16 @@ test("Control Core remains centered after first-load reveal", async ({ page }) =
   expect(dy).toBeLessThan(3);
 });
 
-test("footer closes with a wide two-line authored principle instead of duplicate navigation", async ({ page }, testInfo) => {
+test("footer closes with two intentional edge-spanning editorial lines", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
   const footer = page.locator("footer.site-footer");
   const manifesto = footer.locator(".footer-manifesto");
-  await expect(footer.getByText(/Curiosity starts the question/)).toBeVisible();
+  const lines = manifesto.locator(".footer-manifesto-line");
+
+  await expect(lines).toHaveCount(2);
+  await expect(lines.nth(0)).toContainText("Curiosity starts the question");
+  await expect(lines.nth(0)).toContainText("Persistence carries it through failure");
+  await expect(lines.nth(1)).toContainText("I keep building, testing and learning");
   await expect(footer.getByText(/Build carefully\. Test what matters\. Learn from what fails\./)).toBeVisible();
   await expect(footer.locator('a[href^="/"]')).toHaveCount(0);
   await expect(footer.locator(".footer-links")).toHaveCount(0);
@@ -141,22 +146,23 @@ test("footer closes with a wide two-line authored principle instead of duplicate
   expect(fontFamily).toMatch(/Iowan Old Style|Palatino|Book Antiqua|Georgia|serif/i);
 
   if (testInfo.project.name === "desktop") {
-    const metrics = await manifesto.evaluate(node => {
-      const range = document.createRange();
-      range.selectNodeContents(node);
-      const lineRects = Array.from(range.getClientRects())
-        .filter(rect => rect.width > 1 && rect.height > 1)
-        .map(rect => ({ width: rect.width, left: rect.left, right: rect.right }));
-      const box = node.getBoundingClientRect();
-      return {
-        lineCount: lineRects.length,
-        minCoverage: Math.min(...lineRects.map(rect => rect.width / box.width)),
-        width: box.width,
-      };
+    const metrics = await lines.evaluateAll(nodes => {
+      const parent = nodes[0]?.parentElement?.getBoundingClientRect();
+      return nodes.map(node => {
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        const textRects = Array.from(range.getClientRects()).filter(rect => rect.width > 1 && rect.height > 1);
+        const textWidth = textRects.reduce((sum, rect) => sum + rect.width, 0);
+        return {
+          wrapCount: textRects.length,
+          coverage: parent ? textWidth / parent.width : 0,
+          parentWidth: parent?.width ?? 0,
+        };
+      });
     });
 
-    expect(metrics.width).toBeGreaterThan(1200);
-    expect(metrics.lineCount).toBe(2);
-    expect(metrics.minCoverage).toBeGreaterThan(0.78);
+    expect(metrics[0].parentWidth).toBeGreaterThan(1200);
+    expect(metrics.every(metric => metric.wrapCount === 1)).toBe(true);
+    expect(Math.min(...metrics.map(metric => metric.coverage))).toBeGreaterThan(0.82);
   }
 });
