@@ -9,11 +9,32 @@ export function MotionOrchestrator() {
     root.classList.add("motion-ready");
 
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const sectionLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(".system-subnav a[href^='#']"));
+    const sections = Array.from(document.querySelectorAll<HTMLElement>(".anchor-section[id]"));
+
+    const activateSection = (id: string) => {
+      sectionLinks.forEach(link => {
+        const active = link.getAttribute("href") === `#${id}`;
+        link.classList.toggle("is-active", active);
+        if (active) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    };
+
+    if (window.location.hash) activateSection(window.location.hash.slice(1));
+    else if (sections[0]) activateSection(sections[0].id);
+
+    const onSectionClick = (event: Event) => {
+      const link = event.currentTarget as HTMLAnchorElement;
+      const href = link.getAttribute("href");
+      if (href?.startsWith("#")) activateSection(href.slice(1));
+    };
+    sectionLinks.forEach(link => link.addEventListener("click", onSectionClick));
 
     if (reduced) {
       root.classList.add("motion-reduced");
       revealTargets.forEach(target => target.classList.add("is-revealed"));
-      return;
+      return () => sectionLinks.forEach(link => link.removeEventListener("click", onSectionClick));
     }
 
     const revealObserver = new IntersectionObserver(
@@ -26,24 +47,15 @@ export function MotionOrchestrator() {
       },
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
-
     revealTargets.forEach(target => revealObserver.observe(target));
 
-    const sectionLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(".system-subnav a[href^='#']"));
-    const sections = Array.from(document.querySelectorAll<HTMLElement>(".anchor-section[id]"));
     const sectionObserver = new IntersectionObserver(
       entries => {
         const visible = entries
           .filter(entry => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (!visible) return;
-        const id = (visible.target as HTMLElement).id;
-        sectionLinks.forEach(link => {
-          const active = link.getAttribute("href") === `#${id}`;
-          link.classList.toggle("is-active", active);
-          if (active) link.setAttribute("aria-current", "location");
-          else link.removeAttribute("aria-current");
-        });
+        activateSection((visible.target as HTMLElement).id);
       },
       { threshold: [0.15, 0.35, 0.6], rootMargin: "-24% 0px -58% 0px" },
     );
@@ -81,6 +93,7 @@ export function MotionOrchestrator() {
     return () => {
       revealObserver.disconnect();
       sectionObserver.disconnect();
+      sectionLinks.forEach(link => link.removeEventListener("click", onSectionClick));
       document.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("pointerout", onPointerOut);
     };
