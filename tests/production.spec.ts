@@ -22,7 +22,7 @@ test("production routes load without browser errors", async ({ page }) => {
   const browserErrors: string[] = [];
   page.on("pageerror", error => browserErrors.push(`pageerror: ${error.message}`));
   page.on("console", message => {
-    if (message.type() === "error") browserErrors.push(`console: ${message.text()}`);
+    if (message.type() === "error") browserErrors.push(`console: ${message.text()}`));
   });
 
   for (const route of productionRoutes) {
@@ -93,4 +93,46 @@ test("custom 404 is branded and legacy abstract scene is absent", async ({ page 
   await expect(page.getByRole("heading", { name: "Lost in the Lab?" })).toBeVisible();
   await expect(page.locator(".abstract-scene")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /Return home/ })).toBeVisible();
+});
+
+test("search palette is visually quiet while retaining keyboard behavior", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/", { waitUntil: "networkidle" });
+  const trigger = page.getByRole("button", { name: "Open Aixion search" });
+  await expect(trigger).toHaveText("Search");
+  await expect(page.getByText("⌘K", { exact: true })).toHaveCount(0);
+
+  await trigger.click();
+  const dialog = page.getByRole("dialog", { name: "Search Aixion" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByText(/select · Enter open|Esc close/i)).toHaveCount(0);
+  await expect(dialog.getByRole("button", { name: "Close search" })).toHaveText("×");
+});
+
+test("Control Core remains centered after first-load reveal", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/", { waitUntil: "networkidle" });
+  const visual = page.locator(".visual-core").first();
+  await visual.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(900);
+
+  const mapBox = await visual.locator(".core-map").boundingBox();
+  const centerBox = await visual.locator(".core-center").boundingBox();
+  expect(mapBox).not.toBeNull();
+  expect(centerBox).not.toBeNull();
+  if (!mapBox || !centerBox) return;
+
+  const dx = Math.abs((centerBox.x + centerBox.width / 2) - (mapBox.x + mapBox.width / 2));
+  const dy = Math.abs((centerBox.y + centerBox.height / 2) - (mapBox.y + mapBox.height / 2));
+  expect(dx).toBeLessThan(3);
+  expect(dy).toBeLessThan(3);
+});
+
+test("footer closes with an authored principle instead of duplicate navigation", async ({ page }) => {
+  await page.goto("/", { waitUntil: "networkidle" });
+  const footer = page.locator("footer.site-footer");
+  await expect(footer.getByText(/Curiosity starts the question/)).toBeVisible();
+  await expect(footer.getByText(/Build carefully\. Test what matters\. Learn from what fails\./)).toBeVisible();
+  await expect(footer.locator('a[href^="/"]')).toHaveCount(0);
+  await expect(footer.locator(".footer-links")).toHaveCount(0);
 });
