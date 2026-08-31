@@ -9,12 +9,13 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="hero">
+      <section className="hero signature-hero" data-reveal="hero">
         <div className="shell hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">AIXION LAB · INDEPENDENT APPLIED ENGINEERING</p>
-            <h1>Applied intelligence, automation and decision systems.</h1>
-            <p className="lede">A living engineering lab where research becomes systems through explicit validation, evidence and authority boundaries.</p>
+            <p className="eyebrow">AIXION LAB · APPLIED INTELLIGENCE · AUTOMATION · DECISION SYSTEMS</p>
+            <h1>Systems should be able to explain their state.</h1>
+            <p className="lede">A living engineering lab where applied intelligence becomes real systems through explicit validation, evidence and authority boundaries.</p>
+            <p className="hero-philosophy">The work changes by domain. The engineering requirement does not: know the state, preserve the evidence, expose the boundary.</p>
             <div className="hero-attribution">
               <strong>Built by Ram</strong>
               <span>Quality Engineering · Automation · Software · Data · Applied AI</span>
@@ -28,7 +29,7 @@ export default function HomePage() {
           <LabFieldVisual />
         </div>
 
-        <div className="shell panel pulse-preview">
+        <div className="shell panel pulse-preview" data-reveal="pulse-preview">
           <div className="pulse-head">
             <div>
               <p className="eyebrow">LAB PULSE</p>
@@ -44,7 +45,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" data-reveal="systems-registry">
         <div className="shell">
           <SectionHeading eyebrow="SYSTEMS REGISTRY" title="Four systems. Different problems. One engineering discipline." copy="Each system exposes maturity, current gate, public-safe evidence and the next decision point." />
           <div className="system-grid">
@@ -53,11 +54,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight" data-reveal="tradebot-feature">
         <div className="shell feature-split">
           <article className="panel feature-copy">
             <p className="eyebrow">AX-SYS-001 · FLAGSHIP · VALIDATING</p>
             <h2>TradeBot</h2>
+            <p className="system-principle">A market system should know whether its data is trustworthy before it makes a claim.</p>
             <p>{tradebot.descriptor}</p>
             <p>Market data, research output and automated analysis are deliberately separated from risk and human execution authority.</p>
             <div className="button-row"><StateTag state={tradebot.state} /><Link className="button-secondary" href="/systems/tradebot#evidence">Evidence →</Link></div>
@@ -68,12 +70,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight" data-reveal="control-core-feature">
         <div className="shell feature-split">
           <SystemVisual kind="control-core" />
           <article className="panel feature-copy">
             <p className="eyebrow">AX-SYS-002 · SECOND FLAGSHIP · BUILDING</p>
             <h2>Aixion Control Core</h2>
+            <p className="system-principle">An autonomous system should know what it is allowed to do before it acts.</p>
             <p>{controlCore.descriptor}</p>
             <p>The MVP focuses on inspectable orchestration: intent, context, tools, policy, evidence and human/system authority are explicit stages.</p>
             <StateTag state={controlCore.state} />
@@ -83,7 +86,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" data-reveal="research-proof">
         <div className="shell">
           <SectionHeading eyebrow="RESEARCH / PROOF" title="The lab keeps the questions, failures and evidence visible." copy="A rejected mechanism is still useful engineering evidence. Research is not silently promoted into a system claim." />
           <div className="research-list">
@@ -99,19 +102,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight" data-reveal="journey-feature">
         <div className="shell feature-split">
           <div className="panel feature-copy">
             <p className="eyebrow">JOURNEY</p>
-            <h2>How the way I build evolved.</h2>
-            <p className="lede">Quality engineering taught me to distrust systems that cannot explain their state. That principle now shapes automation, data and AI work.</p>
+            <h2>The tools changed. The questions got stricter.</h2>
+            <p className="lede">Quality engineering started with “why did this fail?” The current frontier asks whether intelligent systems can act while remaining observable, governed and accountable.</p>
             <Link className="text-link" href="/journey">View the engineering journey →</Link>
           </div>
           <SystemVisual kind="journey" />
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" data-reveal="contact">
         <div className="shell contact-panel">
           <div className="panel contact-copy">
             <p className="eyebrow">CONTACT</p>
