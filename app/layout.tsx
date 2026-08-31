@@ -10,6 +10,7 @@ import "./launch.css";
 import "./award-motion.css";
 import "./award-fixes.css";
 import "./live-polish.css";
+import "./observable-system.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionOrchestrator } from "@/components/motion-orchestrator";
@@ -22,7 +23,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: "#E9EDE7",
-  colorScheme: "light",
+  colorScheme: "light dark",
 };
 
 export const metadata: Metadata = {
@@ -89,7 +90,7 @@ const structuredData = {
       "@id": `${siteUrl}/#ram`,
       name: "Ram",
       url: `${siteUrl}/about`,
-      sameAs: ["https://github.com/ramgolladi1503-sys"],
+      sameAs: ["https://github.com/ramgolladi1503-sys", "https://www.linkedin.com/in/ram-golladi"],
       knowsAbout: [
         "Quality engineering",
         "Automation",
