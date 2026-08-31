@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { systems, researchNotes } from "@/lib/site-data";
+import labActivity from "@/content/lab-activity.json";
 import { CareerStrip, ProgressLane, SectionHeading, StateTag, SystemCard } from "@/components/ui";
 import { AixionSignal, LabFieldVisual, SystemVisual } from "@/components/system-visuals";
 
 export default function HomePage() {
   const tradebot = systems[0];
   const controlCore = systems[1];
+  const activeWork = labActivity.active[0];
+  const latestActivity = labActivity.entries[0];
 
   return (
     <>
@@ -41,6 +44,22 @@ export default function HomePage() {
           <ProgressLane label="Control Core" stage="BUILDING" />
           <ProgressLane label="Automation" stage="BUILDING" />
           <ProgressLane label="Analytics Lab" stage="RESEARCH" />
+          <div className="home-worklog-strip" aria-label="Latest Aixion Lab work">
+            <div>
+              <span className="system-id">WORKING NOW · {activeWork.date}</span>
+              <strong>{activeWork.title}</strong>
+              <p>{activeWork.summary}</p>
+            </div>
+            <StateTag state={activeWork.state} />
+          </div>
+          <div className="home-worklog-strip home-worklog-strip--latest">
+            <div>
+              <span className="system-id">LATEST VALIDATED ACTIVITY · {latestActivity.date}</span>
+              <strong>{latestActivity.title}</strong>
+              <p>{latestActivity.summary}</p>
+            </div>
+            <StateTag state={latestActivity.state} />
+          </div>
           <Link className="text-link" href="/pulse">Open operational Pulse →</Link>
         </div>
       </section>
