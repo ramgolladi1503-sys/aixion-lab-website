@@ -12,6 +12,7 @@ import "./award-fixes.css";
 import "./live-polish.css";
 import "./observable-system.css";
 import "./observable-shell.css";
+import "./observable-release.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionOrchestrator } from "@/components/motion-orchestrator";
@@ -23,7 +24,7 @@ const socialDescription = "Applied intelligence, automation and decision systems
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#E9EDE7",
+  themeColor: "#071015",
   colorScheme: "light dark",
 };
 
@@ -114,7 +115,7 @@ const structuredData = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-view="lab">
+    <html lang="en" data-view="lab" suppressHydrationWarning>
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <MotionOrchestrator />
