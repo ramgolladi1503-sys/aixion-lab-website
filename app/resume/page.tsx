@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PrintResumeButton } from "@/components/print-resume-button";
 
 export const metadata: Metadata = {
   title: "Career Snapshot",
@@ -15,12 +16,16 @@ export default function ResumePage() {
             <p className="eyebrow">AIXION LAB · CAREER SNAPSHOT</p>
             <h1>Quality engineering evolved into systems engineering.</h1>
             <p className="lede">A concise recruiter-facing translation of the work shown across Aixion Lab. The project evidence stays the same; this page makes the competencies easier to scan.</p>
+            <div className="button-row resume-actions">
+              <PrintResumeButton />
+              <a className="button-secondary" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
+            </div>
           </div>
           <div className="panel meta-board">
             <div><span>Current direction</span><strong>QA · Automation · Applied AI</strong></div>
             <div><span>Flagship work</span><strong>TradeBot · Control Core</strong></div>
             <div><span>Working style</span><strong>Evidence-led systems</strong></div>
-            <div><span>Full résumé PDF</span><strong>Publication pending</strong></div>
+            <div><span>Public résumé</span><strong>Live web version</strong></div>
           </div>
         </div>
       </section>
@@ -67,9 +72,13 @@ export default function ResumePage() {
 
       <section className="section-tight">
         <div className="shell panel panel-pad">
-          <p className="eyebrow">NEXT STEP</p>
-          <h2>Use the system pages as evidence, not just project names.</h2>
-          <p className="lede">A downloadable role-specific résumé will be added once the final public version and exact contact links are frozen. Until then, this page intentionally avoids publishing stale or mismatched résumé files.</p>
+          <p className="eyebrow">RECRUITER HANDOFF</p>
+          <h2>Review the evidence, then take a copy with you.</h2>
+          <p className="lede">This page is the current public career snapshot. Use Print / Save PDF to export it from any modern browser; the system pages remain the deeper evidence source behind the summary.</p>
+          <div className="button-row resume-actions">
+            <PrintResumeButton />
+            <Link className="button" href="/systems">Review systems →</Link>
+          </div>
         </div>
       </section>
     </>

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { DeployStamp } from "./deploy-stamp";
 
 export function SiteFooter() {
   return (
@@ -22,7 +21,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="shell build-line">
-        <DeployStamp />
+        <span className="footer-build-static">© 2026 Aixion Lab · Build 2026.08.31</span>
         <span>Research → Build → Validate → Observe → Operate → Learn</span>
       </div>
     </footer>

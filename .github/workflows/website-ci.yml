@@ -33,11 +33,17 @@ jobs:
           test -f out/index.html
           test -f out/systems/tradebot.html || test -f out/systems/tradebot/index.html
           test -f out/research/evidence-bound-autonomy.html || test -f out/research/evidence-bound-autonomy/index.html
+          test -f out/robots.txt
+          test -f out/sitemap.xml
+          test -f out/manifest.webmanifest
+          test -f out/icon.svg
+          test -f out/_headers
+          ! grep -R -i -E "publication pending|will be added|build preview" out --include='*.html'
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Capture desktop and mobile renders
+      - name: Production browser and visual suite
         run: npm run visual
 
       - name: Upload visual review bundle

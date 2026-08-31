@@ -95,6 +95,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return system ? { title: system.name, description: system.descriptor } : {};
 }
 
+function SystemHeroSummary({ system }: { system: (typeof systems)[number] }) {
+  return (
+    <aside className={`system-hero-summary summary-${system.accent}`} aria-label={`${system.name} system snapshot`}>
+      <div className="system-summary-head">
+        <p className="eyebrow">SYSTEM SNAPSHOT · {system.id}</p>
+        <StateTag state={system.state} />
+      </div>
+      <h2>{system.currentFocus}</h2>
+      <dl className="system-summary-grid">
+        <div><dt>Domain</dt><dd>{system.domain}</dd></div>
+        <div><dt>Current gate</dt><dd>{system.currentGate}</dd></div>
+        <div><dt>Next gate</dt><dd>{system.nextGate}</dd></div>
+        <div><dt>Public boundary</dt><dd>Architecture, method and evidence summaries only.</dd></div>
+      </dl>
+      <div className="system-summary-skills" aria-label="Key competencies">
+        {system.competencies.slice(0, 5).map(skill => <span key={skill}>{skill}</span>)}
+      </div>
+    </aside>
+  );
+}
+
 function FlagshipSpecific({ slug }: { slug: string }) {
   if (slug === "tradebot") return (
     <>
@@ -167,7 +188,7 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
             <div className="button-row"><StateTag state={system.state} /><Link className="button-secondary" href="#evidence">View evidence ↓</Link></div>
             <CareerStrip skills={system.competencies} />
           </div>
-          <VisualForSystem system={system} />
+          <SystemHeroSummary system={system} />
         </div>
       </section>
 
