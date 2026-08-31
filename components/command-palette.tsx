@@ -8,7 +8,7 @@ const items = [
   ["TradeBot", "/systems/tradebot", "System", "VALIDATING"],
   ["Aixion Control Core", "/systems/control-core", "System", "BUILDING"],
   ["Automation Systems", "/systems/automation", "System", "BUILDING"],
-  ["Analytics Lab", "/systems/analytics", "System", "RESEARCH"],
+  ["Analytics Lab", "/systems/analytics", "System", "BUILDING"],
   ["Research Notes", "/research", "Research", "ACTIVE + REJECTED"],
   ["Aixion Pulse", "/pulse", "Now", "CURRENT STATE"],
   ["Journey", "/journey", "Story", "7 QUESTIONS"],
