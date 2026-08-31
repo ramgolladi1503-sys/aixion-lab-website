@@ -35,8 +35,8 @@
 }
 
 /* Footer closes the story rather than repeating site navigation.
-   The manifesto is deliberately wider and quieter than the previous poster-like
-   treatment: two broad editorial lines across the page on desktop. */
+   The manifesto is deliberately wide and editorial: two intentional lines
+   across the page on large desktop surfaces, without poster-scale type. */
 .site-footer--statement {
   padding-top: 0;
 }
@@ -54,12 +54,19 @@
   margin: 0;
   color: var(--text);
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
-  font-size: clamp(28px, 2.2vw, 36px);
+  font-size: clamp(27px, 2vw, 33px);
   font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -.022em;
+  line-height: 1.1;
+  letter-spacing: -.02em;
   font-feature-settings: "kern" 1, "liga" 1;
-  text-wrap: balance;
+}
+.footer-manifesto-line {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+}
+.footer-manifesto-line + .footer-manifesto-line {
+  margin-top: .08em;
 }
 .footer-signoff {
   max-width: none;
@@ -74,13 +81,19 @@
   color: #647069;
 }
 
+@media (max-width: 1320px) {
+  .footer-manifesto-line {
+    white-space: normal;
+  }
+}
+
 @media (max-width: 1100px) {
   .footer-closing.shell,
   .build-line--quiet {
     width: min(100% - 48px, 980px);
   }
   .footer-manifesto {
-    font-size: clamp(28px, 3.3vw, 34px);
+    font-size: clamp(27px, 3.15vw, 32px);
     line-height: 1.1;
   }
 }
@@ -102,7 +115,9 @@
     font-size: clamp(27px, 8.4vw, 36px);
     line-height: 1.08;
     letter-spacing: -.025em;
-    text-wrap: pretty;
+  }
+  .footer-manifesto-line + .footer-manifesto-line {
+    margin-top: .35em;
   }
   .footer-signoff {
     margin-top: 22px;
