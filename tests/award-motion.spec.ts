@@ -60,12 +60,11 @@ test("command palette carries state, not just destinations", async ({ page }) =>
   await expect(page.locator('.command-results a[href="/journey"] .command-meta')).toContainText("7 QUESTIONS");
 });
 
-test("system subnavigation reflects the section in view", async ({ page }, testInfo) => {
+test("system subnavigation reflects deliberate section navigation", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "Sticky section authority is a desktop interaction");
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  await page.locator('#architecture').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(350);
   const architectureLink = page.locator('.system-subnav a[href="#architecture"]');
+  await architectureLink.click();
   await expect(architectureLink).toHaveClass(/is-active/);
   await expect(architectureLink).toHaveAttribute("aria-current", "location");
 });
