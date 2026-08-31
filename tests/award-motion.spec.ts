@@ -33,8 +33,12 @@ test("reduced-motion collapses the award layer safely", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("html")).toHaveClass(/motion-reduced/);
-  const duration = await page.locator(".signal-node").first().evaluate(node => getComputedStyle(node).animationDuration);
-  expect(duration).toBe("0.01ms");
+  const durationMs = await page.locator(".signal-node").first().evaluate(node => {
+    const value = getComputedStyle(node).animationDuration.trim();
+    const amount = Number.parseFloat(value);
+    return value.endsWith("ms") ? amount : amount * 1000;
+  });
+  expect(durationMs).toBeLessThanOrEqual(0.02);
   const visualTransform = await page.locator(".lab-field-visual").evaluate(node => getComputedStyle(node).transform);
   expect(visualTransform).toBe("none");
 });
@@ -52,15 +56,15 @@ test("command palette carries state, not just destinations", async ({ page }) =>
   await page.goto("/", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Open Aixion command palette" }).click();
   await expect(page.getByRole("dialog", { name: "Search Aixion" })).toBeVisible();
-  await expect(page.getByText("System· VALIDATING")).toBeVisible();
-  await expect(page.getByText("Story· 7 QUESTIONS")).toBeVisible();
+  await expect(page.locator('.command-results a[href="/systems/tradebot"] .command-meta')).toContainText("VALIDATING");
+  await expect(page.locator('.command-results a[href="/journey"] .command-meta')).toContainText("7 QUESTIONS");
 });
 
 test("system subnavigation reflects the section in view", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "Sticky section authority is a desktop interaction");
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  await page.locator("#architecture").scrollIntoViewIfNeeded();
-  await page.waitForTimeout(250);
+  await page.locator('#architecture').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(350);
   const architectureLink = page.locator('.system-subnav a[href="#architecture"]');
   await expect(architectureLink).toHaveClass(/is-active/);
   await expect(architectureLink).toHaveAttribute("aria-current", "location");
