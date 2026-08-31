@@ -4,7 +4,8 @@ export function SiteFooter() {
       <div className="shell footer-closing">
         <p className="eyebrow">AIXION LAB · CLOSING PRINCIPLE</p>
         <p className="footer-manifesto">
-          Curiosity starts the question. Discipline keeps the work honest. Persistence carries it through failure. I keep building until the system can explain its state, its evidence and its limits.
+          <span className="footer-manifesto-line">Curiosity starts the question. Discipline keeps the work honest. Persistence carries it through failure.</span>
+          <span className="footer-manifesto-line">I keep building, testing and learning until the system can explain its state, its evidence and its limits.</span>
         </p>
         <p className="footer-signoff">Build carefully. Test what matters. Learn from what fails.</p>
       </div>
