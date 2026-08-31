@@ -2,7 +2,8 @@ import Link from "next/link";
 import { systems, researchNotes } from "@/lib/site-data";
 import labActivity from "@/content/lab-activity.json";
 import { CareerStrip, ProgressLane, SectionHeading, StateTag, SystemCard } from "@/components/ui";
-import { AixionSignal, LabFieldVisual, SystemVisual } from "@/components/system-visuals";
+import { AixionSignal, SystemVisual } from "@/components/system-visuals";
+import { ObservableStateField } from "@/components/observable-state-field";
 
 export default function HomePage() {
   const tradebot = systems[0];
@@ -11,14 +12,14 @@ export default function HomePage() {
   const latestActivity = labActivity.entries[0];
 
   return (
-    <>
-      <section className="hero signature-hero" data-reveal="hero">
-        <div className="shell hero-grid">
-          <div className="hero-copy">
-            <p className="eyebrow">AIXION LAB · APPLIED INTELLIGENCE · AUTOMATION · DECISION SYSTEMS</p>
-            <h1>Systems should be able to explain their state.</h1>
+    <div className="observable-home">
+      <section className="observable-hero" data-reveal="hero">
+        <div className="observable-hero-grid">
+          <div className="observable-copy">
+            <p className="eyebrow">AIXION LAB · THE SYSTEM IS EXPLAINING ITSELF</p>
+            <h1>Systems should be able to explain their state, their evidence and their limits.</h1>
             <p className="lede">A living engineering lab where applied intelligence becomes real systems through explicit validation, evidence and authority boundaries.</p>
-            <p className="hero-philosophy">The work changes by domain. The engineering requirement does not: know the state, preserve the evidence, expose the boundary.</p>
+            <p className="hero-philosophy">The visual field is public-state driven: work that is building remains incomplete, validation accumulates evidence, and rejected research remains visible instead of disappearing.</p>
             <div className="hero-attribution">
               <strong>Built by Ram</strong>
               <span>Quality Engineering · Automation · Software · Data · Applied AI</span>
@@ -29,13 +30,13 @@ export default function HomePage() {
             </div>
             <AixionSignal compact />
           </div>
-          <LabFieldVisual />
+          <ObservableStateField />
         </div>
 
-        <div className="shell panel pulse-preview" data-reveal="pulse-preview">
+        <div className="panel pulse-preview" data-reveal="pulse-preview">
           <div className="pulse-head">
             <div>
-              <p className="eyebrow">LAB PULSE</p>
+              <p className="eyebrow">AIXION PULSE · PUBLIC STATE</p>
               <h2>Current system state, evidence and next gates.</h2>
             </div>
             <p>Curated public-safe state · no arbitrary completion percentages</p>
@@ -43,7 +44,7 @@ export default function HomePage() {
           <ProgressLane label="TradeBot" stage="VALIDATING" />
           <ProgressLane label="Control Core" stage="BUILDING" />
           <ProgressLane label="Automation" stage="BUILDING" />
-          <ProgressLane label="Analytics Lab" stage="RESEARCH" />
+          <ProgressLane label="Analytics Lab" stage="BUILDING" />
           <div className="home-worklog-strip" aria-label="Latest Aixion Lab work">
             <div>
               <span className="system-id">WORKING NOW · {activeWork.date}</span>
@@ -151,6 +152,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
