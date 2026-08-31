@@ -67,7 +67,6 @@ export default function AboutPage() {
               <a className="button" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">Open GitHub →</a>
               <Link className="button-secondary" href="/resume">Career snapshot</Link>
             </div>
-            <p className="contact-boundary">Direct email and LinkedIn will be published only after the final public handles are confirmed.</p>
           </div>
           <div className="panel contact-copy career-only">
             <p className="eyebrow">CAREER LENS</p>
