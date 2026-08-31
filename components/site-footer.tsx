@@ -1,28 +1,16 @@
-import Link from "next/link";
-
 export function SiteFooter() {
   return (
-    <footer className="site-footer">
-      <div className="shell footer-grid">
-        <div>
-          <p className="eyebrow">AIXION LAB</p>
-          <p className="footer-statement">Engineering applied intelligence. Building systems that can explain their state.</p>
-        </div>
-        <div className="footer-links">
-          <Link href="/systems">Systems</Link>
-          <Link href="/research">Research</Link>
-          <Link href="/journey">Journey</Link>
-          <Link href="/about">About</Link>
-        </div>
-        <div className="footer-links">
-          <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
-          <Link href="/resume">Résumé</Link>
-          <Link href="/about#contact">Contact</Link>
-        </div>
+    <footer className="site-footer site-footer--statement">
+      <div className="shell footer-closing">
+        <p className="eyebrow">AIXION LAB · CLOSING PRINCIPLE</p>
+        <p className="footer-manifesto">
+          Curiosity starts the question. Discipline keeps the work honest. Persistence carries it through failure. I keep building until the system can explain its state, its evidence and its limits.
+        </p>
+        <p className="footer-signoff">Build carefully. Test what matters. Learn from what fails.</p>
       </div>
-      <div className="shell build-line">
-        <span className="footer-build-static">© 2026 Aixion Lab · Build 2026.08.31</span>
-        <span>Research → Build → Validate → Observe → Operate → Learn</span>
+      <div className="shell build-line build-line--quiet">
+        <span>© 2026 Aixion Lab</span>
+        <span>Curiosity → Discipline → Evidence → Learn</span>
       </div>
     </footer>
   );
