@@ -11,6 +11,7 @@ import "./award-motion.css";
 import "./award-fixes.css";
 import "./live-polish.css";
 import "./observable-system.css";
+import "./observable-shell.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionOrchestrator } from "@/components/motion-orchestrator";
