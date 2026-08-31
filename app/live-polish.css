@@ -54,7 +54,7 @@
   margin: 0;
   color: var(--text);
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
-  font-size: clamp(27px, 2vw, 33px);
+  font-size: clamp(28px, 2.1vw, 34px);
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -.02em;
