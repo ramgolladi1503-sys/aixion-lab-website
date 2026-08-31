@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { researchNotes, systems } from "@/lib/site-data";
 
+export const dynamic = "force-static";
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aixionlab.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
