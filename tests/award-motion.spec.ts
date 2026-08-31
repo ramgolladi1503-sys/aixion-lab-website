@@ -1,20 +1,16 @@
 import { test, expect } from "@playwright/test";
 
-test("home has a memorable thesis and interactive system field", async ({ page }) => {
+test("home has a memorable thesis and observable temporal system field", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
   await expect(page.locator("[data-aixion-signal] .signal-stage")).toHaveCount(6);
 
-  const field = page.getByRole("navigation", { name: "Aixion system field" });
+  const field = page.locator(".observable-field");
   await expect(field).toBeVisible();
-  await expect(field.getByRole("link")).toHaveCount(4);
-  await expect(field.getByRole("link", { name: /TradeBot/ })).toHaveAttribute("href", "/systems/tradebot");
-  await expect(field.getByRole("link", { name: /Control Core/ })).toHaveAttribute("href", "/systems/control-core");
-
-  await field.getByRole("link", { name: /TradeBot/ }).hover();
-  const selectedOpacity = await page.locator(".field-path-tradebot").evaluate(node => Number.parseFloat(getComputedStyle(node).opacity));
-  const otherOpacity = await page.locator(".field-path-core").evaluate(node => Number.parseFloat(getComputedStyle(node).opacity));
-  expect(selectedOpacity).toBeGreaterThan(otherOpacity);
+  await expect(field.locator(".state-band")).toHaveCount(4);
+  await expect(field.getByText("TRADEBOT", { exact: true })).toBeVisible();
+  await expect(field.getByText("CONTROL CORE", { exact: true })).toBeVisible();
+  await expect(field.getByText("REJECTED RESEARCH REMAINS VISIBLE", { exact: true })).toBeVisible();
 });
 
 test("motion has a real animation grammar", async ({ page }) => {
@@ -23,24 +19,27 @@ test("motion has a real animation grammar", async ({ page }) => {
   const signalAnimation = await page.locator(".signal-node").first().evaluate(node => getComputedStyle(node).animationName);
   expect(signalAnimation).toContain("signal-arrive");
 
+  const fieldAnimation = await page.locator(".state-band-line").first().evaluate(node => getComputedStyle(node).animationName);
+  expect(fieldAnimation).toContain("observable-flow");
+
   await page.locator(".visual-tradebot").scrollIntoViewIfNeeded();
   await expect(page.locator(".visual-tradebot")).toHaveClass(/is-revealed/);
   const stageAnimation = await page.locator(".visual-tradebot .tradebot-stage").first().evaluate(node => getComputedStyle(node).animationName);
   expect(stageAnimation).toContain("architecture-step");
 });
 
-test("reduced-motion collapses the award layer safely", async ({ page }) => {
+test("reduced-motion collapses the observable and award layers safely", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("html")).toHaveClass(/motion-reduced/);
-  const durationMs = await page.locator(".signal-node").first().evaluate(node => {
-    const value = getComputedStyle(node).animationDuration.trim();
-    const amount = Number.parseFloat(value);
-    return value.endsWith("ms") ? amount : amount * 1000;
-  });
-  expect(durationMs).toBeLessThanOrEqual(0.02);
-  const visualTransform = await page.locator(".lab-field-visual").evaluate(node => getComputedStyle(node).transform);
-  expect(visualTransform).toBe("none");
+
+  const signalAnimation = await page.locator(".signal-node").first().evaluate(node => getComputedStyle(node).animationName);
+  const fieldAnimation = await page.locator(".state-band-line").first().evaluate(node => getComputedStyle(node).animationName);
+  const fieldTransform = await page.locator(".observable-field").evaluate(node => getComputedStyle(node).transform);
+
+  expect(signalAnimation).toBe("none");
+  expect(fieldAnimation).toBe("none");
+  expect(fieldTransform).toBe("none");
 });
 
 test("Journey is an escalating engineering-question narrative", async ({ page }) => {
@@ -58,6 +57,7 @@ test("command palette carries state, not just destinations", async ({ page }, te
   await page.getByRole("button", { name: "Open Aixion search" }).click();
   await expect(page.getByRole("dialog", { name: "Search Aixion" })).toBeVisible();
   await expect(page.locator('.command-results a[href="/systems/tradebot"] .command-meta')).toContainText("VALIDATING");
+  await expect(page.locator('.command-results a[href="/systems/analytics"] .command-meta')).toContainText("BUILDING");
   await expect(page.locator('.command-results a[href="/journey"] .command-meta')).toContainText("7 QUESTIONS");
 });
 
