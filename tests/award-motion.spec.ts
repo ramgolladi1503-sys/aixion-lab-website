@@ -52,7 +52,8 @@ test("Journey is an escalating engineering-question narrative", async ({ page })
   await expect(page.locator(".journey-question")).toHaveCount(7);
 });
 
-test("command palette carries state, not just destinations", async ({ page }) => {
+test("command palette carries state, not just destinations", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "The command palette is intentionally a desktop keyboard surface; mobile uses the menu.");
   await page.goto("/", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Open Aixion command palette" }).click();
   await expect(page.getByRole("dialog", { name: "Search Aixion" })).toBeVisible();
