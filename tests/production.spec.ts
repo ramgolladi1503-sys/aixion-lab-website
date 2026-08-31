@@ -22,7 +22,7 @@ test("production routes load without browser errors", async ({ page }) => {
   const browserErrors: string[] = [];
   page.on("pageerror", error => browserErrors.push(`pageerror: ${error.message}`));
   page.on("console", message => {
-    if (message.type() === "error") browserErrors.push(`console: ${message.text()}`));
+    if (message.type() === "error") browserErrors.push(`console: ${message.text()}`);
   });
 
   for (const route of productionRoutes) {
