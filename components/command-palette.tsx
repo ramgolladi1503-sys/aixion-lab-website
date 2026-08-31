@@ -53,11 +53,12 @@ export function CommandPalette() {
 
   return (
     <>
-      <button className="command-trigger" onClick={open} aria-label="Open Aixion command palette">⌘K</button>
+      <button className="command-trigger" onClick={open} aria-label="Open Aixion search">Search</button>
       <dialog className="command-dialog" ref={dialogRef} aria-label="Search Aixion" onClick={(event) => { if (event.target === dialogRef.current) close(); }}>
         <div className="command-box">
           <div className="command-head">
-            <span>Search Aixion</span><span className="command-hint">↑↓ select · Enter open · Esc close</span><button onClick={close} aria-label="Close command palette">Esc</button>
+            <span>Search Aixion</span>
+            <button className="command-close" onClick={close} aria-label="Close search">×</button>
           </div>
           <input ref={inputRef} value={query} onChange={event => setQuery(event.target.value)} onKeyDown={onInputKeyDown} placeholder="Systems, research, evidence…" aria-label="Search Aixion pages" />
           <div className="command-results" aria-label="Aixion destinations">
