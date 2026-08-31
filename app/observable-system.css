@@ -1,0 +1,330 @@
+/* Locked visual authority: Observable Temporal State Field.
+   Additive layer only: content, routes, evidence boundaries and interaction semantics remain authoritative. */
+
+.observable-home {
+  --obs-bg: #071015;
+  --obs-bg-2: #0a1419;
+  --obs-panel: rgba(10, 20, 25, .78);
+  --obs-panel-soft: rgba(13, 25, 31, .62);
+  --obs-line: rgba(205, 225, 218, .13);
+  --obs-line-strong: rgba(205, 225, 218, .24);
+  --obs-text: #edf1ec;
+  --obs-muted: #9aa9a3;
+  --obs-lime: #a8d66f;
+  --obs-blue: #79a7ff;
+  --obs-teal: #62d8d0;
+  --obs-amber: #eba94d;
+  --obs-violet: #b384ef;
+  --obs-danger: #e16b5d;
+  color: var(--obs-text);
+  background:
+    radial-gradient(circle at 62% 5%, rgba(122, 166, 83, .12), transparent 34rem),
+    radial-gradient(circle at 78% 34%, rgba(71, 137, 198, .09), transparent 31rem),
+    linear-gradient(180deg, var(--obs-bg), #081217 54%, #091217 100%);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.observable-home::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .22;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at 62% 28%, black, transparent 72%);
+}
+
+.observable-home .observable-hero {
+  min-height: min(860px, calc(100vh - 78px));
+  padding: clamp(54px, 7vw, 92px) 0 42px;
+  position: relative;
+}
+
+.observable-hero-grid {
+  width: min(1540px, calc(100% - 56px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(330px, .72fr) minmax(620px, 1.28fr);
+  gap: clamp(30px, 4vw, 68px);
+  align-items: center;
+}
+
+.observable-home .observable-copy {
+  position: relative;
+  z-index: 2;
+  padding-left: clamp(0px, 2vw, 28px);
+}
+
+.observable-home .observable-copy .eyebrow {
+  color: var(--obs-lime);
+}
+
+.observable-home .observable-copy h1 {
+  color: var(--obs-text);
+  font-size: clamp(52px, 5.3vw, 86px);
+  max-width: 780px;
+  margin-bottom: 24px;
+  text-wrap: balance;
+}
+
+.observable-home .observable-copy .lede,
+.observable-home .observable-copy .hero-philosophy,
+.observable-home .observable-copy .hero-attribution span {
+  color: var(--obs-muted);
+}
+
+.observable-home .observable-copy .hero-philosophy {
+  max-width: 650px;
+}
+
+.observable-home .observable-copy .hero-attribution {
+  border-left-color: rgba(168, 214, 111, .55);
+}
+
+.observable-home .observable-copy .hero-attribution strong {
+  color: var(--obs-text);
+}
+
+.observable-home .button {
+  background: var(--obs-lime);
+  color: #0a140f;
+  box-shadow: 0 0 28px rgba(168,214,111,.13);
+}
+
+.observable-home .button-secondary {
+  color: var(--obs-text);
+  border-color: var(--obs-line-strong);
+  background: rgba(8, 18, 23, .56);
+}
+
+.observable-home .text-link { color: #b8dd8a; }
+.observable-home .panel,
+.observable-home .detail-card,
+.observable-home .system-card,
+.observable-home .research-row {
+  border-color: var(--obs-line);
+  background: var(--obs-panel-soft);
+  box-shadow: none;
+}
+
+.observable-home .panel:hover,
+.observable-home .system-card:hover,
+.observable-home .research-row:hover {
+  border-color: var(--obs-line-strong);
+}
+
+.observable-home .section-heading h2,
+.observable-home .feature-copy h2,
+.observable-home .contact-copy h2,
+.observable-home h3 { color: var(--obs-text); }
+.observable-home .section-heading p,
+.observable-home .feature-copy p,
+.observable-home .system-card p,
+.observable-home .research-row p,
+.observable-home .contact-copy p,
+.observable-home .system-id,
+.observable-home .mini-meta dt,
+.observable-home .pulse-head p { color: var(--obs-muted); }
+
+.observable-home .section,
+.observable-home .section-tight {
+  position: relative;
+}
+
+.observable-home .section::before,
+.observable-home .section-tight::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(1540px, calc(100% - 56px));
+  transform: translateX(-50%);
+  border-top: 1px solid rgba(209, 228, 221, .06);
+}
+
+.observable-field {
+  position: relative;
+  min-height: 600px;
+  border-radius: 28px;
+  border: 1px solid rgba(199, 220, 212, .12);
+  background:
+    radial-gradient(circle at 65% 28%, rgba(118, 178, 83, .09), transparent 18rem),
+    radial-gradient(circle at 55% 58%, rgba(67, 121, 194, .08), transparent 19rem),
+    linear-gradient(155deg, rgba(9, 18, 23, .86), rgba(6, 14, 18, .4));
+  overflow: hidden;
+  box-shadow: inset 0 1px rgba(255,255,255,.02), 0 36px 90px rgba(0,0,0,.18);
+}
+
+.observable-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(7,16,21,.7), transparent 18%, transparent 82%, rgba(7,16,21,.48));
+}
+
+.observable-field-svg {
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  display: block;
+}
+
+.field-grid line {
+  stroke: rgba(220,235,229,.05);
+  stroke-width: 1;
+}
+
+.temporal-axis line { stroke: rgba(221,235,230,.18); stroke-width: 1; }
+.temporal-axis text,
+.state-band-state,
+.rejected-trace text {
+  fill: rgba(211,226,220,.55);
+  font: 10px var(--mono);
+  letter-spacing: .14em;
+}
+.temporal-axis circle { fill: var(--obs-text); }
+
+.state-band .state-band-halo {
+  fill: none;
+  stroke-width: 32;
+  opacity: .08;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.state-band .state-band-line {
+  fill: none;
+  stroke-width: 1.7;
+  opacity: .7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.state-band circle { stroke: currentColor; fill: currentColor; }
+.state-band-node { fill: #081116 !important; stroke-width: 3 !important; }
+.state-band-label {
+  fill: currentColor;
+  font: 650 12px var(--mono);
+  letter-spacing: .08em;
+}
+.band-tradebot { color: var(--obs-lime); }
+.band-core { color: var(--obs-blue); }
+.band-automation { color: var(--obs-teal); }
+.band-analytics { color: var(--obs-amber); }
+.band-tradebot path { stroke: var(--obs-lime); }
+.band-core path { stroke: var(--obs-blue); }
+.band-automation path { stroke: var(--obs-teal); }
+.band-analytics path { stroke: var(--obs-amber); }
+
+.rejected-trace path,
+.rejected-trace line { stroke: var(--obs-danger); fill: none; stroke-width: 1.4; opacity: .72; }
+.rejected-trace text { fill: rgba(225,107,93,.8); }
+.research-markers circle { fill: var(--obs-violet); stroke: var(--obs-violet); }
+.research-markers .marker-ring { fill: transparent; opacity: .34; }
+
+.field-legend {
+  position: absolute;
+  left: 22px;
+  top: 22px;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.field-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px;
+  border: 1px solid var(--obs-line);
+  border-radius: 999px;
+  background: rgba(7, 15, 20, .74);
+  color: var(--obs-muted);
+  font: 600 8px var(--mono);
+  letter-spacing: .06em;
+}
+.legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+.legend-validating { background: var(--obs-lime); }
+.legend-building { background: var(--obs-blue); }
+.legend-research { background: var(--obs-violet); }
+.legend-rejected { background: var(--obs-danger); }
+
+.field-explainer {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+  width: min(320px, 42%);
+  padding: 15px 16px;
+  border: 1px solid var(--obs-line);
+  border-radius: 14px;
+  background: rgba(6, 14, 18, .84);
+  backdrop-filter: blur(12px);
+}
+.field-explainer span { color: var(--obs-lime); font: 650 9px var(--mono); letter-spacing: .08em; }
+.field-explainer p { margin: 7px 0 0; color: var(--obs-muted); font-size: 11px; line-height: 1.55; }
+
+.observable-home .pulse-preview {
+  width: min(1540px, calc(100% - 56px));
+  background: rgba(8, 18, 23, .68);
+}
+.observable-home .progress-lane,
+.observable-home .home-worklog-strip,
+.observable-home .mini-meta div { border-color: var(--obs-line); }
+.observable-home .lane-track:before { background: var(--obs-line-strong); }
+.observable-home .lane-stage i { border-color: #0d191e; background: #53615c; }
+.observable-home .lane-stage.reached i { background: #719b71; }
+.observable-home .lane-stage.current i { background: var(--obs-lime); }
+
+.observable-home .system-card:before { box-shadow: 0 0 22px currentColor; }
+.observable-home .state-tag { border: 1px solid rgba(160,205,151,.14); }
+.observable-home .state-building { background: rgba(121,167,255,.1); color: #9bbcff; }
+.observable-home .state-research,
+.observable-home .state-active { background: rgba(179,132,239,.1); color: #c39cf4; }
+.observable-home .state-rejected { background: rgba(225,107,93,.1); color: #ea8e83; }
+
+.observable-home .feature-visual,
+.observable-home .visual-frame,
+.observable-home .architecture-step span {
+  border-color: var(--obs-line);
+  background: rgba(10, 22, 27, .68);
+}
+
+@media (max-width: 1180px) {
+  .observable-hero-grid { grid-template-columns: 1fr; }
+  .observable-field { min-height: 520px; }
+  .observable-field-svg { min-height: 520px; }
+}
+
+@media (max-width: 700px) {
+  .observable-home .observable-hero { padding-top: 42px; }
+  .observable-hero-grid,
+  .observable-home .pulse-preview { width: calc(100% - 32px); }
+  .observable-home .observable-copy h1 { font-size: clamp(44px, 13vw, 62px); }
+  .observable-field { min-height: 390px; border-radius: 18px; }
+  .observable-field-svg { min-height: 390px; transform: scale(1.18); transform-origin: 58% 50%; }
+  .field-legend { left: 12px; top: 12px; right: 12px; }
+  .field-legend span { font-size: 7px; }
+  .field-explainer { left: 12px; right: 12px; bottom: 12px; width: auto; }
+  .observable-home .section::before,
+  .observable-home .section-tight::before { width: calc(100% - 32px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .state-band-line { stroke-dasharray: 5 8; animation: observable-flow 18s linear infinite; }
+  .research-markers .marker-ring { animation: observable-pulse 4.5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+}
+
+@keyframes observable-flow { to { stroke-dashoffset: -160; } }
+@keyframes observable-pulse { 50% { transform: scale(1.35); opacity: .12; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .observable-home *,
+  .observable-home *::before,
+  .observable-home *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+}
