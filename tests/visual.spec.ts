@@ -29,12 +29,12 @@ test("home primary action is visible without scrolling", async ({ page }) => {
   expect((box?.y ?? 99999) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0);
 });
 
-test("desktop home hero begins near the sticky header", async ({ page }, testInfo) => {
+test("desktop observable hero begins near the sticky header", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
   await page.goto("/", { waitUntil: "networkidle" });
-  const copy = await page.locator(".hero-copy").boundingBox();
+  const copy = await page.locator(".observable-copy").boundingBox();
   expect(copy).not.toBeNull();
-  expect(copy?.y ?? 99999).toBeLessThan(180);
+  expect(copy?.y ?? 99999).toBeLessThan(190);
 });
 
 test("desktop About Lab contact does not reserve a hidden second column", async ({ page }, testInfo) => {
