@@ -26,6 +26,7 @@ test("observable homepage keeps content usable on mobile", async ({ page }) => {
   await expect(page.locator(".observable-field")).toBeVisible();
   await expect(page.getByRole("link", { name: /Explore systems/ }).first()).toBeVisible();
   await expect(page.getByRole("link", { name: /View Lab Pulse/ }).first()).toBeVisible();
+  await expect(page.locator("details.mobile-menu summary")).toBeVisible();
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
@@ -40,13 +41,18 @@ test("observable field respects reduced motion", async ({ page }) => {
     return { name: style.animationName, duration: style.animationDuration, count: style.animationIterationCount };
   });
 
-  expect(animation.duration === "0.001ms" || animation.duration === "0s").toBe(true);
-  expect(animation.count === "1" || animation.name === "none").toBe(true);
+  expect(animation.name).toBe("none");
+  expect(animation.duration === "0s" || animation.duration === "0ms").toBe(true);
+  expect(animation.count === "1" || animation.count === "1.0").toBe(true);
 });
 
-test("observable redesign does not replace validated interactions", async ({ page }) => {
+test("observable redesign does not replace validated interactions", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("button", { name: "Open Aixion search" })).toHaveText("Search");
+  if (testInfo.project.name === "mobile") {
+    await expect(page.locator("details.mobile-menu summary")).toBeVisible();
+  } else {
+    await expect(page.getByRole("button", { name: "Open Aixion search" })).toHaveText("Search");
+  }
   await expect(page.locator("footer.site-footer .footer-manifesto-line")).toHaveCount(2);
 
   await page.goto("/systems/control-core", { waitUntil: "networkidle" });
