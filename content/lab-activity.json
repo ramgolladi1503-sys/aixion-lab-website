@@ -1,0 +1,80 @@
+{
+  "updated_at": "2026-08-31",
+  "principle": "Only meaningful, public-safe engineering work is published. Raw commits, private conversations, credentials, proprietary logic and unverified claims stay out of the public feed.",
+  "active": [
+    {
+      "id": "AX-WORK-2026-0831-03",
+      "date": "2026-08-31",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "BUILD",
+      "state": "BUILDING",
+      "title": "Public worklog and activity publishing",
+      "summary": "Turning ongoing Aixion engineering work into a curated public activity layer that can surface current work, evidence and next gates without exposing raw repository or conversation data.",
+      "evidence": "Pulse is moving from hard-coded ship-log entries to a structured manifest shared with the public site.",
+      "next_gate": "Pass production CI, publish the first activity feed and use it for future meaningful milestones."
+    }
+  ],
+  "entries": [
+    {
+      "id": "AX-WORK-2026-0831-02",
+      "date": "2026-08-31",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "RELEASE",
+      "state": "VALIDATED",
+      "title": "Production candidate passed release gates",
+      "summary": "The launch candidate passed static-export, browser, accessibility, internal-link, reduced-motion and production-content checks before promotion.",
+      "evidence": "92 browser tests passed with 8 intentional project-specific skips on the validated candidate.",
+      "next_gate": "Complete custom-domain DNS and HTTPS propagation and monitor the production site."
+    },
+    {
+      "id": "AX-WORK-2026-0831-01",
+      "date": "2026-08-31",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "INTERACTION",
+      "state": "VALIDATED",
+      "title": "Aixion Signal became the interaction language",
+      "summary": "The site now uses state-driven motion, interactive system-field paths, architecture-specific reveal patterns and reduced-motion fallbacks instead of generic decorative animation.",
+      "evidence": "Award-motion acceptance tests and desktop/mobile renders passed in the production suite.",
+      "next_gate": "Judge the live-browser feel and keep future motion changes evidence-led."
+    },
+    {
+      "id": "AX-WORK-2026-0823-03",
+      "date": "2026-08-23",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "DESIGN AUTHORITY",
+      "state": "LOCKED",
+      "title": "Website architecture and visual authority frozen",
+      "summary": "The rebuild was anchored to a single public architecture, state vocabulary and light-mineral visual system before implementation continued.",
+      "evidence": "The master blueprint and visual authority became the implementation boundary for the clean rebuild.",
+      "next_gate": "Translate the authority into production components without reintroducing superseded visual directions."
+    },
+    {
+      "id": "AX-WORK-2026-0823-02",
+      "date": "2026-08-23",
+      "area": "TRADEBOT",
+      "system_slug": "tradebot",
+      "type": "BOUNDARY",
+      "state": "ENFORCED",
+      "title": "Research and live evidence kept separate from proprietary strategy detail",
+      "summary": "The public TradeBot story exposes architecture, validation method and evidence boundaries without publishing private signal mechanics or execution rules.",
+      "evidence": "Public pages distinguish research evidence, live observation, risk and human authority instead of collapsing them into one claim.",
+      "next_gate": "Add sanitized operational proof only when it is safe and evidence-backed."
+    },
+    {
+      "id": "AX-WORK-2026-0823-01",
+      "date": "2026-08-23",
+      "area": "CONTROL CORE",
+      "system_slug": "control-core",
+      "type": "ARCHITECTURE",
+      "state": "BUILDING",
+      "title": "MVP orchestration translated into inspectable stages",
+      "summary": "Intent, context, planning, agents, tools, evidence, policy and authority were separated into explicit stages for the public architecture.",
+      "evidence": "The site presents a labelled demo trace while explicitly avoiding fake production telemetry.",
+      "next_gate": "Promote a policy-bound execution trace backed by implementation evidence."
+    }
+  ]
+}
