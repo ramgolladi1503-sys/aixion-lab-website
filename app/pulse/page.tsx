@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 };
 
 export default function PulsePage() {
+  const currentCycle = systems.map(system => {
+    const evidence = labState.systems.find(item => item.slug === system.slug);
+    return {
+      ...system,
+      latestMilestone: evidence?.latest_milestone ?? "Public evidence summary pending the next curated update.",
+    };
+  });
+
   return (
     <>
       <section className="page-hero">
@@ -65,16 +73,16 @@ export default function PulsePage() {
 
       <section className="section">
         <div className="shell">
-          <SectionHeading eyebrow="SYSTEM STATE" title="Current cycle" copy="These cards answer four things quickly: state, current focus, latest milestone and next gate." />
+          <SectionHeading eyebrow="SYSTEM STATE" title="Current cycle" copy="These cards answer four things quickly: state, current focus, latest milestone and next gate. State and focus come from the same registry that drives the rest of Aixion Lab." />
           <div className="pulse-now-grid">
-            {labState.systems.map(system => (
+            {currentCycle.map(system => (
               <article className="pulse-system-card" key={system.id}>
                 <div className="system-card-top"><span className="system-id">{system.id}</span><StateTag state={system.state} /></div>
                 <h3>{system.name}</h3>
                 <dl>
-                  <div><dt>Current focus</dt><dd>{system.current_focus}</dd></div>
-                  <div><dt>Latest evidence</dt><dd>{system.latest_milestone}</dd></div>
-                  <div><dt>Next gate</dt><dd>{system.next_gate}</dd></div>
+                  <div><dt>Current focus</dt><dd>{system.currentFocus}</dd></div>
+                  <div><dt>Latest evidence</dt><dd>{system.latestMilestone}</dd></div>
+                  <div><dt>Next gate</dt><dd>{system.nextGate}</dd></div>
                 </dl>
               </article>
             ))}
