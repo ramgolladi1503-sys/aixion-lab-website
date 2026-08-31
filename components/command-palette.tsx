@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const items = [
-  ["TradeBot", "/systems/tradebot", "System"],
-  ["Aixion Control Core", "/systems/control-core", "System"],
-  ["Automation Systems", "/systems/automation", "System"],
-  ["Analytics Lab", "/systems/analytics", "System"],
-  ["Research Notes", "/research", "Research"],
-  ["Aixion Pulse", "/pulse", "Now"],
-  ["Journey", "/journey", "Story"],
-  ["About Ram", "/about", "Profile"],
-  ["Career Snapshot", "/resume", "Career"],
+  ["TradeBot", "/systems/tradebot", "System", "VALIDATING"],
+  ["Aixion Control Core", "/systems/control-core", "System", "BUILDING"],
+  ["Automation Systems", "/systems/automation", "System", "BUILDING"],
+  ["Analytics Lab", "/systems/analytics", "System", "RESEARCH"],
+  ["Research Notes", "/research", "Research", "ACTIVE + REJECTED"],
+  ["Aixion Pulse", "/pulse", "Now", "CURRENT STATE"],
+  ["Journey", "/journey", "Story", "7 QUESTIONS"],
+  ["About Ram", "/about", "Profile", "ENGINEER"],
+  ["Career Snapshot", "/resume", "Career", "LIVE WEB"],
 ] as const;
 
 export function CommandPalette() {
@@ -26,7 +26,7 @@ export function CommandPalette() {
   const visible = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     if (!normalized) return items;
-    return items.filter(item => `${item[0]} ${item[2]}`.toLowerCase().includes(normalized));
+    return items.filter(item => `${item[0]} ${item[2]} ${item[3]}`.toLowerCase().includes(normalized));
   }, [query]);
 
   function open() { dialogRef.current?.showModal(); setActiveIndex(0); requestAnimationFrame(() => inputRef.current?.focus()); }
@@ -61,9 +61,9 @@ export function CommandPalette() {
           </div>
           <input ref={inputRef} value={query} onChange={event => setQuery(event.target.value)} onKeyDown={onInputKeyDown} placeholder="Systems, research, evidence…" aria-label="Search Aixion pages" />
           <div className="command-results" aria-label="Aixion destinations">
-            {visible.map(([label, href, category], index) => (
+            {visible.map(([label, href, category, state], index) => (
               <Link href={href} key={href} onClick={close} className={index === activeIndex ? "active" : ""} aria-current={index === activeIndex ? "true" : undefined}>
-                <strong>{label}</strong><span>{category}</span>
+                <strong>{label}</strong><span className="command-meta">{category}<em>· {state}</em></span>
               </Link>
             ))}
             {!visible.length ? <p>No matching public page.</p> : null}
