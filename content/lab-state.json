@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-23",
+  "updated_at": "2026-09-01",
   "systems": [
     {
       "id": "AX-SYS-001",
@@ -24,18 +24,18 @@
       "slug": "automation",
       "name": "Automation Systems",
       "state": "BUILDING",
-      "current_focus": "Reusable workflow primitives and observable execution.",
-      "latest_milestone": "Public case-study structure frozen around workflow state and failure handling.",
-      "next_gate": "End-to-end workflow evidence."
+      "current_focus": "MCP Shield: policy-bound tool execution, auditability and failure-safe automation.",
+      "latest_milestone": "MCP Shield promoted as a public implementation case study with architecture, security boundaries and hardening evidence.",
+      "next_gate": "Broaden real-world workflow validation without inventing ROI claims."
     },
     {
       "id": "AX-SYS-004",
       "slug": "analytics",
       "name": "Analytics Lab",
-      "state": "RESEARCH",
-      "current_focus": "Turning operational data into useful, explainable decision views.",
-      "latest_milestone": "Analytics work separated from decorative dashboard presentation.",
-      "next_gate": "Promote one experiment into a complete case study."
+      "state": "BUILDING",
+      "current_focus": "Algotradify: candidate truth, readiness, replay, outcomes and execution-safety views.",
+      "latest_milestone": "Algotradify promoted as a public decision-support case study with replay and outcome analytics attached to runtime state.",
+      "next_gate": "Deepen outcome analysis while preserving decision context and evidence boundaries."
     }
   ]
 }
