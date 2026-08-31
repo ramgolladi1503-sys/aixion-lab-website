@@ -21,9 +21,13 @@ body:has(.observable-home) .mobile-menu summary {
   color: #d7e0dc;
 }
 
-body:has(.observable-home) .brand small,
-body:has(.observable-home) .mode-label {
+body:has(.observable-home) .brand small {
   color: #aab8b2;
+}
+
+body:has(.observable-home) .mode-label {
+  color: #c6d1cc;
+  opacity: 1 !important;
 }
 
 body:has(.observable-home) .brand-mark i {
@@ -69,9 +73,6 @@ body:has(.observable-home) .site-footer .build-line {
   color: #aab8b2;
 }
 
-/* Keep legacy system diagrams visually inside the same dark laboratory world
-   when they appear on the homepage. Their semantics and component structure
-   remain unchanged. */
 .observable-home .system-visual {
   border-color: rgba(210, 228, 221, .14);
   background: linear-gradient(150deg, rgba(12, 25, 31, .92), rgba(8, 18, 23, .82));
@@ -123,7 +124,6 @@ body:has(.observable-home) .site-footer .build-line {
   color: #aab8b2;
 }
 
-/* Reduced motion is a true static mode, not merely an extremely short animation. */
 @media (prefers-reduced-motion: reduce) {
   .observable-home .state-band-line,
   .observable-home .research-markers .marker-ring,
