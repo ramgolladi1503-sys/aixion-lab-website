@@ -7,8 +7,10 @@ import "./accessibility.css";
 import "./final-polish.css";
 import "./uat-polish.css";
 import "./launch.css";
+import "./award-motion.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { MotionOrchestrator } from "@/components/motion-orchestrator";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aixionlab.com";
 const siteDescription = "An independent engineering lab where ideas move through research, implementation, validation and real-world observation.";
@@ -81,6 +83,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" data-view="lab">
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
+        <MotionOrchestrator />
         <SiteHeader />
         <main id="main-content">{children}</main>
         <SiteFooter />
