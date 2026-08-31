@@ -20,8 +20,85 @@
   stroke-width: 2.4 !important;
 }
 
+/* Curated public worklog: current work is visible without becoming a raw activity feed. */
+.home-worklog-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: start;
+  padding: 16px 0;
+  border-top: 1px solid rgba(53,58,55,.12);
+}
+.home-worklog-strip strong {
+  display: block;
+  margin: 5px 0 4px;
+  font: 500 18px/1.25 var(--serif);
+  color: var(--text);
+}
+.home-worklog-strip p {
+  max-width: 780px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.home-worklog-strip--latest { padding-top: 14px; }
+
+.worklog-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.worklog-card { padding: 24px; }
+.worklog-card--active {
+  background: linear-gradient(145deg, rgba(242,244,239,.96), rgba(237,241,242,.82));
+  border-color: rgba(120,153,139,.28);
+}
+.worklog-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.worklog-card h3 { margin: 4px 0 10px; font-size: clamp(25px,3vw,38px); }
+.worklog-card > p:not(.eyebrow) { max-width: 850px; }
+.worklog-evidence {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 12px;
+  margin: 22px 0 0;
+}
+.worklog-evidence div {
+  padding: 14px 16px;
+  border: 1px solid rgba(53,58,55,.1);
+  border-radius: 14px;
+  background: rgba(255,255,255,.2);
+}
+.worklog-evidence dt,
+.worklog-row-meta {
+  color: var(--muted);
+  font: 700 10px/1.4 var(--mono);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.worklog-evidence dd { margin: 6px 0 0; color: var(--text); font-size: 14px; line-height: 1.45; }
+.worklog-principle { max-width: 900px; margin: 16px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+
+.worklog-list { display: grid; gap: 0; }
+.worklog-row {
+  display: grid;
+  grid-template-columns: 150px minmax(0,1fr) auto;
+  gap: 24px;
+  align-items: start;
+  padding: 22px 0;
+  border-top: 1px solid rgba(53,58,55,.12);
+}
+.worklog-row:first-child { border-top: 0; padding-top: 4px; }
+.worklog-row-meta { display: grid; gap: 5px; }
+.worklog-row-copy h3 { margin: 0 0 7px; font-size: 20px; }
+.worklog-row-copy p { max-width: 780px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.worklog-row-copy .worklog-next { margin-top: 8px; color: var(--text-secondary, #53605a); }
+
 @media (max-width: 980px) {
   .journey-step { grid-template-columns: 86px minmax(0, 1fr); }
+  .worklog-row { grid-template-columns: 120px minmax(0,1fr) auto; gap: 18px; }
 }
 
 @media (max-width: 700px) {
@@ -31,4 +108,11 @@
   .journey-step p { grid-column: auto; }
   .journey-step .journey-question { font-size: 17px; }
   .command-meta { white-space: normal; justify-content: flex-end; text-align: right; }
+  .home-worklog-strip { grid-template-columns: 1fr; gap: 10px; }
+  .worklog-card { padding: 18px; }
+  .worklog-card-head { align-items: flex-start; }
+  .worklog-evidence { grid-template-columns: 1fr; }
+  .worklog-row { grid-template-columns: 1fr; gap: 10px; padding: 20px 0; }
+  .worklog-row-meta { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+  .worklog-row > .state-tag { justify-self: start; }
 }
