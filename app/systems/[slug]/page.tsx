@@ -47,35 +47,35 @@ const detail: Record<string, {
     ],
   },
   automation: {
-    problem: "Operational workflows often repeat manual work while making failure handling and auditability hard to see.",
-    challenge: "Automate repetitive work without turning failures, retries and state transitions into invisible behavior.",
-    built: "Reusable workflow and RPA patterns shaped by quality-engineering principles: explicit inputs, validation, retries, evidence and reporting.",
-    outcome: "A growing automation system family that can become public case studies as individual workflows mature.",
+    problem: "Agent and workflow automation becomes dangerous when tool execution, secrets, destructive commands and approval boundaries are implicit.",
+    challenge: "Automate useful work while making policy decisions, blocked actions, redaction, audit state and rollback visible before execution.",
+    built: "MCP Shield: a public, local-first runtime security gateway for MCP tools and AI agents with scanning, deterministic policy evaluation, runtime interception, redacted audit trails and rollback-safe configuration.",
+    outcome: "A concrete automation/security case study with a documented architecture, CLI workflow, attack corpus, hardening tests and public implementation evidence.",
     engineering: [
-      { title: "Observable workflow state", body: "Each stage should explain whether it is waiting, running, retrying, blocked or complete." },
-      { title: "Failure handling", body: "Retries and recovery belong in the workflow design rather than being manual cleanup after the fact." },
-      { title: "QA as architecture", body: "Validation is designed into automation paths instead of being added only after implementation." },
+      { title: "Policy-bound execution", body: "Tool calls are evaluated through explicit allow, warn, approve and block decisions instead of relying on agent intent alone." },
+      { title: "Failure-safe automation", body: "Unsafe calls, secret access, destructive commands and policy errors are designed to fail closed where appropriate, with explainable reasons and rollback paths." },
+      { title: "QA as architecture", body: "Unit, integration, corpus, smoke and hardening tests treat security and failure modes as first-class system behavior." },
     ],
     evidence: [
-      { type: "BUILD", label: "Workflow engine and RPA case-study structure", state: "BUILDING" },
-      { type: "CASE STUDY", label: "Detailed public evidence added only after an end-to-end workflow is frozen", state: "GATED" },
+      { type: "PUBLIC REPO", label: "MCP Shield implementation, architecture and demo workflow", state: "PUBLIC" },
+      { type: "QUALITY", label: "Hardening, corpus, smoke and release-validation test strategy", state: "DOCUMENTED" },
       { type: "BOUNDARY", label: "No fabricated time-saving or ROI metrics", state: "ENFORCED" },
     ],
   },
   analytics: {
-    problem: "Dashboards become decoration when the underlying question, data quality and decision path are not explicit.",
-    challenge: "Turn operational data into views that support a specific decision and can explain how each insight was produced.",
-    built: "A research area for Tableau, data-quality and operational analytics work that will promote only complete, evidence-backed case studies.",
-    outcome: "A place to show analytical reasoning without padding the portfolio with disconnected visualizations.",
+    problem: "Operational dashboards become decoration when candidate truth, readiness, outcomes and safety state cannot be traced back to the decision path.",
+    challenge: "Turn runtime evidence into operator views that explain candidate survival, execution readiness, outcomes and failure state without implying that a signal is automatically tradable.",
+    built: "Algotradify: a public FastAPI and React runtime bridge with candidate-truth views, opportunity ranking, readiness evidence, replay drilldowns, outcome analytics, filtering and execution-safety visibility.",
+    outcome: "A concrete decision-support case study where analytics are attached to runtime state, replay and operator decisions rather than presented as disconnected dashboard screenshots.",
     engineering: [
-      { title: "Question first", body: "Every dashboard starts with the decision or question it needs to support." },
-      { title: "Data quality", body: "Source assumptions, transformations and missing-data behavior are part of the story." },
-      { title: "Explain the insight", body: "Visual polish is useful only when the visitor can understand what changed and why it matters." },
+      { title: "Decision path first", body: "The UI follows candidate survival from strategy output through truth, ranking, readiness, lifecycle and outcomes." },
+      { title: "Replay and outcomes", body: "Outcome logging, replay drilldowns and analytics views make historical decisions inspectable instead of reducing them to a single score." },
+      { title: "Safety visibility", body: "Execution-safety state is surfaced in the API and UI so operator views distinguish opportunity from executable readiness." },
     ],
     evidence: [
-      { type: "RESEARCH", label: "Analytics and Tableau experiments are being selected for complete case studies", state: "RESEARCH" },
-      { type: "PROMOTION", label: "One experiment must pass completeness and evidence gates before becoming a flagship case study", state: "GATED" },
-      { type: "BOUNDARY", label: "No decorative dashboard screenshots without context", state: "ENFORCED" },
+      { type: "PUBLIC REPO", label: "Algotradify runtime bridge, monitoring UI and documented architecture", state: "PUBLIC" },
+      { type: "ANALYTICS", label: "Replay drilldowns, outcome analytics and richer operator filtering", state: "DOCUMENTED" },
+      { type: "BOUNDARY", label: "No decorative dashboard screenshots without decision context", state: "ENFORCED" },
     ],
   },
 };
@@ -83,8 +83,8 @@ const detail: Record<string, {
 const tabs: Record<string, [string, string][]> = {
   tradebot: [["Overview", "overview"], ["Architecture", "architecture"], ["Engineering", "engineering"], ["Research", "research"], ["Evidence", "evidence"], ["Timeline", "timeline"]],
   "control-core": [["Overview", "overview"], ["Architecture", "architecture"], ["Capabilities", "capabilities"], ["MVP", "mvp"], ["Evidence", "evidence"], ["Roadmap", "roadmap"]],
-  automation: [["Overview", "overview"], ["Workflow", "architecture"], ["Engineering", "engineering"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
-  analytics: [["Overview", "overview"], ["Decision model", "architecture"], ["Engineering", "engineering"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
+  automation: [["Overview", "overview"], ["Workflow", "architecture"], ["Engineering", "engineering"], ["Case study", "case-study"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
+  analytics: [["Overview", "overview"], ["Decision model", "architecture"], ["Engineering", "engineering"], ["Case study", "case-study"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
 };
 
 export function generateStaticParams() { return systems.map(system => ({ slug: system.slug })); }
@@ -166,6 +166,32 @@ function FlagshipSpecific({ slug }: { slug: string }) {
         </div>
       </section>
     </>
+  );
+
+  if (slug === "automation") return (
+    <section className="section-tight anchor-section" id="case-study">
+      <div className="shell panel panel-pad">
+        <SectionHeading eyebrow="PUBLIC CASE STUDY · MCP SHIELD" title="Automation with a security boundary before execution." copy="This is a real public implementation, not a placeholder case study or estimated ROI story." />
+        <div className="detail-grid">
+          <div className="detail-card"><p className="eyebrow">RUNTIME LOOP</p><h3>Scan → policy → intercept → explain → audit → rollback</h3><p>The gateway sits between agents and MCP tools so risky calls can be evaluated before side effects occur.</p></div>
+          <div className="detail-card"><p className="eyebrow">QUALITY EVIDENCE</p><h3>Attack corpus and hardening tests</h3><p>Prompt injection, secret access, destructive commands, response poisoning and false-positive behavior are part of the documented test strategy.</p></div>
+        </div>
+        <div className="button-row"><a className="button-secondary" href="https://github.com/ramgolladi1503-sys/MCP" target="_blank" rel="noreferrer">Review MCP Shield on GitHub ↗</a></div>
+      </div>
+    </section>
+  );
+
+  if (slug === "analytics") return (
+    <section className="section-tight anchor-section" id="case-study">
+      <div className="shell panel panel-pad">
+        <SectionHeading eyebrow="PUBLIC CASE STUDY · ALGOTRADIFY" title="Analytics attached to decision state, not dashboard decoration." copy="The public implementation connects runtime evidence to candidate truth, readiness, replay, outcomes and operator views." />
+        <div className="detail-grid">
+          <div className="detail-card"><p className="eyebrow">DECISION PATH</p><h3>Truth → rank → readiness → lifecycle → outcome</h3><p>Candidate state is carried through the operator workflow so a visible opportunity is not confused with executable readiness.</p></div>
+          <div className="detail-card"><p className="eyebrow">ANALYTICS SURFACE</p><h3>Replay drilldowns and outcome views</h3><p>Historical outcomes, filtering and execution-safety visibility make the reasoning path inspectable rather than presenting an isolated chart.</p></div>
+        </div>
+        <div className="button-row"><a className="button-secondary" href="https://github.com/ramgolladi1503-sys/algotradify" target="_blank" rel="noreferrer">Review Algotradify on GitHub ↗</a></div>
+      </div>
+    </section>
   );
 
   return null;
