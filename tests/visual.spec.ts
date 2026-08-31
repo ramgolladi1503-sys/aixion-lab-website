@@ -12,6 +12,7 @@ for (const [name, route] of routes) {
     const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     expect(hasHorizontalOverflow, `${route} must not overflow horizontally`).toBe(false);
     await expect(page.locator(".abstract-scene")).toHaveCount(0);
+    await page.waitForTimeout(1100);
     const destination = path.join("test-results", "screenshots", testInfo.project.name, `${name}.png`);
     await page.screenshot({ path: destination, fullPage: true });
   });
