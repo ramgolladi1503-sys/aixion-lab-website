@@ -3,19 +3,43 @@
   "principle": "Only meaningful, public-safe engineering work is published. Raw commits, private conversations, credentials, proprietary logic and unverified claims stay out of the public feed.",
   "active": [
     {
+      "id": "AX-WORK-2026-0831-05",
+      "date": "2026-08-31",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "RELEASE",
+      "state": "VALIDATING",
+      "title": "Production cutover and live-domain verification",
+      "summary": "Promoting the validated interaction, first-load stability and public-worklog refinements to aixionlab.com while keeping the custom-domain release observable.",
+      "evidence": "The release candidate passed typecheck, static-export, browser, accessibility, interaction and visual regression gates before production promotion.",
+      "next_gate": "Deploy the validated head to aixionlab.com, verify the live custom-domain experience end to end and then close the launch cycle."
+    }
+  ],
+  "entries": [
+    {
+      "id": "AX-WORK-2026-0831-04",
+      "date": "2026-08-31",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "UAT",
+      "state": "VALIDATED",
+      "title": "Live UAT removed interaction and layout distractions",
+      "summary": "Production review simplified the search surface, removed redundant footer navigation and corrected the Control Core first-load reveal so its center no longer shifts during animation.",
+      "evidence": "Focused browser regressions passed for first-load Control Core centering, the quieter Search control and the authored closing footer.",
+      "next_gate": "Verify the same behavior on the production custom domain after deployment."
+    },
+    {
       "id": "AX-WORK-2026-0831-03",
       "date": "2026-08-31",
       "area": "AIXION LAB",
       "system_slug": "lab",
       "type": "BUILD",
-      "state": "BUILDING",
+      "state": "VALIDATED",
       "title": "Public worklog and activity publishing",
-      "summary": "Turning ongoing Aixion engineering work into a curated public activity layer that can surface current work, evidence and next gates without exposing raw repository or conversation data.",
-      "evidence": "Pulse is moving from hard-coded ship-log entries to a structured manifest shared with the public site.",
-      "next_gate": "Pass production CI, publish the first activity feed and use it for future meaningful milestones."
-    }
-  ],
-  "entries": [
+      "summary": "Ongoing Aixion engineering work now feeds a curated public activity layer that surfaces current work, evidence and next gates without exposing raw repository or conversation data.",
+      "evidence": "Home and Pulse read from a structured public-safe activity manifest, with dedicated worklog acceptance tests in the production suite.",
+      "next_gate": "Use the manifest for future meaningful milestones and keep publication evidence-led."
+    },
     {
       "id": "AX-WORK-2026-0831-02",
       "date": "2026-08-31",
