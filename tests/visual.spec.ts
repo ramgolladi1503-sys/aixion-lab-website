@@ -20,7 +20,7 @@ for (const [name, route] of routes) {
 
 test("home primary action is visible without scrolling", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  const action = page.getByRole("link", { name: /Explore systems/ });
+  const action = page.getByRole("link", { name: /Explore systems/i });
   await expect(action).toBeVisible();
   const box = await action.boundingBox();
   const viewport = page.viewportSize();
