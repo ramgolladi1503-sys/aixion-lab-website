@@ -12,21 +12,25 @@ test("home keeps the approved observable dark thesis and flagship orientation", 
   await expect(page.locator(".editorial-home")).toHaveCount(0);
 });
 
-test("motion reveals approved dark sections without becoming the content model", async ({ page }) => {
+test("motion reveals approved dark sections without becoming the content model", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-ready/);
   await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
   await expect(page.locator('[data-reveal="pulse-preview"]')).toBeVisible();
-  await expect(page.locator("[data-aixion-signal]").first()).toBeVisible();
+  const lifecycle = page.locator("[data-aixion-signal]").first();
+  if (testInfo.project.name === "mobile") await expect(lifecycle).toBeHidden();
+  else await expect(lifecycle).toBeVisible();
 });
 
-test("reduced-motion preserves the complete approved dark Home", async ({ page }) => {
+test("reduced-motion preserves approved content and mobile subtraction", async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-reduced/);
   await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
   await expect(page.getByRole("link", { name: /Explore systems/i }).first()).toBeVisible();
-  await expect(page.locator("[data-aixion-signal]").first()).toBeVisible();
+  const lifecycle = page.locator("[data-aixion-signal]").first();
+  if (testInfo.project.name === "mobile") await expect(lifecycle).toBeHidden();
+  else await expect(lifecycle).toBeVisible();
 });
 
 test("Journey is an escalating engineering-question narrative", async ({ page }) => {
