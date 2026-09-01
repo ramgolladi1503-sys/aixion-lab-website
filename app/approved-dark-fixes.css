@@ -120,6 +120,17 @@
 .observable-home .home-worklog-strip { background: transparent !important; }
 .observable-home .section,
 .observable-home .section-tight { background: transparent !important; }
+.hero-career-link {
+  display: inline-flex;
+  width: max-content;
+  margin-top: 7px;
+  color: #cbd6d2;
+  font-size: 12px;
+  letter-spacing: .02em;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(168,231,92,.22);
+}
+.hero-career-link:hover { color: #eef4ee; border-bottom-color: rgba(168,231,92,.5); }
 
 /* System detail pages must never reintroduce pale tiles inside the dark snapshot/evidence surfaces. */
 .system-hero-summary,
@@ -153,6 +164,12 @@
   border-color: rgba(168,231,92,.28) !important;
   color: #eef4ee !important;
 }
+
+/* Give the four system routes a distinct atmospheric signature without changing the shared authority. */
+main:has(.visual-tradebot) .system-hero-summary { background: linear-gradient(155deg, rgba(20,42,31,.9), rgba(6,18,20,.82)) !important; border-top-color: rgba(168,231,92,.42) !important; }
+main:has(.visual-core) .system-hero-summary { background: linear-gradient(155deg, rgba(25,24,42,.9), rgba(6,18,20,.82)) !important; border-top-color: rgba(168,137,232,.42) !important; }
+main:has(.visual-automation) .system-hero-summary { background: linear-gradient(155deg, rgba(42,30,21,.88), rgba(6,18,20,.82)) !important; border-top-color: rgba(231,164,92,.42) !important; }
+main:has(.visual-analytics) .system-hero-summary { background: linear-gradient(155deg, rgba(16,31,43,.9), rgba(6,18,20,.82)) !important; border-top-color: rgba(103,167,232,.42) !important; }
 
 /* Footer is part of the wallpaper rather than a light slab. */
 .site-footer,
@@ -193,4 +210,14 @@ main [class*="meta"] { color: #95a49f; }
     background: rgba(8,22,24,.82) !important;
   }
   .system-summary-grid > div { background: rgba(8,22,24,.32) !important; }
+
+  /* Mobile subtraction: preserve the evidence path while removing repeated desktop explanation. */
+  .anchor-section#engineering .system-grid.section-inline { display: none !important; }
+  .observable-home [data-reveal="research-proof"] .research-row:nth-child(n+3) { display: none !important; }
+  .observable-home [data-reveal="journey-feature"] .system-visual { display: none !important; }
+  .observable-home [data-reveal="journey-feature"] .feature-split { grid-template-columns: 1fr !important; }
+  .observable-home .contact-copy--conversation { display: none !important; }
+  .observable-home .contact-panel { grid-template-columns: 1fr !important; }
+  .observable-home .contact-copy--career { padding: 22px 18px !important; }
+  .hero-career-link { font-size: 12px; margin-top: 9px; }
 }
