@@ -141,7 +141,7 @@ test("Control Core remains centered after first-load reveal", async ({ page }) =
   expect(dy).toBeLessThan(3);
 });
 
-test("footer closes with two intentional edge-spanning editorial lines", async ({ page }, testInfo) => {
+test("footer closes as a quiet authored endpoint", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
   const footer = page.locator("footer.site-footer");
   const manifesto = footer.locator(".footer-manifesto");
@@ -159,23 +159,13 @@ test("footer closes with two intentional edge-spanning editorial lines", async (
   expect(fontFamily).toMatch(/Iowan Old Style|Palatino|Book Antiqua|Georgia|serif/i);
 
   if (testInfo.project.name === "desktop") {
-    const metrics = await lines.evaluateAll(nodes => {
-      const parent = nodes[0]?.parentElement?.getBoundingClientRect();
-      return nodes.map(node => {
-        const range = document.createRange();
-        range.selectNodeContents(node);
-        const textRects = Array.from(range.getClientRects()).filter(rect => rect.width > 1 && rect.height > 1);
-        const textWidth = textRects.reduce((sum, rect) => sum + rect.width, 0);
-        return {
-          wrapCount: textRects.length,
-          coverage: parent ? textWidth / parent.width : 0,
-          parentWidth: parent?.width ?? 0,
-        };
-      });
-    });
-
-    expect(metrics[0].parentWidth).toBeGreaterThan(1200);
-    expect(metrics.every(metric => metric.wrapCount === 1)).toBe(true);
-    expect(Math.min(...metrics.map(metric => metric.coverage))).toBeGreaterThan(0.82);
+    const width = await manifesto.evaluate(node => node.getBoundingClientRect().width);
+    const fontSize = await manifesto.evaluate(node => parseFloat(getComputedStyle(node).fontSize));
+    expect(width).toBeGreaterThanOrEqual(760);
+    expect(width).toBeLessThanOrEqual(960);
+    expect(fontSize).toBeLessThanOrEqual(24);
+  } else {
+    await expect(lines.nth(0)).toBeVisible();
+    await expect(lines.nth(1)).toBeHidden();
   }
 });
