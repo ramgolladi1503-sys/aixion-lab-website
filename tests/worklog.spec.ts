@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("Home surfaces current curated lab work without turning mobile into an activity feed", async ({ page }, testInfo) => {
+test("Home surfaces current curated lab work without becoming an activity feed", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
   const current = page.locator(".pulse-preview");
   await expect(current).toBeVisible();
@@ -11,14 +11,13 @@ test("Home surfaces current curated lab work without turning mobile into an acti
   else await expect(older).toBeVisible();
 });
 
-test("Pulse publishes active work and a public-safe worklog", async ({ page }) => {
+test("Pulse publishes current work and only recent meaningful public changes", async ({ page }) => {
   await page.goto("/pulse", { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { name: "What is actively moving" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Approved dark system refinement and release validation" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Changes that meaningfully altered capability, evidence or authority" })).toBeVisible();
-  await expect(page.getByText("Black-wallpaper 70/20/10 authority restored")).toBeVisible();
-  await expect(page.getByText("Editorial closing principle became the authored site endpoint")).toBeVisible();
-  await expect(page.getByText("Public worklog and activity publishing")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Only changes that matter outside the repository" })).toBeVisible();
+  await expect(page.locator(".pulse-history .worklog-row")).toHaveCount(5);
+  await expect(page.getByText(/older public milestones remain preserved/i)).toBeVisible();
   await expect(page.getByText(/Raw commits, private conversations, credentials, proprietary logic/)).toBeVisible();
 });
 
