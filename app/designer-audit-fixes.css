@@ -121,25 +121,34 @@ main:not(:has(.observable-home)) + .site-footer .footer-closing {
 }
 
 @media (max-width: 760px) {
-  /* Mobile system visuals are semantic sequences, not miniature desktop diagrams. */
+  /* Mobile system visuals become readable semantic sequences, not miniature desktop diagrams. */
   .visual-core .core-map { grid-template-columns: 1fr !important; gap: 7px !important; }
   .visual-core .core-center { min-height: 68px !important; margin-bottom: 3px !important; }
   .visual-core .core-node { min-height: 42px !important; font-size: 12px !important; justify-content: flex-start !important; padding: 0 14px !important; }
 
-  .visual-tradebot .pipeline,
-  .visual-automation .automation-flow {
-    grid-template-columns: 1fr !important;
+  .visual-tradebot .tradebot-rail { grid-template-columns: 1fr !important; gap: 7px !important; }
+  .visual-tradebot .tradebot-stage {
+    min-height: 54px !important;
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 28px 84px 1fr !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .visual-tradebot .tradebot-stage small { text-align: left !important; }
+  .visual-tradebot .tradebot-wave { height: 48px !important; }
+
+  .visual-automation .workflow-lanes { display: grid !important; grid-template-columns: 1fr !important; gap: 7px !important; }
+  .visual-automation .workflow-row {
+    min-height: 48px !important;
+    width: 100% !important;
+    grid-template-columns: 26px 72px minmax(0,1fr) auto !important;
     gap: 7px !important;
   }
-  .visual-tradebot .pipeline > *,
-  .visual-automation .automation-flow > * {
-    min-height: 44px !important;
-    width: 100% !important;
-  }
 
+  .visual-analytics .analytics-grid { grid-template-columns: 1fr !important; gap: 7px !important; }
   .visual-analytics .analytics-chart { min-height: 86px !important; }
-  .visual-analytics .analytics-metrics,
-  .visual-analytics .analytics-questions { grid-template-columns: 1fr !important; gap: 7px !important; }
+  .visual-analytics .analytics-metric { min-height: 50px !important; }
 
   .worklog-evidence { grid-template-columns: 1fr !important; }
   .worklog-evidence > div { padding: 13px !important; }
