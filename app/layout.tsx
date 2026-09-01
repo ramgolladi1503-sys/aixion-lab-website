@@ -13,7 +13,6 @@ import "./live-polish.css";
 import "./observable-system.css";
 import "./observable-shell.css";
 import "./observable-release.css";
-import "./editorial-light.css";
 import "./system-grammar.css";
 import "./accessibility-contrast.css";
 import "./approved-dark.css";
