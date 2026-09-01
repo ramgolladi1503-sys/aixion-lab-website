@@ -56,7 +56,17 @@ export function ObservableStateField() {
           {[-18,-10,-2,6,14].map(offset => <path d={`M 110 ${472 + offset} C 230 ${425 + offset}, 325 ${505 + offset}, 455 ${462 + offset} S 650 ${490 + offset}, 760 ${468 + offset}`} key={offset} />)}
           {rejected.slice(0, rejectedPositions.length).map((note, index) => {
             const [x, y] = rejectedPositions[index];
-            return <g className="rejected-x" transform={`translate(${x} ${y})`} key={note.slug}><line x1="-5" y1="-5" x2="5" y2="5"/><line x1="5" y1="-5" x2="-5" y2="5"/><title>{note.title}: rejected after evaluation</title></g>;
+            return (
+              <g
+                className="rejected-x"
+                transform={`translate(${x} ${y})`}
+                key={note.slug}
+                aria-label={`${note.title}: rejected after evaluation`}
+              >
+                <line x1="-5" y1="-5" x2="5" y2="5"/>
+                <line x1="5" y1="-5" x2="-5" y2="5"/>
+              </g>
+            );
           })}
           <text x="104" y="508">REJECTED HYPOTHESES</text>
           <text x="104" y="525">REMAIN VISIBLE</text>
@@ -65,7 +75,16 @@ export function ObservableStateField() {
         <g className="research-markers">
           {researchNotes.slice(0, 3).map((note, index) => {
             const coords = [[342,210],[548,325],[704,446]][index];
-            return <g transform={`translate(${coords[0]} ${coords[1]})`} key={note.slug}><circle r="5"/><circle className="marker-ring" r="16"/><title>{note.title}: {note.state}</title></g>;
+            return (
+              <g
+                transform={`translate(${coords[0]} ${coords[1]})`}
+                key={note.slug}
+                aria-label={`${note.title}: ${note.state}`}
+              >
+                <circle r="5"/>
+                <circle className="marker-ring" r="16"/>
+              </g>
+            );
           })}
         </g>
 
