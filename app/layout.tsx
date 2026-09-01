@@ -13,6 +13,7 @@ import "./live-polish.css";
 import "./observable-system.css";
 import "./observable-shell.css";
 import "./observable-release.css";
+import "./observable-universe.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionOrchestrator } from "@/components/motion-orchestrator";
@@ -25,7 +26,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: "#071015",
-  colorScheme: "light dark",
+  colorScheme: "dark",
 };
 
 export const metadata: Metadata = {
