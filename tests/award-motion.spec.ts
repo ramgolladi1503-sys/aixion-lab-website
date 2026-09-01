@@ -1,44 +1,31 @@
 import { test, expect } from "@playwright/test";
 
-test("home has a memorable thesis and locked observable control-room field", async ({ page }) => {
+test("home has a memorable light editorial thesis and flagship orientation", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
-  await expect(page.locator(".control-rail--left")).toBeVisible();
-  await expect(page.locator(".control-rail--right")).toBeVisible();
-  await expect(page.locator(".pulse-preview")).toBeVisible();
-
-  const field = page.locator(".observable-field");
-  await expect(field).toBeVisible();
-  await expect(field.locator(".state-band")).toHaveCount(4);
-  await expect(field.getByText("TRADEBOT", { exact: true })).toBeVisible();
-  await expect(field.getByText("CONTROL CORE", { exact: true })).toBeVisible();
-  await expect(field.getByText("REJECTED HYPOTHESES", { exact: true })).toBeVisible();
-  await expect(field.getByText("REMAIN VISIBLE", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Applied intelligence, automation and decision systems." })).toBeVisible();
+  await expect(page.getByText(/Built by Ram — Quality Engineering/)).toBeVisible();
+  await expect(page.locator(".home-flagships .flagship-record")).toHaveCount(2);
+  await expect(page.locator(".home-flagships").getByText("TradeBot", { exact: true })).toBeVisible();
+  await expect(page.locator(".home-flagships").getByText("Aixion Control Core", { exact: true })).toBeVisible();
+  await expect(page.locator(".editorial-home")).toBeVisible();
+  await expect(page.locator(".observable-home")).toHaveCount(0);
 });
 
-test("motion has a real temporal-field animation grammar", async ({ page }) => {
+test("motion reveals editorial sections without becoming the content model", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-ready/);
-
-  const fieldAnimation = await page.locator(".state-band-line").first().evaluate(node => getComputedStyle(node).animationName);
-  expect(fieldAnimation).toContain("observable-flow");
-
-  const markerAnimation = await page.locator(".research-markers .marker-ring").first().evaluate(node => getComputedStyle(node).animationName);
-  expect(markerAnimation).toContain("observable-pulse");
+  await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
+  await expect(page.locator('[data-reveal="proof"]')).toBeVisible();
+  await expect(page.locator("[data-aixion-signal]")).toBeVisible();
 });
 
-test("reduced-motion collapses the observable field safely", async ({ page }) => {
+test("reduced-motion preserves the complete editorial Home", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-reduced/);
-
-  const fieldAnimation = await page.locator(".state-band-line").first().evaluate(node => getComputedStyle(node).animationName);
-  const markerAnimation = await page.locator(".research-markers .marker-ring").first().evaluate(node => getComputedStyle(node).animationName);
-  const fieldTransform = await page.locator(".observable-field").evaluate(node => getComputedStyle(node).transform);
-
-  expect(fieldAnimation).toBe("none");
-  expect(markerAnimation).toBe("none");
-  expect(fieldTransform).toBe("none");
+  await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
+  await expect(page.getByRole("link", { name: /Explore systems/i })).toBeVisible();
+  await expect(page.locator("[data-aixion-signal]")).toBeVisible();
 });
 
 test("Journey is an escalating engineering-question narrative", async ({ page }) => {
