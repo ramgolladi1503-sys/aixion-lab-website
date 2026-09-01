@@ -17,7 +17,8 @@ export default function AboutPage() {
             <h1>The engineer behind the systems.</h1>
             <p className="lede">I build observable, testable and evidence-driven systems across quality engineering, automation, software, data and applied AI.</p>
             <div className="button-row">
-              <Link className="button" href="/resume">Career snapshot →</Link>
+              <Link className="button" href="/resume">Hire Ram · Career snapshot →</Link>
+              <Link className="button-secondary" href="/collaborate">Work with Aixion Lab</Link>
               <a className="button-secondary" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
               <a className="button-secondary" href="https://www.linkedin.com/in/ram-golladi" target="_blank" rel="noreferrer">LinkedIn ↗</a>
             </div>
@@ -70,21 +71,27 @@ export default function AboutPage() {
       </section>
 
       <section className="section-tight" id="contact">
-        <div className="shell contact-panel about-contact-panel">
-          <div className="panel contact-copy">
-            <p className="eyebrow">CONTACT</p>
-            <h2>Build, test or discuss something difficult.</h2>
-            <p>Engineering roles, applied AI, automation, data systems or architecture discussions are the right reasons to reach out.</p>
-            <div className="button-row">
-              <a className="button" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">Open GitHub →</a>
-              <Link className="button-secondary" href="/resume">Career snapshot</Link>
+        <div className="shell">
+          <SectionHeading eyebrow="CONTACT" title="Two reasons to reach out" copy="Choose the path that matches the opportunity. The engineering evidence remains the same." />
+          <div className="contact-panel about-contact-panel">
+            <div className="panel contact-copy contact-copy--career">
+              <p className="eyebrow">CAREER OPPORTUNITIES</p>
+              <h3>Hire the engineer behind Aixion Lab.</h3>
+              <p>For full-time engineering roles spanning quality, automation, software, data or applied AI, use the recruiter-ready career view.</p>
+              <div className="button-row">
+                <Link className="button" href="/resume">Career snapshot →</Link>
+                <a className="button-secondary" href="https://www.linkedin.com/in/ram-golladi" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              </div>
             </div>
-          </div>
-          <div className="panel contact-copy career-only">
-            <p className="eyebrow">CAREER LENS</p>
-            <h3>Recruiter fast path</h3>
-            <p>Quality engineering · automation · Python · Java · APIs · WebSockets · real-time data · testing · CI/CD · ML experimentation · system design · observability.</p>
-            <Link className="text-link" href="/resume">Open career snapshot →</Link>
+            <div className="panel contact-copy contact-copy--conversation">
+              <p className="eyebrow">PROJECT COLLABORATION</p>
+              <h3>Work with the independent lab.</h3>
+              <p>Aixion Lab is open to selective, bounded engineering collaboration; it is not presented as a staffed agency or large consultancy.</p>
+              <div className="button-row">
+                <Link className="button" href="/collaborate">Collaboration path →</Link>
+                <a className="button-secondary" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
