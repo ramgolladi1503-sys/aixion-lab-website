@@ -78,24 +78,34 @@
   border: 1px solid rgba(103,167,232,.14) !important;
   box-shadow: inset 0 1px rgba(255,255,255,.012) !important;
 }
-.visual-analytics .analytics-chart svg path:first-child {
-  stroke: #7fb4ea !important;
-  opacity: .8 !important;
-}
-.visual-analytics .analytics-chart svg path:last-child {
-  stroke: #6fbca9 !important;
-  opacity: .55 !important;
-}
+.visual-analytics .analytics-chart svg path:first-child { stroke: #7fb4ea !important; opacity: .8 !important; }
+.visual-analytics .analytics-chart svg path:last-child { stroke: #6fbca9 !important; opacity: .55 !important; }
 .visual-analytics .analytics-chart span { color: #99aaa4 !important; }
+
+/* Research states should explain their boundary without adding another card. */
+.research-state-reason {
+  max-width: 720px;
+  margin-top: 10px !important;
+  color: #aebdb8 !important;
+  font-size: 12.5px !important;
+  line-height: 1.5 !important;
+}
+.research-state-reason span {
+  display: inline-block;
+  margin-right: 8px;
+  color: #c9d6d1;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
 
 /* The full authored manifesto belongs to Home; secondary routes end more quietly. */
 main:not(:has(.observable-home)) + .site-footer .footer-manifesto {
   max-width: 720px;
   font-size: clamp(16px,1.25vw,19px) !important;
 }
-main:not(:has(.observable-home)) + .site-footer .footer-manifesto-line + .footer-manifesto-line {
-  display: none;
-}
+main:not(:has(.observable-home)) + .site-footer .footer-manifesto-line + .footer-manifesto-line { display: none; }
 main:not(:has(.observable-home)) + .site-footer .footer-closing {
   padding-top: 24px !important;
   padding-bottom: 18px !important;
@@ -111,12 +121,28 @@ main:not(:has(.observable-home)) + .site-footer .footer-closing {
 }
 
 @media (max-width: 760px) {
-  .visual-core .core-map { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
-  .visual-core .core-center { min-height: 76px !important; }
-  .visual-core .core-node { min-height: 46px !important; font-size: 11px !important; }
+  /* Mobile system visuals are semantic sequences, not miniature desktop diagrams. */
+  .visual-core .core-map { grid-template-columns: 1fr !important; gap: 7px !important; }
+  .visual-core .core-center { min-height: 68px !important; margin-bottom: 3px !important; }
+  .visual-core .core-node { min-height: 42px !important; font-size: 12px !important; justify-content: flex-start !important; padding: 0 14px !important; }
+
+  .visual-tradebot .pipeline,
+  .visual-automation .automation-flow {
+    grid-template-columns: 1fr !important;
+    gap: 7px !important;
+  }
+  .visual-tradebot .pipeline > *,
+  .visual-automation .automation-flow > * {
+    min-height: 44px !important;
+    width: 100% !important;
+  }
+
+  .visual-analytics .analytics-chart { min-height: 86px !important; }
+  .visual-analytics .analytics-metrics,
+  .visual-analytics .analytics-questions { grid-template-columns: 1fr !important; gap: 7px !important; }
+
   .worklog-evidence { grid-template-columns: 1fr !important; }
   .worklog-evidence > div { padding: 13px !important; }
-  .visual-analytics .analytics-chart { min-height: 100px !important; }
 
   .anchor-section#capabilities .system-grid { grid-template-columns: 1fr !important; }
   .anchor-section#capabilities .detail-card,
@@ -126,5 +152,18 @@ main:not(:has(.observable-home)) + .site-footer .footer-closing {
     border-right: 0 !important;
   }
   .anchor-section#capabilities .detail-card h3 { font-size: 18px; }
+
+  /* Preserve Journey chronology while removing desktop-scale vertical air. */
+  .journey-timeline { gap: 0 !important; }
+  .journey-step { padding-top: 20px !important; padding-bottom: 20px !important; }
+  .journey-question-label { font-size: 10px !important; }
+
+  /* Primary metadata stays readable; tertiary decoration remains quiet. */
+  .research-domain,
+  .system-meta,
+  .worklog-meta,
+  .journey-question-label { color: #a9b8b3 !important; }
+  .research-state-reason { font-size: 12px !important; margin-top: 8px !important; }
+
   main:not(:has(.observable-home)) + .site-footer .footer-manifesto { font-size: 16px !important; }
 }
