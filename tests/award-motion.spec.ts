@@ -18,7 +18,7 @@ test("home has a memorable thesis and locked observable control-room field", asy
 
 test("motion has a real temporal-field animation grammar", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.locator("#main-content")).toHaveClass(/motion-ready/);
+  await expect(page.locator("html")).toHaveClass(/motion-ready/);
 
   const fieldAnimation = await page.locator(".state-band-line").first().evaluate(node => getComputedStyle(node).animationName);
   expect(fieldAnimation).toContain("observable-flow");
@@ -30,7 +30,7 @@ test("motion has a real temporal-field animation grammar", async ({ page }) => {
 test("reduced-motion collapses the observable field safely", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.locator("#main-content")).toHaveClass(/motion-reduced/);
+  await expect(page.locator("html")).toHaveClass(/motion-reduced/);
 
   const fieldAnimation = await page.locator(".state-band-line").first().evaluate(node => getComputedStyle(node).animationName);
   const markerAnimation = await page.locator(".research-markers .marker-ring").first().evaluate(node => getComputedStyle(node).animationName);
