@@ -1,31 +1,32 @@
 import { test, expect } from "@playwright/test";
 
-test("home has a memorable light editorial thesis and flagship orientation", async ({ page }) => {
+test("home keeps the approved observable dark thesis and flagship orientation", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "Applied intelligence, automation and decision systems." })).toBeVisible();
-  await expect(page.getByText(/Built by Ram — Quality Engineering/)).toBeVisible();
-  await expect(page.locator(".home-flagships .flagship-record")).toHaveCount(2);
-  await expect(page.locator(".home-flagships").getByText("TradeBot", { exact: true })).toBeVisible();
-  await expect(page.locator(".home-flagships").getByText("Aixion Control Core", { exact: true })).toBeVisible();
-  await expect(page.locator(".editorial-home")).toBeVisible();
-  await expect(page.locator(".observable-home")).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
+  await expect(page.getByText("Built by Ram", { exact: true })).toBeVisible();
+  await expect(page.locator(".observable-home")).toBeVisible();
+  await expect(page.locator(".observable-field")).toBeVisible();
+  await expect(page.locator(".system-grid .system-card")).toHaveCount(4);
+  await expect(page.getByRole("heading", { name: "TradeBot" }).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Aixion Control Core" }).first()).toBeVisible();
+  await expect(page.locator(".editorial-home")).toHaveCount(0);
 });
 
-test("motion reveals editorial sections without becoming the content model", async ({ page }) => {
+test("motion reveals approved dark sections without becoming the content model", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-ready/);
   await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
-  await expect(page.locator('[data-reveal="proof"]')).toBeVisible();
-  await expect(page.locator("[data-aixion-signal]")).toBeVisible();
+  await expect(page.locator('[data-reveal="pulse-preview"]')).toBeVisible();
+  await expect(page.locator("[data-aixion-signal]").first()).toBeVisible();
 });
 
-test("reduced-motion preserves the complete editorial Home", async ({ page }) => {
+test("reduced-motion preserves the complete approved dark Home", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-reduced/);
   await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
-  await expect(page.getByRole("link", { name: /Explore systems/i })).toBeVisible();
-  await expect(page.locator("[data-aixion-signal]")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Explore systems/i }).first()).toBeVisible();
+  await expect(page.locator("[data-aixion-signal]").first()).toBeVisible();
 });
 
 test("Journey is an escalating engineering-question narrative", async ({ page }) => {
