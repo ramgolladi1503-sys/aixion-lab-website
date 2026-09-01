@@ -19,9 +19,11 @@
   color: var(--a11y-accent) !important;
 }
 
-/* Legacy layers render this 9px label too faintly without an explicit guard. */
-.mode-label {
+/* Legacy globals faded every non-track span in the mode toggle to 45% opacity.
+   That made the 9px "View" label fail contrast even with a compliant text color. */
+.mode-toggle .mode-label {
   color: var(--editorial-muted, #5e6862) !important;
+  opacity: 1 !important;
 }
 
 /* Journey question metadata uses a warm accent; keep it distinct but readable. */
