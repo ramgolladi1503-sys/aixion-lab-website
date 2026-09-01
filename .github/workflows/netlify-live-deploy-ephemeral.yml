@@ -1,0 +1,54 @@
+name: Ephemeral Netlify Production Deploy
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout deployment branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Package exact approved main source
+        run: |
+          git cat-file -e 98c757cdd2be43de3106611332bf2b1ae54666ef^{commit}
+          git archive --format=zip --output=release.zip 98c757cdd2be43de3106611332bf2b1ae54666ef
+          unzip -l release.zip | grep -q 'app/'
+          unzip -l release.zip | grep -q 'netlify.toml'
+
+      - name: Upload exact approved source to Netlify
+        env:
+          SITE_ID: 7f081cce-94b4-440b-918c-9a4ec3bcecd0
+          PROXY: https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..9kdoDgOWgHDfoema.gYHAVpEAcyz2RjOLOH-jGoqFpBboYltiwDbC0SeZuHvJyC_YAgP6GHlNBX-2hxgtSPC2b-qTJ6jxbirNgQZ5fMAXwuQyKAwJat8okyrLVLOxu49b302UtphFOSIqi1VY2yFJsePKmKcTKy9WBdrn5RrA3zPBZeztYBr5pQ6PiNryRYcmjrx_L3m1RfVs_hNIz8zo_5DEEnN631A0Uelr4XHYEee54wpyQIJFDawy-GiowqFljC_4blah8R7GkxcfJY7DH5rlpFj1AHJpadXNc_E6guuhsCuQzvpK5EHP1mKSEyuxyMynAnwn_Pf4wxWvrwc1CM45zqwU6AdgzI2BLspBlf7l65uIrdnCEylypAe7YQuVdQbSva6xQNl_eTNmZUNNh0yZ.b80CJX9hpd5uZUl0lW2YrQ
+        run: |
+          set -euo pipefail
+          curl -fsS -F "zip=@release.zip;type=application/zip" "$PROXY/api/v1/sites/$SITE_ID/builds" -o deploy-response.json
+          DEPLOY_ID=$(jq -r 'if type=="array" then .[0].deploy_id else .deploy_id end' deploy-response.json)
+          BUILD_ID=$(jq -r 'if type=="array" then .[0].id else .id end' deploy-response.json)
+          test -n "$DEPLOY_ID"
+          test "$DEPLOY_ID" != "null"
+          echo "Deploy started: $DEPLOY_ID / build $BUILD_ID"
+          for i in $(seq 1 120); do
+            curl -fsS "$PROXY/api/v1/deploys/$DEPLOY_ID" -o deploy-status.json
+            STATE=$(jq -r '.state' deploy-status.json)
+            echo "Netlify state: $STATE"
+            if [ "$STATE" = "ready" ]; then
+              URL=$(jq -r '.ssl_url // .url' deploy-status.json)
+              echo "Production deploy ready: $URL"
+              exit 0
+            fi
+            if [ "$STATE" = "error" ] || [ "$STATE" = "rejected" ]; then
+              jq '{id,state,error_message}' deploy-status.json
+              exit 1
+            fi
+            sleep 5
+          done
+          echo "Timed out waiting for Netlify deploy"
+          exit 1
