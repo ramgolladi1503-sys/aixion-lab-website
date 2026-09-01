@@ -81,6 +81,7 @@ export const researchNotes = [
     domain: "Market microstructure",
     question: "Are early-session price movements preceded by measurable structural diffusion across constituents and derivatives?",
     state: "ACTIVE VALIDATION",
+    stateReason: "Candidate remains under validation; no structural-edge claim is promoted from the public evidence shown here.",
     accent: "sage",
   },
   {
@@ -89,6 +90,7 @@ export const researchNotes = [
     domain: "Market research",
     question: "Do structural interactions contain repeatable information before a candidate becomes eligible for validation?",
     state: "HYPOTHESIS FROZEN",
+    stateReason: "Specification is frozen before further evaluation so later evidence cannot silently rewrite the hypothesis.",
     accent: "lavender",
   },
   {
@@ -97,6 +99,7 @@ export const researchNotes = [
     domain: "Strategy research",
     question: "Does the candidate retain structural edge after realistic assumptions and holdout testing?",
     state: "REJECTED",
+    stateReason: "The candidate did not retain sufficient support after the required validation boundary; rejection remains part of the record.",
     accent: "peach",
   },
   {
@@ -105,6 +108,7 @@ export const researchNotes = [
     domain: "Autonomous systems",
     question: "How can agent actions remain useful while preserving explicit policy, evidence and authority boundaries?",
     state: "ACTIVE",
+    stateReason: "The research question remains open while policy, evidence and human-authority boundaries are being developed.",
     accent: "blue",
   },
 ];
