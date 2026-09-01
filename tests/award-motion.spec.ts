@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("home keeps the approved observable dark thesis and flagship orientation", async ({ page }) => {
+test("home keeps the approved observable dark thesis and progressive-disclosure orientation", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
   await expect(page.getByText("Built by Ram", { exact: true })).toBeVisible();
@@ -8,7 +8,8 @@ test("home keeps the approved observable dark thesis and flagship orientation", 
   await expect(page.locator(".observable-field")).toBeVisible();
   await expect(page.locator(".system-grid .system-card")).toHaveCount(4);
   await expect(page.getByRole("heading", { name: "TradeBot" }).first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Aixion Control Core" }).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "The rest of the lab lives on dedicated pages." })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Governed autonomy and explicit authority/i })).toBeVisible();
   await expect(page.locator(".editorial-home")).toHaveCount(0);
 });
 
