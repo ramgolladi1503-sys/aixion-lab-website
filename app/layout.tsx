@@ -119,9 +119,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" data-view="lab" suppressHydrationWarning>
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
-        <MotionOrchestrator />
         <SiteHeader />
-        <main id="main-content">{children}</main>
+        <MotionOrchestrator>{children}</MotionOrchestrator>
         <SiteFooter />
         <script
           type="application/ld+json"
