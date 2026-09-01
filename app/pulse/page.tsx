@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { systems } from "@/lib/site-data";
 import labState from "@/content/lab-state.json";
 import labActivity from "@/content/lab-activity.json";
-import { ProgressLane, SectionHeading, StateTag } from "@/components/ui";
+import { SectionHeading, StateTag } from "@/components/ui";
 import { AixionSignal } from "@/components/system-visuals";
 
 export const metadata: Metadata = {
@@ -63,17 +63,8 @@ export default function PulsePage() {
       </section>
 
       <section className="section-tight">
-        <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="SYSTEM MATURITY" title="Where each system sits now" copy="State is categorical and evidence-led. A percentage would pretend we know more than we do." />
-          {systems.map(system => (
-            <ProgressLane key={system.id} label={system.shortName} stage={system.state === "VALIDATING" || system.state === "BUILDING" || system.state === "OPERATING" ? system.state : "RESEARCH"} />
-          ))}
-        </div>
-      </section>
-
-      <section className="section">
         <div className="shell">
-          <SectionHeading eyebrow="SYSTEM STATE" title="Current cycle" copy="These cards answer four things quickly: state, current focus, latest milestone and next gate. State and focus come from the same registry that drives the rest of Aixion Lab." />
+          <SectionHeading eyebrow="SYSTEM STATE" title="Current cycle" copy="One compact register carries the state, current focus, latest public-safe evidence and next gate. A second maturity visualization would only repeat the same information." />
           <div className="pulse-now-grid">
             {currentCycle.map(system => (
               <article className="pulse-system-card" key={system.id}>
