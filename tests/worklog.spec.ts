@@ -1,9 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-test("Home surfaces current curated lab work in the editorial Pulse section", async ({ page }) => {
+test("Home surfaces current curated lab work in the approved Pulse block", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  const current = page.locator(".home-current-grid");
+  const current = page.locator(".pulse-preview");
   await expect(current).toBeVisible();
+  await expect(current.locator(".home-worklog-strip")).toHaveCount(2);
   await expect(current.getByText("Light editorial convergence and release validation")).toBeVisible();
   await expect(current.getByText("Hydration and regression baseline stabilized")).toBeVisible();
 });
