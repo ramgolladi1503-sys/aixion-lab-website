@@ -6,8 +6,8 @@ test("approved observable Home keeps state, evidence and authority public-safe",
 
   await expect(page.locator(".observable-home")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "The lab keeps the questions, failures and evidence visible." })).toBeVisible();
-  await expect(page.getByText(/Research is not silently promoted into a system claim/)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "The rest of the lab lives on dedicated pages." })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Questions, frozen hypotheses and rejected work/i })).toBeVisible();
   await expect(page.locator(".system-grid .system-card")).toHaveCount(4);
 
   const body = (await page.locator("body").innerText()).toLowerCase();
@@ -30,6 +30,7 @@ test("approved observable Home is deliberately recomposed for mobile", async ({ 
   await expect(page.locator("details.mobile-menu summary")).toBeVisible();
   await expect(page.locator(".observable-field")).toBeVisible();
   await expect(page.locator("[data-aixion-signal]").first()).toBeHidden();
+  await expect(page.getByRole("heading", { name: "The rest of the lab lives on dedicated pages." })).toBeVisible();
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
