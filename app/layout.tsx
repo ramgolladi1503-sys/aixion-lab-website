@@ -13,7 +13,7 @@ import "./live-polish.css";
 import "./observable-system.css";
 import "./observable-shell.css";
 import "./observable-release.css";
-import "./observable-universe.css";
+import "./editorial-light.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionOrchestrator } from "@/components/motion-orchestrator";
