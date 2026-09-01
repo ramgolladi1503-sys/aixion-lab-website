@@ -1,102 +1,89 @@
 import { systems, researchNotes } from "@/lib/site-data";
 
-const bandClass = ["band-tradebot", "band-core", "band-automation", "band-analytics"];
-const bandY = [120, 205, 300, 390];
+const bands = [
+  { cls: "band-tradebot", y: 96 },
+  { cls: "band-core", y: 184 },
+  { cls: "band-automation", y: 286 },
+  { cls: "band-analytics", y: 390 },
+] as const;
 
-function escapeXml(value: string) {
-  return value.replace(/[<>&"']/g, character => ({
-    "<": "&lt;",
-    ">": "&gt;",
-    "&": "&amp;",
-    '"': "&quot;",
-    "'": "&apos;",
-  }[character] ?? character));
+const points = [88, 170, 260, 350, 445, 540, 640, 735, 835, 920];
+
+function wavePath(y: number, offset: number) {
+  const ys = [22, 8, 30, -10, 18, -14, 12, -22, -4, -18];
+  return points.map((x, index) => `${index === 0 ? "M" : "L"} ${x} ${y + ys[index] + offset}`).join(" ");
 }
-
-function buildSvgMarkup() {
-  const gridX = [100, 200, 300, 400, 500, 600, 700, 800, 900]
-    .map(x => `<line x1="${x}" y1="42" x2="${x}" y2="500"></line>`).join("");
-  const gridY = [80, 160, 240, 320, 400, 480]
-    .map(y => `<line x1="34" y1="${y}" x2="946" y2="${y}"></line>`).join("");
-
-  const bands = systems.map((system, index) => {
-    const y = bandY[index];
-    const points = [
-      [70, y + 34], [150, y + 18], [230, y + 26], [315, y - 8], [390, y + 8],
-      [470, y - 18], [555, y + 4], [650, y - 24], [740, y - 5], [825, y - 26], [910, y - 12],
-    ];
-    const d = `M ${points.map(point => point.join(" ")).join(" L ")}`;
-    const circles = points.slice(2).map(([x, py], pointIndex) =>
-      `<circle cx="${x}" cy="${py}" r="${pointIndex === 5 ? 6 : 2.8}"></circle>`
-    ).join("");
-    return `<g class="state-band ${bandClass[index]}">
-      <path class="state-band-halo" d="${d}"></path>
-      <path class="state-band-line" d="${d}"></path>
-      ${circles}
-      <circle class="state-band-node" cx="825" cy="${y - 26}" r="12" filter="url(#softGlow)"></circle>
-      <text class="state-band-label" x="842" y="${y - 31}">${escapeXml(system.shortName.toUpperCase())}</text>
-      <text class="state-band-state" x="842" y="${y - 14}">${escapeXml(system.state)}</text>
-    </g>`;
-  }).join("");
-
-  const rejectedMarks = [210, 340, 505].map((x, index) =>
-    `<g transform="translate(${x} ${[445, 456, 449][index]})"><line x1="-5" y1="-5" x2="5" y2="5"></line><line x1="5" y1="-5" x2="-5" y2="5"></line></g>`
-  ).join("");
-
-  const research = researchNotes.slice(0, 3).map((note, index) => {
-    const positions = [[355, 235], [515, 350], [270, 430]];
-    const [x, y] = positions[index];
-    return `<g transform="translate(${x} ${y})"><circle r="5"></circle><circle class="marker-ring" r="14"></circle><title>${escapeXml(note.title)}: ${escapeXml(note.state)}</title></g>`;
-  }).join("");
-
-  return `
-    <title id="observable-title">Aixion temporal state field</title>
-    <desc id="observable-desc">A public-safe visualization of system maturity, current state and research traces. It is illustrative and does not represent private telemetry or invented performance metrics.</desc>
-    <defs>
-      <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
-        <feGaussianBlur stdDeviation="5" result="blur"></feGaussianBlur>
-        <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
-      </filter>
-    </defs>
-    <g class="field-grid" aria-hidden="true">${gridX}${gridY}</g>
-    <g class="temporal-axis" aria-hidden="true">
-      <line x1="54" y1="500" x2="920" y2="500"></line>
-      <text x="54" y="526">PAST</text><text x="470" y="526">PRESENT</text><text x="855" y="526">NEXT</text>
-      <circle cx="650" cy="500" r="5"></circle>
-    </g>
-    ${bands}
-    <g class="rejected-trace">
-      <path d="M70 448 C170 410 260 476 360 446 S540 466 620 445"></path>
-      ${rejectedMarks}
-      <text x="72" y="470">REJECTED RESEARCH REMAINS VISIBLE</text>
-    </g>
-    <g class="research-markers">${research}</g>
-  `;
-}
-
-const svgMarkup = buildSvgMarkup();
 
 export function ObservableStateField() {
-  return (
-    <div className="observable-field" aria-label="Aixion public system state map">
-      <svg
-        className="observable-field-svg"
-        viewBox="0 0 980 560"
-        role="img"
-        aria-labelledby="observable-title observable-desc"
-        dangerouslySetInnerHTML={{ __html: svgMarkup }}
-      />
+  const rejected = researchNotes.filter(note => note.state === "REJECTED");
 
-      <div className="field-legend" aria-label="State legend">
+  return (
+    <div className="observable-field observable-field--locked" aria-label="Aixion public temporal system state map">
+      <svg className="observable-field-svg" viewBox="0 0 1000 560" role="img" aria-labelledby="observable-title observable-desc">
+        <title id="observable-title">Aixion temporal state field</title>
+        <desc id="observable-desc">A public-safe visualization of system maturity, validation and research traces. It does not represent private telemetry or invented performance metrics.</desc>
+        <defs>
+          <filter id="obs-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7" /></filter>
+          <linearGradient id="fade-grid" x1="0" x2="1"><stop offset="0" stopColor="white" stopOpacity="0"/><stop offset=".25" stopColor="white" stopOpacity=".6"/><stop offset="1" stopColor="white" stopOpacity=".12"/></linearGradient>
+        </defs>
+
+        <g className="field-grid" aria-hidden="true">
+          {[90,180,270,360,450,540,630,720,810,900].map(x => <line key={`x-${x}`} x1={x} y1="30" x2={x} y2="500" />)}
+          {[70,140,210,280,350,420,490].map(y => <line key={`y-${y}`} x1="40" y1={y} x2="960" y2={y} />)}
+        </g>
+
+        {bands.map((band, index) => {
+          const system = systems[index];
+          return (
+            <g className={`state-band ${band.cls}`} key={system.id}>
+              {[-28,-20,-12,-4,4,12,20,28].map(offset => <path className="state-band-thread" d={wavePath(band.y, offset)} key={offset} />)}
+              <path className="state-band-halo" d={wavePath(band.y, 0)} />
+              <path className="state-band-line" d={wavePath(band.y, 0)} />
+              {points.slice(2).map((x, pointIndex) => {
+                const yOffsets = [30,-10,18,-14,12,-22,-4,-18];
+                return <circle className={pointIndex === 5 ? "field-node field-node--major" : "field-node"} cx={x} cy={band.y + yOffsets[pointIndex]} r={pointIndex === 5 ? 8 : 3} key={`${system.id}-${x}`} />;
+              })}
+              <circle className="field-node-glow" cx="835" cy={band.y - 4} r="18" filter="url(#obs-glow)" />
+              <circle className="field-node field-node--major" cx="835" cy={band.y - 4} r="8" />
+              <text className="state-band-label" x="850" y={band.y - 12}>{system.shortName.toUpperCase()}</text>
+              <text className="state-band-state" x="850" y={band.y + 8}>{system.state}</text>
+            </g>
+          );
+        })}
+
+        <g className="research-layer">
+          {[-18,-10,-2,6,14].map(offset => <path d={`M 110 ${472 + offset} C 230 ${425 + offset}, 325 ${505 + offset}, 455 ${462 + offset} S 650 ${490 + offset}, 760 ${468 + offset}`} key={offset} />)}
+          {[180,320,520,655].map((x, index) => <g className="rejected-x" transform={`translate(${x} ${[458,475,461,474][index]})`} key={x}><line x1="-5" y1="-5" x2="5" y2="5"/><line x1="5" y1="-5" x2="-5" y2="5"/></g>)}
+          <text x="104" y="508">REJECTED HYPOTHESES</text>
+          <text x="104" y="525">REMAIN VISIBLE</text>
+        </g>
+
+        <g className="research-markers">
+          {researchNotes.slice(0, 3).map((note, index) => {
+            const coords = [[342,210],[548,325],[704,446]][index];
+            return <g transform={`translate(${coords[0]} ${coords[1]})`} key={note.slug}><circle r="5"/><circle className="marker-ring" r="16"/><title>{note.title}: {note.state}</title></g>;
+          })}
+        </g>
+
+        <g className="temporal-axis" aria-hidden="true">
+          <line x1="70" y1="530" x2="940" y2="530" />
+          {[70,250,440,625,810,940].map((x, index) => <g key={x}><circle cx={x} cy="530" r={index === 4 ? 5 : 2.5}/><text x={x - 10} y="552">{["APR","MAY","JUN","JUL","NOW","SEP"][index]}</text></g>)}
+        </g>
+      </svg>
+
+      <div className="field-legend field-legend--compact" aria-label="Field legend">
         <span><i className="legend-dot legend-validating" />VALIDATING</span>
         <span><i className="legend-dot legend-building" />BUILDING</span>
         <span><i className="legend-dot legend-research" />RESEARCH</span>
         <span><i className="legend-dot legend-rejected" />REJECTED</span>
       </div>
-      <div className="field-explainer">
-        <span>WHY DOES THIS FIELD LOOK LIKE THIS?</span>
-        <p>Visible structure follows public state. Building remains incomplete. Validation accumulates evidence. Rejected research leaves a trace.</p>
+
+      <div className="field-note-card">
+        <span>WHY THIS FIELD LOOKS LIKE THIS</span>
+        <p>Visible structure follows public state: building remains incomplete, validation accumulates evidence, and rejected work remains traceable.</p>
       </div>
+
+      {rejected.length ? <span className="sr-only">Rejected research represented in the field: {rejected.map(item => item.title).join(", ")}</span> : null}
     </div>
   );
 }
