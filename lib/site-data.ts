@@ -129,4 +129,5 @@ export const nav = [
   ["Pulse", "/pulse"],
   ["Journey", "/journey"],
   ["About", "/about"],
+  ["Collaborate", "/collaborate"],
 ] as const;
