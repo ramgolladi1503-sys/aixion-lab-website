@@ -5,7 +5,7 @@ test("Home surfaces current curated lab work without turning mobile into an acti
   const current = page.locator(".pulse-preview");
   await expect(current).toBeVisible();
   await expect(current.locator(".home-worklog-strip")).toHaveCount(2);
-  await expect(current.getByText("Light editorial convergence and release validation")).toBeVisible();
+  await expect(current.getByText("Approved dark system refinement and release validation")).toBeVisible();
   const older = current.getByText("Hydration and regression baseline stabilized");
   if (testInfo.project.name === "mobile") await expect(older).toBeHidden();
   else await expect(older).toBeVisible();
@@ -14,9 +14,9 @@ test("Home surfaces current curated lab work without turning mobile into an acti
 test("Pulse publishes active work and a public-safe worklog", async ({ page }) => {
   await page.goto("/pulse", { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { name: "What is actively moving" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Light editorial convergence and release validation" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Approved dark system refinement and release validation" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Changes that meaningfully altered capability, evidence or authority" })).toBeVisible();
-  await expect(page.getByText("Observable Temporal State Field experiment archived as site-wide authority")).toBeVisible();
+  await expect(page.getByText("Black-wallpaper 70/20/10 authority restored")).toBeVisible();
   await expect(page.getByText("Editorial closing principle became the authored site endpoint")).toBeVisible();
   await expect(page.getByText("Public worklog and activity publishing")).toBeVisible();
   await expect(page.getByText(/Raw commits, private conversations, credentials, proprietary logic/)).toBeVisible();
