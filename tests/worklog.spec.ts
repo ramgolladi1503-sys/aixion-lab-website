@@ -1,10 +1,11 @@
 import { test, expect } from "@playwright/test";
 
-test("Home surfaces current curated lab work", async ({ page }) => {
+test("Home surfaces current curated lab work in the control-room activity rail", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByText("WORKING NOW · 2026-09-01")).toBeVisible();
-  await expect(page.getByText("Observable Temporal State Field production readiness")).toBeVisible();
-  await expect(page.getByText("Observable Temporal State Field became the visual authority")).toBeVisible();
+  const rail = page.locator(".recent-state-panel");
+  await expect(rail).toBeVisible();
+  await expect(rail.getByText("Observable Temporal State Field production readiness")).toBeVisible();
+  await expect(rail.getByText("Observable Temporal State Field became the visual authority")).toBeVisible();
 });
 
 test("Pulse publishes active work and a public-safe worklog", async ({ page }) => {
