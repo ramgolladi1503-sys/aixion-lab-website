@@ -5,7 +5,7 @@ test("home has a memorable thesis and locked observable control-room field", asy
   await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
   await expect(page.locator(".control-rail--left")).toBeVisible();
   await expect(page.locator(".control-rail--right")).toBeVisible();
-  await expect(page.locator(".control-pulse-strip")).toBeVisible();
+  await expect(page.locator(".pulse-preview")).toBeVisible();
 
   const field = page.locator(".observable-field");
   await expect(field).toBeVisible();
