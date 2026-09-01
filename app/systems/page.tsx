@@ -12,24 +12,16 @@ export default function SystemsPage() {
   return (
     <>
       <section className="page-hero systems-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">AIXION LAB · SYSTEMS</p>
-            <h1>Systems Registry</h1>
-            <p className="lede">The engineered systems, tools and platforms being built inside Aixion Lab. Maturity is shown explicitly; research is not dressed up as production.</p>
-          </div>
-          <div className="panel meta-board">
-            <div><span>Authority</span><strong>Blueprint v1.0</strong></div>
-            <div><span>State model</span><strong>Research → Operating</strong></div>
-            <div><span>Public boundary</span><strong>Evidence-led summaries</strong></div>
-            <div><span>Flagship</span><strong>TradeBot</strong></div>
-          </div>
+        <div className="shell systems-hero-copy">
+          <p className="eyebrow">AIXION LAB · SYSTEMS</p>
+          <h1>Systems Registry</h1>
+          <p className="lede">Four engineered systems, each with an explicit maturity state, current gate and public-safe focus. Research is not dressed up as production.</p>
         </div>
       </section>
 
       <section className="section-tight registry-section">
         <div className="shell">
-          <SectionHeading eyebrow="REGISTRY" title="Four systems. Explicit maturity." copy="Each entry carries a system ID, maturity, current gate and public-safe focus so project status is immediately scannable." />
+          <SectionHeading eyebrow="REGISTRY" title="Four systems. Explicit maturity." copy="The registry is the authority. Each row carries only the information needed to understand the system and decide whether to inspect it further." />
           <div className="registry">
             {systems.map(system => (
               <article className="registry-row" key={system.id}>
