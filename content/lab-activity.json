@@ -9,10 +9,10 @@
       "system_slug": "lab",
       "type": "DESIGN / UAT",
       "state": "VALIDATING",
-      "title": "Light editorial convergence and release validation",
-      "summary": "Aixion Lab is converging on its locked light-mineral editorial authority while reducing template repetition, tightening public state language and preserving evidence, career and accessibility boundaries.",
-      "evidence": "The stabilized candidate passes production build, static export and the complete desktop/mobile browser suite before the next composition changes are admitted.",
-      "next_gate": "Complete the editorial composition pass, review fresh desktop/mobile artifacts and preserve a green regression baseline."
+      "title": "Approved dark system refinement and release validation",
+      "summary": "Aixion Lab is converging on the approved 70/20/10 black-wallpaper authority while reducing template repetition, improving mobile hierarchy and preserving evidence, career and accessibility boundaries.",
+      "evidence": "The current candidate is admitted only after production build, static export, desktop/mobile browser checks, accessibility gates and fresh visual review artifacts pass on the exact implementation SHA.",
+      "next_gate": "Complete recruiter-fast-path and mobile subtraction, inspect fresh desktop/mobile artifacts and preserve a green regression baseline."
     }
   ],
   "entries": [
@@ -33,12 +33,12 @@
       "date": "2026-09-01",
       "area": "AIXION LAB",
       "system_slug": "lab",
-      "type": "DESIGN EXPERIMENT",
-      "state": "ARCHIVED",
-      "title": "Observable Temporal State Field experiment archived as site-wide authority",
-      "summary": "The dark observable-system treatment was useful for exploring state-driven interaction, but it conflicted with the locked light-mineral visual authority and created a second brand system. The site-wide dark direction was superseded; public-safe state-model ideas remain available as interaction concepts.",
-      "evidence": "The design audit preserved the useful state, evidence and reduced-motion ideas while restoring the primary light editorial authority and explicit truth boundaries.",
-      "next_gate": "Reuse observable-state ideas only when they fit the light editorial system and are bound to real public-safe data."
+      "type": "DESIGN AUTHORITY",
+      "state": "LOCKED",
+      "title": "Black-wallpaper 70/20/10 authority restored",
+      "summary": "The approved near-black wallpaper system is the current visual authority: roughly 70% atmospheric field, 20% structured dark surfaces and 10% restrained signal accents. Earlier light-editorial convergence is superseded.",
+      "evidence": "The approved reference was matched back to the earlier repository composition, restored as the Home authority and hardened through exact-SHA desktop/mobile visual and accessibility validation.",
+      "next_gate": "Preserve this authority across every route and use future changes only to improve hierarchy, clarity and implementation quality."
     },
     {
       "id": "AX-WORK-2026-0901-02",
@@ -93,12 +93,12 @@
       "date": "2026-08-23",
       "area": "AIXION LAB",
       "system_slug": "lab",
-      "type": "DESIGN AUTHORITY",
-      "state": "LOCKED",
-      "title": "Light-mineral website authority reaffirmed",
-      "summary": "The clean rebuild remains anchored to the light soft-neutral mineral visual system, public architecture, maturity vocabulary and evidence boundaries.",
-      "evidence": "The master blueprint and visual-design authority govern page architecture, light visual language, accessibility and public/private evidence boundaries.",
-      "next_gate": "Keep later experiments subordinate to the locked authority unless a new authority is explicitly approved."
+      "type": "HISTORICAL DESIGN AUTHORITY",
+      "state": "SUPERSEDED",
+      "title": "Earlier light-mineral website authority",
+      "summary": "An earlier clean rebuild was anchored to a light soft-neutral mineral visual system. That visual authority is retained only as historical project evidence and was superseded by the explicitly approved black-wallpaper direction on 2026-09-01.",
+      "evidence": "Repository history preserves the earlier blueprint and implementation while the current exact-SHA visual authority is governed by the approved dark reference and regression suite.",
+      "next_gate": "Do not reintroduce the superseded light authority unless a future explicit design decision replaces the current one."
     },
     {
       "id": "AX-WORK-2026-0823-02",
