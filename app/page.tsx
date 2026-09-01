@@ -21,7 +21,7 @@ export default function HomePage() {
 
   return (
     <div className="observable-home observable-control-room">
-      <section className="control-room-shell" aria-labelledby="observable-home-title">
+      <section className="control-room-shell observable-hero" data-reveal="hero" aria-labelledby="observable-home-title">
         <aside className="control-rail control-rail--left" aria-label="System state overview">
           <p className="control-label">SYSTEM STATE OVERVIEW</p>
           <div className="rail-panel state-overview-panel">
@@ -61,13 +61,13 @@ export default function HomePage() {
         </aside>
 
         <main className="control-stage">
-          <div className="control-stage-copy">
-            <p className="control-kicker">THE SYSTEM IS EXPLAINING ITSELF</p>
+          <div className="control-stage-copy observable-copy">
+            <p className="control-kicker eyebrow">THE SYSTEM IS EXPLAINING ITSELF</p>
             <h1 id="observable-home-title">Systems should be able to explain their state, their evidence and their limits.</h1>
-            <p>Aixion Lab designs, builds and tests intelligence systems with an evidence-first philosophy.</p>
-            <div className="control-actions">
-              <Link className="control-primary" href="/systems">EXPLORE SYSTEMS →</Link>
-              <Link className="control-secondary" href="/pulse">VIEW PULSE</Link>
+            <p className="lede">Aixion Lab designs, builds and tests intelligence systems with an evidence-first philosophy.</p>
+            <div className="control-actions button-row hero-actions-visible">
+              <Link className="control-primary button" href="/systems">EXPLORE SYSTEMS →</Link>
+              <Link className="control-secondary button-secondary" href="/pulse">VIEW PULSE</Link>
               <span className="control-heartbeat" aria-hidden="true">⌁</span>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function HomePage() {
             <div><strong>FUTURE</strong><span>What we are building</span></div>
           </div>
 
-          <section className="control-pulse-strip" aria-label="Aixion Pulse summary">
+          <section className="control-pulse-strip pulse-preview" data-reveal="pulse-preview" aria-label="Aixion Pulse summary">
             <div className="pulse-live"><strong>AIXION PULSE · LIVE</strong><span>Curated public state</span></div>
             <div className="pulse-stat"><span>Systems</span><strong>{systems.length}</strong></div>
             <div className="pulse-stat"><span>Validating</span><strong>{validating}</strong></div>
