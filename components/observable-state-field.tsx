@@ -8,6 +8,7 @@ const bands = [
 ] as const;
 
 const points = [88, 170, 260, 350, 445, 540, 640, 735, 835, 920];
+const rejectedPositions = [[180, 458], [320, 475], [520, 461], [655, 474]] as const;
 
 function wavePath(y: number, offset: number) {
   const ys = [22, 8, 30, -10, 18, -14, 12, -22, -4, -18];
@@ -18,10 +19,10 @@ export function ObservableStateField() {
   const rejected = researchNotes.filter(note => note.state === "REJECTED");
 
   return (
-    <div className="observable-field observable-field--locked" aria-label="Aixion public temporal system state map">
+    <div className="observable-field observable-field--locked" aria-label="Aixion public system-state model">
       <svg className="observable-field-svg" viewBox="0 0 1000 560" role="img" aria-labelledby="observable-title observable-desc">
-        <title id="observable-title">Aixion temporal state field</title>
-        <desc id="observable-desc">A public-safe visualization of system maturity, validation and research traces. It does not represent private telemetry or invented performance metrics.</desc>
+        <title id="observable-title">Aixion public system-state model</title>
+        <desc id="observable-desc">A public-safe conceptual visualization of current system maturity and research traces. It is not live runtime telemetry and does not represent invented performance metrics.</desc>
         <defs>
           <filter id="obs-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7" /></filter>
           <linearGradient id="fade-grid" x1="0" x2="1"><stop offset="0" stopColor="white" stopOpacity="0"/><stop offset=".25" stopColor="white" stopOpacity=".6"/><stop offset="1" stopColor="white" stopOpacity=".12"/></linearGradient>
@@ -53,7 +54,10 @@ export function ObservableStateField() {
 
         <g className="research-layer">
           {[-18,-10,-2,6,14].map(offset => <path d={`M 110 ${472 + offset} C 230 ${425 + offset}, 325 ${505 + offset}, 455 ${462 + offset} S 650 ${490 + offset}, 760 ${468 + offset}`} key={offset} />)}
-          {[180,320,520,655].map((x, index) => <g className="rejected-x" transform={`translate(${x} ${[458,475,461,474][index]})`} key={x}><line x1="-5" y1="-5" x2="5" y2="5"/><line x1="5" y1="-5" x2="-5" y2="5"/></g>)}
+          {rejected.slice(0, rejectedPositions.length).map((note, index) => {
+            const [x, y] = rejectedPositions[index];
+            return <g className="rejected-x" transform={`translate(${x} ${y})`} key={note.slug}><line x1="-5" y1="-5" x2="5" y2="5"/><line x1="5" y1="-5" x2="-5" y2="5"/><title>{note.title}: rejected after evaluation</title></g>;
+          })}
           <text x="104" y="508">REJECTED HYPOTHESES</text>
           <text x="104" y="525">REMAIN VISIBLE</text>
         </g>
@@ -67,7 +71,7 @@ export function ObservableStateField() {
 
         <g className="temporal-axis" aria-hidden="true">
           <line x1="70" y1="530" x2="940" y2="530" />
-          {[70,250,440,625,810,940].map((x, index) => <g key={x}><circle cx={x} cy="530" r={index === 4 ? 5 : 2.5}/><text x={x - 10} y="552">{["APR","MAY","JUN","JUL","NOW","SEP"][index]}</text></g>)}
+          {[[70, "HISTORY"], [390, "EVIDENCE"], [700, "CURRENT"], [940, "NEXT"]].map(([x, label], index) => <g key={String(label)}><circle cx={Number(x)} cy="530" r={index === 2 ? 5 : 2.5}/><text x={Number(x) - 18} y="552">{label}</text></g>)}
         </g>
       </svg>
 
@@ -75,12 +79,12 @@ export function ObservableStateField() {
         <span><i className="legend-dot legend-validating" />VALIDATING</span>
         <span><i className="legend-dot legend-building" />BUILDING</span>
         <span><i className="legend-dot legend-research" />RESEARCH</span>
-        <span><i className="legend-dot legend-rejected" />REJECTED</span>
+        <span><i className="legend-dot legend-rejected" />REJECTED RESEARCH</span>
       </div>
 
       <div className="field-note-card">
-        <span>WHY THIS FIELD LOOKS LIKE THIS</span>
-        <p>Visible structure follows public state: building remains incomplete, validation accumulates evidence, and rejected work remains traceable.</p>
+        <span>PUBLIC-SAFE STATE MODEL</span>
+        <p>Visible structure follows curated public state: building remains incomplete, validation accumulates evidence, and rejected research remains traceable. This is not live telemetry.</p>
       </div>
 
       {rejected.length ? <span className="sr-only">Rejected research represented in the field: {rejected.map(item => item.title).join(", ")}</span> : null}
