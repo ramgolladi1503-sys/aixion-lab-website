@@ -16,6 +16,7 @@ import "./observable-release.css";
 import "./editorial-light.css";
 import "./system-grammar.css";
 import "./accessibility-contrast.css";
+import "./approved-dark.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionOrchestrator } from "@/components/motion-orchestrator";
@@ -27,8 +28,8 @@ const socialDescription = "Applied intelligence, automation and decision systems
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#E9EDE7",
-  colorScheme: "light",
+  themeColor: "#061113",
+  colorScheme: "dark",
 };
 
 export const metadata: Metadata = {
