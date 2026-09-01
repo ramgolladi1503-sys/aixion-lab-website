@@ -1,15 +1,14 @@
 import { test, expect } from "@playwright/test";
 
-test("editorial Home keeps state, evidence and authority public-safe", async ({ page }) => {
+test("approved observable Home keeps state, evidence and authority public-safe", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/", { waitUntil: "networkidle" });
 
-  await expect(page.locator(".editorial-home")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Claims stay bounded by evidence." })).toBeVisible();
-  await expect(page.getByText("Rejected work remains visible.")).toBeVisible();
-  await expect(page.getByText("Public evidence is deliberately scoped.")).toBeVisible();
-  await expect(page.getByText("Automation does not erase human authority.")).toBeVisible();
-  await expect(page.locator(".home-systems-list .home-system-row")).toHaveCount(4);
+  await expect(page.locator(".observable-home")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "The lab keeps the questions, failures and evidence visible." })).toBeVisible();
+  await expect(page.getByText(/Research is not silently promoted into a system claim/)).toBeVisible();
+  await expect(page.locator(".system-grid .system-card")).toHaveCount(4);
 
   const body = (await page.locator("body").innerText()).toLowerCase();
   expect(body).not.toContain("win rate");
@@ -20,15 +19,16 @@ test("editorial Home keeps state, evidence and authority public-safe", async ({ 
   expect(body).not.toContain("tests passed");
 });
 
-test("editorial Home is intentionally recomposed for mobile", async ({ page }) => {
+test("approved observable Home is deliberately recomposed for mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
 
-  await expect(page.getByRole("heading", { name: "Applied intelligence, automation and decision systems." })).toBeVisible();
-  await expect(page.getByText(/Built by Ram/)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
+  await expect(page.getByText("Built by Ram", { exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: /Explore systems/i }).first()).toBeVisible();
-  await expect(page.getByRole("link", { name: /Current Pulse/i }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /View Lab Pulse/i }).first()).toBeVisible();
   await expect(page.locator("details.mobile-menu summary")).toBeVisible();
+  await expect(page.locator(".observable-field")).toBeVisible();
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
@@ -38,12 +38,12 @@ test("Aixion lifecycle remains legible in reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-reduced/);
-  await expect(page.locator("[data-aixion-signal]")).toBeVisible();
+  await expect(page.locator("[data-aixion-signal]").first()).toBeVisible();
   await expect(page.getByText("RESEARCH", { exact: true }).first()).toBeVisible();
   await expect(page.getByText("LEARN", { exact: true }).first()).toBeVisible();
 });
 
-test("editorial convergence does not replace validated interactions", async ({ page }, testInfo) => {
+test("dark convergence does not replace validated interactions", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
   if (testInfo.project.name === "mobile") {
     await expect(page.locator("details.mobile-menu summary")).toBeVisible();
