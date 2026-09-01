@@ -43,6 +43,30 @@
   border: 1px solid rgba(168,137,232,.16) !important;
 }
 
+/* The capability section is sequential system anatomy, not eight equal dashboard cards. */
+.anchor-section#capabilities .system-grid {
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: 0 !important;
+  border-top: 1px solid rgba(168,137,232,.15);
+  border-bottom: 1px solid rgba(157,184,176,.09);
+}
+.anchor-section#capabilities .detail-card {
+  min-height: 122px;
+  padding: 22px 20px 20px 0 !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(157,184,176,.08) !important;
+  border-bottom: 1px solid rgba(157,184,176,.08) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.anchor-section#capabilities .detail-card:nth-child(4n+2),
+.anchor-section#capabilities .detail-card:nth-child(4n+3),
+.anchor-section#capabilities .detail-card:nth-child(4n+4) { padding-left: 20px !important; }
+.anchor-section#capabilities .detail-card:nth-child(4n) { border-right: 0 !important; }
+.anchor-section#capabilities .detail-card h3 { font-size: 18px; margin-bottom: 9px; }
+.anchor-section#capabilities .detail-card p { font-size: 13px; line-height: 1.5; }
+
 /* Analytics is a decision-state surface, never a pale dashboard card. */
 .visual-analytics .analytics-chart,
 .visual-analytics .analytics-chart-main {
@@ -62,8 +86,28 @@
   stroke: #6fbca9 !important;
   opacity: .55 !important;
 }
-.visual-analytics .analytics-chart span {
-  color: #99aaa4 !important;
+.visual-analytics .analytics-chart span { color: #99aaa4 !important; }
+
+/* The full authored manifesto belongs to Home; secondary routes end more quietly. */
+main:not(:has(.observable-home)) + .site-footer .footer-manifesto {
+  max-width: 720px;
+  font-size: clamp(16px,1.25vw,19px) !important;
+}
+main:not(:has(.observable-home)) + .site-footer .footer-manifesto-line + .footer-manifesto-line {
+  display: none;
+}
+main:not(:has(.observable-home)) + .site-footer .footer-closing {
+  padding-top: 24px !important;
+  padding-bottom: 18px !important;
+}
+
+@media (max-width: 900px) {
+  .anchor-section#capabilities .system-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  .anchor-section#capabilities .detail-card,
+  .anchor-section#capabilities .detail-card:nth-child(4n+2),
+  .anchor-section#capabilities .detail-card:nth-child(4n+3),
+  .anchor-section#capabilities .detail-card:nth-child(4n+4) { padding: 18px 16px 18px 0 !important; }
+  .anchor-section#capabilities .detail-card:nth-child(even) { padding-left: 16px !important; border-right: 0 !important; }
 }
 
 @media (max-width: 760px) {
@@ -73,4 +117,14 @@
   .worklog-evidence { grid-template-columns: 1fr !important; }
   .worklog-evidence > div { padding: 13px !important; }
   .visual-analytics .analytics-chart { min-height: 100px !important; }
+
+  .anchor-section#capabilities .system-grid { grid-template-columns: 1fr !important; }
+  .anchor-section#capabilities .detail-card,
+  .anchor-section#capabilities .detail-card:nth-child(even) {
+    min-height: 0;
+    padding: 16px 0 !important;
+    border-right: 0 !important;
+  }
+  .anchor-section#capabilities .detail-card h3 { font-size: 18px; }
+  main:not(:has(.observable-home)) + .site-footer .footer-manifesto { font-size: 16px !important; }
 }
