@@ -26,6 +26,13 @@
   opacity: 1 !important;
 }
 
+/* Control Core synthetic trace timestamps were 4.48:1 on the cool surface —
+   technically below WCAG AA for 9px metadata. Preserve the lavender grammar,
+   but move the timestamps safely past the threshold. */
+.trace-preview > span {
+  color: #6f6878 !important;
+}
+
 /* Journey question metadata uses a warm accent; keep it distinct but readable. */
 .journey-question-label {
   color: var(--a11y-warm-meta) !important;
