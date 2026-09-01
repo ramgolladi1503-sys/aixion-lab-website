@@ -23,6 +23,7 @@ export default function HomePage() {
             <div className="hero-attribution">
               <strong>Built by Ram</strong>
               <span>Quality Engineering · Automation · Software · Data · Applied AI</span>
+              <Link className="hero-career-link" href="/resume">Recruiter fast path · Career snapshot →</Link>
             </div>
             <div className="button-row hero-actions-visible">
               <Link className="button" href="/systems">Explore systems →</Link>
@@ -136,12 +137,12 @@ export default function HomePage() {
 
       <section className="section" data-reveal="contact">
         <div className="shell contact-panel">
-          <div className="panel contact-copy">
+          <div className="panel contact-copy contact-copy--conversation">
             <p className="eyebrow">CONTACT</p>
             <h2>Build, test or discuss something difficult.</h2>
             <p className="lede">Engineering roles, applied-AI work, automation systems or a technical conversation about one of the systems.</p>
           </div>
-          <div className="panel contact-copy">
+          <div className="panel contact-copy contact-copy--career">
             <p className="eyebrow">RECRUITER FAST PATH</p>
             <h3>Need the career translation?</h3>
             <p>Career view translates the same systems into competencies without changing the underlying evidence.</p>
