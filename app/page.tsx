@@ -2,151 +2,143 @@ import Link from "next/link";
 import { systems, researchNotes } from "@/lib/site-data";
 import labActivity from "@/content/lab-activity.json";
 import { StateTag } from "@/components/ui";
-import { ObservableStateField } from "@/components/observable-state-field";
-
-const legend = [
-  ["OPERATING", "Stable and trusted"],
-  ["VALIDATING", "Evidence is accumulating"],
-  ["BUILDING", "Actively under construction"],
-  ["RESEARCH", "Exploring and iterating"],
-  ["CONCEPT", "Defined but not yet built"],
-  ["ARCHIVED", "Complete / no longer active"],
-] as const;
+import { AixionSignal } from "@/components/system-visuals";
 
 export default function HomePage() {
-  const recent = [labActivity.active[0], ...labActivity.entries].slice(0, 5);
-  const rejected = researchNotes.filter(note => note.state === "REJECTED");
-  const validating = systems.filter(system => system.state === "VALIDATING").length;
-  const building = systems.filter(system => system.state === "BUILDING").length;
+  const flagship = systems.slice(0, 2);
+  const current = [labActivity.active[0], ...labActivity.entries]
+    .filter(item => !item.title.includes("Observable Temporal State Field"))
+    .slice(0, 3);
+  const rejected = researchNotes.find(note => note.state === "REJECTED");
 
   return (
-    <div className="observable-home observable-control-room">
-      <section className="control-room-shell observable-hero" data-reveal="hero" aria-labelledby="observable-home-title">
-        <aside className="control-rail control-rail--left" aria-label="System state overview">
-          <p className="control-label">SYSTEM STATE OVERVIEW</p>
-          <div className="rail-panel state-overview-panel">
-            {systems.map((system, index) => (
-              <Link className="state-overview-row" href={`/systems/${system.slug}`} key={system.id}>
-                <span className={`state-orb state-orb--${index}`} aria-hidden="true" />
-                <span className="state-overview-copy">
-                  <strong>{system.shortName}</strong>
-                  <small>{system.state}</small>
+    <div className="editorial-home">
+      <section className="editorial-home-hero" data-reveal="hero" aria-labelledby="home-title">
+        <div className="shell editorial-home-hero-grid">
+          <div className="editorial-home-copy">
+            <p className="eyebrow">AIXION LAB · APPLIED ENGINEERING</p>
+            <h1 id="home-title">Applied intelligence, automation and decision systems.</h1>
+            <p className="lede">An independent engineering lab where ideas move through research, implementation, validation and real-world observation.</p>
+            <p className="home-byline">Built by Ram — Quality Engineering · Automation · Software · Data · Applied AI</p>
+            <div className="button-row">
+              <Link className="button" href="/systems">Explore systems →</Link>
+              <Link className="button-secondary" href="/pulse">Current Pulse</Link>
+            </div>
+          </div>
+
+          <aside className="home-flagships" aria-label="Flagship systems">
+            {flagship.map(system => (
+              <Link className="flagship-record" href={`/systems/${system.slug}`} key={system.id}>
+                <span>
+                  <span className="record-id">{system.id}</span>
+                  <strong>{system.name}</strong>
+                  <p>{system.descriptor}</p>
+                  <small>Current gate · {system.currentGate}</small>
                 </span>
-                <span className={`state-spark state-spark--${index}`} aria-hidden="true">⌁</span>
+                <span className="record-state"><StateTag state={system.state} /></span>
               </Link>
             ))}
-            <Link className="state-overview-row" href="/research">
-              <span className="state-orb state-orb--research" aria-hidden="true" />
-              <span className="state-overview-copy"><strong>Research Notes</strong><small>RESEARCH</small></span>
-              <span className="state-spark state-spark--research" aria-hidden="true">⌁</span>
-            </Link>
-          </div>
-
-          <div className="rail-panel state-legend-panel">
-            <p className="control-label">MATURITY LEGEND</p>
-            {legend.map(([state, description]) => (
-              <div className="state-legend-row" key={state}>
-                <span className={`legend-ring legend-ring--${state.toLowerCase()}`} />
-                <strong>{state}</strong>
-                <small>{description}</small>
-              </div>
-            ))}
-          </div>
-
-          <div className="rail-panel rail-explainer">
-            <p className="control-label control-label--accent">WHY DOES THIS PAGE LOOK LIKE THIS?</p>
-            <p>Every visible element represents public state. Nothing is shown as complete unless its evidence supports that claim.</p>
-            <Link href="/about" className="rail-link">EXPLORE THE PRINCIPLES →</Link>
-          </div>
-        </aside>
-
-        <div className="control-stage">
-          <div className="control-stage-copy observable-copy">
-            <p className="control-kicker eyebrow">THE SYSTEM IS EXPLAINING ITSELF</p>
-            <h1 id="observable-home-title">Systems should be able to explain their state, their evidence and their limits.</h1>
-            <p className="lede">Aixion Lab designs, builds and tests intelligence systems with an evidence-first philosophy.</p>
-            <div className="control-actions button-row hero-actions-visible">
-              <Link className="control-primary button" href="/systems">EXPLORE SYSTEMS →</Link>
-              <Link className="control-secondary button-secondary" href="/pulse">VIEW PULSE</Link>
-              <span className="control-heartbeat" aria-hidden="true">⌁</span>
-            </div>
-          </div>
-
-          <ObservableStateField />
-
-          <div className="temporal-caption" aria-label="Temporal state interpretation">
-            <div><strong>PAST</strong><span>What has happened</span></div>
-            <div><strong>PRESENT</strong><span>What we know now</span></div>
-            <div><strong>FUTURE</strong><span>What we are building</span></div>
-          </div>
-
-          <section className="control-pulse-strip pulse-preview" data-reveal="pulse-preview" aria-label="Aixion Pulse summary">
-            <div className="pulse-live"><strong>AIXION PULSE · CURRENT</strong><span>Latest curated public state</span></div>
-            <div className="pulse-stat"><span>Systems</span><strong>{systems.length}</strong></div>
-            <div className="pulse-stat"><span>Validating</span><strong>{validating}</strong></div>
-            <div className="pulse-stat"><span>Building</span><strong>{building}</strong></div>
-            <div className="pulse-stat"><span>Research notes</span><strong>{researchNotes.length}</strong></div>
-            <Link href="/pulse" className="pulse-open">VIEW FULL PULSE →</Link>
-          </section>
-
-          <section className="control-pulse-strip career-only" aria-label="Career translation">
-            <div className="pulse-live"><strong>CAREER TRANSLATION</strong><span>Same evidence, recruiter-readable</span></div>
-            <div className="pulse-stat"><span>Focus</span><strong>Quality · Automation · Systems · Applied AI</strong></div>
-            <Link href="/resume" className="pulse-open">VIEW CAREER SNAPSHOT →</Link>
-          </section>
+          </aside>
         </div>
+      </section>
 
-        <aside className="control-rail control-rail--right" aria-label="Recent public state changes">
-          <div className="rail-panel recent-state-panel">
-            <p className="control-label">RECENT STATE CHANGES</p>
-            {recent.map(item => (
-              <div className="recent-state-row" key={item.id}>
-                <span className="recent-node" aria-hidden="true" />
-                <div>
-                  <small>{item.date}</small>
-                  <strong>{item.title}</strong>
-                  <p>{item.summary}</p>
-                </div>
-              </div>
+      <section className="home-signal-band" aria-label="Aixion engineering lifecycle">
+        <div className="shell"><AixionSignal compact /></div>
+      </section>
+
+      <section className="home-editorial-section" aria-labelledby="proof-title" data-reveal="proof">
+        <div className="shell">
+          <div className="home-section-head">
+            <div>
+              <p className="eyebrow">PROOF BEFORE PRESENTATION</p>
+              <h2 id="proof-title">Claims stay bounded by evidence.</h2>
+            </div>
+            <p>The lab keeps system maturity, research results, evidence visibility and authority separate. A promising result is not dressed up as production readiness.</p>
+          </div>
+
+          <div className="home-proof-list">
+            <div className="home-proof-row">
+              <span>RESEARCH</span>
+              <strong>Rejected work remains visible.</strong>
+              <p>{rejected ? `${rejected.title} remains part of the public research record.` : "Rejected hypotheses remain part of the public research record."}</p>
+              <Link className="text-link" href={rejected ? `/research/${rejected.slug}` : "/research"}>Inspect →</Link>
+            </div>
+            <div className="home-proof-row">
+              <span>BOUNDARY</span>
+              <strong>Public evidence is deliberately scoped.</strong>
+              <p>Architecture, method and sanitized summaries can be public while proprietary mechanics and sensitive runtime evidence stay private.</p>
+              <Link className="text-link" href="/research/evidence-bound-autonomy">Method →</Link>
+            </div>
+            <div className="home-proof-row">
+              <span>AUTHORITY</span>
+              <strong>Automation does not erase human authority.</strong>
+              <p>TradeBot and Control Core both make approval and execution boundaries explicit rather than hiding them behind system confidence.</p>
+              <Link className="text-link" href="/systems/tradebot">TradeBot →</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-editorial-section" aria-labelledby="systems-title" data-reveal="systems-index">
+        <div className="shell">
+          <div className="home-section-head">
+            <div>
+              <p className="eyebrow">SYSTEMS REGISTRY</p>
+              <h2 id="systems-title">Four systems. Explicit maturity.</h2>
+            </div>
+            <p>Each record exposes only what matters for orientation: what the system is, where it stands, and which gate it is working toward now.</p>
+          </div>
+
+          <div className="home-systems-list">
+            {systems.map(system => (
+              <Link className="home-system-row" href={`/systems/${system.slug}`} key={system.id}>
+                <span className="system-code">{system.id}</span>
+                <strong>{system.name}</strong>
+                <p>{system.currentFocus}</p>
+                <StateTag state={system.state} />
+                <span className="row-arrow" aria-hidden="true">→</span>
+              </Link>
             ))}
-            <Link href="/pulse" className="rail-link">VIEW FULL ACTIVITY →</Link>
           </div>
-
-          <div className="rail-panel selected-system-panel">
-            <div className="selected-system-head">
-              <strong>TRADEBOT <span className="selected-dot" /></strong>
-              <StateTag state={systems[0].state} />
-            </div>
-            <p>{systems[0].descriptor}</p>
-            <dl>
-              <div><dt>Current focus</dt><dd>{systems[0].currentFocus}</dd></div>
-              <div><dt>Current gate</dt><dd>{systems[0].currentGate}</dd></div>
-              <div><dt>Authority</dt><dd>Human boundary explicit</dd></div>
-            </dl>
-            <Link href="/systems/tradebot" className="rail-link">VIEW SYSTEM PAGE →</Link>
-          </div>
-
-          <div className="rail-panel authority-map-panel">
-            <p className="control-label">SYSTEM AUTHORITY MAP</p>
-            <div className="authority-map" role="img" aria-label="Public architecture map: state, evidence, policy, risk and human authority remain separate">
-              <span className="authority-core">STATE</span>
-              <span className="authority-point authority-point--1">DATA</span>
-              <span className="authority-point authority-point--2">EVIDENCE</span>
-              <span className="authority-point authority-point--3">POLICY</span>
-              <span className="authority-point authority-point--4">RISK</span>
-              <span className="authority-point authority-point--5">HUMAN</span>
-            </div>
-          </div>
-        </aside>
+        </div>
       </section>
 
-      <section className="control-closing" aria-label="Aixion Lab closing principle">
-        <span>“</span>
-        <p>Curiosity starts the question. Discipline keeps the work honest.<br />Persistence carries it through failure.</p>
-        <span>”</span>
+      <section className="home-editorial-section" aria-labelledby="current-title" data-reveal="current-work">
+        <div className="shell">
+          <div className="home-section-head">
+            <div>
+              <p className="eyebrow">AIXION PULSE</p>
+              <h2 id="current-title">What is moving now.</h2>
+            </div>
+            <p>A curated public record of meaningful engineering changes—not raw commits, hours, completion percentages or activity theatre.</p>
+          </div>
+
+          <div className="home-current-grid">
+            {current.map(item => (
+              <article className="home-current-entry" key={item.id}>
+                <small>{item.date} · {item.type}</small>
+                <h3>{item.title}</h3>
+                <p>{item.summary}</p>
+              </article>
+            ))}
+          </div>
+          <div className="button-row"><Link className="text-link" href="/pulse">Open the full Pulse →</Link></div>
+        </div>
       </section>
 
-      {rejected.length > 0 ? <span className="sr-only">Rejected research remains visible: {rejected.map(item => item.title).join(", ")}</span> : null}
+      <section className="shell home-journey-bridge" aria-labelledby="journey-bridge-title" data-reveal="journey-bridge">
+        <div>
+          <p className="eyebrow">ENGINEERING JOURNEY</p>
+          <blockquote id="journey-bridge-title">Quality engineering taught me to distrust systems that cannot explain their state.</blockquote>
+        </div>
+        <div>
+          <p>That principle now shapes how I build automation, data and AI systems—and why evidence, failure and authority recur throughout Aixion Lab.</p>
+          <Link className="button-secondary" href="/journey">Follow the journey →</Link>
+          <div className="career-only" style={{ marginTop: 16 }}>
+            <Link className="text-link" href="/resume">Career Snapshot →</Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
