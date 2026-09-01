@@ -8,7 +8,7 @@ export default function HomePage() {
   const flagship = systems.slice(0, 2);
   const current = [labActivity.active[0], ...labActivity.entries]
     .filter(item => !item.title.includes("Observable Temporal State Field"))
-    .slice(0, 3);
+    .slice(0, 2);
   const rejected = researchNotes.find(note => note.state === "REJECTED");
 
   return (
@@ -110,7 +110,7 @@ export default function HomePage() {
               <p className="eyebrow">AIXION PULSE</p>
               <h2 id="current-title">What is moving now.</h2>
             </div>
-            <p>A curated public record of meaningful engineering changes—not raw commits, hours, completion percentages or activity theatre.</p>
+            <p>Two public-safe updates are enough for orientation. The full worklog stays in Pulse rather than turning Home into an activity feed.</p>
           </div>
 
           <div className="home-current-grid">
