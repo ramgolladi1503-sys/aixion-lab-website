@@ -35,6 +35,7 @@ export function ResearchIndex() {
             <div>
               <h3>{note.title}</h3>
               <p>{note.question}</p>
+              <p className="research-state-reason"><span>Why this state</span>{note.stateReason}</p>
             </div>
             <span className="research-domain">{note.domain}</span>
             <StateTag state={note.state} />
