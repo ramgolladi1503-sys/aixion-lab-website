@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
-export function MotionOrchestrator() {
+export function MotionOrchestrator({ children }: { children: ReactNode }) {
+  const [motionState, setMotionState] = useState<"pending" | "ready" | "reduced">("pending");
+
   useEffect(() => {
-    const root = document.documentElement;
     let cancelled = false;
     let firstFrame = 0;
     let secondFrame = 0;
@@ -14,9 +15,7 @@ export function MotionOrchestrator() {
       if (cancelled) return;
 
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      root.classList.add("motion-ready");
-      if (reduced) root.classList.add("motion-reduced");
-      else root.classList.remove("motion-reduced");
+      setMotionState(reduced ? "reduced" : "ready");
 
       const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
       const sectionLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(".system-subnav a[href^='#']"));
@@ -114,8 +113,8 @@ export function MotionOrchestrator() {
       };
     };
 
-    // Wait for two painted frames so React/Next can finish hydrating the SSR tree
-    // before observers or classes mutate that tree.
+    // Keep the initial client render identical to SSR, then enable motion only
+    // after hydration has had two painted frames to settle.
     firstFrame = window.requestAnimationFrame(() => {
       secondFrame = window.requestAnimationFrame(initialize);
     });
@@ -125,9 +124,14 @@ export function MotionOrchestrator() {
       window.cancelAnimationFrame(firstFrame);
       window.cancelAnimationFrame(secondFrame);
       dispose?.();
-      root.classList.remove("motion-ready", "motion-reduced");
     };
   }, []);
 
-  return null;
+  const motionClass = motionState === "pending"
+    ? "motion-scope"
+    : motionState === "reduced"
+      ? "motion-scope motion-ready motion-reduced"
+      : "motion-scope motion-ready";
+
+  return <div id="motion-scope" className={motionClass} style={{ display: "contents" }}>{children}</div>;
 }
