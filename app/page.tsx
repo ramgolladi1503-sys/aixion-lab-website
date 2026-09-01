@@ -22,11 +22,11 @@ export default function HomePage() {
             <div className="hero-attribution">
               <strong>Built by Ram</strong>
               <span>Quality Engineering · Automation · Software · Data · Applied AI</span>
-              <Link className="hero-career-link" href="/resume">Recruiter fast path · Career snapshot →</Link>
+              <Link className="hero-career-link" href="/resume">Hire Ram · Recruiter fast path →</Link>
             </div>
             <div className="button-row hero-actions-visible">
               <Link className="button" href="/systems">Explore systems →</Link>
-              <Link className="button-secondary" href="/pulse">View Lab Pulse</Link>
+              <Link className="button-secondary" href="/collaborate">Work with Aixion Lab</Link>
             </div>
             <AixionSignal compact />
           </div>
@@ -103,19 +103,26 @@ export default function HomePage() {
       </section>
 
       <section className="section" data-reveal="contact">
-        <div className="shell contact-panel">
-          <div className="panel contact-copy contact-copy--conversation">
-            <p className="eyebrow">CONTACT</p>
-            <h2>Build, test or discuss something difficult.</h2>
-            <p className="lede">Engineering roles, applied-AI work, automation systems or a technical conversation about one of the systems.</p>
-          </div>
-          <div className="panel contact-copy contact-copy--career">
-            <p className="eyebrow">RECRUITER FAST PATH</p>
-            <h3>Need the career translation?</h3>
-            <p>Career view translates the same systems into competencies without changing the underlying evidence.</p>
-            <div className="button-row">
-              <Link className="button" href="/resume">Career snapshot →</Link>
-              <Link className="button-secondary" href="/about#contact">Contact</Link>
+        <div className="shell">
+          <SectionHeading eyebrow="TWO WAYS TO WORK TOGETHER" title="Hire the engineer, or collaborate with the lab." copy="Aixion Lab is an independent engineering lab led by Ram—not a claim of a staffed agency. The same evidence supports two different opportunity paths." />
+          <div className="contact-panel">
+            <div className="panel contact-copy contact-copy--career">
+              <p className="eyebrow">HIRE RAM</p>
+              <h3>Looking for an engineer who can bridge quality, automation, software, data and applied AI?</h3>
+              <p>The recruiter path translates the systems into competencies and career evidence without changing or inflating the underlying work.</p>
+              <div className="button-row">
+                <Link className="button" href="/resume">Career snapshot →</Link>
+                <a className="button-secondary" href="https://www.linkedin.com/in/ram-golladi" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              </div>
+            </div>
+            <div className="panel contact-copy contact-copy--conversation">
+              <p className="eyebrow">WORK WITH AIXION LAB</p>
+              <h3>Have a bounded engineering problem worth building or validating properly?</h3>
+              <p>Explore selective collaboration around QA architecture, workflow automation, AI / agent validation, data systems and evidence-led prototypes.</p>
+              <div className="button-row">
+                <Link className="button" href="/collaborate">Collaboration path →</Link>
+                <Link className="button-secondary" href="/about#contact">Contact</Link>
+              </div>
             </div>
           </div>
         </div>
