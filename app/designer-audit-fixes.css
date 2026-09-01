@@ -1,0 +1,52 @@
+/* Final DesignerGPT audit corrections. Keep subordinate to approved dark authority. */
+
+/* Pulse evidence must stay inside the dark wallpaper system. */
+.worklog-evidence > div {
+  background: rgba(8,22,24,.72) !important;
+  border: 1px solid rgba(157,184,176,.12) !important;
+  color: #dce6e2 !important;
+  box-shadow: none !important;
+}
+.worklog-evidence dt { color: #8fa09a !important; }
+.worklog-evidence dd { color: #c8d4cf !important; }
+
+/* Control Core topology must read as a topology, not collapse into a decorative nucleus. */
+.visual-core .core-map {
+  display: grid !important;
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: 8px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  transform: none !important;
+}
+.visual-core .core-center {
+  position: static !important;
+  transform: none !important;
+  grid-column: 1 / -1 !important;
+  width: auto !important;
+  min-height: 92px !important;
+  margin: 0 0 4px !important;
+}
+.visual-core .core-node {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  width: auto !important;
+  min-height: 48px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #d7e1dd !important;
+  background: rgba(8,23,25,.72) !important;
+  border: 1px solid rgba(168,137,232,.16) !important;
+}
+
+@media (max-width: 760px) {
+  .visual-core .core-map { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  .visual-core .core-center { min-height: 76px !important; }
+  .visual-core .core-node { min-height: 46px !important; font-size: 11px !important; }
+  .worklog-evidence { grid-template-columns: 1fr !important; }
+  .worklog-evidence > div { padding: 13px !important; }
+}
