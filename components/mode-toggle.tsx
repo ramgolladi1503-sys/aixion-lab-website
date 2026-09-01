@@ -7,8 +7,15 @@ export function ModeToggle() {
 
   useEffect(() => {
     const stored = window.localStorage.getItem("aixion-view") === "career";
+    const view = stored ? "career" : "lab";
     setCareer(stored);
-    document.documentElement.dataset.view = stored ? "career" : "lab";
+
+    if (document.documentElement.dataset.view !== view) {
+      const frame = window.requestAnimationFrame(() => {
+        document.documentElement.dataset.view = view;
+      });
+      return () => window.cancelAnimationFrame(frame);
+    }
   }, []);
 
   function toggle() {
