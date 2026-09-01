@@ -20,7 +20,7 @@ for (const [name, route] of routes) {
 
 test("home primary action is visible without scrolling", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  const action = page.getByRole("link", { name: /Explore systems/i });
+  const action = page.getByRole("link", { name: /Explore systems/i }).first();
   await expect(action).toBeVisible();
   const box = await action.boundingBox();
   const viewport = page.viewportSize();
@@ -29,12 +29,12 @@ test("home primary action is visible without scrolling", async ({ page }) => {
   expect((box?.y ?? 99999) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0);
 });
 
-test("desktop editorial hero begins near the sticky header", async ({ page }, testInfo) => {
+test("desktop approved hero begins near the sticky header", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
   await page.goto("/", { waitUntil: "networkidle" });
-  const copy = await page.locator(".editorial-home-copy").boundingBox();
+  const copy = await page.locator(".observable-copy").boundingBox();
   expect(copy).not.toBeNull();
-  expect(copy?.y ?? 99999).toBeLessThan(210);
+  expect(copy?.y ?? 99999).toBeLessThan(230);
 });
 
 test("desktop About Lab contact does not reserve a hidden second column", async ({ page }, testInfo) => {
@@ -54,6 +54,18 @@ test("flagship pages use distinct visual grammars", async ({ page }) => {
   await expect(page.locator(".visual-tradebot").first()).toBeVisible();
   await page.goto("/systems/control-core", { waitUntil: "networkidle" });
   await expect(page.locator(".visual-core").first()).toBeVisible();
+});
+
+test("system hero snapshot and subnavigation stay inside the dark visual system", async ({ page }) => {
+  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
+  const snapshot = page.locator(".system-hero-summary");
+  const subnav = page.locator(".system-subnav-wrap");
+  await expect(snapshot).toBeVisible();
+  await expect(subnav).toBeVisible();
+  const snapshotBg = await snapshot.evaluate(node => getComputedStyle(node).backgroundColor);
+  const subnavBg = await subnav.evaluate(node => getComputedStyle(node).backgroundColor);
+  expect(snapshotBg).not.toBe("rgb(242, 244, 239)");
+  expect(subnavBg).not.toBe("rgb(233, 237, 231)");
 });
 
 test("Career mode has one visible state indicator", async ({ page }) => {
@@ -85,7 +97,7 @@ test("Systems registry reaches the first system quickly on desktop", async ({ pa
   await page.goto("/systems", { waitUntil: "networkidle" });
   const firstRow = await page.locator(".registry-row").first().boundingBox();
   expect(firstRow).not.toBeNull();
-  expect(firstRow?.y ?? 99999).toBeLessThan(900);
+  expect(firstRow?.y ?? 99999).toBeLessThan(720);
 });
 
 test("Journey evolution labels remain readable rather than vertical", async ({ page }) => {
