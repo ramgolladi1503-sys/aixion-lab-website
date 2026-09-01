@@ -1,0 +1,162 @@
+/* Approved dark authority hardening. Loaded after every legacy/light layer. */
+
+.command-trigger,
+.subnav,
+.system-subnav {
+  background: rgba(6, 17, 19, .92) !important;
+  border-color: rgba(157,184,176,.16) !important;
+  color: #dce6e2 !important;
+}
+.subnav a,
+.system-subnav a { color: #9daca7 !important; }
+.subnav a:hover,
+.system-subnav a:hover,
+.system-subnav a.is-active { color: #eef4ee !important; }
+
+/* Kill residual light-surface shorthands from the superseded editorial layer. */
+.detail-card,
+.pulse-system-card,
+.worklog-card,
+.worklog-row,
+.research-row,
+.contact-copy,
+.meta-board,
+.resume-card,
+.resume-summary,
+.principle-card,
+.frontier-card,
+.journey-card,
+.evidence-card,
+.impact-card,
+.registry-row,
+.case-study-panel,
+.architecture-visual,
+.hero-visual,
+.about-profile-visual {
+  background: linear-gradient(180deg, rgba(10,25,27,.78), rgba(7,20,22,.72)) !important;
+  border-color: rgba(157,184,176,.14) !important;
+  color: #edf3ef !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.015), 0 16px 44px rgba(0,0,0,.07) !important;
+}
+
+.registry-row p,
+.registry-row .registry-label,
+.worklog-row p,
+.worklog-row-meta,
+.worklog-row-meta span,
+.worklog-card p,
+.pulse-system-card dd,
+.detail-card p,
+.resume-card p,
+.resume-summary p,
+.principle-card p,
+.frontier-card p,
+.journey-card p,
+.evidence-card p,
+.impact-card p { color: #9fada9 !important; }
+
+.registry-row h3,
+.worklog-row h3,
+.worklog-card h3,
+.pulse-system-card h3,
+.detail-card h3,
+.resume-card h3,
+.principle-card h3,
+.frontier-card h3,
+.journey-card h3,
+.evidence-card h3,
+.impact-card h3 { color: #eef4ee !important; }
+
+.registry-label,
+.worklog-row-meta span,
+.system-id { color: #91a19c !important; }
+
+.state-tag,
+.state-validated {
+  background: rgba(168,231,92,.10) !important;
+  border-color: rgba(168,231,92,.22) !important;
+  color: #c4f48b !important;
+}
+.state-building {
+  background: rgba(168,137,232,.11) !important;
+  border-color: rgba(168,137,232,.22) !important;
+  color: #d0b9f5 !important;
+}
+.state-research,
+.state-active {
+  background: rgba(103,167,232,.11) !important;
+  border-color: rgba(103,167,232,.22) !important;
+  color: #acd3f5 !important;
+}
+.state-rejected {
+  background: rgba(225,110,99,.11) !important;
+  border-color: rgba(225,110,99,.23) !important;
+  color: #f0aaa3 !important;
+}
+.state-hypothesis-frozen {
+  background: rgba(168,137,232,.11) !important;
+  border-color: rgba(168,137,232,.22) !important;
+  color: #d0b9f5 !important;
+}
+
+/* Exact approved Home family: keep the observable field as the dominant visual object. */
+.observable-home {
+  --obs-bg: #061113;
+  --obs-bg-2: #081719;
+  --obs-panel: rgba(9,24,26,.78);
+  --obs-panel-soft: rgba(9,24,26,.62);
+  --obs-line: rgba(205,225,218,.13);
+  --obs-line-strong: rgba(205,225,218,.24);
+  --obs-text: #eef4ee;
+  --obs-muted: #9eada8;
+  --obs-lime: #a8e75c;
+  background:
+    radial-gradient(circle at 62% 5%, rgba(122,166,83,.10), transparent 34rem),
+    radial-gradient(circle at 78% 34%, rgba(71,137,198,.07), transparent 31rem),
+    linear-gradient(180deg, #061113, #071416 54%, #061113 100%) !important;
+}
+.observable-home .observable-hero { min-height: auto; }
+.observable-home .pulse-preview { background: rgba(7,20,22,.72) !important; }
+.observable-home .home-worklog-strip { background: transparent !important; }
+.observable-home .section,
+.observable-home .section-tight { background: transparent !important; }
+
+/* Footer is part of the wallpaper rather than a light slab. */
+.site-footer,
+.site-footer--statement {
+  background: rgba(4,14,16,.56) !important;
+  border-top-color: rgba(157,184,176,.11) !important;
+  color: #9aa9a4 !important;
+}
+.footer-closing.shell { border-top-color: rgba(157,184,176,.11) !important; }
+.footer-manifesto { color: #dce6e1 !important; }
+.footer-signoff,
+.build-line--quiet { color: #95a49f !important; }
+.site-footer--statement .eyebrow { color: #9fcf78 !important; }
+
+/* Readability guard for the dark wallpaper. */
+main p,
+main li,
+main dd,
+main blockquote { color: #9eada8; }
+main h1,
+main h2,
+main h3,
+main h4,
+main dt { color: #eef4ee; }
+main small,
+main time,
+main .meta,
+main [class*="meta"] { color: #95a49f; }
+
+@media (max-width: 760px) {
+  .registry-row,
+  .worklog-row,
+  .detail-card,
+  .pulse-system-card,
+  .resume-card,
+  .journey-card,
+  .research-row {
+    background: rgba(8,22,24,.82) !important;
+  }
+}
