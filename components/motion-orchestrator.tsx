@@ -6,7 +6,10 @@ export function MotionOrchestrator() {
   useEffect(() => {
     const root = document.documentElement;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    root.classList.add("motion-ready");
+    const readyTimer = window.setTimeout(() => {
+      root.classList.add("motion-ready");
+      if (reduced) root.classList.add("motion-reduced");
+    }, 0);
 
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     const sectionLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(".system-subnav a[href^='#']"));
@@ -32,9 +35,11 @@ export function MotionOrchestrator() {
     sectionLinks.forEach(link => link.addEventListener("click", onSectionClick));
 
     if (reduced) {
-      root.classList.add("motion-reduced");
       revealTargets.forEach(target => target.classList.add("is-revealed"));
-      return () => sectionLinks.forEach(link => link.removeEventListener("click", onSectionClick));
+      return () => {
+        window.clearTimeout(readyTimer);
+        sectionLinks.forEach(link => link.removeEventListener("click", onSectionClick));
+      };
     }
 
     const revealObserver = new IntersectionObserver(
@@ -91,6 +96,7 @@ export function MotionOrchestrator() {
     document.addEventListener("pointerout", onPointerOut, { passive: true });
 
     return () => {
+      window.clearTimeout(readyTimer);
       revealObserver.disconnect();
       sectionObserver.disconnect();
       sectionLinks.forEach(link => link.removeEventListener("click", onSectionClick));
