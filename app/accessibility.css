@@ -1,0 +1,19 @@
+.button { background: #aec6bc; color: #28352f; border-color: rgba(40,53,47,.16); }
+.button-secondary { background: rgba(246,248,244,.82); color: #303c36; }
+.text-link { color: #3f5b50; }
+.state-tag { color: #38564a; background: rgba(120,153,139,.18); font-size: 9px; }
+.state-building, .state-hypothesis-frozen { color: #5c5068; background: rgba(167,156,184,.2); }
+.state-research, .state-active, .state-active-validation { color: #4e6476; background: rgba(129,153,176,.19); }
+.state-rejected { color: #774a43; background: rgba(185,130,120,.18); }
+.registry-label, .system-id, .research-domain, .mini-meta dt, .meta-board span, .evidence-row span:first-child { color: #59645d; }
+.detail-card p, .detail-card li, .research-row p, .principle p { color: #56615a; }
+.command-results span, .command-head, .evidence-detail-list dt { color: #58635c; }
+.mobile-menu summary, .mode-toggle, .command-trigger, .evidence-trigger { min-height: 40px; }
+.section-inline { margin-top: 14px; }
+.contact-boundary { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); color: #59645d; font-size: 11px; }
+.trace-preview--page { position: static; grid-template-columns: 80px 100px 1fr; padding: 18px; font-size: 10px; }
+
+@media (max-width: 700px) {
+  .state-tag { font-size: 9px; }
+  .trace-preview--page { grid-template-columns: 62px 78px 1fr; padding: 13px; font-size: 8px; }
+}

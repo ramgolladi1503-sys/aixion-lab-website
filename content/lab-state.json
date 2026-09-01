@@ -1,0 +1,41 @@
+{
+  "updated_at": "2026-09-01",
+  "systems": [
+    {
+      "id": "AX-SYS-001",
+      "slug": "tradebot",
+      "name": "TradeBot",
+      "state": "VALIDATING",
+      "current_focus": "Evidence reconciliation, data integrity and candidate validation.",
+      "latest_milestone": "Public-safe research and live-observation boundaries defined for the portfolio.",
+      "next_gate": "Public-safe operational evidence review."
+    },
+    {
+      "id": "AX-SYS-002",
+      "slug": "control-core",
+      "name": "Aixion Control Core",
+      "state": "BUILDING",
+      "current_focus": "Orchestration, tool boundaries, policy and evidence capture.",
+      "latest_milestone": "MVP architecture translated into explicit intent-to-authority stages.",
+      "next_gate": "Policy-bound execution trace."
+    },
+    {
+      "id": "AX-SYS-003",
+      "slug": "automation",
+      "name": "Automation Systems",
+      "state": "BUILDING",
+      "current_focus": "MCP Shield: policy-bound tool execution, auditability and failure-safe automation.",
+      "latest_milestone": "MCP Shield promoted as a public implementation case study with architecture, security boundaries and hardening evidence.",
+      "next_gate": "Broaden real-world workflow validation without inventing ROI claims."
+    },
+    {
+      "id": "AX-SYS-004",
+      "slug": "analytics",
+      "name": "Analytics Lab",
+      "state": "BUILDING",
+      "current_focus": "Algotradify: candidate truth, readiness, replay, outcomes and execution-safety views.",
+      "latest_milestone": "Algotradify promoted as a public decision-support case study with replay and outcome analytics attached to runtime state.",
+      "next_gate": "Deepen outcome analysis while preserving decision context and evidence boundaries."
+    }
+  ]
+}

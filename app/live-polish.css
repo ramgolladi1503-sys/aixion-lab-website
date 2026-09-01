@@ -1,0 +1,136 @@
+/* Final live-site polish driven by production UAT. */
+
+/* Search is a destination, not a shortcut badge. */
+.command-trigger {
+  min-width: 64px;
+  padding-inline: 14px;
+  font-size: 10px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.command-head {
+  grid-template-columns: 1fr auto;
+}
+.command-hint { display: none !important; }
+.command-close {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* Preserve the centering transform during the first-load reveal animation.
+   The previous generic scale keyframe replaced translate(-50%, -50%) while
+   the animation fill was active, visibly shifting CORE down/right. */
+@keyframes core-center-in {
+  from { opacity: .45; transform: translate(-50%, -50%) scale(.88); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.motion-ready .visual-core.is-revealed .core-center {
+  animation: core-center-in 580ms var(--motion-spring) both,
+             core-breathe 5s 900ms ease-in-out infinite;
+}
+
+/* Footer closes the story rather than repeating site navigation.
+   The manifesto is deliberately wide and editorial: two intentional lines
+   across the page on large desktop surfaces, without poster-scale type. */
+.site-footer--statement {
+  padding-top: 0;
+}
+.footer-closing.shell {
+  width: min(1540px, calc(100% - 72px));
+  padding: clamp(58px, 6vw, 86px) 0 clamp(46px, 5vw, 68px);
+  border-top: 1px solid var(--line);
+}
+.footer-closing .eyebrow {
+  margin-bottom: 20px;
+}
+.footer-manifesto {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  color: var(--text);
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  font-size: clamp(28px, 2.1vw, 34px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+.footer-manifesto-line {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+}
+.footer-manifesto-line + .footer-manifesto-line {
+  margin-top: .08em;
+}
+.footer-signoff {
+  max-width: none;
+  margin: 26px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+  letter-spacing: .005em;
+}
+.build-line--quiet {
+  width: min(1540px, calc(100% - 72px));
+  color: #647069;
+}
+
+@media (max-width: 1320px) {
+  .footer-manifesto-line {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 1100px) {
+  .footer-closing.shell,
+  .build-line--quiet {
+    width: min(100% - 48px, 980px);
+  }
+  .footer-manifesto {
+    font-size: clamp(27px, 3.15vw, 32px);
+    line-height: 1.1;
+  }
+}
+
+@media (max-width: 700px) {
+  .command-trigger {
+    min-width: 58px;
+    padding-inline: 10px;
+    font-size: 9px;
+  }
+  .footer-closing.shell,
+  .build-line--quiet {
+    width: calc(100% - 40px);
+  }
+  .footer-closing {
+    padding: 48px 0 42px;
+  }
+  .footer-manifesto {
+    font-size: clamp(27px, 8.4vw, 36px);
+    line-height: 1.08;
+    letter-spacing: -.025em;
+  }
+  .footer-manifesto-line + .footer-manifesto-line {
+    margin-top: .35em;
+  }
+  .footer-signoff {
+    margin-top: 22px;
+    font-size: 14px;
+  }
+  .build-line--quiet {
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready .visual-core.is-revealed .core-center {
+    animation: none !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}

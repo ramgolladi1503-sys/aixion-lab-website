@@ -1,0 +1,178 @@
+/* Final DesignerGPT audit corrections. Keep subordinate to approved dark authority. */
+
+/* Pulse evidence must stay inside the dark wallpaper system. */
+.worklog-evidence > div {
+  background: rgba(8,22,24,.72) !important;
+  border: 1px solid rgba(157,184,176,.12) !important;
+  color: #dce6e2 !important;
+  box-shadow: none !important;
+}
+.worklog-evidence dt { color: #8fa09a !important; }
+.worklog-evidence dd { color: #c8d4cf !important; }
+
+/* Control Core topology must read as a topology, not collapse into a decorative nucleus. */
+.visual-core .core-map {
+  display: grid !important;
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: 8px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  transform: none !important;
+}
+.visual-core .core-center {
+  position: static !important;
+  transform: none !important;
+  grid-column: 1 / -1 !important;
+  width: auto !important;
+  min-height: 92px !important;
+  margin: 0 0 4px !important;
+}
+.visual-core .core-node {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  width: auto !important;
+  min-height: 48px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #d7e1dd !important;
+  background: rgba(8,23,25,.72) !important;
+  border: 1px solid rgba(168,137,232,.16) !important;
+}
+
+/* The capability section is sequential system anatomy, not eight equal dashboard cards. */
+.anchor-section#capabilities .system-grid {
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: 0 !important;
+  border-top: 1px solid rgba(168,137,232,.15);
+  border-bottom: 1px solid rgba(157,184,176,.09);
+}
+.anchor-section#capabilities .detail-card {
+  min-height: 122px;
+  padding: 22px 20px 20px 0 !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(157,184,176,.08) !important;
+  border-bottom: 1px solid rgba(157,184,176,.08) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.anchor-section#capabilities .detail-card:nth-child(4n+2),
+.anchor-section#capabilities .detail-card:nth-child(4n+3),
+.anchor-section#capabilities .detail-card:nth-child(4n+4) { padding-left: 20px !important; }
+.anchor-section#capabilities .detail-card:nth-child(4n) { border-right: 0 !important; }
+.anchor-section#capabilities .detail-card h3 { font-size: 18px; margin-bottom: 9px; }
+.anchor-section#capabilities .detail-card p { font-size: 13px; line-height: 1.5; }
+
+/* Analytics is a decision-state surface, never a pale dashboard card. */
+.visual-analytics .analytics-chart,
+.visual-analytics .analytics-chart-main {
+  background:
+    linear-gradient(rgba(103,167,232,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103,167,232,.035) 1px, transparent 1px),
+    rgba(7,21,24,.88) !important;
+  background-size: 32px 32px, 32px 32px, auto !important;
+  border: 1px solid rgba(103,167,232,.14) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.012) !important;
+}
+.visual-analytics .analytics-chart svg path:first-child { stroke: #7fb4ea !important; opacity: .8 !important; }
+.visual-analytics .analytics-chart svg path:last-child { stroke: #6fbca9 !important; opacity: .55 !important; }
+.visual-analytics .analytics-chart span { color: #99aaa4 !important; }
+
+/* Research states should explain their boundary without adding another card. */
+.research-state-reason {
+  max-width: 720px;
+  margin-top: 10px !important;
+  color: #aebdb8 !important;
+  font-size: 12.5px !important;
+  line-height: 1.5 !important;
+}
+.research-state-reason span {
+  display: inline-block;
+  margin-right: 8px;
+  color: #c9d6d1;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* The full authored manifesto belongs to Home; secondary routes end more quietly. */
+main:not(:has(.observable-home)) + .site-footer .footer-manifesto {
+  max-width: 720px;
+  font-size: clamp(16px,1.25vw,19px) !important;
+}
+main:not(:has(.observable-home)) + .site-footer .footer-manifesto-line + .footer-manifesto-line { display: none; }
+main:not(:has(.observable-home)) + .site-footer .footer-closing {
+  padding-top: 24px !important;
+  padding-bottom: 18px !important;
+}
+
+@media (max-width: 900px) {
+  .anchor-section#capabilities .system-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  .anchor-section#capabilities .detail-card,
+  .anchor-section#capabilities .detail-card:nth-child(4n+2),
+  .anchor-section#capabilities .detail-card:nth-child(4n+3),
+  .anchor-section#capabilities .detail-card:nth-child(4n+4) { padding: 18px 16px 18px 0 !important; }
+  .anchor-section#capabilities .detail-card:nth-child(even) { padding-left: 16px !important; border-right: 0 !important; }
+}
+
+@media (max-width: 760px) {
+  /* Mobile system visuals become readable semantic sequences, not miniature desktop diagrams. */
+  .visual-core .core-map { grid-template-columns: 1fr !important; gap: 7px !important; }
+  .visual-core .core-center { min-height: 68px !important; margin-bottom: 3px !important; }
+  .visual-core .core-node { min-height: 42px !important; font-size: 12px !important; justify-content: flex-start !important; padding: 0 14px !important; }
+
+  .visual-tradebot .tradebot-rail { grid-template-columns: 1fr !important; gap: 7px !important; }
+  .visual-tradebot .tradebot-stage {
+    min-height: 54px !important;
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 28px 84px 1fr !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .visual-tradebot .tradebot-stage small { text-align: left !important; }
+  .visual-tradebot .tradebot-wave { height: 48px !important; }
+
+  .visual-automation .workflow-lanes { display: grid !important; grid-template-columns: 1fr !important; gap: 7px !important; }
+  .visual-automation .workflow-row {
+    min-height: 48px !important;
+    width: 100% !important;
+    grid-template-columns: 26px 72px minmax(0,1fr) auto !important;
+    gap: 7px !important;
+  }
+
+  .visual-analytics .analytics-grid { grid-template-columns: 1fr !important; gap: 7px !important; }
+  .visual-analytics .analytics-chart { min-height: 86px !important; }
+  .visual-analytics .analytics-metric { min-height: 50px !important; }
+
+  .worklog-evidence { grid-template-columns: 1fr !important; }
+  .worklog-evidence > div { padding: 13px !important; }
+
+  .anchor-section#capabilities .system-grid { grid-template-columns: 1fr !important; }
+  .anchor-section#capabilities .detail-card,
+  .anchor-section#capabilities .detail-card:nth-child(even) {
+    min-height: 0;
+    padding: 16px 0 !important;
+    border-right: 0 !important;
+  }
+  .anchor-section#capabilities .detail-card h3 { font-size: 18px; }
+
+  /* Preserve Journey chronology while removing desktop-scale vertical air. */
+  .journey-timeline { gap: 0 !important; }
+  .journey-step { padding-top: 20px !important; padding-bottom: 20px !important; }
+  .journey-question-label { font-size: 10px !important; }
+
+  /* Primary metadata stays readable; tertiary decoration remains quiet. */
+  .research-domain,
+  .system-meta,
+  .worklog-meta,
+  .journey-question-label { color: #a9b8b3 !important; }
+  .research-state-reason { font-size: 12px !important; margin-top: 8px !important; }
+
+  main:not(:has(.observable-home)) + .site-footer .footer-manifesto { font-size: 16px !important; }
+}

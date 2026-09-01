@@ -1,0 +1,197 @@
+/* Phase 1 system-specific visual grammar.
+   Purpose: make each public system read as a different engineering discipline
+   without changing evidence, authority, or runtime claims. */
+
+.system-visual {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.system-visual .visual-kicker {
+  position: relative;
+  z-index: 2;
+}
+
+/* TradeBot — sequential governance topology. */
+.visual-tradebot {
+  background:
+    linear-gradient(180deg, rgba(237,241,242,.96), rgba(233,237,231,.9)) !important;
+  border-top: 3px solid #50695e !important;
+}
+.visual-tradebot::before {
+  content: "";
+  position: absolute;
+  inset: 52px 5% 76px;
+  background: repeating-linear-gradient(90deg, transparent 0 17%, rgba(80,105,94,.08) 17% 17.3%);
+  pointer-events: none;
+}
+.tradebot-rail {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0,1fr));
+  gap: 0;
+  margin-top: 28px;
+  border-top: 1px solid var(--editorial-line-strong);
+  border-bottom: 1px solid var(--editorial-line-strong);
+}
+.tradebot-stage {
+  min-height: 126px;
+  padding: 20px 18px;
+  border-right: 1px solid var(--editorial-line);
+}
+.tradebot-stage:last-child { border-right: 0; }
+.tradebot-stage strong { display:block; margin:8px 0 5px; font:600 15px/1.2 var(--sans); letter-spacing:.035em; }
+.tradebot-stage small { color:var(--editorial-muted); line-height:1.45; }
+.tradebot-index { color:#50695e; font:650 10px/1 var(--mono); }
+.tradebot-evidence-strip {
+  position: relative;
+  z-index: 1;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:18px;
+  color:#50695e;
+  font:650 9px/1.2 var(--mono);
+  letter-spacing:.06em;
+}
+.tradebot-evidence-strip i { flex:1; height:1px; background:rgba(80,105,94,.3); }
+.tradebot-wave { opacity:.48; margin-top:18px; }
+
+/* Control Core — central orchestration + trace. */
+.visual-core {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(111,104,120,.09), transparent 32%),
+    var(--editorial-lavender) !important;
+  border-top: 3px solid #6f6878 !important;
+}
+.core-map { min-height: 330px; }
+.core-center {
+  box-shadow: 0 0 0 16px rgba(111,104,120,.05), 0 0 0 32px rgba(111,104,120,.025);
+}
+.core-node { border-color:rgba(111,104,120,.3) !important; }
+.trace-preview {
+  border-top:1px solid rgba(111,104,120,.22);
+  background:rgba(255,255,255,.22);
+}
+
+/* Automation — linear workflow with visible exception path. */
+.visual-automation {
+  background: var(--editorial-warm) !important;
+  border-top: 3px solid #645b56 !important;
+}
+.workflow-lanes { margin-top:22px; border-top:1px solid var(--editorial-line-strong); }
+.workflow-row {
+  position:relative;
+  grid-template-columns:54px 120px minmax(0,1fr) 86px;
+  border-bottom:1px solid var(--editorial-line);
+}
+.workflow-row:nth-child(4) {
+  background:rgba(100,91,86,.055);
+  border-left:3px solid #645b56;
+}
+.workflow-row:nth-child(4)::after {
+  content:"EXCEPTION PATH";
+  position:absolute;
+  right:14px;
+  top:-8px;
+  padding:0 6px;
+  background:var(--editorial-warm);
+  color:#645b56;
+  font:650 8px/1 var(--mono);
+  letter-spacing:.07em;
+}
+.workflow-rule {
+  margin-top:16px;
+  padding-left:14px;
+  border-left:2px solid #645b56;
+}
+
+/* Analytics — reasoning chain first, chart second. */
+.visual-analytics {
+  background: var(--editorial-cool) !important;
+  border-top: 3px solid #526575 !important;
+}
+.analytics-grid {
+  display:grid;
+  grid-template-columns:minmax(0,1.4fr) minmax(170px,.6fr);
+  grid-template-rows:repeat(3,auto);
+  gap:0 20px;
+  margin-top:24px;
+}
+.analytics-chart-main {
+  grid-row:1 / 4;
+  border-right:1px solid var(--editorial-line-strong);
+  padding-right:22px;
+}
+.analytics-metric {
+  padding:16px 0;
+  border-bottom:1px solid var(--editorial-line);
+}
+.analytics-metric:first-of-type { border-top:1px solid var(--editorial-line); }
+.analytics-metric small { color:#526575; }
+.analytics-metric strong { display:block; margin-top:6px; font:500 18px/1.25 var(--serif); }
+
+/* Mobile is recomposed, not merely shrunk. */
+@media (max-width: 430px) {
+  .system-visual { border-radius:18px; }
+  .system-visual .visual-kicker { gap:8px; align-items:flex-start; }
+  .tradebot-rail {
+    grid-template-columns:1fr;
+    border-bottom:0;
+  }
+  .tradebot-stage {
+    min-height:0;
+    display:grid;
+    grid-template-columns:38px 92px minmax(0,1fr);
+    gap:10px;
+    align-items:center;
+    padding:14px 0;
+    border-right:0;
+    border-bottom:1px solid var(--editorial-line);
+  }
+  .tradebot-stage strong { margin:0; font-size:13px; }
+  .tradebot-stage small { font-size:11px; }
+  .tradebot-evidence-strip { display:grid; grid-template-columns:1fr; gap:7px; }
+  .tradebot-evidence-strip i { width:32px; }
+  .tradebot-wave { height:54px; }
+
+  .core-map { min-height:285px; transform:scale(.9); transform-origin:center; }
+  .trace-preview { grid-template-columns:64px 74px minmax(0,1fr); font-size:10px; }
+
+  .workflow-row {
+    grid-template-columns:34px 82px minmax(0,1fr);
+    gap:8px;
+    padding:13px 0;
+  }
+  .workflow-row > b { grid-column:2 / -1; justify-self:start; }
+  .workflow-row:nth-child(4)::after { position:static; grid-column:2 / -1; margin-top:4px; padding:0; background:none; }
+
+  .analytics-grid { grid-template-columns:1fr; gap:0; }
+  .analytics-chart-main {
+    grid-row:auto;
+    border-right:0;
+    border-bottom:1px solid var(--editorial-line-strong);
+    padding:0 0 18px;
+    margin-bottom:4px;
+  }
+  .analytics-metric { padding:13px 0; }
+}
+
+@media (max-width: 390px) {
+  .tradebot-stage { grid-template-columns:32px 82px minmax(0,1fr); gap:8px; }
+  .core-map { transform:scale(.84); margin-inline:-18px; }
+  .trace-preview { grid-template-columns:58px 66px minmax(0,1fr); }
+}
+
+@media (max-width: 375px) {
+  .tradebot-stage small { font-size:10px; }
+  .core-map { transform:scale(.8); margin-inline:-28px; }
+  .workflow-row { grid-template-columns:30px 76px minmax(0,1fr); }
+  .analytics-metric strong { font-size:17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .core-map { transform:none; }
+}

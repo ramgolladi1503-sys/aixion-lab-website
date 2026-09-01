@@ -1,0 +1,55 @@
+name: Website CI
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Production build
+        run: npm run build
+
+      - name: Verify deployable static export
+        run: |
+          test -f out/index.html
+          test -f out/systems/tradebot.html || test -f out/systems/tradebot/index.html
+          test -f out/research/evidence-bound-autonomy.html || test -f out/research/evidence-bound-autonomy/index.html
+          test -f out/robots.txt
+          test -f out/sitemap.xml
+          test -f out/manifest.webmanifest
+          test -f out/icon.svg
+          test -f out/_headers
+          ! grep -R -i -E "publication pending|will be added|build preview" out --include='*.html'
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Production browser and visual suite
+        run: npm run visual
+
+      - name: Upload visual review bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aixion-pass1-visuals
+          path: test-results/
+          if-no-files-found: warn
