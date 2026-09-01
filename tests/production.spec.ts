@@ -19,20 +19,32 @@ const productionRoutes = [
 ] as const;
 
 test("production routes load without browser errors", async ({ page }) => {
-  const browserErrors: string[] = [];
-  page.on("pageerror", error => browserErrors.push(`pageerror: ${error.message}`));
+  let activeRoute = "";
+  const routeErrors = new Map<string, string[]>();
+  const record = (message: string) => {
+    const errors = routeErrors.get(activeRoute) ?? [];
+    errors.push(message);
+    routeErrors.set(activeRoute, errors);
+  };
+
+  page.on("pageerror", error => record(`pageerror: ${error.message}`));
   page.on("console", message => {
-    if (message.type() === "error") browserErrors.push(`console: ${message.text()}`);
+    if (message.type() === "error") record(`console: ${message.text()}`);
   });
 
   for (const route of productionRoutes) {
-    browserErrors.length = 0;
+    activeRoute = route;
+    routeErrors.set(route, []);
     const response = await page.goto(route, { waitUntil: "networkidle" });
     expect(response?.status(), `${route} should return a successful response`).toBeLessThan(400);
     await expect(page.locator("#main-content")).toBeVisible();
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /\S+/);
-    expect(browserErrors, `${route} should not emit browser errors`).toEqual([]);
   }
+
+  const failures = [...routeErrors.entries()]
+    .filter(([, errors]) => errors.length > 0)
+    .map(([route, errors]) => `${route}: ${errors.join(" | ")}`);
+  expect(failures, "Production routes should not emit browser errors").toEqual([]);
 });
 
 test("all internal navigation links resolve", async ({ page, request }) => {
