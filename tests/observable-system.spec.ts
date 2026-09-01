@@ -41,7 +41,7 @@ test("observable homepage keeps the control-room content usable on mobile", asyn
   await page.goto("/", { waitUntil: "networkidle" });
 
   await expect(page.locator(".observable-field")).toBeVisible();
-  await expect(page.getByRole("link", { name: /Explore systems/ }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /Explore systems/i }).first()).toBeVisible();
   await expect(page.getByRole("link", { name: /View pulse/i }).first()).toBeVisible();
   await expect(page.locator("details.mobile-menu summary")).toBeVisible();
 
