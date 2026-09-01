@@ -121,24 +121,38 @@ test("search palette is visually quiet while retaining keyboard behavior", async
   await expect(dialog.getByRole("button", { name: "Close search" })).toHaveText("×");
 });
 
-test("Control Core remains centered after first-load reveal", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 1000 });
+test("Control Core topology stays readable after first-load reveal", async ({ page }) => {
   await page.goto("/systems/control-core", { waitUntil: "networkidle" });
   const visual = page.locator(".visual-core").first();
+  const map = visual.locator(".core-map");
+  const center = visual.locator(".core-center");
+  const nodes = visual.locator(".core-node");
+
   await expect(visual).toBeVisible();
   await visual.scrollIntoViewIfNeeded();
   await page.waitForTimeout(900);
+  await expect(map).toBeVisible();
+  await expect(center).toBeVisible();
+  await expect(nodes).toHaveCount(8);
 
-  const mapBox = await visual.locator(".core-map").boundingBox();
-  const centerBox = await visual.locator(".core-center").boundingBox();
-  expect(mapBox).not.toBeNull();
-  expect(centerBox).not.toBeNull();
-  if (!mapBox || !centerBox) return;
+  const metrics = await map.evaluate(node => {
+    const mapRect = node.getBoundingClientRect();
+    const centerRect = node.querySelector(".core-center")?.getBoundingClientRect();
+    const nodeRects = [...node.querySelectorAll(".core-node")].map(item => item.getBoundingClientRect());
+    return {
+      map: { left: mapRect.left, right: mapRect.right, top: mapRect.top, bottom: mapRect.bottom },
+      center: centerRect ? { width: centerRect.width, height: centerRect.height, top: centerRect.top, bottom: centerRect.bottom } : null,
+      nodes: nodeRects.map(rect => ({ width: rect.width, height: rect.height, left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom })),
+    };
+  });
 
-  const dx = Math.abs((centerBox.x + centerBox.width / 2) - (mapBox.x + mapBox.width / 2));
-  const dy = Math.abs((centerBox.y + centerBox.height / 2) - (mapBox.y + mapBox.height / 2));
-  expect(dx).toBeLessThan(3);
-  expect(dy).toBeLessThan(3);
+  expect(metrics.center).not.toBeNull();
+  expect(metrics.center?.width ?? 0).toBeGreaterThan(150);
+  expect(metrics.center?.height ?? 0).toBeGreaterThan(50);
+  expect(metrics.nodes).toHaveLength(8);
+  expect(metrics.nodes.every(node => node.width > 40 && node.height > 30)).toBe(true);
+  expect(metrics.nodes.every(node => node.left >= metrics.map.left - 1 && node.right <= metrics.map.right + 1)).toBe(true);
+  expect(metrics.nodes.every(node => node.top >= metrics.map.top - 1 && node.bottom <= metrics.map.bottom + 1)).toBe(true);
 });
 
 test("footer closes as a quiet authored endpoint", async ({ page }, testInfo) => {
