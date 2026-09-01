@@ -1,0 +1,318 @@
+/*
+ * APPROVED VISUAL AUTHORITY — 2026-09-01
+ * Source of truth: user-approved black wallpaper reference.
+ * 70% near-black atmospheric field / 20% structured dark surfaces / 10% restrained signal accents.
+ * This file is intentionally loaded LAST. Do not replace with a light editorial theme.
+ */
+
+:root {
+  --canvas: #061113;
+  --canvas-2: #081719;
+  --surface: #0a181a;
+  --surface-2: #0d1c1f;
+  --surface-blue: #09191f;
+  --surface-lavender: #101821;
+  --surface-peach: #171713;
+  --text: #eef4ee;
+  --muted: #8a9995;
+  --line: rgba(157, 184, 176, 0.12);
+  --line-strong: rgba(157, 184, 176, 0.22);
+  --sage: #a8e75c;
+  --teal: #68d7c2;
+  --blue: #67a7e8;
+  --lavender: #a889e8;
+  --peach: #e7a45c;
+  --amber: #d9b65c;
+  --danger: #e16e63;
+  --radius: 18px;
+  --radius-sm: 11px;
+  --shadow: 0 22px 60px rgba(0, 0, 0, .2);
+}
+
+html {
+  background: #061113;
+  color-scheme: dark;
+}
+
+body {
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 14% -8%, rgba(100, 216, 192, .045), transparent 32rem),
+    radial-gradient(ellipse at 82% 10%, rgba(103, 167, 232, .025), transparent 34rem),
+    linear-gradient(180deg, #061113 0%, #071416 45%, #061113 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .17;
+  background-image:
+    linear-gradient(rgba(133, 163, 154, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(133, 163, 154, .025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.8), transparent 72%);
+}
+
+::selection { background: rgba(168,231,92,.25); color: #fff; }
+
+.site-header {
+  border-bottom: 1px solid rgba(151, 183, 173, .11);
+  background: rgba(5, 16, 18, .86);
+  box-shadow: 0 8px 30px rgba(0,0,0,.08);
+}
+
+.brand strong,
+.desktop-nav a:hover,
+.quiet-link:hover,
+h1, h2, h3, h4,
+strong,
+.system-card h3,
+.feature-copy h2,
+.pulse-head h2 { color: var(--text); }
+
+.brand small,
+.desktop-nav,
+.quiet-link,
+.lede,
+.section-heading p,
+.feature-copy p,
+.system-card p,
+.hero-attribution span,
+.pulse-head p { color: var(--muted); }
+
+.brand-mark i { background: var(--sage); box-shadow: 0 0 9px rgba(168,231,92,.18); }
+
+.mode-toggle {
+  border-color: rgba(151,183,173,.16);
+  background: rgba(12,29,31,.72);
+  color: #bcc9c5;
+}
+.mode-track { background: rgba(168,231,92,.12); }
+.mode-knob { background: var(--sage); box-shadow: 0 0 10px rgba(168,231,92,.25); }
+
+.eyebrow {
+  color: #9fcf78;
+  letter-spacing: .16em;
+}
+
+.text-link { color: #b7ec75; }
+.text-link:hover { color: #d2ff9b; }
+
+.button {
+  background: #a8e75c !important;
+  border-color: #a8e75c !important;
+  color: #07100d !important;
+  box-shadow: 0 0 0 1px rgba(168,231,92,.04), 0 8px 24px rgba(168,231,92,.08);
+}
+.button:hover, .button:focus-visible { background: #b9f36f !important; }
+.button-secondary {
+  background: rgba(11,29,31,.82);
+  color: #dbe6e2;
+  border-color: rgba(151,183,173,.2);
+}
+
+/* 70% wallpaper field: sections remain open, separators are quiet. */
+.section,
+.section-tight,
+.hero,
+.page-hero { background: transparent !important; }
+
+.section + .section,
+.section-tight + .section,
+.section + .section-tight {
+  border-top: 1px solid rgba(151,183,173,.07);
+}
+
+/* 20% structural surfaces: panels stay embedded in the wallpaper, never become light cards. */
+.panel,
+.system-card,
+.feature-copy,
+.feature-visual,
+.pulse-preview,
+.abstract-scene,
+.system-visual,
+.research-card,
+.research-row,
+.journey-card,
+.timeline-card,
+.contact-card,
+.resume-card,
+.evidence-card,
+.architecture-step span,
+.mode-toggle,
+[class*="panel"],
+[class*="card"] {
+  border-color: rgba(151,183,173,.13) !important;
+  background-color: rgba(9,24,26,.56) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.012), 0 18px 50px rgba(0,0,0,.08) !important;
+}
+
+.panel:hover,
+.system-card:hover,
+[class*="card"]:hover {
+  border-color: rgba(168,231,92,.18) !important;
+}
+
+.system-card {
+  background: linear-gradient(180deg, rgba(11,28,30,.72), rgba(8,22,24,.58)) !important;
+  min-height: 0;
+}
+.system-card:before {
+  height: 3px;
+  opacity: .82;
+  box-shadow: 0 0 12px currentColor;
+}
+
+.accent-blue { --system-accent: var(--blue); }
+.accent-lavender { --system-accent: var(--lavender); }
+.accent-peach { --system-accent: var(--peach); }
+
+.mini-meta div,
+.progress-lane,
+[class*="row"] { border-color: rgba(151,183,173,.1); }
+.mini-meta dt,
+.system-id { color: #80908c; }
+.mini-meta dd { color: #cdd8d4; }
+
+.state-tag {
+  border: 1px solid rgba(168,231,92,.12);
+  background: rgba(168,231,92,.08);
+  color: #b9eb7c;
+}
+.state-building { background: rgba(168,137,232,.09); color: #c0a9ef; border-color: rgba(168,137,232,.14); }
+.state-research, .state-active { background: rgba(103,167,232,.09); color: #93c2ef; border-color: rgba(103,167,232,.14); }
+.state-rejected { background: rgba(225,110,99,.08); color: #e99289; border-color: rgba(225,110,99,.15); }
+.state-hypothesis-frozen { background: rgba(168,137,232,.08); color: #c0aaeb; border-color: rgba(168,137,232,.13); }
+
+.hero-attribution { border-left-color: rgba(168,231,92,.46); }
+.hero-attribution strong { color: #eaf1ec; }
+
+.abstract-scene,
+.scene-blue,
+.scene-lavender,
+.scene-peach {
+  background:
+    radial-gradient(circle at 72% 24%, rgba(168,231,92,.04), transparent 18rem),
+    linear-gradient(145deg, rgba(9,24,26,.9), rgba(5,17,19,.94)) !important;
+  border-color: rgba(151,183,173,.13) !important;
+}
+.scene-grid {
+  opacity: .34;
+  background-image:
+    linear-gradient(rgba(119,153,142,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(119,153,142,.07) 1px, transparent 1px);
+}
+.scene-platform {
+  border-color: rgba(142,177,166,.18);
+  background: linear-gradient(145deg, rgba(17,39,41,.88), rgba(7,20,22,.94));
+  box-shadow: 0 28px 48px rgba(0,0,0,.34);
+}
+.scene-orb,
+.scene-blue .scene-orb,
+.scene-lavender .scene-orb,
+.scene-peach .scene-orb {
+  background: radial-gradient(circle at 32% 30%, #bdd7ca 0, #547166 36%, #1f3933 68%, #102522 100%);
+  box-shadow: 0 0 40px rgba(168,231,92,.10), 0 28px 44px rgba(0,0,0,.35);
+}
+
+/* Pulse / maturity lanes mirror the approved reference: faint rails, bright current state. */
+.lane-track:before { background: rgba(150,181,172,.17); }
+.lane-stage { color: #70817c; }
+.lane-stage i {
+  border-color: #091719;
+  background: #293936;
+  box-shadow: 0 0 0 1px rgba(151,183,173,.15);
+}
+.lane-stage.reached i { background: #648b7e; }
+.lane-stage.current i {
+  background: var(--sage);
+  box-shadow: 0 0 0 3px rgba(168,231,92,.08), 0 0 12px rgba(168,231,92,.24);
+}
+
+/* System-specific diagrams retain the approved 10% signal vocabulary. */
+.system-visual {
+  background: linear-gradient(180deg, rgba(8,23,25,.82), rgba(6,18,20,.76)) !important;
+  border: 1px solid rgba(151,183,173,.13) !important;
+}
+.tradebot-visual { border-top-color: rgba(168,231,92,.55) !important; }
+.control-core-visual { border-top-color: rgba(168,137,232,.55) !important; }
+.automation-visual { border-top-color: rgba(231,164,92,.52) !important; }
+.analytics-visual { border-top-color: rgba(103,167,232,.55) !important; }
+
+.tradebot-visual,
+.control-core-visual,
+.automation-visual,
+.analytics-visual {
+  background-color: rgba(7,21,23,.76) !important;
+}
+
+.tradebot-stage,
+.evidence-strip,
+.trace-preview,
+.workflow-row,
+.analytics-metric,
+.core-node,
+.core-center {
+  border-color: rgba(151,183,173,.13) !important;
+  background: rgba(8,23,25,.72) !important;
+  color: #d7e1dd;
+}
+
+.core-center {
+  box-shadow: 0 0 0 12px rgba(168,137,232,.025), 0 0 0 24px rgba(168,137,232,.018), 0 0 32px rgba(168,137,232,.08) !important;
+}
+
+/* Generic typography protection across Research, Pulse, Journey, About and Resume. */
+main p,
+main li,
+main dd,
+main blockquote { color: #91a09c; }
+main h1,
+main h2,
+main h3,
+main h4,
+main dt { color: #edf3ef; }
+main small,
+main time,
+main .meta,
+main [class*="meta"] { color: #778883; }
+
+hr { border-color: rgba(151,183,173,.1); }
+
+input,
+textarea,
+select {
+  background: rgba(8,22,24,.86);
+  border-color: rgba(151,183,173,.18);
+  color: #e4ece8;
+}
+
+/* Footer belongs to the wallpaper, not a separate slab. */
+.site-footer {
+  background: rgba(4,14,16,.42) !important;
+  border-top-color: rgba(151,183,173,.1) !important;
+  color: #83938e;
+}
+.site-footer strong,
+.site-footer a:hover { color: #e6eeea; }
+
+/* Focus is functional and uses the signal color without turning the UI neon. */
+:focus-visible { outline-color: #a8e75c !important; }
+
+/* Mobile: preserve the same ratio and density, not a different design language. */
+@media (max-width: 760px) {
+  body::before { background-size: 48px 48px; opacity: .12; }
+  .site-header { background: rgba(5,16,18,.93); }
+  .panel,
+  .system-card,
+  [class*="card"] { background-color: rgba(8,22,24,.7) !important; }
+  .system-visual { background-color: rgba(7,20,22,.84) !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Static responsive transforms are layout, not motion; do not disable them here. */
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}
