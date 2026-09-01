@@ -29,18 +29,24 @@ test("approved observable Home is deliberately recomposed for mobile", async ({ 
   await expect(page.getByRole("link", { name: /View Lab Pulse/i }).first()).toBeVisible();
   await expect(page.locator("details.mobile-menu summary")).toBeVisible();
   await expect(page.locator(".observable-field")).toBeVisible();
+  await expect(page.locator("[data-aixion-signal]").first()).toBeHidden();
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
 });
 
-test("Aixion lifecycle remains legible in reduced motion", async ({ page }) => {
+test("Aixion lifecycle respects reduced motion and deliberate mobile subtraction", async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-reduced/);
-  await expect(page.locator("[data-aixion-signal]").first()).toBeVisible();
-  await expect(page.getByText("RESEARCH", { exact: true }).first()).toBeVisible();
-  await expect(page.getByText("LEARN", { exact: true }).first()).toBeVisible();
+  const lifecycle = page.locator("[data-aixion-signal]").first();
+  if (testInfo.project.name === "mobile") {
+    await expect(lifecycle).toBeHidden();
+  } else {
+    await expect(lifecycle).toBeVisible();
+    await expect(page.getByText("RESEARCH", { exact: true }).first()).toBeVisible();
+    await expect(page.getByText("LEARN", { exact: true }).first()).toBeVisible();
+  }
 });
 
 test("dark convergence does not replace validated interactions", async ({ page }, testInfo) => {
