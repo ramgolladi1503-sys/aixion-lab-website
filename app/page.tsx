@@ -9,8 +9,8 @@ const legend = [
   ["VALIDATING", "Evidence is accumulating"],
   ["BUILDING", "Actively under construction"],
   ["RESEARCH", "Exploring and iterating"],
+  ["CONCEPT", "Defined but not yet built"],
   ["ARCHIVED", "Complete / no longer active"],
-  ["REJECTED", "Rejected after evaluation"],
 ] as const;
 
 export default function HomePage() {
@@ -37,13 +37,13 @@ export default function HomePage() {
             ))}
             <Link className="state-overview-row" href="/research">
               <span className="state-orb state-orb--research" aria-hidden="true" />
-              <span className="state-overview-copy"><strong>Research Engine</strong><small>LEARNING</small></span>
+              <span className="state-overview-copy"><strong>Research Notes</strong><small>RESEARCH</small></span>
               <span className="state-spark state-spark--research" aria-hidden="true">⌁</span>
             </Link>
           </div>
 
           <div className="rail-panel state-legend-panel">
-            <p className="control-label">STATE LEGEND</p>
+            <p className="control-label">MATURITY LEGEND</p>
             {legend.map(([state, description]) => (
               <div className="state-legend-row" key={state}>
                 <span className={`legend-ring legend-ring--${state.toLowerCase()}`} />
@@ -60,7 +60,7 @@ export default function HomePage() {
           </div>
         </aside>
 
-        <main className="control-stage">
+        <div className="control-stage">
           <div className="control-stage-copy observable-copy">
             <p className="control-kicker eyebrow">THE SYSTEM IS EXPLAINING ITSELF</p>
             <h1 id="observable-home-title">Systems should be able to explain their state, their evidence and their limits.</h1>
@@ -81,14 +81,20 @@ export default function HomePage() {
           </div>
 
           <section className="control-pulse-strip pulse-preview" data-reveal="pulse-preview" aria-label="Aixion Pulse summary">
-            <div className="pulse-live"><strong>AIXION PULSE · LIVE</strong><span>Curated public state</span></div>
+            <div className="pulse-live"><strong>AIXION PULSE · CURRENT</strong><span>Latest curated public state</span></div>
             <div className="pulse-stat"><span>Systems</span><strong>{systems.length}</strong></div>
             <div className="pulse-stat"><span>Validating</span><strong>{validating}</strong></div>
             <div className="pulse-stat"><span>Building</span><strong>{building}</strong></div>
             <div className="pulse-stat"><span>Research notes</span><strong>{researchNotes.length}</strong></div>
             <Link href="/pulse" className="pulse-open">VIEW FULL PULSE →</Link>
           </section>
-        </main>
+
+          <section className="control-pulse-strip career-only" aria-label="Career translation">
+            <div className="pulse-live"><strong>CAREER TRANSLATION</strong><span>Same evidence, recruiter-readable</span></div>
+            <div className="pulse-stat"><span>Focus</span><strong>Quality · Automation · Systems · Applied AI</strong></div>
+            <Link href="/resume" className="pulse-open">VIEW CAREER SNAPSHOT →</Link>
+          </section>
+        </div>
 
         <aside className="control-rail control-rail--right" aria-label="Recent public state changes">
           <div className="rail-panel recent-state-panel">
