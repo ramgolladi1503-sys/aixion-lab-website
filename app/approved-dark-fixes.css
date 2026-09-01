@@ -121,6 +121,39 @@
 .observable-home .section,
 .observable-home .section-tight { background: transparent !important; }
 
+/* System detail pages must never reintroduce pale tiles inside the dark snapshot/evidence surfaces. */
+.system-hero-summary,
+.system-summary-grid,
+.system-summary-grid > div {
+  background: transparent !important;
+  color: #eef4ee !important;
+  box-shadow: none !important;
+}
+.system-hero-summary {
+  background: linear-gradient(155deg, rgba(9,25,27,.88), rgba(6,18,20,.82)) !important;
+}
+.system-summary-grid > div {
+  border-color: rgba(157,184,176,.11) !important;
+}
+.system-summary-grid dt { color: #9daca7 !important; }
+.system-summary-grid dd { color: #dce6e2 !important; }
+.system-summary-skills span {
+  background: rgba(157,184,176,.055) !important;
+  border-color: rgba(157,184,176,.12) !important;
+  color: #b6c3bf !important;
+}
+.evidence-trigger,
+.drawer-close {
+  background: rgba(8,22,24,.9) !important;
+  border-color: rgba(157,184,176,.16) !important;
+  color: #dce6e2 !important;
+}
+.evidence-trigger:hover,
+.drawer-close:hover {
+  border-color: rgba(168,231,92,.28) !important;
+  color: #eef4ee !important;
+}
+
 /* Footer is part of the wallpaper rather than a light slab. */
 .site-footer,
 .site-footer--statement {
@@ -159,4 +192,5 @@ main [class*="meta"] { color: #95a49f; }
   .research-row {
     background: rgba(8,22,24,.82) !important;
   }
+  .system-summary-grid > div { background: rgba(8,22,24,.32) !important; }
 }
