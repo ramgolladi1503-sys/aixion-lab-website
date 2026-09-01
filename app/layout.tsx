@@ -120,8 +120,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <SiteHeader />
-        <main id="main-content">{children}</main>
-        <MotionOrchestrator />
+        <main id="main-content"><MotionOrchestrator>{children}</MotionOrchestrator></main>
         <SiteFooter />
         <script
           type="application/ld+json"
