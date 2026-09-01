@@ -14,7 +14,7 @@ test("observable homepage matches the locked control-room composition and stays 
   await expect(field.locator("svg")).toHaveAttribute("aria-labelledby", /observable-title observable-desc/);
   await expect(field.getByText("VALIDATING", { exact: true }).first()).toBeVisible();
   await expect(field.getByText("BUILDING", { exact: true }).first()).toBeVisible();
-  await expect(field.getByText("REJECTED", { exact: true }).first()).toBeVisible();
+  await expect(field.getByText("REJECTED RESEARCH", { exact: true }).first()).toBeVisible();
   await expect(page.getByRole("heading", { name: /Systems should be able to explain their state, their evidence and their limits/i })).toBeVisible();
 
   const leftBox = await page.locator(".control-rail--left").boundingBox();
