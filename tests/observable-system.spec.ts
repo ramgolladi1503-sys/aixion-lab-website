@@ -7,7 +7,7 @@ test("observable homepage matches the locked control-room composition and stays 
   await expect(page.locator(".control-rail--left")).toBeVisible();
   await expect(page.locator(".control-stage")).toBeVisible();
   await expect(page.locator(".control-rail--right")).toBeVisible();
-  await expect(page.locator(".control-pulse-strip")).toBeVisible();
+  await expect(page.locator(".pulse-preview")).toBeVisible();
 
   const field = page.locator(".observable-field");
   await expect(field).toBeVisible();
