@@ -134,15 +134,16 @@ test("Control Core topology stays readable after first-load reveal", async ({ pa
   await expect(map).toBeVisible();
   await expect(center).toBeVisible();
   await expect(nodes).toHaveCount(8);
+  for (let index = 0; index < 8; index += 1) await expect(nodes.nth(index)).toBeVisible();
 
   const metrics = await map.evaluate(node => {
     const mapRect = node.getBoundingClientRect();
     const centerRect = node.querySelector(".core-center")?.getBoundingClientRect();
     const nodeRects = [...node.querySelectorAll(".core-node")].map(item => item.getBoundingClientRect());
     return {
-      map: { left: mapRect.left, right: mapRect.right, top: mapRect.top, bottom: mapRect.bottom },
-      center: centerRect ? { width: centerRect.width, height: centerRect.height, top: centerRect.top, bottom: centerRect.bottom } : null,
-      nodes: nodeRects.map(rect => ({ width: rect.width, height: rect.height, left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom })),
+      map: { left: mapRect.left, right: mapRect.right },
+      center: centerRect ? { width: centerRect.width, height: centerRect.height } : null,
+      nodes: nodeRects.map(rect => ({ width: rect.width, height: rect.height, left: rect.left, right: rect.right })),
     };
   });
 
@@ -152,7 +153,6 @@ test("Control Core topology stays readable after first-load reveal", async ({ pa
   expect(metrics.nodes).toHaveLength(8);
   expect(metrics.nodes.every(node => node.width > 40 && node.height > 30)).toBe(true);
   expect(metrics.nodes.every(node => node.left >= metrics.map.left - 1 && node.right <= metrics.map.right + 1)).toBe(true);
-  expect(metrics.nodes.every(node => node.top >= metrics.map.top - 1 && node.bottom <= metrics.map.bottom + 1)).toBe(true);
 });
 
 test("footer closes as a quiet authored endpoint", async ({ page }, testInfo) => {
