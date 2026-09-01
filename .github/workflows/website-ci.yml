@@ -53,3 +53,23 @@ jobs:
           name: aixion-pass1-visuals
           path: test-results/
           if-no-files-found: warn
+
+      - name: Package exact release source and static export
+        uses: actions/upload-artifact@v4
+        with:
+          name: aixion-netlify-release-source
+          path: |
+            app/
+            components/
+            content/
+            lib/
+            netlify/
+            public/
+            out/
+            package.json
+            package-lock.json
+            next.config.mjs
+            tsconfig.json
+            netlify.toml
+            next-env.d.ts
+          if-no-files-found: error
