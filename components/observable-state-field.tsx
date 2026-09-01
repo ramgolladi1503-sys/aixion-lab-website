@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { systems, researchNotes } from "@/lib/site-data";
 
 const bands = [
@@ -15,8 +18,31 @@ function wavePath(y: number, offset: number) {
   return points.map((x, index) => `${index === 0 ? "M" : "L"} ${x} ${y + ys[index] + offset}`).join(" ");
 }
 
+function StableFieldShell() {
+  return (
+    <div className="observable-field observable-field--locked observable-field--pending" aria-label="Aixion public system-state model">
+      <div className="field-note-card">
+        <span>PUBLIC-SAFE STATE MODEL</span>
+        <p>Curated system maturity and research traces. This visualization is not live runtime telemetry.</p>
+      </div>
+      <span className="sr-only">System-state visualization loading.</span>
+    </div>
+  );
+}
+
 export function ObservableStateField() {
+  const [mounted, setMounted] = useState(false);
   const rejected = researchNotes.filter(note => note.state === "REJECTED");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // React requires the first browser render to match SSR exactly. The complex SVG
+  // is therefore mounted only after hydration; the public-safe shell is stable in
+  // both environments and prevents parser/namespace differences from invalidating
+  // the page root during hydration.
+  if (!mounted) return <StableFieldShell />;
 
   return (
     <div className="observable-field observable-field--locked" aria-label="Aixion public system-state model">
