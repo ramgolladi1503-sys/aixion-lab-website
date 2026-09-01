@@ -211,11 +211,11 @@ main [class*="meta"] { color: #95a49f; }
   }
   .system-summary-grid > div { background: rgba(8,22,24,.32) !important; }
 
-  /* Mobile subtraction: preserve the evidence path while removing repeated desktop explanation. */
+  /* Mobile subtraction: Home is an orientation surface; deeper stories live on their dedicated routes. */
   .anchor-section#engineering .system-grid.section-inline { display: none !important; }
-  .observable-home [data-reveal="research-proof"] .research-row:nth-child(n+3) { display: none !important; }
-  .observable-home [data-reveal="journey-feature"] .system-visual { display: none !important; }
-  .observable-home [data-reveal="journey-feature"] .feature-split { grid-template-columns: 1fr !important; }
+  .observable-home [data-reveal="control-core-feature"],
+  .observable-home [data-reveal="research-proof"],
+  .observable-home [data-reveal="journey-feature"] { display: none !important; }
   .observable-home .contact-copy--conversation { display: none !important; }
   .observable-home .contact-panel { grid-template-columns: 1fr !important; }
   .observable-home .contact-copy--career { padding: 22px 18px !important; }
