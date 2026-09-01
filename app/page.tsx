@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { systems, researchNotes } from "@/lib/site-data";
+import { systems } from "@/lib/site-data";
 import labActivity from "@/content/lab-activity.json";
 import { CareerStrip, ProgressLane, SectionHeading, StateTag, SystemCard } from "@/components/ui";
 import { AixionSignal, SystemVisual } from "@/components/system-visuals";
@@ -7,7 +7,6 @@ import { ObservableStateField } from "@/components/observable-state-field";
 
 export default function HomePage() {
   const tradebot = systems[0];
-  const controlCore = systems[1];
   const activeWork = labActivity.active[0];
   const latestActivity = labActivity.entries[0];
 
@@ -83,55 +82,23 @@ export default function HomePage() {
             <p className="system-principle">A market system should know whether its data is trustworthy before it makes a claim.</p>
             <p>{tradebot.descriptor}</p>
             <p>Market data, research output and automated analysis are deliberately separated from risk and human execution authority.</p>
+            <p className="competency-bridge">Demonstrates: {tradebot.competencies.slice(0, 5).join(" · ")}</p>
             <div className="button-row"><StateTag state={tradebot.state} /><Link className="button-secondary" href="/systems/tradebot#evidence">Evidence →</Link></div>
             <CareerStrip skills={tradebot.competencies} />
-            <Link className="text-link" href="/systems/tradebot">Explore the system →</Link>
+            <Link className="text-link" href="/systems/tradebot">Explore the flagship system →</Link>
           </article>
           <SystemVisual kind="tradebot" />
         </div>
       </section>
 
-      <section className="section-tight" data-reveal="control-core-feature">
-        <div className="shell feature-split">
-          <SystemVisual kind="control-core" />
-          <article className="panel feature-copy">
-            <p className="eyebrow">AX-SYS-002 · SECOND FLAGSHIP · BUILDING</p>
-            <h2>Aixion Control Core</h2>
-            <p className="system-principle">An autonomous system should know what it is allowed to do before it acts.</p>
-            <p>{controlCore.descriptor}</p>
-            <p>The MVP focuses on inspectable orchestration: intent, context, tools, policy, evidence and human/system authority are explicit stages.</p>
-            <StateTag state={controlCore.state} />
-            <CareerStrip skills={controlCore.competencies} />
-            <Link className="text-link" href="/systems/control-core">Explore Control Core →</Link>
-          </article>
-        </div>
-      </section>
-
-      <section className="section" data-reveal="research-proof">
+      <section className="section-tight home-deeper" data-reveal="deeper-paths">
         <div className="shell">
-          <SectionHeading eyebrow="RESEARCH / PROOF" title="The lab keeps the questions, failures and evidence visible." copy="A rejected mechanism is still useful engineering evidence. Research is not silently promoted into a system claim." />
-          <div className="research-list">
-            {researchNotes.slice(0, 3).map(note => (
-              <Link className="research-row" href={`/research/${note.slug}`} key={note.slug}>
-                <div><h3>{note.title}</h3><p>{note.question}</p></div>
-                <span className="research-domain">{note.domain}</span>
-                <StateTag state={note.state} />
-              </Link>
-            ))}
-          </div>
-          <Link className="text-link" href="/research">View research index →</Link>
-        </div>
-      </section>
-
-      <section className="section-tight" data-reveal="journey-feature">
-        <div className="shell feature-split">
-          <div className="panel feature-copy">
-            <p className="eyebrow">JOURNEY</p>
-            <h2>The tools changed. The questions got stricter.</h2>
-            <p className="lede">Quality engineering started with “why did this fail?” The current frontier asks whether intelligent systems can act while remaining observable, governed and accountable.</p>
-            <Link className="text-link" href="/journey">View the engineering journey →</Link>
-          </div>
-          <SystemVisual kind="journey" />
+          <SectionHeading eyebrow="GO DEEPER" title="The rest of the lab lives on dedicated pages." copy="Home stops here by design. The deeper evidence, research and engineering progression remain available without duplicating them into the landing page." />
+          <nav className="home-deeper-rail" aria-label="Deeper Aixion Lab paths">
+            <Link href="/systems/control-core"><span>CONTROL CORE</span><strong>Governed autonomy and explicit authority →</strong></Link>
+            <Link href="/research"><span>RESEARCH</span><strong>Questions, frozen hypotheses and rejected work →</strong></Link>
+            <Link href="/journey"><span>JOURNEY</span><strong>How quality engineering evolved into systems thinking →</strong></Link>
+          </nav>
         </div>
       </section>
 
