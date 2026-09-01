@@ -18,6 +18,8 @@ export default function PulsePage() {
       latestMilestone: evidence?.latest_milestone ?? "Public evidence summary pending the next curated update.",
     };
   });
+  const recentChanges = labActivity.entries.slice(0, 5);
+  const archivedCount = Math.max(0, labActivity.entries.length - recentChanges.length);
 
   return (
     <>
@@ -26,7 +28,7 @@ export default function PulsePage() {
           <div>
             <p className="eyebrow">AIXION LAB · PULSE</p>
             <h1>The operational pulse of the lab.</h1>
-            <p className="lede">Current work, system state, public-safe evidence and next gates. Pulse is curated engineering state—not raw repository activity or conversation history.</p>
+            <p className="lede">What is active now, what changed recently, what evidence is newly available and what gate comes next. Pulse is curated public engineering state—not a raw changelog.</p>
             <AixionSignal compact />
           </div>
           <div className="panel meta-board pulse-meta">
@@ -82,10 +84,10 @@ export default function PulsePage() {
       </section>
 
       <section className="section-tight" data-reveal="worklog-history">
-        <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="PUBLIC WORKLOG" title="Changes that meaningfully altered capability, evidence or authority" copy="This log records decisions and milestones worth understanding. Cosmetic commit volume, private implementation details and raw chat history are deliberately excluded." />
+        <div className="shell pulse-history">
+          <SectionHeading eyebrow="RECENT PUBLIC CHANGES" title="Only changes that matter outside the repository" copy="The latest meaningful capability, evidence and authority changes remain visible here. Older history is deliberately de-emphasized so Pulse stays useful to a public visitor." />
           <div className="worklog-list">
-            {labActivity.entries.map(item => (
+            {recentChanges.map(item => (
               <article className="worklog-row" key={item.id}>
                 <div className="worklog-row-meta">
                   <span>{item.date}</span>
@@ -95,12 +97,13 @@ export default function PulsePage() {
                 <div className="worklog-row-copy">
                   <h3>{item.title}</h3>
                   <p>{item.summary}</p>
-                  <p className="worklog-next"><strong>Next gate:</strong> {item.next_gate}</p>
+                  <p className="worklog-next"><strong>Why it matters / next gate:</strong> {item.next_gate}</p>
                 </div>
                 <StateTag state={item.state} />
               </article>
             ))}
           </div>
+          {archivedCount > 0 ? <p className="pulse-archive-note">{archivedCount} older public milestones remain preserved in the source manifest and repository history; they are not repeated here because recency and relevance outrank completeness.</p> : null}
         </div>
       </section>
     </>
