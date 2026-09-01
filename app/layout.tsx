@@ -17,6 +17,7 @@ import "./system-grammar.css";
 import "./accessibility-contrast.css";
 import "./approved-dark.css";
 import "./approved-dark-fixes.css";
+import "./designer-audit-fixes.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionOrchestrator } from "@/components/motion-orchestrator";
