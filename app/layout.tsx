@@ -25,8 +25,8 @@ const socialDescription = "Applied intelligence, automation and decision systems
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#071015",
-  colorScheme: "dark",
+  themeColor: "#E9EDE7",
+  colorScheme: "light",
 };
 
 export const metadata: Metadata = {
