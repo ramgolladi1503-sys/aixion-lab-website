@@ -1,0 +1,42 @@
+/* Accessibility contrast guard.
+   Loaded after the editorial composition layer so WCAG AA contrast remains a
+   hard constraint even when legacy/experimental styles define lighter accents. */
+
+:root {
+  --a11y-accent: #50695e;
+  --a11y-warm-meta: #645b56;
+}
+
+/* Small metadata and editorial accent text must remain >= 4.5:1 on both
+   the canvas (#e9ede7) and footer surface (#e4e9e2). */
+.eyebrow,
+.site-footer--statement .eyebrow,
+.home-proof-row span:first-child,
+.home-current-entry small,
+.home-system-row .row-arrow,
+.flagship-record:hover strong,
+.flagship-record:focus-visible strong {
+  color: var(--a11y-accent) !important;
+}
+
+/* Legacy layers render this 9px label too faintly without an explicit guard. */
+.mode-label {
+  color: var(--editorial-muted, #5e6862) !important;
+}
+
+/* Journey question metadata uses a warm accent; keep it distinct but readable. */
+.journey-question-label {
+  color: var(--a11y-warm-meta) !important;
+}
+
+/* The previous sage button (#78998b) only produced ~2.96:1 with its light text. */
+.button {
+  background: var(--a11y-accent) !important;
+  border-color: var(--a11y-accent) !important;
+  color: #f7faf6 !important;
+}
+.button:hover,
+.button:focus-visible {
+  background: #455d53 !important;
+  border-color: #455d53 !important;
+}
