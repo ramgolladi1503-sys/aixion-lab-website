@@ -29,7 +29,7 @@ test("production routes load without browser errors", async ({ page }) => {
     browserErrors.length = 0;
     const response = await page.goto(route, { waitUntil: "networkidle" });
     expect(response?.status(), `${route} should return a successful response`).toBeLessThan(400);
-    await expect(page.locator("main")).toBeVisible();
+    await expect(page.locator("#main-content")).toBeVisible();
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /\S+/);
     expect(browserErrors, `${route} should not emit browser errors`).toEqual([]);
   }
@@ -111,8 +111,9 @@ test("search palette is visually quiet while retaining keyboard behavior", async
 
 test("Control Core remains centered after first-load reveal", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/", { waitUntil: "networkidle" });
+  await page.goto("/systems/control-core", { waitUntil: "networkidle" });
   const visual = page.locator(".visual-core").first();
+  await expect(visual).toBeVisible();
   await visual.scrollIntoViewIfNeeded();
   await page.waitForTimeout(900);
 
