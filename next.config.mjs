@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: ".next-noir",
+  output: "export",
 };
 
 export default nextConfig;
