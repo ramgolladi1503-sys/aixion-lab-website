@@ -1,0 +1,197 @@
+/* VISUAL CALIBRATION — measured against the user-approved cinematic gallery reference. */
+
+/* Home is its own gallery composition. Inner routes use the compact in-frame header language. */
+body:has(.approved-gallery-home) .site-header{display:none!important}
+body:not(:has(.approved-gallery-home)) .site-header{
+  width:min(860px,calc(100% - 36px));
+  margin:26px auto 0;
+  position:sticky;
+  top:10px;
+  border:1px solid rgba(179,149,115,.58);
+  border-bottom:0;
+  border-radius:30px 30px 0 0;
+  background:rgba(5,14,24,.96);
+  box-shadow:0 18px 50px rgba(0,0,0,.24);
+}
+body:not(:has(.approved-gallery-home)) .header-inner{
+  width:100%!important;
+  min-height:52px!important;
+  padding:0 18px!important;
+  display:flex!important;
+  justify-content:space-between!important;
+}
+body:not(:has(.approved-gallery-home)) .brand strong{font:650 10px/1 var(--ax-mono)!important;letter-spacing:.18em!important}
+body:not(:has(.approved-gallery-home)) .brand small,
+body:not(:has(.approved-gallery-home)) .desktop-nav,
+body:not(:has(.approved-gallery-home)) .mode-toggle,
+body:not(:has(.approved-gallery-home)) .command-trigger,
+body:not(:has(.approved-gallery-home)) .header-github{display:none!important}
+body:not(:has(.approved-gallery-home)) details.mobile-menu{display:block!important}
+body:not(:has(.approved-gallery-home)) details.mobile-menu summary{
+  display:block!important;
+  list-style:none;
+  color:#f4eee5;
+  font:650 9px/1 var(--ax-mono);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+body:not(:has(.approved-gallery-home)) details.mobile-menu summary::-webkit-details-marker{display:none}
+body:not(:has(.approved-gallery-home)) main:not(:has(.approved-gallery-home)){
+  margin-top:0!important;
+  border-radius:0 0 30px 30px!important;
+  border-color:rgba(179,149,115,.58)!important;
+  box-shadow:0 32px 100px rgba(0,0,0,.34),inset 0 0 0 1px rgba(255,255,255,.018)!important;
+}
+
+/* Reference is brighter than the prior dark UI: increase cold-blue separation without becoming neon. */
+body{
+  background:
+    radial-gradient(circle at 50% -10%,rgba(53,128,196,.30),transparent 32rem),
+    radial-gradient(circle at 15% 48%,rgba(35,91,147,.13),transparent 28rem),
+    linear-gradient(180deg,#071526 0%,#081a2e 48%,#06111e 100%)!important;
+}
+
+/* Hero image field: every subpage opens with a cinematic environmental image zone. */
+body:not(:has(.approved-gallery-home)) .page-hero:first-child,
+body:not(:has(.approved-gallery-home)) .observable-hero:first-child{
+  min-height:650px!important;
+  padding-top:300px!important;
+  overflow:hidden;
+  isolation:isolate;
+  background:linear-gradient(180deg,#0b2847 0%,#0a1b2e 52%,#071522 100%)!important;
+}
+body:not(:has(.approved-gallery-home)) .page-hero:first-child::before,
+body:not(:has(.approved-gallery-home)) .observable-hero:first-child::before{
+  content:"";
+  position:absolute;
+  z-index:-2;
+  inset:0 0 auto 0;
+  height:330px;
+  background:
+    radial-gradient(circle at 50% 28%,rgba(173,224,255,.52),transparent 7%),
+    linear-gradient(90deg,#020a13 0 13%,#0d2946 27%,#1b4f77 43%,#c6eaff 49.7%,#1b4f77 56%,#0d2946 72%,#020a13 87%);
+  clip-path:polygon(0 0,100% 0,100% 100%,78% 82%,67% 94%,52% 74%,39% 95%,25% 78%,0 100%);
+  filter:saturate(.9) contrast(1.06);
+}
+body:not(:has(.approved-gallery-home)) .page-hero:first-child::after,
+body:not(:has(.approved-gallery-home)) .observable-hero:first-child::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  width:auto!important;
+  height:auto!important;
+  background:
+    linear-gradient(180deg,rgba(2,8,14,.03) 0 35%,rgba(5,15,26,.44) 49%,#081725 63% 100%),
+    radial-gradient(circle at 50% 19%,rgba(120,204,255,.30),transparent 18%)!important;
+  pointer-events:none;
+}
+
+/* Create a cinematic cadence down every inner route rather than long flat navy passages. */
+body:not(:has(.approved-gallery-home)) main .section,
+body:not(:has(.approved-gallery-home)) main .section-tight{
+  position:relative;
+  overflow:hidden;
+}
+body:not(:has(.approved-gallery-home)) main .section:nth-of-type(3n+2)::before,
+body:not(:has(.approved-gallery-home)) main .section-tight:nth-of-type(3n+2)::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.48;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 84% 36%,rgba(61,150,220,.24),transparent 22%),
+    repeating-linear-gradient(125deg,transparent 0 38px,rgba(92,170,232,.035) 39px 40px);
+}
+body:not(:has(.approved-gallery-home)) main .section:nth-of-type(3n)::after,
+body:not(:has(.approved-gallery-home)) main .section-tight:nth-of-type(3n)::after{
+  content:"";
+  position:absolute;
+  right:-8%;
+  bottom:-140px;
+  width:420px;
+  height:300px;
+  border:1px solid rgba(103,186,245,.18);
+  border-radius:50%;
+  box-shadow:0 0 0 42px rgba(80,160,220,.025),0 0 90px rgba(60,135,198,.10);
+  pointer-events:none;
+}
+
+/* Stronger approved-reference typography and breathable line lengths. */
+body:not(:has(.approved-gallery-home)) .page-hero h1{font-size:clamp(44px,6vw,62px)!important;max-width:620px!important}
+body:not(:has(.approved-gallery-home)) .page-hero .lede{max-width:610px;font-size:16px!important}
+body:not(:has(.approved-gallery-home)) .section h2,
+body:not(:has(.approved-gallery-home)) .section-tight h2{max-width:650px}
+body:not(:has(.approved-gallery-home)) .section p,
+body:not(:has(.approved-gallery-home)) .section-tight p{max-width:680px}
+
+/* Panels in the approved image are translucent structural blocks, not dashboard cards. */
+body:not(:has(.approved-gallery-home)) .panel,
+body:not(:has(.approved-gallery-home)) .detail-card,
+body:not(:has(.approved-gallery-home)) .registry-row,
+body:not(:has(.approved-gallery-home)) .research-row,
+body:not(:has(.approved-gallery-home)) .contact-copy,
+body:not(:has(.approved-gallery-home)) .about-identity,
+body:not(:has(.approved-gallery-home)) .system-card{
+  background:linear-gradient(145deg,rgba(10,29,49,.68),rgba(6,18,31,.72))!important;
+  backdrop-filter:blur(3px);
+  border-color:rgba(179,149,115,.40)!important;
+  border-radius:12px!important;
+}
+
+/* Reference footer: compact bronze divider and quiet authored close, not a giant manifesto block. */
+body:not(:has(.approved-gallery-home)) .site-footer{
+  width:min(860px,calc(100% - 36px));
+  margin:0 auto 38px!important;
+  border:1px solid rgba(179,149,115,.58)!important;
+  border-top:0!important;
+  border-radius:0 0 30px 30px!important;
+  background:#050e18!important;
+}
+body:not(:has(.approved-gallery-home)) .site-footer .shell{width:100%!important;padding:22px 20px!important}
+body:not(:has(.approved-gallery-home)) .footer-manifesto{font-size:14px!important;line-height:1.45!important;max-width:620px!important}
+
+/* Home gallery fidelity: 7 + 7 device wall, brighter images, slimmer bronze frame. */
+.approved-gallery-home .screen-grid{gap:22px 18px!important;padding-top:24px!important}
+.approved-gallery-home .screen-card{
+  min-height:585px!important;
+  border-color:rgba(179,149,115,.72)!important;
+  border-radius:30px!important;
+  background:linear-gradient(180deg,#07182a,#081625)!important;
+}
+.approved-gallery-home .screen-scene{height:285px!important;filter:saturate(1.03) brightness(1.12)}
+.approved-gallery-home .screen-copy h2{font-size:clamp(22px,1.45vw,29px)!important;color:#f5efe6!important}
+.approved-gallery-home .screen-copy p{font-size:13px!important;color:#d9e0e8!important}
+.approved-gallery-home .gallery-masthead{padding-top:12px!important;padding-bottom:18px!important}
+.approved-gallery-home .gallery-wordmark h1{font-size:clamp(34px,3.2vw,50px)!important;color:#f0e8dc!important}
+
+@media (max-width:900px){
+  body:not(:has(.approved-gallery-home)) .site-header,
+  body:not(:has(.approved-gallery-home)) main:not(:has(.approved-gallery-home)),
+  body:not(:has(.approved-gallery-home)) .site-footer{width:min(100% - 24px,620px)!important}
+  body:not(:has(.approved-gallery-home)) .page-hero:first-child,
+  body:not(:has(.approved-gallery-home)) .observable-hero:first-child{min-height:590px!important;padding-top:250px!important}
+  body:not(:has(.approved-gallery-home)) .page-hero:first-child::before,
+  body:not(:has(.approved-gallery-home)) .observable-hero:first-child::before{height:280px}
+}
+
+@media (max-width:640px){
+  body:not(:has(.approved-gallery-home)) .site-header{margin-top:12px!important;top:4px!important}
+  body:not(:has(.approved-gallery-home)) .page-hero:first-child,
+  body:not(:has(.approved-gallery-home)) .observable-hero:first-child{padding:220px 22px 46px!important;min-height:540px!important}
+  body:not(:has(.approved-gallery-home)) .page-hero:first-child::before,
+  body:not(:has(.approved-gallery-home)) .observable-hero:first-child::before{height:245px}
+  body:not(:has(.approved-gallery-home)) .section,
+  body:not(:has(.approved-gallery-home)) .section-tight{padding:48px 22px!important}
+  body:not(:has(.approved-gallery-home)) .page-hero h1{font-size:clamp(36px,11vw,48px)!important}
+  .approved-gallery-home{padding-inline:12px!important}
+  .approved-gallery-home .screen-grid{grid-template-columns:1fr!important;gap:26px!important}
+  .approved-gallery-home .screen-card{min-height:640px!important}
+  .approved-gallery-home .screen-scene{height:320px!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
