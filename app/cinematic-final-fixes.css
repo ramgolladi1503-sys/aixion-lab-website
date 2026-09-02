@@ -1,0 +1,129 @@
+/* Final cinematic contract repairs.
+   These overrides intentionally load after the legacy/base styles so the
+   redesigned surfaces remain readable, number-free and motion-safe. */
+
+/* Removed decorative indices leave semantic layouts, not empty columns. */
+.tradebot-stage {
+  display: grid;
+  align-content: center;
+  gap: 7px;
+}
+
+.workflow-row {
+  grid-template-columns: 120px minmax(0, 1fr) 92px !important;
+}
+
+.journey-visual-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.journey-visual-stage span {
+  writing-mode: horizontal-tb !important;
+}
+
+/* Registry values are content, never microcopy. */
+.registry-row p,
+.registry-row dd,
+.registry-row .registry-value,
+.registry-section p:not(.eyebrow) {
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+/* Mobile system diagrams are recomposed rather than scaled down. */
+@media (max-width: 700px) {
+  .tradebot-stage {
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+    gap: 12px !important;
+    min-height: 64px !important;
+    padding: 14px 0 !important;
+  }
+
+  .tradebot-stage strong {
+    margin: 0 !important;
+    align-self: center;
+  }
+
+  .workflow-row {
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    padding: 14px 0 !important;
+  }
+
+  .workflow-row > b {
+    grid-column: 1 / -1 !important;
+    justify-self: start !important;
+  }
+
+  .core-map {
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    padding: 22px 0 24px !important;
+    transform: none !important;
+    margin-inline: 0 !important;
+  }
+
+  .core-center,
+  .core-node {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  .core-center {
+    min-height: 92px !important;
+    display: grid !important;
+    place-items: center !important;
+    align-content: center !important;
+  }
+
+  .core-node {
+    min-height: 46px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 12px 16px !important;
+  }
+
+  .trace-preview {
+    grid-template-columns: 72px 80px minmax(0, 1fr) !important;
+  }
+
+  .journey-visual-track {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .journey-visual-stage {
+    min-height: 46px !important;
+    width: 100% !important;
+  }
+}
+
+/* Reduced-motion means literally no transition/animation duration. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .destination-panel:hover,
+  .destination-panel:focus-visible {
+    transform: none !important;
+  }
+}
