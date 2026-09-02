@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./approved-gallery.css";
+import "./approved-gallery-scenes.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -7,18 +8,10 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aixionlab.com";
 const siteDescription = "An independent engineering lab where ideas move through research, implementation, validation and real-world observation.";
 const socialDescription = "Applied intelligence, automation and decision systems built with explicit state, evidence and authority boundaries.";
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#06111e",
-  colorScheme: "dark",
-};
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#06111e", colorScheme: "dark" };
 
 export const metadata: Metadata = {
-  title: {
-    default: "Aixion Lab by Ram — Evidence-led Systems Engineering",
-    template: "%s | Aixion Lab",
-  },
+  title: { default: "Aixion Lab by Ram — Evidence-led Systems Engineering", template: "%s | Aixion Lab" },
   description: siteDescription,
   metadataBase: new URL(siteUrl),
   applicationName: "Aixion Lab",
