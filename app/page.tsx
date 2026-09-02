@@ -21,29 +21,39 @@ export default function HomePage() {
   return (
     <div className="approved-gallery-home">
       <div className="shell">
-        <header className="gallery-masthead">
+        <div className="gallery-masthead">
           <div className="gallery-wordmark">
             <h1>AIXION LAB°</h1>
             <p>Independent applied-engineering lab</p>
           </div>
           <div className="gallery-tagline">Responsive · unified · intelligent<br/>AI systems · automation · insight</div>
-        </header>
+        </div>
 
         <section className="screen-grid" aria-label="Aixion Lab destinations">
           {screens.map((screen) => (
-            <Link className="screen-card" href={screen.href} key={screen.name}>
-              <div className="screen-top"><span>AIXION LAB°</span><span>MENU</span></div>
-              <div className={`screen-scene ${screen.scene}`} aria-hidden="true" />
-              <div className="screen-copy">
-                <p className="kicker">{screen.kicker}</p>
-                <h2>{screen.title}</h2>
-                <p>{screen.copy}</p>
-                <span className="screen-cta">{screen.cta} →</span>
-              </div>
-              <div className="screen-bottom"><span>State · evidence · authority</span><span>Explore</span></div>
-            </Link>
+            <div className="screen-slot" key={screen.name}>
+              <div className="screen-label">{screen.name}</div>
+              <Link className="screen-card" href={screen.href}>
+                <div className="screen-top"><span>AIXION LAB°</span><span>MENU</span></div>
+                <div className={`screen-scene ${screen.scene}`} aria-hidden="true" />
+                <div className="screen-copy">
+                  <p className="kicker">{screen.kicker}</p>
+                  <h2>{screen.title}</h2>
+                  <p>{screen.copy}</p>
+                  <span className="screen-cta">{screen.cta} →</span>
+                </div>
+                <div className="screen-bottom"><span>State · evidence · authority</span><span>Explore</span></div>
+              </Link>
+            </div>
           ))}
         </section>
+
+        <div className="gallery-footer">
+          <div><strong>AIXION LAB°</strong><small>© 2026 Aixion Lab. All rights reserved.</small></div>
+          <div className="gallery-footer-mark" aria-hidden="true">✦</div>
+          <p>Engineering intelligent systems<br/>for an unknowable future</p>
+          <nav aria-label="Footer links"><Link href="/about">About</Link><Link href="/resume">Career</Link><Link href="/collaborate">Collaborate</Link><a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub</a></nav>
+        </div>
       </div>
     </div>
   );
