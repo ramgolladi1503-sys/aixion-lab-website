@@ -12,12 +12,13 @@ const stageCells = [
 export default function HomePage() {
   return (
     <div className="sharp-home">
-      <section className="sharp-hero" data-reveal="sharp-hero">
+      <section className="sharp-hero" data-reveal="hero">
         <div className="sharp-hero-inner">
           <div className="sharp-hero-copy">
             <p className="sharp-kicker">AIXION LAB · APPLIED INTELLIGENCE</p>
             <h1>Intelligence with <em>evidence.</em></h1>
             <p className="sharp-hero-lede">Aixion Lab builds automation, decision systems and applied AI that can explain their state, their evidence and their limits.</p>
+            <p className="career-only sharp-career-translation">Recruiter view · systems translated into quality, automation, software, data and applied-AI competencies.</p>
             <div className="sharp-hero-actions">
               <Link className="sharp-pill-link sharp-pill-link--solid" href="/systems">Explore systems →</Link>
               <Link className="sharp-pill-link" href="/resume">Career snapshot</Link>
@@ -87,6 +88,7 @@ export default function HomePage() {
             <div className="sharp-opportunity-links">
               <Link className="sharp-pill-link sharp-pill-link--solid" href="/resume">Hire Ram →</Link>
               <Link className="sharp-pill-link" href="/collaborate">Work with Aixion Lab →</Link>
+              <Link className="sharp-pill-link" href="/pulse">Open Pulse</Link>
               <Link className="sharp-pill-link" href="/research">Review research</Link>
             </div>
           </div>
