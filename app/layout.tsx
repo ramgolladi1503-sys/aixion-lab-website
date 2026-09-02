@@ -22,6 +22,7 @@ import "./dark-surface-guard.css";
 import "./sharplink-rebuild.css";
 import "./sharplink-global.css";
 import "./sharplink-v2.css";
+import "./sharplink-header.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionOrchestrator } from "@/components/motion-orchestrator";
