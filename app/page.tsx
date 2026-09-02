@@ -35,7 +35,10 @@ export default function HomePage() {
               <div className="screen-label">{screen.name}</div>
               <Link className="screen-card" href={screen.href}>
                 <div className="screen-top"><span>AIXION LAB°</span><span>MENU</span></div>
-                <div className={`screen-scene ${screen.scene}`} aria-hidden="true" />
+                <div className={`screen-scene ${screen.scene}`} aria-hidden="true">
+                  <span className="scene-horizon" />
+                  <span className="scene-figure" />
+                </div>
                 <div className="screen-copy">
                   <p className="kicker">{screen.kicker}</p>
                   <h2>{screen.title}</h2>
