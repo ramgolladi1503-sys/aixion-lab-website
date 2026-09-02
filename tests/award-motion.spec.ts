@@ -1,40 +1,32 @@
 import { test, expect } from "@playwright/test";
 
-test("home keeps the approved observable dark thesis and progressive-disclosure orientation", async ({ page }) => {
+test("home exposes the approved five cinematic destinations without decorative numbering", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
-  await expect(page.getByText("Built by Ram", { exact: true })).toBeVisible();
-  await expect(page.locator(".observable-home")).toBeVisible();
-  await expect(page.locator(".observable-field")).toBeVisible();
-  await expect(page.locator(".system-grid .system-card")).toHaveCount(4);
-  await expect(page.getByRole("heading", { name: "TradeBot" }).first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "The rest of the lab lives on dedicated pages." })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Governed autonomy and explicit authority/i })).toBeVisible();
-  await expect(page.locator(".editorial-home")).toHaveCount(0);
+  await expect(page.locator(".destination-grid .destination-panel")).toHaveCount(5);
+  await expect(page.getByText("We build intelligent systems for a more extraordinary future.")).toBeVisible();
+  await expect(page.getByText("Applied intelligence with a point of view.")).toBeVisible();
+  await expect(page.getByText("Systems that learn, adapt and explain.")).toBeVisible();
+  await expect(page.getByText("Real questions. Evidence before confidence.")).toBeVisible();
+  await expect(page.getByText("Let’s build what’s next.")).toBeVisible();
+  const decorative = await page.locator("body").innerText();
+  expect(decorative).not.toMatch(/CHAPTER\s*0?\d|AX\s*\/\s*0?\d/);
 });
 
-test("motion reveals approved dark sections without becoming the content model", async ({ page }, testInfo) => {
+test("motion remains optional and does not hide landing content", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.locator("#motion-scope")).toHaveClass(/motion-ready/);
-  await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
-  await expect(page.locator('[data-reveal="pulse-preview"]')).toBeVisible();
-  const lifecycle = page.locator("[data-aixion-signal]").first();
-  if (testInfo.project.name === "mobile") await expect(lifecycle).toBeHidden();
-  else await expect(lifecycle).toBeVisible();
+  await expect(page.locator("#motion-scope")).toHaveClass(/motion-ready|motion-reduced/);
+  for (const panel of await page.locator(".destination-panel").all()) await expect(panel).toBeVisible();
 });
 
-test("reduced-motion preserves approved content and mobile subtraction", async ({ page }, testInfo) => {
+test("reduced motion preserves every destination and primary path", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-reduced/);
-  await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
-  await expect(page.getByRole("link", { name: /Explore systems/i }).first()).toBeVisible();
-  const lifecycle = page.locator("[data-aixion-signal]").first();
-  if (testInfo.project.name === "mobile") await expect(lifecycle).toBeHidden();
-  else await expect(lifecycle).toBeVisible();
+  await expect(page.locator(".destination-panel")).toHaveCount(5);
+  await expect(page.getByRole("link", { name: /Systems that learn, adapt and explain/i })).toBeVisible();
 });
 
-test("Journey is an escalating engineering-question narrative", async ({ page }) => {
+test("Journey remains an escalating engineering-question narrative", async ({ page }) => {
   await page.goto("/journey", { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { name: "The tools changed. The questions got stricter." })).toBeVisible();
   await expect(page.getByText(/Why did this fail/)).toBeVisible();
