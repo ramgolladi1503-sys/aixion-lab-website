@@ -26,7 +26,7 @@ test("approved observable Home is deliberately recomposed for mobile", async ({ 
   await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
   await expect(page.getByText("Built by Ram", { exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: /Explore systems/i }).first()).toBeVisible();
-  await expect(page.getByRole("link", { name: /View Lab Pulse/i }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /Work with Aixion Lab/i }).first()).toBeVisible();
   await expect(page.locator("details.mobile-menu summary")).toBeVisible();
   await expect(page.locator(".observable-field")).toBeVisible();
   await expect(page.locator("[data-aixion-signal]").first()).toBeHidden();
