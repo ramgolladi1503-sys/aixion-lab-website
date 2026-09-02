@@ -1,0 +1,67 @@
+/* Original cinematic art direction for the approved Aixion gallery. No third-party artwork or reference assets are copied. */
+
+.screen-scene{isolation:isolate;overflow:hidden}
+.screen-scene .scene-horizon,.screen-scene .scene-figure{position:absolute;display:block;pointer-events:none}
+
+/* Atmospheric horizon: layered blue-black terrain instead of flat schematic panels. */
+.screen-scene .scene-horizon{
+  z-index:2;
+  left:-8%;right:-8%;bottom:-2%;height:48%;
+  background:linear-gradient(180deg,#153a5a 0%,#071524 38%,#020912 100%);
+  clip-path:polygon(0 72%,10% 61%,20% 69%,31% 37%,41% 63%,52% 24%,61% 58%,70% 43%,79% 68%,89% 50%,100% 72%,100% 100%,0 100%);
+  filter:drop-shadow(0 -12px 22px rgba(46,124,190,.12));
+}
+.scene-canyon .scene-horizon{height:54%;clip-path:polygon(0 47%,20% 27%,35% 56%,50% 42%,64% 66%,78% 31%,100% 54%,100% 100%,0 100%);background:linear-gradient(180deg,#17466c,#061424 48%,#020912)}
+.scene-network .scene-horizon{height:39%;background:linear-gradient(180deg,rgba(28,82,125,.72),#061321 48%,#020812);clip-path:polygon(0 72%,15% 64%,29% 76%,45% 54%,59% 71%,76% 48%,100% 68%,100% 100%,0 100%)}
+.scene-orbit .scene-horizon,.scene-signal .scene-horizon{height:31%;opacity:.82;clip-path:polygon(0 77%,17% 62%,36% 75%,56% 46%,73% 69%,88% 55%,100% 65%,100% 100%,0 100%)}
+.scene-city .scene-horizon{display:none}
+.scene-robot .scene-horizon{height:28%;opacity:.60;clip-path:polygon(0 80%,20% 63%,40% 72%,60% 49%,82% 68%,100% 54%,100% 100%,0 100%)}
+
+/* Tiny human scale cue found throughout the approved visual language. */
+.scene-canyon .scene-figure,.scene-mountain .scene-figure,.scene-orbit .scene-figure,.scene-signal .scene-figure{
+  z-index:4;
+  left:50%;bottom:12%;width:3px;height:18px;
+  transform:translateX(-50%);
+  background:#02060b;
+  border-radius:3px 3px 1px 1px;
+  box-shadow:0 -4px 0 -1px #02060b,0 0 14px rgba(127,201,255,.22);
+}
+.scene-canyon .scene-figure:after,.scene-mountain .scene-figure:after,.scene-orbit .scene-figure:after,.scene-signal .scene-figure:after{
+  content:"";position:absolute;left:-3px;top:5px;width:9px;height:1px;background:#02060b;transform:rotate(-7deg)
+}
+.scene-network .scene-figure,.scene-city .scene-figure,.scene-robot .scene-figure{display:none}
+
+/* Star/grain depth without introducing a different palette. */
+.scene-orbit,.scene-signal,.scene-robot{
+  background-color:#071525!important;
+}
+.scene-orbit{background-image:radial-gradient(circle at 16% 20%,rgba(211,237,255,.45) 0 1px,transparent 1.5px),radial-gradient(circle at 74% 19%,rgba(190,225,255,.35) 0 1px,transparent 1.5px),radial-gradient(circle at 31% 42%,rgba(151,204,244,.30) 0 1px,transparent 1.4px),radial-gradient(circle at 82% 51%,rgba(190,225,255,.26) 0 1px,transparent 1.4px),radial-gradient(circle at 50% 52%,rgba(104,183,242,.28),transparent 21%),linear-gradient(180deg,#081628,#0a2440 62%,#06111d)!important}
+.scene-signal{background-image:radial-gradient(circle at 22% 17%,rgba(207,235,255,.40) 0 1px,transparent 1.5px),radial-gradient(circle at 79% 25%,rgba(207,235,255,.26) 0 1px,transparent 1.5px),radial-gradient(circle at 48% 53%,rgba(129,205,255,.66),transparent 8%),radial-gradient(circle at 48% 53%,rgba(59,133,199,.18),transparent 32%),linear-gradient(180deg,#08182b,#0a2744 58%,#07131f)!important}
+
+/* More material depth in technical scenes. */
+.scene-network{background-image:radial-gradient(ellipse at 50% 72%,rgba(52,153,230,.72),transparent 25%),radial-gradient(circle at 62% 32%,rgba(91,119,205,.22),transparent 18%),repeating-linear-gradient(116deg,transparent 0 30px,rgba(87,173,238,.055) 31px 32px),linear-gradient(180deg,#040c18,#09243f)!important}
+.scene-city{background-image:linear-gradient(90deg,transparent 0 7%,rgba(76,161,225,.10) 7.2% 7.5%,transparent 7.8% 100%),radial-gradient(circle at 54% 28%,rgba(80,165,231,.34),transparent 18%),linear-gradient(180deg,#071425,#0a2b4d)!important}
+.scene-robot{background-image:radial-gradient(circle at 50% 42%,rgba(83,179,249,.29),transparent 21%),repeating-radial-gradient(circle at 50% 48%,transparent 0 23px,rgba(111,193,249,.08) 24px 25px),linear-gradient(180deg,#071421,#0a2948)!important}
+
+/* One continuous inner device: header -> content -> footer. Remove the duplicate synthetic top bar. */
+body:not(:has(.approved-gallery-home)) main:not(:has(.approved-gallery-home))::before{display:none!important;content:none!important}
+body:not(:has(.approved-gallery-home)) main:not(:has(.approved-gallery-home)){
+  border-radius:0!important;
+  border-bottom:0!important;
+  margin-bottom:0!important;
+}
+body:not(:has(.approved-gallery-home)) .site-footer{
+  margin-top:0!important;
+  border-radius:0 0 30px 30px!important;
+  border-top:1px solid rgba(179,149,115,.38)!important;
+}
+.footer-reference-row{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.footer-reference-links{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end;color:var(--ax-copy);font:650 9px/1.3 var(--ax-mono);letter-spacing:.10em;text-transform:uppercase}
+.footer-reference-links a:hover{color:var(--ax-blue)}
+.footer-signoff{margin:16px 0 0!important;color:var(--ax-bronze)!important;font:400 22px/1.05 var(--ax-serif)!important}
+
+@media(max-width:640px){
+  .footer-reference-row{grid-template-columns:1fr}
+  .footer-reference-links{justify-content:flex-start}
+  .scene-canyon .scene-figure,.scene-mountain .scene-figure,.scene-orbit .scene-figure,.scene-signal .scene-figure{height:16px}
+}
