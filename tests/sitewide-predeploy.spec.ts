@@ -47,7 +47,7 @@ test("all major routes stay inside the approved dark visual authority", async ({
     const bodyBg = await page.locator("body").evaluate(node => getComputedStyle(node).backgroundColor);
     expect(luminance(bodyBg), `${route} body must remain dark`).toBeLessThan(80);
 
-    const paleSurfaces = await page.locator(".panel, .system-card, .research-row, .journey-card, .resume-card, .about-identity, .system-visual").evaluateAll(nodes =>
+    const paleSurfaces = await page.locator(".panel, .system-card, .research-row, .journey-card, .resume-card, .about-identity, .system-visual, .principles-grid .principle").evaluateAll(nodes =>
       nodes.filter(node => {
         const style = getComputedStyle(node);
         const rgb = style.backgroundColor.match(/[\d.]+/g)?.slice(0, 3).map(Number) ?? [0, 0, 0];
@@ -96,7 +96,7 @@ test("About and Collaborate fact grids follow a consistent definition-list rule"
   test.skip(testInfo.project.name !== "desktop", "desktop card structure check");
   for (const route of ["/about", "/collaborate"] as const) {
     await page.goto(route, { waitUntil: "networkidle" });
-    const card = page.locator(".about-identity, .collaborate-positioning").first();
+    const card = page.locator(".about-identity").first();
     await expect(card).toBeVisible();
     const values = card.locator("dd");
     const count = await values.count();
@@ -133,9 +133,15 @@ test("mobile routes remain readable and navigation is usable", async ({ page }, 
   }
 });
 
-test("global navigation includes current opportunity paths and internal links resolve", async ({ page, request }) => {
+test("global navigation includes current opportunity paths and internal links resolve", async ({ page, request }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("link", { name: "Collaborate" }).first()).toBeVisible();
+  if (testInfo.project.name === "mobile") {
+    const menu = page.locator("details.mobile-menu");
+    await menu.locator("summary").click();
+    await expect(menu.getByRole("link", { name: "Collaborate" })).toBeVisible();
+  } else {
+    await expect(page.getByRole("link", { name: "Collaborate" }).first()).toBeVisible();
+  }
   const hrefs = await page.locator('a[href^="/"]').evaluateAll(anchors => [...new Set(anchors.map(anchor => anchor.getAttribute("href")?.split("#")[0]).filter(Boolean))] as string[]);
   for (const href of hrefs) {
     const response = await request.get(href);
