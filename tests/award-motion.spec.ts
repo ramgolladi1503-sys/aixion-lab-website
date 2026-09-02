@@ -24,7 +24,13 @@ test("home implements the approved cinematic gallery authority", async ({ page }
   const firstCard = page.locator(".screen-card").first();
   const box = await firstCard.boundingBox();
   expect(box).not.toBeNull();
-  expect(box?.height ?? 0).toBeGreaterThan(520);
+  // The approved 1448×1086 reference renders each desktop device at roughly 400–450px tall.
+  if (testInfo.project.name === "desktop") {
+    expect(box?.height ?? 0).toBeGreaterThan(400);
+    expect(box?.height ?? 9999).toBeLessThan(480);
+  } else {
+    expect(box?.height ?? 0).toBeGreaterThan(580);
+  }
 
   if (testInfo.project.name === "mobile") {
     const first = await page.locator(".screen-slot").nth(0).boundingBox();
@@ -35,7 +41,7 @@ test("home implements the approved cinematic gallery authority", async ({ page }
   }
 });
 
-test("approved gallery uses one coherent cinematic visual language", async ({ page }) => {
+test("approved gallery uses one coherent cinematic visual language", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
   const card = page.locator(".screen-card").first();
   const style = await card.evaluate(node => {
@@ -50,7 +56,12 @@ test("approved gallery uses one coherent cinematic visual language", async ({ pa
   await expect(scenes).toHaveCount(14);
   for (let index = 0; index < 14; index++) {
     const sceneBox = await scenes.nth(index).boundingBox();
-    expect(sceneBox?.height ?? 0).toBeGreaterThan(240);
+    if (testInfo.project.name === "desktop") {
+      expect(sceneBox?.height ?? 0).toBeGreaterThan(190);
+      expect(sceneBox?.height ?? 9999).toBeLessThan(230);
+    } else {
+      expect(sceneBox?.height ?? 0).toBeGreaterThan(280);
+    }
   }
 });
 
