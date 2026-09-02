@@ -41,16 +41,16 @@ export function LabFieldVisual() {
       </svg>
       <div className="field-hub" aria-hidden="true"><strong>AIXION</strong><small>STATE / EVIDENCE</small></div>
       <Link className="field-node node-tradebot" href="/systems/tradebot" aria-label="Open TradeBot, validating">
-        <b>01</b><span>TRADEBOT</span><small>VALIDATING</small>
+        <span>TRADEBOT</span><small>VALIDATING</small>
       </Link>
       <Link className="field-node node-core" href="/systems/control-core" aria-label="Open Control Core, building">
-        <b>02</b><span>CONTROL CORE</span><small>BUILDING</small>
+        <span>CONTROL CORE</span><small>BUILDING</small>
       </Link>
       <Link className="field-node node-auto" href="/systems/automation" aria-label="Open Automation, building">
-        <b>03</b><span>AUTOMATION</span><small>BUILDING</small>
+        <span>AUTOMATION</span><small>BUILDING</small>
       </Link>
       <Link className="field-node node-analytics" href="/systems/analytics" aria-label="Open Analytics Lab, research">
-        <b>04</b><span>ANALYTICS</span><small>RESEARCH</small>
+        <span>ANALYTICS</span><small>RESEARCH</small>
       </Link>
       <div className="field-caption" aria-hidden="true">One lifecycle. Different systems. Evidence at every boundary.</div>
     </nav>
@@ -69,9 +69,8 @@ function TradeBotVisual() {
     <div className="system-visual visual-tradebot" aria-hidden="true" data-motion-visual data-reveal="tradebot-architecture">
       <div className="visual-kicker"><span>MARKET INTELLIGENCE TOPOLOGY</span><span>READ-ONLY PUBLIC MODEL</span></div>
       <div className="tradebot-rail">
-        {lanes.map(([label, copy], index) => (
+        {lanes.map(([label, copy]) => (
           <div className="tradebot-stage" key={label}>
-            <span className="tradebot-index">0{index + 1}</span>
             <strong>{label}</strong>
             <small>{copy}</small>
           </div>
@@ -108,19 +107,19 @@ function ControlCoreVisual() {
 
 function AutomationVisual() {
   const rows = [
-    ["01", "TRIGGER", "input received", "READY"],
-    ["02", "VALIDATE", "contract + preconditions", "PASS"],
-    ["03", "PROCESS", "bounded workflow", "RUNNING"],
-    ["04", "RETRY", "failure recovery", "POLICY"],
-    ["05", "EVIDENCE", "trace + outcome", "CAPTURE"],
+    ["TRIGGER", "input received", "READY"],
+    ["VALIDATE", "contract + preconditions", "PASS"],
+    ["PROCESS", "bounded workflow", "RUNNING"],
+    ["RETRY", "failure recovery", "POLICY"],
+    ["EVIDENCE", "trace + outcome", "CAPTURE"],
   ];
   return (
     <div className="system-visual visual-automation" aria-hidden="true" data-motion-visual data-reveal="automation-architecture">
       <div className="visual-kicker"><span>WORKFLOW / RPA LANE</span><span>OBSERVABLE BY DESIGN</span></div>
       <div className="workflow-lanes">
-        {rows.map(([id, label, copy, state]) => (
-          <div className="workflow-row" key={id}>
-            <span>{id}</span><strong>{label}</strong><em>{copy}</em><b>{state}</b>
+        {rows.map(([label, copy, state]) => (
+          <div className="workflow-row" key={label}>
+            <strong>{label}</strong><em>{copy}</em><b>{state}</b>
           </div>
         ))}
       </div>
@@ -155,8 +154,8 @@ function JourneyVisual() {
     <div className="system-visual visual-journey" aria-hidden="true" data-motion-visual data-reveal="journey-architecture">
       <div className="visual-kicker"><span>ENGINEERING EVOLUTION</span><span>STATE → EVIDENCE → AUTHORITY</span></div>
       <div className="journey-visual-track">
-        {stages.map((stage, index) => (
-          <div className="journey-visual-stage" key={stage}><b>0{index + 1}</b><span>{stage}</span></div>
+        {stages.map(stage => (
+          <div className="journey-visual-stage" key={stage}><span>{stage}</span></div>
         ))}
       </div>
       <div className="journey-visual-note">The tools changed. The questions got stricter.</div>
