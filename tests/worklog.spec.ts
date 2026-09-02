@@ -1,14 +1,9 @@
 import { test, expect } from "@playwright/test";
 
-test("Home surfaces current curated lab work without becoming an activity feed", async ({ page }, testInfo) => {
+test("Home routes current-work discovery to the dedicated Pulse surface", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  const current = page.locator(".pulse-preview");
-  await expect(current).toBeVisible();
-  await expect(current.locator(".home-worklog-strip")).toHaveCount(2);
-  await expect(current.getByText("Approved dark system refinement and release validation")).toBeVisible();
-  const older = current.getByText("Hydration and regression baseline stabilized");
-  if (testInfo.project.name === "mobile") await expect(older).toBeHidden();
-  else await expect(older).toBeVisible();
+  await expect(page.locator('.desktop-nav a[href="/pulse"]')).toHaveCount(1);
+  await expect(page.locator(".pulse-preview")).toHaveCount(0);
 });
 
 test("Pulse publishes current work and only recent meaningful public changes", async ({ page }) => {
