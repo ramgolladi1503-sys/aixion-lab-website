@@ -1,0 +1,63 @@
+/* Final dark-surface guard. Loaded last to prevent legacy light-theme chips and pills from leaking into the approved dark visual authority. */
+
+.career-strip {
+  border-top-color: rgba(157,184,176,.12) !important;
+}
+.career-strip > span {
+  color: #8fa09a !important;
+}
+.career-strip i,
+.system-summary-skills span,
+.resume-skills span,
+.skill-chip,
+.meta-chip,
+.tech-chip,
+.tag-chip,
+.chip,
+.pill {
+  background: rgba(10,28,30,.86) !important;
+  color: #c4d2cd !important;
+  border: 1px solid rgba(157,184,176,.16) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.018) !important;
+}
+.career-strip i:hover,
+.system-summary-skills span:hover,
+.resume-skills span:hover,
+.skill-chip:hover,
+.meta-chip:hover,
+.tech-chip:hover,
+.tag-chip:hover,
+.chip:hover,
+.pill:hover {
+  background: rgba(14,36,38,.94) !important;
+  color: #eef4ee !important;
+  border-color: rgba(168,231,92,.26) !important;
+}
+
+/* Secondary controls should never read as white slabs inside dark panels. */
+.observable-home .button-secondary,
+.system-hero-summary .button-secondary,
+.feature-copy .button-secondary,
+.contact-copy .button-secondary,
+.resume-card .button-secondary,
+.about-identity .button-secondary {
+  background: rgba(8,24,26,.88) !important;
+  color: #dce7e2 !important;
+  border-color: rgba(157,184,176,.19) !important;
+}
+
+/* Keep muted badges dark while preserving semantic accent colors for actual state tags. */
+.career-strip i,
+.system-summary-skills span,
+.resume-skills span {
+  font-style: normal;
+  opacity: 1 !important;
+}
+
+@media (max-width: 760px) {
+  .career-strip i,
+  .system-summary-skills span,
+  .resume-skills span {
+    font-size: 11px !important;
+  }
+}
