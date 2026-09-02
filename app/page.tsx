@@ -1,130 +1,103 @@
 import Link from "next/link";
 import { systems } from "@/lib/site-data";
-import labActivity from "@/content/lab-activity.json";
-import { CareerStrip, ProgressLane, SectionHeading, StateTag, SystemCard } from "@/components/ui";
-import { AixionSignal, SystemVisual } from "@/components/system-visuals";
-import { ObservableStateField } from "@/components/observable-state-field";
+import { RobotMind } from "@/components/robot-mind";
+
+const stageCells = [
+  ["01", "RESEARCH", "Questions are frozen before evidence can rewrite them."],
+  ["02", "BUILD", "Systems are implemented with state and failure paths exposed."],
+  ["03", "VALIDATE", "Claims compete against tests, holdouts and negative evidence."],
+  ["04", "OPERATE", "Authority remains explicit when systems meet the real world."],
+] as const;
 
 export default function HomePage() {
-  const tradebot = systems[0];
-  const activeWork = labActivity.active[0];
-  const latestActivity = labActivity.entries[0];
-
   return (
-    <div className="observable-home">
-      <section className="observable-hero" data-reveal="hero">
-        <div className="observable-hero-grid shell">
-          <div className="observable-copy">
-            <p className="eyebrow">AIXION LAB · THE SYSTEM IS EXPLAINING ITSELF</p>
-            <h1>Systems should be able to explain their state, their evidence and their limits.</h1>
-            <p className="lede">A living engineering lab where applied intelligence becomes real systems through explicit validation, evidence and authority boundaries.</p>
-            <p className="hero-philosophy">The visual field is public-state driven: work that is building remains incomplete, validation accumulates evidence, and rejected research remains visible instead of disappearing.</p>
-            <div className="hero-attribution">
-              <strong>Built by Ram</strong>
-              <span>Quality Engineering · Automation · Software · Data · Applied AI</span>
-              <Link className="hero-career-link" href="/resume">Hire Ram · Recruiter fast path →</Link>
+    <div className="sharp-home">
+      <section className="sharp-hero" data-reveal="sharp-hero">
+        <div className="sharp-hero-inner">
+          <div className="sharp-hero-copy">
+            <p className="sharp-kicker">AIXION LAB · APPLIED INTELLIGENCE</p>
+            <h1>Intelligence with <em>evidence.</em></h1>
+            <p className="sharp-hero-lede">Aixion Lab builds automation, decision systems and applied AI that can explain their state, their evidence and their limits.</p>
+            <div className="sharp-hero-actions">
+              <Link className="sharp-pill-link sharp-pill-link--solid" href="/systems">Explore systems →</Link>
+              <Link className="sharp-pill-link" href="/resume">Career snapshot</Link>
             </div>
-            <div className="button-row hero-actions-visible">
-              <Link className="button" href="/systems">Explore systems →</Link>
-              <Link className="button-secondary" href="/collaborate">Work with Aixion Lab</Link>
-            </div>
-            <AixionSignal compact />
+            <div className="sharp-hero-foot"><span>BUILT BY RAM · QUALITY → AUTOMATION → SYSTEMS → AI</span><i /></div>
           </div>
-          <ObservableStateField />
-        </div>
-
-        <div className="panel pulse-preview shell" data-reveal="pulse-preview">
-          <div className="pulse-head">
-            <div>
-              <p className="eyebrow">AIXION PULSE · PUBLIC STATE</p>
-              <h2>Current system state, evidence and next gates.</h2>
-            </div>
-            <p>Curated public-safe state · no arbitrary completion percentages</p>
-          </div>
-          <ProgressLane label="TradeBot" stage="VALIDATING" />
-          <ProgressLane label="Control Core" stage="BUILDING" />
-          <ProgressLane label="Automation" stage="BUILDING" />
-          <ProgressLane label="Analytics Lab" stage="BUILDING" />
-          <div className="home-worklog-strip" aria-label="Latest Aixion Lab work">
-            <div>
-              <span className="system-id">WORKING NOW · {activeWork.date}</span>
-              <strong>{activeWork.title}</strong>
-              <p>{activeWork.summary}</p>
-            </div>
-            <StateTag state={activeWork.state} />
-          </div>
-          <div className="home-worklog-strip home-worklog-strip--latest">
-            <div>
-              <span className="system-id">LATEST VALIDATED ACTIVITY · {latestActivity.date}</span>
-              <strong>{latestActivity.title}</strong>
-              <p>{latestActivity.summary}</p>
-            </div>
-            <StateTag state={latestActivity.state} />
-          </div>
-          <Link className="text-link" href="/pulse">Open operational Pulse →</Link>
+          <RobotMind />
         </div>
       </section>
 
-      <section className="section" data-reveal="systems-registry">
-        <div className="shell">
-          <SectionHeading eyebrow="SYSTEMS REGISTRY" title="Four systems. Different problems. One engineering discipline." copy="Each system exposes maturity, current gate, public-safe evidence and the next decision point." />
-          <div className="system-grid">
-            {systems.map(system => <SystemCard key={system.id} system={system} />)}
+      <div className="sharp-marquee" aria-hidden="true">
+        <div className="sharp-marquee-track">
+          <span>STATE <b>VISIBLE</b></span><span>·</span><span>EVIDENCE <b>TRACEABLE</b></span><span>·</span><span>AUTHORITY <b>BOUNDED</b></span><span>·</span><span>FAILURE <b>RECORDED</b></span><span>·</span>
+          <span>STATE <b>VISIBLE</b></span><span>·</span><span>EVIDENCE <b>TRACEABLE</b></span><span>·</span><span>AUTHORITY <b>BOUNDED</b></span><span>·</span><span>FAILURE <b>RECORDED</b></span><span>·</span>
+          <span>STATE <b>VISIBLE</b></span><span>·</span><span>EVIDENCE <b>TRACEABLE</b></span><span>·</span><span>AUTHORITY <b>BOUNDED</b></span><span>·</span><span>FAILURE <b>RECORDED</b></span><span>·</span>
+        </div>
+      </div>
+
+      <section className="sharp-intro" data-reveal="sharp-intro">
+        <div className="sharp-shell sharp-intro-grid">
+          <p className="sharp-section-index">01 · PRINCIPLE</p>
+          <div>
+            <h2>Systems should not ask for trust they cannot explain.</h2>
+            <div className="sharp-intro-copy">
+              <p>Aixion Lab is an independent applied-engineering lab where research, implementation and operation remain connected by evidence.</p>
+              <p>Work that is incomplete stays incomplete. Rejected research remains visible. Automation does not silently inherit authority it was never given.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section-tight" data-reveal="tradebot-feature">
-        <div className="shell feature-split">
-          <article className="panel feature-copy">
-            <p className="eyebrow">AX-SYS-001 · FLAGSHIP · VALIDATING</p>
-            <h2>TradeBot</h2>
-            <p className="system-principle">A market system should know whether its data is trustworthy before it makes a claim.</p>
-            <p>{tradebot.descriptor}</p>
-            <p>Market data, research output and automated analysis are deliberately separated from risk and human execution authority.</p>
-            <p className="competency-bridge">Demonstrates: {tradebot.competencies.slice(0, 5).join(" · ")}</p>
-            <div className="button-row"><StateTag state={tradebot.state} /><Link className="button-secondary" href="/systems/tradebot#evidence">Evidence →</Link></div>
-            <CareerStrip skills={tradebot.competencies} />
-            <Link className="text-link" href="/systems/tradebot">Explore the flagship system →</Link>
+      <section className="sharp-state-band" aria-label="Aixion engineering lifecycle">
+        {stageCells.map(([number, label, copy]) => (
+          <article className="sharp-state-cell" key={number}>
+            <span>{number}</span><strong>{label}</strong><small>{copy}</small>
           </article>
-          <SystemVisual kind="tradebot" />
+        ))}
+      </section>
+
+      <section className="sharp-propositions" data-reveal="sharp-systems">
+        <div className="sharp-shell">
+          <div className="sharp-propositions-head">
+            <p className="sharp-section-index">02 · SYSTEMS</p>
+            <h2>The stack for governed intelligence.</h2>
+          </div>
+          <div className="sharp-system-stack">
+            {systems.map((system, index) => (
+              <article className="sharp-system-row" key={system.id}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h3>{system.shortName}</h3>
+                <p>{system.descriptor} Current public state: {system.state.toLowerCase()}.</p>
+                <Link href={`/systems/${system.slug}`}>EXPLORE →</Link>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="section-tight home-deeper" data-reveal="deeper-paths">
-        <div className="shell">
-          <SectionHeading eyebrow="GO DEEPER" title="The rest of the lab lives on dedicated pages." copy="Home stops here by design. The deeper evidence, research and engineering progression remain available without duplicating them into the landing page." />
-          <nav className="home-deeper-rail" aria-label="Deeper Aixion Lab paths">
-            <Link href="/systems/control-core"><span>CONTROL CORE</span><strong>Governed autonomy and explicit authority →</strong></Link>
-            <Link href="/research"><span>RESEARCH</span><strong>Questions, frozen hypotheses and rejected work →</strong></Link>
-            <Link href="/journey"><span>JOURNEY</span><strong>How quality engineering evolved into systems thinking →</strong></Link>
-          </nav>
-        </div>
-      </section>
-
-      <section className="section" data-reveal="contact">
-        <div className="shell">
-          <SectionHeading eyebrow="TWO WAYS TO WORK TOGETHER" title="Hire the engineer, or collaborate with the lab." copy="Aixion Lab is an independent engineering lab led by Ram—not a claim of a staffed agency. The same evidence supports two different opportunity paths." />
-          <div className="contact-panel">
-            <div className="panel contact-copy contact-copy--career">
-              <p className="eyebrow">HIRE RAM</p>
-              <h3>Looking for an engineer who can bridge quality, automation, software, data and applied AI?</h3>
-              <p>The recruiter path translates the systems into competencies and career evidence without changing or inflating the underlying work.</p>
-              <div className="button-row">
-                <Link className="button" href="/resume">Career snapshot →</Link>
-                <a className="button-secondary" href="https://www.linkedin.com/in/ram-golladi" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-              </div>
-            </div>
-            <div className="panel contact-copy contact-copy--conversation">
-              <p className="eyebrow">WORK WITH AIXION LAB</p>
-              <h3>Have a bounded engineering problem worth building or validating properly?</h3>
-              <p>Explore selective collaboration around QA architecture, workflow automation, AI / agent validation, data systems and evidence-led prototypes.</p>
-              <div className="button-row">
-                <Link className="button" href="/collaborate">Collaboration path →</Link>
-                <Link className="button-secondary" href="/about#contact">Contact</Link>
-              </div>
+      <section className="sharp-opportunity" data-reveal="sharp-opportunity">
+        <div className="sharp-shell sharp-opportunity-grid">
+          <div>
+            <p className="sharp-section-index">03 · OPPORTUNITY</p>
+            <h2>Build what can survive scrutiny.</h2>
+          </div>
+          <div className="sharp-opportunity-copy">
+            <p>Recruiters can review the engineer behind the systems. Teams with a bounded technical problem can collaborate with Aixion Lab. Both paths point back to the same public evidence.</p>
+            <div className="sharp-opportunity-links">
+              <Link className="sharp-pill-link sharp-pill-link--solid" href="/resume">Hire Ram →</Link>
+              <Link className="sharp-pill-link" href="/collaborate">Work with Aixion Lab →</Link>
+              <Link className="sharp-pill-link" href="/research">Review research</Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="sharp-closing" data-reveal="sharp-closing">
+        <div className="sharp-closing-inner">
+          <p className="sharp-section-index">AIXION LAB</p>
+          <h2>Observe.<span>Explain.</span>Operate.</h2>
+          <p>Applied intelligence becomes useful when state, evidence, failure and authority remain visible all the way from experiment to operation.</p>
         </div>
       </section>
     </div>
