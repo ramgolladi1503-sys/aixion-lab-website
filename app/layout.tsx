@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./approved-gallery.css";
 import "./approved-gallery-scenes.css";
+import "./approved-gallery-calibration.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
