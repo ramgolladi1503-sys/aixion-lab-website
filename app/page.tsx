@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <div className="observable-home">
       <section className="observable-hero" data-reveal="hero">
-        <div className="observable-hero-grid">
+        <div className="observable-hero-grid shell">
           <div className="observable-copy">
             <p className="eyebrow">AIXION LAB · THE SYSTEM IS EXPLAINING ITSELF</p>
             <h1>Systems should be able to explain their state, their evidence and their limits.</h1>
@@ -33,7 +33,7 @@ export default function HomePage() {
           <ObservableStateField />
         </div>
 
-        <div className="panel pulse-preview" data-reveal="pulse-preview">
+        <div className="panel pulse-preview shell" data-reveal="pulse-preview">
           <div className="pulse-head">
             <div>
               <p className="eyebrow">AIXION PULSE · PUBLIC STATE</p>
