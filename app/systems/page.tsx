@@ -28,16 +28,16 @@ export default function SystemsPage() {
                 <span className="system-id">{system.id}</span>
                 <div>
                   <h3>{system.name}</h3>
-                  <p>{system.descriptor}</p>
+                  <p style={{ fontSize: 14, lineHeight: 1.55 }}>{system.descriptor}</p>
                 </div>
                 <div className="registry-hide-mobile">
                   <span className="registry-label">Domain</span>
-                  <p>{system.domain}</p>
+                  <p style={{ fontSize: 14, lineHeight: 1.55 }}>{system.domain}</p>
                 </div>
                 <StateTag state={system.state} />
                 <div className="registry-hide-tablet">
                   <span className="registry-label">Current gate</span>
-                  <p>{system.currentGate}</p>
+                  <p style={{ fontSize: 14, lineHeight: 1.55 }}>{system.currentGate}</p>
                 </div>
                 <Link className="text-link" href={`/systems/${system.slug}`}>View →</Link>
               </article>
