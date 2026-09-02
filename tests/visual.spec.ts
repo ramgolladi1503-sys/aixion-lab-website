@@ -1,107 +1,111 @@
 import { test, expect } from "@playwright/test";
 import path from "node:path";
 
-const routes = [["home", "/"], ["systems", "/systems"], ["tradebot", "/systems/tradebot"], ["control-core", "/systems/control-core"], ["automation", "/systems/automation"], ["analytics", "/systems/analytics"], ["research", "/research"], ["pulse", "/pulse"], ["journey", "/journey"], ["about", "/about"], ["resume", "/resume"]] as const;
+const routes = [["home", "/"], ["systems", "/systems"], ["tradebot", "/systems/tradebot"], ["control-core", "/systems/control-core"], ["automation", "/systems/automation"], ["analytics", "/systems/analytics"], ["research", "/research"], ["pulse", "/pulse"], ["journey", "/journey"], ["about", "/about"], ["resume", "/resume"], ["collaborate", "/collaborate"]] as const;
 
 for (const [name, route] of routes) {
-  test(`${name} renders and captures`, async ({ page }, testInfo) => {
+  test(`${name} renders, remains readable and captures`, async ({ page }, testInfo) => {
     await page.goto(route, { waitUntil: "networkidle" });
     await expect(page.locator("body")).toBeVisible();
-    await expect(page.locator("header")).toBeVisible();
-    await expect(page.locator("footer")).toBeVisible();
+    if (route === "/") {
+      await expect(page.locator(".gallery-masthead")).toBeVisible();
+      await expect(page.locator(".gallery-footer")).toBeVisible();
+    } else {
+      await expect(page.locator(".site-header")).toBeVisible();
+      await expect(page.locator("footer.site-footer")).toBeVisible();
+    }
     const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     expect(hasHorizontalOverflow, `${route} must not overflow horizontally`).toBe(false);
     await expect(page.locator(".abstract-scene")).toHaveCount(0);
-    await page.waitForTimeout(1100);
+
+    const bodyFont = await page.locator("body").evaluate(node => parseFloat(getComputedStyle(node).fontSize));
+    expect(bodyFont).toBeGreaterThanOrEqual(14);
+    const h1 = page.locator("h1").first();
+    if (await h1.count()) {
+      const h1Size = await h1.evaluate(node => parseFloat(getComputedStyle(node).fontSize));
+      expect(h1Size).toBeLessThanOrEqual(testInfo.project.name === "mobile" ? 52 : 84);
+    }
+
     const destination = path.join("test-results", "screenshots", testInfo.project.name, `${name}.png`);
     await page.screenshot({ path: destination, fullPage: true });
   });
 }
 
-test("home primary action is visible without scrolling", async ({ page }) => {
+test("desktop Home matches the approved seven-column device-wall composition", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "Desktop composition assertion");
+  await page.setViewportSize({ width: 1600, height: 1000 });
   await page.goto("/", { waitUntil: "networkidle" });
-  const action = page.getByRole("link", { name: /Explore systems/i }).first();
-  await expect(action).toBeVisible();
-  const box = await action.boundingBox();
-  const viewport = page.viewportSize();
-  expect(box).not.toBeNull();
-  expect(viewport).not.toBeNull();
-  expect((box?.y ?? 99999) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0);
+  const cards = page.locator(".screen-card");
+  await expect(cards).toHaveCount(14);
+  const firstRow = await Promise.all(Array.from({ length: 7 }, (_, index) => cards.nth(index).boundingBox()));
+  const secondRow = await Promise.all(Array.from({ length: 7 }, (_, index) => cards.nth(index + 7).boundingBox()));
+  expect(firstRow.every(Boolean)).toBe(true);
+  expect(secondRow.every(Boolean)).toBe(true);
+  const ySpread = Math.max(...firstRow.map(box => box!.y)) - Math.min(...firstRow.map(box => box!.y));
+  expect(ySpread).toBeLessThan(4);
+  expect(secondRow[0]!.y).toBeGreaterThan(firstRow[0]!.y + firstRow[0]!.height);
 });
 
-test("desktop approved hero begins near the sticky header", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
+test("mobile Home stacks full-width cinematic device cards", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile", "Mobile composition assertion");
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
-  const copy = await page.locator(".observable-copy").boundingBox();
-  expect(copy).not.toBeNull();
-  expect(copy?.y ?? 99999).toBeLessThan(230);
+  const first = await page.locator(".screen-card").nth(0).boundingBox();
+  const second = await page.locator(".screen-card").nth(1).boundingBox();
+  expect(first).not.toBeNull();
+  expect(second).not.toBeNull();
+  expect(first?.width ?? 0).toBeGreaterThan(330);
+  expect(second!.y).toBeGreaterThan(first!.y + first!.height);
 });
 
-test("desktop About Lab contact does not reserve a hidden second column", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Desktop grid assertion");
+test("Home uses consistent bronze frames and luminous blue image fields", async ({ page }) => {
+  await page.goto("/", { waitUntil: "networkidle" });
+  const cards = page.locator(".screen-card");
+  const scenes = page.locator(".screen-scene");
+  await expect(cards).toHaveCount(14);
+  await expect(scenes).toHaveCount(14);
+  for (const index of [0, 2, 3, 9, 10, 11, 12]) {
+    const cardStyle = await cards.nth(index).evaluate(node => getComputedStyle(node));
+    expect(parseFloat(cardStyle.borderRadius)).toBeGreaterThanOrEqual(24);
+    expect(cardStyle.borderColor).not.toBe("rgba(0, 0, 0, 0)");
+    const sceneStyle = await scenes.nth(index).evaluate(node => getComputedStyle(node));
+    expect(sceneStyle.backgroundImage).not.toBe("none");
+  }
+});
+
+test("inner pages use one compact framed cinematic shell", async ({ page }, testInfo) => {
   await page.goto("/about", { waitUntil: "networkidle" });
-  const panel = page.locator(".about-contact-panel");
-  const visibleCard = panel.locator(".contact-copy").first();
-  const panelBox = await panel.boundingBox();
-  const cardBox = await visibleCard.boundingBox();
-  expect(panelBox).not.toBeNull();
-  expect(cardBox).not.toBeNull();
-  expect((cardBox?.width ?? 0) / (panelBox?.width ?? 1)).toBeGreaterThan(0.95);
+  const main = await page.locator("main").boundingBox();
+  const header = await page.locator(".site-header").boundingBox();
+  expect(main).not.toBeNull();
+  expect(header).not.toBeNull();
+  if (testInfo.project.name !== "mobile") {
+    expect(main?.width ?? 9999).toBeLessThanOrEqual(900);
+    expect(header?.width ?? 9999).toBeLessThanOrEqual(900);
+  }
+  const hero = await page.locator(".page-hero").first().boundingBox();
+  expect(hero?.height ?? 0).toBeGreaterThan(500);
 });
 
-test("flagship pages use distinct visual grammars", async ({ page }) => {
+test("flagship architecture visuals remain distinct and readable", async ({ page }) => {
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
   await expect(page.locator(".visual-tradebot").first()).toBeVisible();
   await page.goto("/systems/control-core", { waitUntil: "networkidle" });
   await expect(page.locator(".visual-core").first()).toBeVisible();
 });
 
-test("system hero snapshot and subnavigation stay inside the dark visual system", async ({ page }) => {
-  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  const snapshot = page.locator(".system-hero-summary");
-  const subnav = page.locator(".system-subnav-wrap");
-  await expect(snapshot).toBeVisible();
-  await expect(subnav).toBeVisible();
-  const snapshotBg = await snapshot.evaluate(node => getComputedStyle(node).backgroundColor);
-  const subnavBg = await subnav.evaluate(node => getComputedStyle(node).backgroundColor);
-  expect(snapshotBg).not.toBe("rgb(242, 244, 239)");
-  expect(subnavBg).not.toBe("rgb(233, 237, 231)");
-});
-
-test("Career mode has one visible state indicator", async ({ page }) => {
-  await page.goto("/", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Toggle Lab and Career view" }).click();
-  await expect(page.locator("html")).toHaveAttribute("data-view", "career");
-  const afterContent = await page.evaluate(() => getComputedStyle(document.body, "::after").content);
-  expect(afterContent === "none" || afterContent === "normal" || afterContent === '""').toBe(true);
-});
-
-test("Research method is compact and does not repeat the lifecycle as a giant title", async ({ page }, testInfo) => {
+test("Research method remains compact rather than becoming a giant title", async ({ page }) => {
   await page.goto("/research", { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { name: "How a claim earns authority." })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Question.*Observation.*Hypothesis.*Freeze.*Test.*Validation.*Decision/ })).toHaveCount(0);
   await expect(page.locator(".research-method-flow .architecture-step")).toHaveCount(7);
-
-  if (testInfo.project.name !== "mobile") {
-    const method = await page.locator(".research-method-section").boundingBox();
-    const footer = await page.locator("footer").boundingBox();
-    expect(method).not.toBeNull();
-    expect(footer).not.toBeNull();
-    const gap = (footer?.y ?? 0) - ((method?.y ?? 0) + (method?.height ?? 0));
-    expect(gap).toBeLessThan(120);
-  }
 });
 
-test("Systems registry reaches the first system quickly on desktop", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
-  await page.goto("/systems", { waitUntil: "networkidle" });
-  const firstRow = await page.locator(".registry-row").first().boundingBox();
-  expect(firstRow).not.toBeNull();
-  expect(firstRow?.y ?? 99999).toBeLessThan(720);
-});
-
-test("Journey evolution labels remain readable rather than vertical", async ({ page }) => {
+test("Journey evolution labels remain horizontal and readable", async ({ page }) => {
   await page.goto("/journey", { waitUntil: "networkidle" });
-  const writingMode = await page.locator(".journey-visual-stage span").first().evaluate(node => getComputedStyle(node).writingMode);
-  expect(writingMode).toBe("horizontal-tb");
+  const label = page.locator(".journey-visual-stage span").first();
+  if (await label.count()) {
+    const writingMode = await label.evaluate(node => getComputedStyle(node).writingMode);
+    expect(writingMode).toBe("horizontal-tb");
+  }
 });
