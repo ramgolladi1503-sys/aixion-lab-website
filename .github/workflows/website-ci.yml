@@ -37,7 +37,8 @@ jobs:
           test -f out/sitemap.xml
           test -f out/manifest.webmanifest
           test -f out/icon.svg
-          test -f out/_headers
+          # Preserve the repository security-policy source contract. GitHub Pages does not consume Netlify-style _headers from the static export.
+          test -f public/_headers
           ! grep -R -i -E "publication pending|will be added|build preview" out --include='*.html'
 
       - name: Install Chromium
