@@ -1,16 +1,13 @@
 import { test, expect } from "@playwright/test";
 
-test("Lab Career mode changes presentation state", async ({ page }, testInfo) => {
+test("Lab Career mode changes presentation state without requiring legacy career-only content", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
   const toggle = page.getByRole("button", { name: "Toggle Lab and Career view" });
   await toggle.click();
   await expect(page.locator("html")).toHaveAttribute("data-view", "career");
   await expect(toggle).toContainText("Career");
-  if (testInfo.project.name === "mobile") {
-    await expect(page.locator("details.mobile-menu summary")).toBeVisible();
-  } else {
-    await expect(page.locator(".career-only").first()).toBeVisible();
-  }
+  if (testInfo.project.name === "mobile") await expect(page.locator("details.mobile-menu summary")).toBeVisible();
+  else await expect(page.getByRole("link", { name: /Career|Résumé|Resume/i }).first()).toBeVisible();
 });
 
 test("Research status filters are functional", async ({ page }) => {
