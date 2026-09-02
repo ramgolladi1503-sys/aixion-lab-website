@@ -111,6 +111,100 @@ main:not(:has(.observable-home)) + .site-footer .footer-closing {
   padding-bottom: 18px !important;
 }
 
+/* Home hero composition: contain the copy, use the right-hand field, and keep typography deliberate. */
+.observable-home .observable-hero {
+  padding-top: clamp(48px,5vw,72px) !important;
+}
+.observable-home .observable-hero-grid.shell {
+  display: grid;
+  grid-template-columns: minmax(0,.92fr) minmax(480px,1.08fr);
+  gap: clamp(36px,5vw,74px) !important;
+  align-items: center;
+}
+.observable-home .observable-copy {
+  min-width: 0;
+  max-width: 650px;
+}
+.observable-home .observable-copy h1 {
+  max-width: 630px !important;
+  font-size: clamp(44px,4vw,64px) !important;
+  line-height: 1.01 !important;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.observable-home .observable-copy .lede {
+  max-width: 560px !important;
+  font-size: clamp(16px,1.25vw,19px) !important;
+  line-height: 1.62;
+}
+.observable-home .observable-copy .hero-philosophy {
+  max-width: 555px !important;
+}
+.observable-home .observable-field--locked {
+  min-height: 500px !important;
+  isolation: isolate;
+  opacity: .98;
+  background:
+    radial-gradient(circle at 58% 32%, rgba(168,231,92,.055), transparent 28%),
+    radial-gradient(circle at 70% 55%, rgba(103,167,232,.045), transparent 32%);
+}
+.observable-home .observable-field-svg {
+  min-height: 500px !important;
+  opacity: .94;
+  filter: saturate(1.08) drop-shadow(0 18px 48px rgba(0,0,0,.16));
+  animation: aixion-field-drift 16s ease-in-out infinite alternate;
+}
+.observable-home .field-grid line { stroke: rgba(219,234,228,.07) !important; }
+.observable-home .state-band-line {
+  stroke-width: 1.55 !important;
+  opacity: .9 !important;
+  stroke-dasharray: 8 7;
+  animation: aixion-flow 13s linear infinite;
+}
+.observable-home .state-band-thread { opacity: .14 !important; }
+.observable-home .field-node--major {
+  filter: drop-shadow(0 0 8px currentColor);
+  animation: aixion-node-breathe 3.8s ease-in-out infinite;
+}
+.observable-home .research-markers .marker-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: aixion-ring-pulse 4.6s ease-out infinite;
+}
+.observable-home .field-note-card {
+  border-color: rgba(168,231,92,.16) !important;
+  background: rgba(6,17,19,.78) !important;
+  backdrop-filter: blur(12px);
+}
+.observable-home .pulse-preview.shell {
+  margin-inline: auto;
+}
+
+@keyframes aixion-flow {
+  to { stroke-dashoffset: -120; }
+}
+@keyframes aixion-field-drift {
+  from { transform: translate3d(0,-3px,0) scale(1); }
+  to { transform: translate3d(7px,5px,0) scale(1.008); }
+}
+@keyframes aixion-node-breathe {
+  0%,100% { opacity: .78; }
+  50% { opacity: 1; }
+}
+@keyframes aixion-ring-pulse {
+  0% { opacity: .18; transform: scale(.82); }
+  55% { opacity: .42; transform: scale(1.08); }
+  100% { opacity: .12; transform: scale(1.25); }
+}
+
+@media (max-width: 1080px) {
+  .observable-home .observable-hero-grid.shell {
+    grid-template-columns: minmax(0,1fr) minmax(400px,.92fr);
+    gap: 30px !important;
+  }
+  .observable-home .observable-copy h1 { font-size: clamp(42px,5vw,58px) !important; }
+}
+
 @media (max-width: 900px) {
   .anchor-section#capabilities .system-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
   .anchor-section#capabilities .detail-card,
@@ -118,6 +212,15 @@ main:not(:has(.observable-home)) + .site-footer .footer-closing {
   .anchor-section#capabilities .detail-card:nth-child(4n+3),
   .anchor-section#capabilities .detail-card:nth-child(4n+4) { padding: 18px 16px 18px 0 !important; }
   .anchor-section#capabilities .detail-card:nth-child(even) { padding-left: 16px !important; border-right: 0 !important; }
+
+  .observable-home .observable-hero-grid.shell {
+    grid-template-columns: 1fr;
+    gap: 22px !important;
+  }
+  .observable-home .observable-copy { max-width: 680px; }
+  .observable-home .observable-copy h1 { max-width: 680px !important; }
+  .observable-home .observable-field--locked,
+  .observable-home .observable-field-svg { min-height: 360px !important; }
 }
 
 @media (max-width: 760px) {
@@ -174,5 +277,23 @@ main:not(:has(.observable-home)) + .site-footer .footer-closing {
   .journey-question-label { color: #a9b8b3 !important; }
   .research-state-reason { font-size: 12px !important; margin-top: 8px !important; }
 
+  .observable-home .observable-hero { padding-top: 36px !important; }
+  .observable-home .observable-copy h1 {
+    font-size: clamp(38px,10.5vw,49px) !important;
+    line-height: 1.02 !important;
+  }
+  .observable-home .observable-field--locked,
+  .observable-home .observable-field-svg { min-height: 310px !important; }
+
   main:not(:has(.observable-home)) + .site-footer .footer-manifesto { font-size: 16px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .observable-home .observable-field-svg,
+  .observable-home .state-band-line,
+  .observable-home .field-node--major,
+  .observable-home .research-markers .marker-ring {
+    animation: none !important;
+    transform: none !important;
+  }
 }
