@@ -54,6 +54,36 @@
   opacity: 1 !important;
 }
 
+/* Site-wide two-column page heroes start from one shared top line. */
+.page-hero .page-hero-grid {
+  align-items: start !important;
+}
+
+/* Definition lists must follow the same card alignment rule; remove browser default dd indentation. */
+.about-identity-grid dd,
+.system-summary-grid dd,
+.meta-board dd {
+  margin-left: 0 !important;
+}
+.about-identity-grid dd {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Principles/competency tiles must remain inside the approved dark surface system. */
+.principles-grid .principle {
+  background: linear-gradient(180deg, rgba(10,28,30,.88), rgba(8,22,24,.78)) !important;
+  color: #dce7e2 !important;
+  border: 1px solid rgba(157,184,176,.14) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.015) !important;
+}
+.principles-grid .principle strong {
+  color: #eef4ee !important;
+}
+.principles-grid .principle p {
+  color: #9eada8 !important;
+}
+
 /* TradeBot public topology: enforce a readable information grammar instead of floating debug labels. */
 .visual-tradebot {
   display: grid !important;
@@ -146,6 +176,9 @@
   .system-summary-skills span,
   .resume-skills span {
     font-size: 11px !important;
+  }
+  .page-hero .page-hero-grid {
+    align-items: start !important;
   }
   .visual-tradebot {
     min-height: 0 !important;
