@@ -82,6 +82,7 @@ a{color:inherit;text-decoration:none}
   box-shadow:0 24px 84px rgba(12,74,128,.28);outline:none;
 }
 #motion-scope.motion-reduced *,#motion-scope.motion-reduced *::before,#motion-scope.motion-reduced *::after{transition-duration:0s!important;transition-delay:0s!important;animation-duration:0s!important;animation-delay:0s!important}
+#motion-scope.motion-reduced .destination-panel{transition:none!important}
 .destination-name{
   position:relative;z-index:3;padding:15px 17px 13px;border-bottom:1px solid var(--line);
   font:650 10px/1 var(--mono);letter-spacing:.18em;color:#d9e2ea;
