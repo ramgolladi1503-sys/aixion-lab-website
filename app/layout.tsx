@@ -5,6 +5,7 @@ import "./approved-gallery-calibration.css";
 import "./approved-gallery-art.css";
 import "./generated-scene-atlas.css";
 import "./reference-match-v2.css";
+import "./approved-reference-v3.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
