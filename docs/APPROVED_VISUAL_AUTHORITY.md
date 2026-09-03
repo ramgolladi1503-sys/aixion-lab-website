@@ -1,22 +1,26 @@
-# Aixion Lab — Approved Visual Authority
+# Approved Visual Authority — Aixion Lab
 
-This branch is governed by the user-approved cinematic mobile-gallery reference supplied on 2026-09-03.
+Status: LOCKED FOR REDESIGN QA
 
-## Non-negotiable visual contract
+The approved visual authority is the user-approved cinematic mobile gallery board: deep navy / blue-black field, restrained bronze-gold frame language, ivory editorial typography, cinematic sci-fi environmental imagery, small human-scale figures, high contrast blue light, and consistent device-like framing across the complete public route set.
 
-- Deep midnight / navy background, never flat generic black.
-- Bright electric-blue cinematic illumination.
-- Restrained bronze / warm-metal hairlines and frames.
-- Ivory / soft-white serif display typography with highly readable sans-serif body copy.
-- Tall rounded device-like page cards/panels, with consistent bronze framing.
-- Mountain / canyon / cosmic / engineering imagery must remain in one coherent blue-noir grade.
-- All main pages and subpages must look like screens from the same system.
-- No teal dashboard look, green/sage surfaces, flat generic engineering UI, or arbitrary purple/neon page palettes.
-- No decorative page/chapter numbering in the production implementation.
-- Body text must remain comfortably readable; no 10–11px paragraph copy.
-- Large headings must remain controlled and never crush the layout.
-- Mobile and desktop are both first-class, but the approved reference’s tall-screen composition is the core visual grammar.
+## Locked visual rules
+- AIXION LAB° wordmark remains the primary mark.
+- Use deep navy / blue-black surfaces; do not return to pale sage, white SaaS cards, generic dark dashboards, or teal cyberpunk neon.
+- Use thin bronze/gold dividers and borders as restraint, not decoration.
+- Use high-contrast serif display typography with small uppercase sans/mono support text.
+- Cinematic artwork should carry page identity while UI text remains accessible live HTML/CSS.
+- Do not bake labels, navigation, metrics, performance claims, or decorative chapter numbering into generated artwork.
+- Decorative page numbering from the reference board is intentionally omitted per explicit user override.
+- Maintain truthful public/private evidence boundaries and system states.
 
-## Acceptance rule
+## Generated asset implementation
+A text-free cinematic scene atlas is stored at:
+`/public/images/cinematic/aixion-scene-atlas.webp`
 
-A candidate is not ready merely because it builds or passes tests. Fresh screenshots from the exact candidate SHA must be manually compared with the approved reference. If the composition, palette, typography, framing, imagery, density, or page-to-page consistency drift materially, the candidate must be revised before review.
+The atlas contains route-specific scenes for Home, About, Systems, Research, Pulse, Journey, Career, Collaborate, Contact, TradeBot, Control Core, Automation, Analytics, the four public research notes, and a mean-reversion research scene. The 404 source tile with baked text was deliberately excluded from use as an asset.
+
+`app/generated-scene-atlas.css` maps atlas cells to the approved gallery and inner-route hero surfaces. System and research detail pages expose slug-specific hero classes so each route receives its own artwork.
+
+## Deployment boundary
+This redesign remains branch-only until explicit user approval to merge/deploy. Production must remain unchanged during visual QA.
