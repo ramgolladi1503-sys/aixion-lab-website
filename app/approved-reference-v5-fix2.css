@@ -1,0 +1,30 @@
+/* V5 final geometry: full-card cinema, measured semantic scene height on desktop. */
+.approved-gallery-home .screen-card{
+  background-image:linear-gradient(180deg,rgba(2,8,15,.06),rgba(2,8,15,.34)),var(--aixion-scene-atlas)!important;
+  background-size:100% 100%,400% 500%!important;
+  background-repeat:no-repeat!important;
+}
+.approved-gallery-home .screen-slot:nth-child(1) .screen-card{background-position:0 0,0 0!important}
+.approved-gallery-home .screen-slot:nth-child(2) .screen-card{background-position:0 0,33.333% 0!important}
+.approved-gallery-home .screen-slot:nth-child(3) .screen-card{background-position:0 0,66.667% 0!important}
+.approved-gallery-home .screen-slot:nth-child(4) .screen-card{background-position:0 0,100% 0!important}
+.approved-gallery-home .screen-slot:nth-child(5) .screen-card{background-position:0 0,0 25%!important}
+.approved-gallery-home .screen-slot:nth-child(6) .screen-card{background-position:0 0,33.333% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(7) .screen-card{background-position:0 0,66.667% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(8) .screen-card{background-position:0 0,100% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(9) .screen-card{background-position:0 0,0 50%!important}
+.approved-gallery-home .screen-slot:nth-child(10) .screen-card{background-position:0 0,33.333% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(11) .screen-card{background-position:0 0,66.667% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(12) .screen-card{background-position:0 0,100% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(13) .screen-card{background-position:0 0,0 75%!important}
+.approved-gallery-home .screen-slot:nth-child(14) .screen-card{background-position:0 0,33.333% 75%!important}
+
+@media(min-width:1121px){
+  .approved-gallery-home .screen-scene{
+    inset:34px 0 auto!important;
+    height:214px!important;
+    min-height:214px!important;
+    opacity:0!important;
+    transform:none!important;
+  }
+}

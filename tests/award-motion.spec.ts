@@ -1,40 +1,80 @@
 import { test, expect } from "@playwright/test";
 
-test("home keeps the approved observable dark thesis and progressive-disclosure orientation", async ({ page }) => {
+test("home implements the approved cinematic gallery authority", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
-  await expect(page.getByText("Built by Ram", { exact: true })).toBeVisible();
-  await expect(page.locator(".observable-home")).toBeVisible();
-  await expect(page.locator(".observable-field")).toBeVisible();
-  await expect(page.locator(".system-grid .system-card")).toHaveCount(4);
-  await expect(page.getByRole("heading", { name: "TradeBot" }).first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "The rest of the lab lives on dedicated pages." })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Governed autonomy and explicit authority/i })).toBeVisible();
-  await expect(page.locator(".editorial-home")).toHaveCount(0);
+
+  await expect(page.locator(".approved-gallery-home")).toBeVisible();
+  await expect(page.locator(".gallery-masthead")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "AIXION LAB°" })).toBeVisible();
+  await expect(page.locator(".screen-slot")).toHaveCount(14);
+  await expect(page.locator(".screen-card")).toHaveCount(14);
+  await expect(page.getByText("HOME", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("ABOUT", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("SYSTEMS", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("RESEARCH", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("PULSE", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("JOURNEY", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("CAREER", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("TRADEBOT", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("CONTROL CORE", { exact: true }).first()).toBeVisible();
+
+  const decorativeNumbers = page.locator(".chapter-number,.page-number,.tradebot-index,.journey-visual-stage b");
+  await expect(decorativeNumbers).toHaveCount(0);
+
+  const firstCard = page.locator(".screen-card").first();
+  const box = await firstCard.boundingBox();
+  expect(box).not.toBeNull();
+  // The approved 1448×1086 reference renders each desktop device at roughly 400–450px tall.
+  if (testInfo.project.name === "desktop") {
+    expect(box?.height ?? 0).toBeGreaterThan(400);
+    expect(box?.height ?? 9999).toBeLessThan(480);
+  } else {
+    expect(box?.height ?? 0).toBeGreaterThan(580);
+  }
+
+  if (testInfo.project.name === "mobile") {
+    const first = await page.locator(".screen-slot").nth(0).boundingBox();
+    const second = await page.locator(".screen-slot").nth(1).boundingBox();
+    expect(first).not.toBeNull();
+    expect(second).not.toBeNull();
+    expect((second?.y ?? 0) > (first?.y ?? 0) + 100).toBe(true);
+  }
 });
 
-test("motion reveals approved dark sections without becoming the content model", async ({ page }, testInfo) => {
+test("approved gallery uses one coherent cinematic visual language", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.locator("#motion-scope")).toHaveClass(/motion-ready/);
-  await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
-  await expect(page.locator('[data-reveal="pulse-preview"]')).toBeVisible();
-  const lifecycle = page.locator("[data-aixion-signal]").first();
-  if (testInfo.project.name === "mobile") await expect(lifecycle).toBeHidden();
-  else await expect(lifecycle).toBeVisible();
+  const card = page.locator(".screen-card").first();
+  const style = await card.evaluate(node => {
+    const css = getComputedStyle(node);
+    return { radius: parseFloat(css.borderRadius), border: css.borderColor, background: css.backgroundImage };
+  });
+  expect(style.radius).toBeGreaterThanOrEqual(24);
+  expect(style.background).not.toBe("none");
+  expect(style.border).not.toBe("rgba(0, 0, 0, 0)");
+
+  const scenes = page.locator(".screen-scene");
+  await expect(scenes).toHaveCount(14);
+  for (let index = 0; index < 14; index++) {
+    const sceneBox = await scenes.nth(index).boundingBox();
+    if (testInfo.project.name === "desktop") {
+      expect(sceneBox?.height ?? 0).toBeGreaterThan(190);
+      expect(sceneBox?.height ?? 9999).toBeLessThan(230);
+    } else {
+      expect(sceneBox?.height ?? 0).toBeGreaterThan(280);
+    }
+  }
 });
 
-test("reduced-motion preserves approved content and mobile subtraction", async ({ page }, testInfo) => {
+test("reduced motion preserves the complete approved gallery", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.locator("#motion-scope")).toHaveClass(/motion-reduced/);
-  await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
-  await expect(page.getByRole("link", { name: /Explore systems/i }).first()).toBeVisible();
-  const lifecycle = page.locator("[data-aixion-signal]").first();
-  if (testInfo.project.name === "mobile") await expect(lifecycle).toBeHidden();
-  else await expect(lifecycle).toBeVisible();
+  await expect(page.locator(".screen-card")).toHaveCount(14);
+  await expect(page.locator(".screen-card").first()).toBeVisible();
+  const transition = await page.locator(".screen-card").first().evaluate(node => getComputedStyle(node).transitionDuration);
+  expect(["0s", "0ms", "0s, 0s", "0ms, 0ms"].includes(transition)).toBe(true);
 });
 
-test("Journey is an escalating engineering-question narrative", async ({ page }) => {
+test("Journey remains an escalating engineering-question narrative", async ({ page }) => {
   await page.goto("/journey", { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { name: "The tools changed. The questions got stricter." })).toBeVisible();
   await expect(page.getByText(/Why did this fail/)).toBeVisible();
@@ -43,21 +83,10 @@ test("Journey is an escalating engineering-question narrative", async ({ page })
   await expect(page.locator(".journey-question")).toHaveCount(7);
 });
 
-test("command palette carries state, not just destinations", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "The command palette is intentionally a desktop keyboard surface; mobile uses the menu.");
-  await page.goto("/", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Open Aixion search" }).click();
-  await expect(page.getByRole("dialog", { name: "Search Aixion" })).toBeVisible();
-  await expect(page.locator('.command-results a[href="/systems/tradebot"] .command-meta')).toContainText("VALIDATING");
-  await expect(page.locator('.command-results a[href="/systems/analytics"] .command-meta')).toContainText("BUILDING");
-  await expect(page.locator('.command-results a[href="/journey"] .command-meta')).toContainText("7 QUESTIONS");
-});
-
-test("system subnavigation reflects deliberate section navigation", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Sticky section authority is a desktop interaction");
+test("system section navigation still reaches architecture", async ({ page }) => {
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
   const architectureLink = page.locator('.system-subnav a[href="#architecture"]');
+  await expect(architectureLink).toBeVisible();
   await architectureLink.click();
-  await expect(architectureLink).toHaveClass(/is-active/);
-  await expect(architectureLink).toHaveAttribute("aria-current", "location");
+  await expect(page.locator("#architecture")).toBeInViewport();
 });

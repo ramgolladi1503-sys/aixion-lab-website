@@ -205,7 +205,7 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
 
   return (
     <>
-      <section className="page-hero anchor-section" id="overview">
+      <section className={`page-hero anchor-section system-hero-${slug}`} id="overview">
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">{system.id} · {system.domain}</p>

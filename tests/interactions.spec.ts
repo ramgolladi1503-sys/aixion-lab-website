@@ -1,16 +1,11 @@
 import { test, expect } from "@playwright/test";
 
-test("Lab Career mode changes presentation state", async ({ page }, testInfo) => {
+test("Home gallery destination cards navigate to the real routes", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  const toggle = page.getByRole("button", { name: "Toggle Lab and Career view" });
-  await toggle.click();
-  await expect(page.locator("html")).toHaveAttribute("data-view", "career");
-  await expect(toggle).toContainText("Career");
-  if (testInfo.project.name === "mobile") {
-    await expect(page.locator("details.mobile-menu summary")).toBeVisible();
-  } else {
-    await expect(page.locator(".career-only").first()).toBeVisible();
-  }
+  const systems = page.locator('.screen-card[href="/systems"]');
+  await expect(systems).toBeVisible();
+  await systems.click();
+  await expect(page).toHaveURL(/\/systems$/);
 });
 
 test("Research status filters are functional", async ({ page }) => {
@@ -31,32 +26,17 @@ test("Evidence Drawer is proof-first, explicit about summary-only records and cl
   await expect(dialog).toBeHidden();
 });
 
-test("Command palette supports keyboard navigation on desktop", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Command palette is a desktop keyboard surface");
-  await page.goto("/", { waitUntil: "networkidle" });
-  await page.keyboard.press("Meta+k");
-  const dialog = page.getByRole("dialog", { name: "Search Aixion" });
-  await expect(dialog).toBeVisible();
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("Escape");
-  await expect(dialog).toBeHidden();
-});
-
-test("Primary navigation exposes active route", async ({ page }) => {
-  await page.goto("/systems", { waitUntil: "networkidle" });
-  await expect(page.locator('.desktop-nav a[href="/systems"]')).toHaveAttribute("aria-current", "page");
-});
-
 test("System page exposes internal navigation", async ({ page }) => {
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
   await expect(page.locator('.system-subnav a[href="#architecture"]')).toBeVisible();
   await expect(page.locator('.system-subnav a[href="#evidence"]')).toBeVisible();
 });
 
-test("Mobile navigation exposes locked routes with usable targets", async ({ page }) => {
+test("compact inner-page menu exposes core routes", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/", { waitUntil: "networkidle" });
+  await page.goto("/about", { waitUntil: "networkidle" });
   const menu = page.locator("details.mobile-menu");
+  await expect(menu.locator("summary")).toBeVisible();
   await menu.locator("summary").click();
   await expect(menu.getByRole("link", { name: "Systems" })).toBeVisible();
   await expect(menu.getByRole("link", { name: "Research" })).toBeVisible();

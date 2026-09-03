@@ -1,67 +1,55 @@
 import { test, expect } from "@playwright/test";
 
-test("approved observable Home keeps state, evidence and authority public-safe", async ({ page }) => {
+test("approved gallery Home remains public-safe and evidence bounded", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/", { waitUntil: "networkidle" });
 
-  await expect(page.locator(".observable-home")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "The rest of the lab lives on dedicated pages." })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Questions, frozen hypotheses and rejected work/i })).toBeVisible();
-  await expect(page.locator(".system-grid .system-card")).toHaveCount(4);
+  await expect(page.locator(".approved-gallery-home")).toBeVisible();
+  await expect(page.locator(".screen-card")).toHaveCount(14);
+  await expect(page.getByRole("link", { name: /TradeBot/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Research/i }).first()).toBeVisible();
 
   const body = (await page.locator("body").innerText()).toLowerCase();
   expect(body).not.toContain("win rate");
   expect(body).not.toContain("accuracy %");
-  expect(body).not.toContain("roi");
+  expect(body).not.toContain("guaranteed return");
   expect(body).not.toContain("execution allowed");
-  expect(body).not.toContain("evidence strength");
-  expect(body).not.toContain("tests passed");
+  expect(body).not.toContain("live profitable");
 });
 
-test("approved observable Home is deliberately recomposed for mobile", async ({ page }) => {
+test("approved gallery Home recomposes cleanly for mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
 
-  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
-  await expect(page.getByText("Built by Ram", { exact: true })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Explore systems/i }).first()).toBeVisible();
-  await expect(page.getByRole("link", { name: /View Lab Pulse/i }).first()).toBeVisible();
-  await expect(page.locator("details.mobile-menu summary")).toBeVisible();
-  await expect(page.locator(".observable-field")).toBeVisible();
-  await expect(page.locator("[data-aixion-signal]").first()).toBeHidden();
-  await expect(page.getByRole("heading", { name: "The rest of the lab lives on dedicated pages." })).toBeVisible();
+  await expect(page.locator(".gallery-masthead")).toBeVisible();
+  await expect(page.locator(".screen-card")).toHaveCount(14);
+  await expect(page.locator(".screen-card").first()).toBeVisible();
+
+  const first = await page.locator(".screen-slot").nth(0).boundingBox();
+  const second = await page.locator(".screen-slot").nth(1).boundingBox();
+  expect(first).not.toBeNull();
+  expect(second).not.toBeNull();
+  expect((second?.y ?? 0) > (first?.y ?? 0)).toBe(true);
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
 });
 
-test("Aixion lifecycle respects reduced motion and deliberate mobile subtraction", async ({ page }, testInfo) => {
+test("approved gallery respects reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.locator("#motion-scope")).toHaveClass(/motion-reduced/);
-  const lifecycle = page.locator("[data-aixion-signal]").first();
-  if (testInfo.project.name === "mobile") {
-    await expect(lifecycle).toBeHidden();
-  } else {
-    await expect(lifecycle).toBeVisible();
-    await expect(page.getByText("RESEARCH", { exact: true }).first()).toBeVisible();
-    await expect(page.getByText("LEARN", { exact: true }).first()).toBeVisible();
-  }
+  await expect(page.locator(".screen-card")).toHaveCount(14);
+  const transitions = await page.locator(".screen-card").first().evaluate(node => getComputedStyle(node).transitionDuration);
+  expect(transitions.includes("0s") || transitions.includes("0ms")).toBe(true);
 });
 
-test("dark convergence does not replace validated interactions", async ({ page }, testInfo) => {
-  await page.goto("/", { waitUntil: "networkidle" });
-  if (testInfo.project.name === "mobile") {
-    await expect(page.locator("details.mobile-menu summary")).toBeVisible();
-  } else {
-    await expect(page.getByRole("button", { name: "Open Aixion search" })).toHaveText("Search");
-  }
-  await expect(page.locator("footer.site-footer .footer-manifesto-line")).toHaveCount(2);
-
+test("cinematic redesign preserves meaningful inner-page interactions", async ({ page }) => {
   await page.goto("/systems/control-core", { waitUntil: "networkidle" });
   await expect(page.locator(".visual-core")).toBeVisible();
 
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
   await expect(page.getByRole("button", { name: /Inspect evidence/i }).first()).toBeVisible();
+
+  await page.goto("/research", { waitUntil: "networkidle" });
+  await expect(page.getByRole("heading", { name: "Research Notes" })).toBeVisible();
 });

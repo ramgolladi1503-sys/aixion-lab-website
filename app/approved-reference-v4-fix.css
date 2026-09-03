@@ -1,0 +1,60 @@
+/* V4 CI/readability corrections. Preserve the approved visual target; do not weaken tests. */
+.approved-gallery-home .screen-card{
+  border-radius:24px!important;
+  background-image:linear-gradient(180deg,rgba(2,8,15,.08),rgba(2,8,15,.70)),var(--aixion-scene-atlas)!important;
+  background-size:100% 100%,400% 500%!important;
+  background-repeat:no-repeat!important;
+  background-color:#04101b!important;
+}
+.approved-gallery-home .screen-slot:nth-child(1) .screen-card{background-position:0 0,0 0!important}
+.approved-gallery-home .screen-slot:nth-child(2) .screen-card{background-position:0 0,33.333% 0!important}
+.approved-gallery-home .screen-slot:nth-child(3) .screen-card{background-position:0 0,66.667% 0!important}
+.approved-gallery-home .screen-slot:nth-child(4) .screen-card{background-position:0 0,100% 0!important}
+.approved-gallery-home .screen-slot:nth-child(5) .screen-card{background-position:0 0,0 25%!important}
+.approved-gallery-home .screen-slot:nth-child(6) .screen-card{background-position:0 0,33.333% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(7) .screen-card{background-position:0 0,66.667% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(8) .screen-card{background-position:0 0,100% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(9) .screen-card{background-position:0 0,0 50%!important}
+.approved-gallery-home .screen-slot:nth-child(10) .screen-card{background-position:0 0,33.333% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(11) .screen-card{background-position:0 0,66.667% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(12) .screen-card{background-position:0 0,100% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(13) .screen-card{background-position:0 0,0 75%!important}
+.approved-gallery-home .screen-slot:nth-child(14) .screen-card{background-position:0 0,33.333% 75%!important}
+
+/* Keep the semantic scene element at the measured reference height while the same artwork continues behind the live HTML copy. */
+@media(min-width:1121px){
+  .approved-gallery-home .screen-scene{
+    inset:34px 0 auto!important;
+    height:214px!important;
+    min-height:214px!important;
+    z-index:0!important;
+    transform:scale(1.01)!important;
+  }
+  .approved-gallery-home .screen-card:before{
+    z-index:1!important;
+    inset:34px 0 0!important;
+    background:linear-gradient(180deg,rgba(2,8,15,.10) 0%,rgba(2,8,15,.03) 27%,rgba(2,8,15,.16) 48%,rgba(2,8,15,.58) 66%,rgba(2,8,15,.90) 100%)!important;
+  }
+  .approved-gallery-home .screen-card:after{
+    z-index:2!important;
+    inset:34px 0 0!important;
+    background:linear-gradient(90deg,rgba(2,8,15,.58) 0%,rgba(2,8,15,.20) 60%,rgba(2,8,15,.02) 100%),linear-gradient(180deg,transparent 0 40%,rgba(3,10,18,.20) 56%,rgba(3,10,18,.72) 100%)!important;
+  }
+  .approved-gallery-home .screen-copy{
+    z-index:3!important;
+    align-self:start!important;
+    padding:30px 12px 10px!important;
+    margin-top:0!important;
+    background:transparent!important;
+  }
+  .approved-gallery-home .screen-top{z-index:5!important}
+  .approved-gallery-home .screen-bottom{z-index:4!important}
+}
+
+@media(max-width:720px){
+  body:not(:has(.approved-gallery-home)) h1,
+  main:not(:has(.approved-gallery-home)) .page-hero h1,
+  main:not(:has(.approved-gallery-home)) .observable-hero h1{
+    font-size:clamp(44px,12vw,52px)!important;
+  }
+}

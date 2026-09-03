@@ -1,0 +1,73 @@
+/* V5 ART FIX — verified atlas, portrait crops, no stretched scene tiles. */
+.approved-gallery-home .screen-card{
+  background-size:100% 100%,auto 500%!important;
+}
+.approved-gallery-home .screen-scene{
+  background-size:auto 500%!important;
+}
+
+/* Four square atlas columns, centered into portrait device crops. */
+.approved-gallery-home .screen-slot:nth-child(1) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(1) .screen-scene{background-position:0 0,7% 0!important}
+.approved-gallery-home .screen-slot:nth-child(2) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(2) .screen-scene{background-position:0 0,35.7% 0!important}
+.approved-gallery-home .screen-slot:nth-child(3) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(3) .screen-scene{background-position:0 0,64.3% 0!important}
+.approved-gallery-home .screen-slot:nth-child(4) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(4) .screen-scene{background-position:0 0,93% 0!important}
+.approved-gallery-home .screen-slot:nth-child(5) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(5) .screen-scene{background-position:0 0,7% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(6) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(6) .screen-scene{background-position:0 0,35.7% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(7) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(7) .screen-scene{background-position:0 0,64.3% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(8) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(8) .screen-scene{background-position:0 0,93% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(9) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(9) .screen-scene{background-position:0 0,7% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(10) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(10) .screen-scene{background-position:0 0,35.7% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(11) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(11) .screen-scene{background-position:0 0,64.3% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(12) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(12) .screen-scene{background-position:0 0,93% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(13) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(13) .screen-scene{background-position:0 0,7% 75%!important}
+.approved-gallery-home .screen-slot:nth-child(14) .screen-card,
+.approved-gallery-home .screen-slot:nth-child(14) .screen-scene{background-position:0 0,35.7% 75%!important}
+
+/* The scene element has one image layer, so reset its positions without the overlay-layer coordinate. */
+.approved-gallery-home .screen-slot:nth-child(1) .screen-scene{background-position:7% 0!important}
+.approved-gallery-home .screen-slot:nth-child(2) .screen-scene{background-position:35.7% 0!important}
+.approved-gallery-home .screen-slot:nth-child(3) .screen-scene{background-position:64.3% 0!important}
+.approved-gallery-home .screen-slot:nth-child(4) .screen-scene{background-position:93% 0!important}
+.approved-gallery-home .screen-slot:nth-child(5) .screen-scene{background-position:7% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(6) .screen-scene{background-position:35.7% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(7) .screen-scene{background-position:64.3% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(8) .screen-scene{background-position:93% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(9) .screen-scene{background-position:7% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(10) .screen-scene{background-position:35.7% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(11) .screen-scene{background-position:64.3% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(12) .screen-scene{background-position:93% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(13) .screen-scene{background-position:7% 75%!important}
+.approved-gallery-home .screen-slot:nth-child(14) .screen-scene{background-position:35.7% 75%!important}
+
+/* Inner route hero artwork: preserve square scene geometry and crop to the tall frame. */
+body:not(:has(.approved-gallery-home)) .page-hero:first-child:before,
+body:not(:has(.approved-gallery-home)) .observable-hero:first-child:before{
+  background-size:auto 500%!important;
+}
+main:has(.about-identity) .page-hero:first-child:before{background-position:35% 0!important}
+main:has(.registry-row) .page-hero:first-child:before{background-position:65% 0!important}
+main:has(.research-row) .page-hero:first-child:before{background-position:95% 0!important}
+main:has(.pulse-system-card) .page-hero:first-child:before{background-position:5% 25%!important}
+main:has(.journey-step) .page-hero:first-child:before{background-position:35% 25%!important}
+main:has(.resume-actions) .page-hero:first-child:before{background-position:65% 25%!important}
+.system-hero-tradebot:before{background-position:35% 50%!important}
+.system-hero-control-core:before{background-position:65% 50%!important}
+.system-hero-automation:before{background-position:95% 50%!important}
+.system-hero-analytics:before{background-position:5% 75%!important}
+.research-hero-evidence-bound-autonomy:before{background-position:35% 75%!important}
+.research-hero-opening-session-market-structure:before{background-position:65% 75%!important}
+.research-hero-rec-md-structural-interaction:before{background-position:95% 75%!important}
+.research-hero-mean-reversion-candidate:before{background-position:5% 100%!important}

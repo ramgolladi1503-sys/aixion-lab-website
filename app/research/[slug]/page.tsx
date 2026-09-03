@@ -69,7 +69,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
 
   return (
     <>
-      <section className="page-hero">
+      <section className={`page-hero research-hero-${slug}`}>
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">RESEARCH NOTE · {note.domain}</p>
