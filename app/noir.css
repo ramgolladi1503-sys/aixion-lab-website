@@ -166,11 +166,13 @@ a{color:inherit;text-decoration:none}
 .section h2{font:400 clamp(36px,3.2vw,52px)/1.06 var(--serif)!important;letter-spacing:-.035em!important}
 .section h3,.detail-card h3,.registry-row h3,.research-row h3{color:var(--text)}
 .lede,.section-heading p,.detail-card p,.detail-card li,.registry-row p,.research-row p,.about-identity p{color:var(--muted)}
+.section-heading p,.detail-card p,.registry-row p,.research-row p,.about-identity p{font-size:14px!important;line-height:1.55!important}
 .panel,.detail-card,.registry-row,.research-row,.pulse-system-card,.contact-copy,.about-identity{background:linear-gradient(145deg,rgba(15,32,51,.96),rgba(8,20,33,.94));border-color:var(--line-strong)}
 .button{background:var(--blue);color:var(--bg-0);font-size:13px!important}
 .button-secondary{background:transparent;color:var(--text);border-color:var(--bronze-soft);font-size:13px!important}
 .text-link{color:var(--blue)}
 .eyebrow,.system-id,.registry-label,.research-domain{color:var(--bronze);font-size:10px!important;letter-spacing:.16em!important}
+.eyebrow{font-size:14px!important;line-height:1.35!important}
 .journey-timeline:before{background:var(--bronze-soft)}
 .journey-step .number:after{background:var(--bg-0);border-color:var(--blue)}
 
