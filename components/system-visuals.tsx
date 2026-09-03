@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { SystemRecord } from "@/lib/site-data";
+import { CinematicImage } from "@/components/cinematic-image";
 
 type VisualKind = "home" | "tradebot" | "control-core" | "automation" | "analytics" | "journey" | "about";
 
@@ -31,6 +32,7 @@ export function AixionSignal({ compact = false }: { compact?: boolean }) {
 export function LabFieldVisual() {
   return (
     <nav className="system-visual lab-field-visual" aria-label="Aixion system field" data-motion-visual data-reveal="system-field">
+      <CinematicImage kind="home" alt="Cinematic canyon and blue signal field" />
       <div className="visual-kicker" aria-hidden="true"><span>AIXION / SYSTEM FIELD</span><span>PUBLIC VIEW</span></div>
       <SignalDots />
       <svg className="lab-field-lines" viewBox="0 0 620 360" preserveAspectRatio="none" aria-hidden="true">
@@ -67,6 +69,7 @@ function TradeBotVisual() {
   ];
   return (
     <div className="system-visual visual-tradebot" aria-hidden="true" data-motion-visual data-reveal="tradebot-architecture">
+      <CinematicImage kind="tradebot" alt="Cinematic market intelligence city and chart field" />
       <div className="visual-kicker"><span>MARKET INTELLIGENCE TOPOLOGY</span><span>READ-ONLY PUBLIC MODEL</span></div>
       <div className="tradebot-rail">
         {lanes.map(([label, copy]) => (
@@ -91,6 +94,7 @@ function ControlCoreVisual() {
   const nodes = ["INTENT", "CONTEXT", "PLANNER", "AGENTS", "TOOLS", "EVIDENCE", "POLICY", "HUMAN"];
   return (
     <div className="system-visual visual-core" aria-hidden="true" data-motion-visual data-reveal="control-core-architecture">
+      <CinematicImage kind="control-core" alt="Cinematic central intelligence tower" />
       <div className="visual-kicker"><span>GOVERNED ORCHESTRATION</span><span>MVP MODEL</span></div>
       <div className="core-map">
         <div className="core-center"><span>CONTROL</span><strong>CORE</strong><small>observable authority</small></div>
