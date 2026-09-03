@@ -3,6 +3,31 @@
   border-radius:24px!important;
   background-image:linear-gradient(180deg,#061523 0%,#04101b 100%)!important;
 }
+
+/* Desktop reference geometry: the cinematic image field is ~210px tall, while live copy overlaps it and continues into the dark lower field. */
+@media(min-width:1121px){
+  .approved-gallery-home .screen-scene{
+    inset:34px 0 auto!important;
+    height:214px!important;
+    min-height:214px!important;
+    transform:scale(1.01)!important;
+  }
+  .approved-gallery-home .screen-card:before{
+    inset:34px 0 0!important;
+    background:linear-gradient(180deg,rgba(2,8,15,.20) 0%,rgba(2,8,15,.08) 29%,rgba(2,8,15,.22) 51%,rgba(2,8,15,.74) 66%,rgba(2,8,15,.94) 100%)!important;
+  }
+  .approved-gallery-home .screen-card:after{
+    inset:34px 0 0!important;
+    background:linear-gradient(90deg,rgba(2,8,15,.52) 0%,rgba(2,8,15,.18) 62%,rgba(2,8,15,.02) 100%),linear-gradient(180deg,transparent 0 44%,rgba(3,10,18,.28) 58%,rgba(3,10,18,.80) 100%)!important;
+  }
+  .approved-gallery-home .screen-copy{
+    align-self:start!important;
+    padding:30px 12px 10px!important;
+    margin-top:0!important;
+    background:transparent!important;
+  }
+}
+
 @media(max-width:720px){
   body:not(:has(.approved-gallery-home)) h1,
   main:not(:has(.approved-gallery-home)) .page-hero h1,
