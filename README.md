@@ -1,26 +1,10 @@
-# Aixion Lab Website
+# Aixion Lab
 
-This repository has been reset to a single website authority.
+Aixion Lab is an independent engineering lab for applied intelligence, automation and decision systems.
 
-## Source of truth
+The public site presents systems, research, evidence boundaries and engineering work while keeping private implementation details private.
 
-`docs/website/AIXION_WEBSITE_MASTER_BLUEPRINT.md`
+Production: https://aixionlab.com
 
-The previous website implementation and design experiments are preserved on:
-
-`archive/pre-blueprint-rebuild-20260823`
-
-They are historical reference only and must not be used as implementation authority.
-
-## Current state
-
-- Website architecture: **LOCKED v1.0**
-- Implementation: **not started from the new authority yet**
-- Approved retained asset: `public/brand/aixion-lab-primary.png`
-- Old draft website PRs: superseded/closed
-
-## Rule
-
-Build from the master blueprint in controlled passes: structure → visual system → interaction → evidence integration → production polish.
-
-Do not reintroduce old radial, cinematic, ivory-world, AI Studio, anime, 3D-world or other superseded website models unless the master blueprint is explicitly revised first.
+## Redesign work
+The cinematic redesign is being developed on `redesign/aixion-approved-gallery-v1` and must not be merged or deployed without explicit approval.
