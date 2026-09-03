@@ -1,0 +1,40 @@
+/* Generated cinematic route atlas — approved Aixion visual language. */
+:root{--aixion-scene-atlas:url('/images/cinematic/aixion-scene-atlas.webp')}
+.approved-gallery-home .screen-scene{background-image:var(--aixion-scene-atlas)!important;background-size:400% 500%!important;background-repeat:no-repeat!important;background-color:#06111e!important;filter:saturate(1.08) brightness(.88) contrast(1.06)!important}
+.approved-gallery-home .screen-scene .scene-horizon,.approved-gallery-home .screen-scene .scene-figure{display:none!important}
+.approved-gallery-home .screen-slot:nth-child(1) .screen-scene{background-position:0 0!important}
+.approved-gallery-home .screen-slot:nth-child(2) .screen-scene{background-position:33.333% 0!important}
+.approved-gallery-home .screen-slot:nth-child(3) .screen-scene{background-position:66.667% 0!important}
+.approved-gallery-home .screen-slot:nth-child(4) .screen-scene{background-position:100% 0!important}
+.approved-gallery-home .screen-slot:nth-child(5) .screen-scene{background-position:0 25%!important}
+.approved-gallery-home .screen-slot:nth-child(6) .screen-scene{background-position:33.333% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(7) .screen-scene{background-position:66.667% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(8) .screen-scene{background-position:100% 25%!important}
+.approved-gallery-home .screen-slot:nth-child(9) .screen-scene{background-position:0 50%!important}
+.approved-gallery-home .screen-slot:nth-child(10) .screen-scene{background-position:33.333% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(11) .screen-scene{background-position:66.667% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(12) .screen-scene{background-position:100% 50%!important}
+.approved-gallery-home .screen-slot:nth-child(13) .screen-scene{background-position:0 75%!important}
+.approved-gallery-home .screen-slot:nth-child(14) .screen-scene{background-position:33.333% 75%!important}
+
+/* Inner-route hero art uses the same atlas; text remains live HTML. */
+main .page-hero:before{background-image:var(--aixion-scene-atlas)!important;background-size:400% 500%!important;background-repeat:no-repeat!important;opacity:.9!important;filter:saturate(1.06) brightness(.72) contrast(1.08)!important}
+main:has(.about-identity) .page-hero:first-child:before{background-position:33.333% 0!important}
+main:has(.registry-row) .page-hero:first-child:before{background-position:66.667% 0!important}
+main:has(.research-row) .page-hero:first-child:before{background-position:100% 0!important}
+main:has(.pulse-system-card) .page-hero:first-child:before{background-position:0 25%!important}
+main:has(.journey-step) .page-hero:first-child:before{background-position:33.333% 25%!important}
+main:has(.resume-actions) .page-hero:first-child:before{background-position:66.667% 25%!important}
+
+.system-hero-tradebot:before{background-position:33.333% 50%!important}
+.system-hero-control-core:before{background-position:66.667% 50%!important}
+.system-hero-automation:before{background-position:100% 50%!important}
+.system-hero-analytics:before{background-position:0 75%!important}
+.research-hero-evidence-bound-autonomy:before{background-position:33.333% 75%!important}
+.research-hero-opening-session-market-structure:before{background-position:66.667% 75%!important}
+.research-hero-rec-md-structural-interaction:before{background-position:100% 75%!important}
+.research-hero-mean-reversion-candidate:before{background-position:0 100%!important}
+
+.page-hero{isolation:isolate}
+.page-hero:before{content:"";position:absolute;inset:0;z-index:-2}
+.page-hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(3,9,18,.9),rgba(3,9,18,.54) 58%,rgba(3,9,18,.76)),linear-gradient(180deg,rgba(3,9,18,.14),rgba(3,9,18,.82))!important;pointer-events:none}
