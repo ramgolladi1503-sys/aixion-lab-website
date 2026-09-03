@@ -87,6 +87,13 @@ const tabs: Record<string, [string, string][]> = {
   analytics: [["Overview", "overview"], ["Decision model", "architecture"], ["Engineering", "engineering"], ["Case study", "case-study"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
 };
 
+const systemArtwork: Record<string, string> = {
+  tradebot: "/visual-authority/generated/system-tradebot-clean.png",
+  "control-core": "/visual-authority/generated/system-control-core-clean.png",
+  automation: "/visual-authority/generated/system-automation-clean.png",
+  analytics: "/visual-authority/generated/system-analytics-clean.png",
+};
+
 export function generateStaticParams() { return systems.map(system => ({ slug: system.slug })); }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -214,6 +221,7 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
             <div className="button-row"><StateTag state={system.state} /><Link className="button-secondary" href="#evidence">View evidence ↓</Link></div>
             <CareerStrip skills={system.competencies} />
           </div>
+          <div className="detail-hero-art" aria-hidden="true"><img src={systemArtwork[slug]} alt="" /></div>
           <SystemHeroSummary system={system} />
         </div>
       </section>
