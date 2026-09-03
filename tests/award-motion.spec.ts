@@ -1,37 +1,36 @@
 import { test, expect } from "@playwright/test";
 
-test("home keeps the approved observable dark thesis and progressive-disclosure orientation", async ({ page }) => {
+test("home keeps the governed-intelligence thesis and cinematic composition", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
-  await expect(page.getByText("Built by Ram", { exact: true })).toBeVisible();
-  await expect(page.locator(".observable-home")).toBeVisible();
-  await expect(page.locator(".observable-field")).toBeVisible();
-  await expect(page.locator(".system-grid .system-card")).toHaveCount(4);
-  await expect(page.getByRole("heading", { name: "TradeBot" }).first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "The rest of the lab lives on dedicated pages." })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Governed autonomy and explicit authority/i })).toBeVisible();
+  await expect(page.locator(".sharp-home")).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Intelligence with evidence/i })).toBeVisible();
+  await expect(page.locator(".robot-mind")).toBeVisible();
+  await expect(page.locator(".sharp-system-row")).toHaveCount(4);
+  await expect(page.getByRole("heading", { name: /Systems should not ask for trust/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Observe.*Explain.*Operate/i })).toBeVisible();
   await expect(page.locator(".editorial-home")).toHaveCount(0);
 });
 
-test("motion reveals approved dark sections without becoming the content model", async ({ page }, testInfo) => {
+test("motion reveals the new cinematic sections without becoming the content model", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-ready/);
   await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
-  await expect(page.locator('[data-reveal="pulse-preview"]')).toBeVisible();
-  const lifecycle = page.locator("[data-aixion-signal]").first();
-  if (testInfo.project.name === "mobile") await expect(lifecycle).toBeHidden();
-  else await expect(lifecycle).toBeVisible();
+  await expect(page.locator(".robot-mind-svg")).toBeVisible();
+  await page.locator('[data-reveal="sharp-systems"]').scrollIntoViewIfNeeded();
+  await expect(page.locator('[data-reveal="sharp-systems"]')).toHaveClass(/is-revealed/);
 });
 
-test("reduced-motion preserves approved content and mobile subtraction", async ({ page }, testInfo) => {
+test("reduced motion preserves the redesign and disables decorative animation", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#motion-scope")).toHaveClass(/motion-reduced/);
   await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
   await expect(page.getByRole("link", { name: /Explore systems/i }).first()).toBeVisible();
-  const lifecycle = page.locator("[data-aixion-signal]").first();
-  if (testInfo.project.name === "mobile") await expect(lifecycle).toBeHidden();
-  else await expect(lifecycle).toBeVisible();
+  await expect(page.locator(".robot-mind")).toBeVisible();
+  const animationName = await page.locator(".robot-mind-svg").evaluate(node => getComputedStyle(node).animationName);
+  const marqueeAnimation = await page.locator(".sharp-marquee-track").evaluate(node => getComputedStyle(node).animationName);
+  expect(animationName).toBe("none");
+  expect(marqueeAnimation).toBe("none");
 });
 
 test("Journey is an escalating engineering-question narrative", async ({ page }) => {

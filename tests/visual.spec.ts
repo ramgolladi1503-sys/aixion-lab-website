@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import path from "node:path";
 
-const routes = [["home", "/"], ["systems", "/systems"], ["tradebot", "/systems/tradebot"], ["control-core", "/systems/control-core"], ["automation", "/systems/automation"], ["analytics", "/systems/analytics"], ["research", "/research"], ["pulse", "/pulse"], ["journey", "/journey"], ["about", "/about"], ["resume", "/resume"]] as const;
+const routes = [["home", "/"], ["systems", "/systems"], ["tradebot", "/systems/tradebot"], ["control-core", "/systems/control-core"], ["automation", "/systems/automation"], ["analytics", "/systems/analytics"], ["research", "/research"], ["pulse", "/pulse"], ["journey", "/journey"], ["about", "/about"], ["resume", "/resume"], ["collaborate", "/collaborate"]] as const;
 
 for (const [name, route] of routes) {
   test(`${name} renders and captures`, async ({ page }, testInfo) => {
@@ -29,12 +29,28 @@ test("home primary action is visible without scrolling", async ({ page }) => {
   expect((box?.y ?? 99999) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0);
 });
 
-test("desktop approved hero begins near the sticky header", async ({ page }, testInfo) => {
+test("desktop robot-mind hero begins near the sticky header", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
   await page.goto("/", { waitUntil: "networkidle" });
-  const copy = await page.locator(".observable-copy").boundingBox();
+  const copy = await page.locator(".sharp-hero-copy").boundingBox();
+  const robot = await page.locator(".robot-mind").boundingBox();
   expect(copy).not.toBeNull();
-  expect(copy?.y ?? 99999).toBeLessThan(230);
+  expect(robot).not.toBeNull();
+  expect(robot?.y ?? 99999).toBeLessThan(260);
+  expect((copy?.width ?? 0)).toBeGreaterThan(420);
+});
+
+test("robot-mind hero balances copy and visual on desktop", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "Desktop composition assertion");
+  await page.goto("/", { waitUntil: "networkidle" });
+  const inner = await page.locator(".sharp-hero-inner").boundingBox();
+  const copy = await page.locator(".sharp-hero-copy").boundingBox();
+  const robot = await page.locator(".robot-mind").boundingBox();
+  expect(inner).not.toBeNull();
+  expect(copy).not.toBeNull();
+  expect(robot).not.toBeNull();
+  expect((copy?.width ?? 0) / (inner?.width ?? 1)).toBeGreaterThan(.28);
+  expect((robot?.width ?? 0) / (inner?.width ?? 1)).toBeGreaterThan(.34);
 });
 
 test("desktop About Lab contact does not reserve a hidden second column", async ({ page }, testInfo) => {
@@ -72,6 +88,7 @@ test("Career mode has one visible state indicator", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Toggle Lab and Career view" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-view", "career");
+  await expect(page.locator(".career-only").first()).toBeVisible();
   const afterContent = await page.evaluate(() => getComputedStyle(document.body, "::after").content);
   expect(afterContent === "none" || afterContent === "normal" || afterContent === '""').toBe(true);
 });
