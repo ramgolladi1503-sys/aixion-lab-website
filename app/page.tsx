@@ -6,7 +6,7 @@ const destinations = [
     label: "HOME",
     title: "We build intelligent systems for a more extraordinary future.",
     body: "Aixion Lab turns research into observable systems with explicit evidence and authority boundaries.",
-    href: "/about",
+    href: "/",
     cta: "Discover the lab", image: "/visual-authority/generated/home-canyon-clean.png",
   },
   {

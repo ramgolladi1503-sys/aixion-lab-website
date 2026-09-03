@@ -81,6 +81,7 @@ a{color:inherit;text-decoration:none}
   transform:translateY(-7px);border-color:rgba(124,200,255,.72);
   box-shadow:0 24px 84px rgba(12,74,128,.28);outline:none;
 }
+#motion-scope.motion-reduced *,#motion-scope.motion-reduced *::before,#motion-scope.motion-reduced *::after{transition-duration:0s!important;transition-delay:0s!important;animation-duration:0s!important;animation-delay:0s!important}
 .destination-name{
   position:relative;z-index:3;padding:15px 17px 13px;border-bottom:1px solid var(--line);
   font:650 10px/1 var(--mono);letter-spacing:.18em;color:#d9e2ea;
@@ -175,6 +176,11 @@ a{color:inherit;text-decoration:none}
 /* Readability guards for system diagrams */
 .core-center{min-height:56px!important;padding-block:14px!important}
 .core-node,.tradebot-stage,.workflow-row,.analytics-metric{min-height:38px!important;padding-block:9px!important}
+.tradebot-rail{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.core-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;min-height:300px}
+.core-node{position:static!important;transform:none!important;display:flex;align-items:center;justify-content:center}
+.workflow-lanes{display:grid;gap:7px}.workflow-row{display:grid;grid-template-columns:100px 1fr auto;gap:10px;align-items:center}
+.analytics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.analytics-chart-main{grid-column:1/-1}
 
 /* Footer aligned to the approved cinematic system. */
 .site-footer{margin-top:0;border-top:1px solid var(--bronze-soft);color:var(--muted);background:#040b12}
@@ -214,6 +220,12 @@ a{color:inherit;text-decoration:none}
   .page-hero{padding:64px 0 44px}
   .page-hero h1{font-size:clamp(36px,10vw,48px)!important}
   .detail-hero-art{grid-column:1;grid-row:auto;min-height:250px;margin-top:18px}.detail-hero-art img{min-height:250px}
+  .aixion-signal{overflow-x:auto;grid-template-columns:repeat(6,minmax(170px,1fr));padding-bottom:8px}
+  .aixion-signal .signal-stage{min-width:170px;min-height:42px}
+  .system-visual p,.system-visual small{font-size:14px!important;line-height:1.45!important}
+  .tradebot-rail{grid-template-columns:1fr}.tradebot-stage{width:100%;min-width:0;min-height:52px;padding:10px 12px!important}
+  .core-map{grid-template-columns:repeat(2,minmax(0,1fr));min-height:0}.core-node{width:auto!important;min-height:46px;padding:10px!important}
+  .workflow-row{grid-template-columns:100px 1fr auto;min-height:56px;padding:10px 8px!important}.analytics-grid{grid-template-columns:1fr}
   .page-hero .lede,.lede{font-size:16px!important}
   .section{padding-block:68px!important}
   .section h2{font-size:clamp(30px,8vw,38px)!important}

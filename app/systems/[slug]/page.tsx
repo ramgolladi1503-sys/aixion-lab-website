@@ -228,7 +228,7 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
 
       <div className="system-subnav-wrap">
         <nav className="shell system-subnav" aria-label={`${system.name} page sections`}>
-          {tabs[slug].map(([label, id]) => <a href={`#${id}`} key={id}>{label}</a>)}
+          {tabs[slug].map(([label, id], index) => <a className={index === 0 ? "is-active" : undefined} aria-current={index === 0 ? "location" : undefined} href={`#${id}`} key={id}>{label}</a>)}
         </nav>
       </div>
 
