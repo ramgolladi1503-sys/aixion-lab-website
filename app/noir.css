@@ -85,8 +85,8 @@ a{color:inherit;text-decoration:none}
   position:relative;z-index:3;padding:15px 17px 13px;border-bottom:1px solid var(--line);
   font:650 10px/1 var(--mono);letter-spacing:.18em;color:#d9e2ea;
 }
-.destination-scene{position:absolute;inset:44px 0 150px;overflow:hidden;z-index:-2;background:#081420}
-.destination-scene::before,.destination-scene::after,.destination-scene i,.destination-scene b,.destination-scene em{content:"";position:absolute;display:block}
+.destination-scene{position:absolute;inset:44px 0 150px;overflow:hidden;z-index:-2;background:#081420}.destination-scene img{width:100%;height:100%;object-fit:cover;object-position:center bottom;transform:scale(1.45);transform-origin:center bottom;filter:saturate(.92) contrast(1.08);opacity:.92}.destination-scene img+*{display:none}
+.destination-scene::before,.destination-scene::after,.destination-scene i,.destination-scene b,.destination-scene em{content:"";position:absolute;display:none!important}
 .destination-scene::after{inset:0;background:linear-gradient(180deg,rgba(2,8,14,.04),rgba(2,8,14,.22) 52%,rgba(3,10,17,.75) 82%,#06111c 100%)}
 
 /* HOME — luminous canyon / intelligence aperture */
