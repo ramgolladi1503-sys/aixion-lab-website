@@ -10,7 +10,7 @@
     "visual": "playwright test"
   },
   "dependencies": {
-    "next": "latest",
+    "next": "16.3.4",
     "react": "latest",
     "react-dom": "latest"
   },
@@ -20,6 +20,6 @@
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "typescript": "latest"
+    "typescript": "7.0.2"
   }
 }

@@ -1,24 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import "./mobile.css";
-import "./interactions.css";
-import "./convergence.css";
-import "./accessibility.css";
-import "./final-polish.css";
-import "./uat-polish.css";
-import "./launch.css";
-import "./award-motion.css";
-import "./award-fixes.css";
-import "./live-polish.css";
-import "./observable-system.css";
-import "./observable-shell.css";
-import "./observable-release.css";
-import "./system-grammar.css";
-import "./accessibility-contrast.css";
-import "./approved-dark.css";
-import "./approved-dark-fixes.css";
-import "./designer-audit-fixes.css";
-import "./dark-surface-guard.css";
+import "./noir.css";
+import "./cinematic-images.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionOrchestrator } from "@/components/motion-orchestrator";
@@ -30,7 +13,7 @@ const socialDescription = "Applied intelligence, automation and decision systems
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#061113",
+  themeColor: "#050b12",
   colorScheme: "dark",
 };
 

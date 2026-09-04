@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { systems } from "@/lib/site-data";
 import { SectionHeading, StateTag } from "@/components/ui";
+import { PageArtwork } from "@/components/page-artwork";
 
 export const metadata: Metadata = {
   title: "Systems Registry",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 export default function SystemsPage() {
   return (
     <>
-      <section className="page-hero systems-hero">
+      <section className="page-hero systems-hero"><PageArtwork kind="systems" />
         <div className="shell systems-hero-copy">
           <p className="eyebrow">AIXION LAB · SYSTEMS</p>
           <h1>Systems Registry</h1>
@@ -28,16 +29,16 @@ export default function SystemsPage() {
                 <span className="system-id">{system.id}</span>
                 <div>
                   <h3>{system.name}</h3>
-                  <p>{system.descriptor}</p>
+                  <p style={{ fontSize: 14, lineHeight: 1.55 }}>{system.descriptor}</p>
                 </div>
                 <div className="registry-hide-mobile">
                   <span className="registry-label">Domain</span>
-                  <p>{system.domain}</p>
+                  <p style={{ fontSize: 14, lineHeight: 1.55 }}>{system.domain}</p>
                 </div>
                 <StateTag state={system.state} />
                 <div className="registry-hide-tablet">
                   <span className="registry-label">Current gate</span>
-                  <p>{system.currentGate}</p>
+                  <p style={{ fontSize: 14, lineHeight: 1.55 }}>{system.currentGate}</p>
                 </div>
                 <Link className="text-link" href={`/systems/${system.slug}`}>View →</Link>
               </article>

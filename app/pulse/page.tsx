@@ -4,6 +4,7 @@ import labState from "@/content/lab-state.json";
 import labActivity from "@/content/lab-activity.json";
 import { SectionHeading, StateTag } from "@/components/ui";
 import { AixionSignal } from "@/components/system-visuals";
+import { PageArtwork } from "@/components/page-artwork";
 
 export const metadata: Metadata = {
   title: "Aixion Pulse",
@@ -23,7 +24,7 @@ export default function PulsePage() {
 
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero"><PageArtwork kind="pulse" />
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · PULSE</p>

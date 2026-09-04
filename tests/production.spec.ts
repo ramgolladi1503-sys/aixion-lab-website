@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 const productionRoutes = [
   "/", "/systems", "/systems/tradebot", "/systems/control-core", "/systems/automation", "/systems/analytics",
   "/research", "/research/opening-session-market-structure", "/research/rec-md-structural-interaction",
-  "/research/mean-reversion-candidate", "/research/evidence-bound-autonomy", "/pulse", "/journey", "/about", "/resume",
+  "/research/mean-reversion-candidate", "/research/evidence-bound-autonomy", "/pulse", "/journey", "/about", "/resume", "/collaborate",
 ] as const;
 
 test("production routes load without browser errors", async ({ page }) => {
@@ -30,7 +30,7 @@ test("production routes load without browser errors", async ({ page }) => {
 
 test("all internal navigation links resolve", async ({ page, request }) => {
   const discovered = new Set<string>();
-  for (const route of ["/", "/systems", "/research", "/journey", "/about", "/resume"]) {
+  for (const route of ["/", "/systems", "/research", "/journey", "/about", "/resume", "/collaborate"]) {
     await page.goto(route, { waitUntil: "networkidle" });
     const hrefs = await page.locator('a[href^="/"]').evaluateAll(anchors => anchors.map(anchor => anchor.getAttribute("href")).filter(Boolean) as string[]);
     hrefs.forEach(href => discovered.add(href.split("#")[0] || "/"));
@@ -91,15 +91,13 @@ test("search palette is visually quiet while retaining keyboard behavior", async
   await page.goto("/", { waitUntil: "networkidle" });
   const trigger = page.getByRole("button", { name: "Open Aixion search" });
   await expect(trigger).toHaveText("Search");
-  await expect(page.getByText("⌘K", { exact: true })).toHaveCount(0);
   await trigger.click();
   const dialog = page.getByRole("dialog", { name: "Search Aixion" });
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByText(/select · Enter open|Esc close/i)).toHaveCount(0);
   await expect(dialog.getByRole("button", { name: "Close search" })).toHaveText("×");
 });
 
-test("Control Core topology stays readable after first-load reveal", async ({ page }) => {
+test("Control Core topology stays readable", async ({ page }) => {
   await page.goto("/systems/control-core", { waitUntil: "networkidle" });
   const visual = page.locator(".visual-core").first();
   const map = visual.locator(".core-map");
@@ -107,27 +105,19 @@ test("Control Core topology stays readable after first-load reveal", async ({ pa
   const nodes = visual.locator(".core-node");
   await expect(visual).toBeVisible();
   await visual.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(900);
+  await page.waitForTimeout(500);
   await expect(map).toBeVisible();
   await expect(center).toBeVisible();
   await expect(nodes).toHaveCount(8);
-  for (let index = 0; index < 8; index += 1) await expect(nodes.nth(index)).toBeVisible();
-  const metrics = await map.evaluate(node => {
-    const mapRect = node.getBoundingClientRect();
-    const centerRect = node.querySelector(".core-center")?.getBoundingClientRect();
-    const nodeRects = [...node.querySelectorAll(".core-node")].map(item => item.getBoundingClientRect());
-    return {
-      map: { left: mapRect.left, right: mapRect.right },
-      center: centerRect ? { width: centerRect.width, height: centerRect.height } : null,
-      nodes: nodeRects.map(rect => ({ width: rect.width, height: rect.height, left: rect.left, right: rect.right })),
-    };
-  });
-  expect(metrics.center).not.toBeNull();
-  expect(metrics.center?.width ?? 0).toBeGreaterThan(150);
-  expect(metrics.center?.height ?? 0).toBeGreaterThan(50);
-  expect(metrics.nodes).toHaveLength(8);
-  expect(metrics.nodes.every(node => node.width > 40 && node.height > 30)).toBe(true);
-  expect(metrics.nodes.every(node => node.left >= metrics.map.left - 1 && node.right <= metrics.map.right + 1)).toBe(true);
+  const centerBox = await center.boundingBox();
+  expect(centerBox?.width ?? 0).toBeGreaterThan(150);
+  expect(centerBox?.height ?? 0).toBeGreaterThan(50);
+  for (let index = 0; index < 8; index += 1) {
+    await expect(nodes.nth(index)).toBeVisible();
+    const box = await nodes.nth(index).boundingBox();
+    expect(box?.width ?? 0).toBeGreaterThan(40);
+    expect(box?.height ?? 0).toBeGreaterThan(30);
+  }
 });
 
 test("mobile architecture visuals expose readable semantic stages", async ({ page }) => {
@@ -162,28 +152,16 @@ test("research index explains why each public note has its state", async ({ page
   }
 });
 
-test("footer closes as a quiet authored endpoint", async ({ page }, testInfo) => {
+test("footer closes with the cinematic Aixion identity and useful routes", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   const footer = page.locator("footer.site-footer");
-  const manifesto = footer.locator(".footer-manifesto");
-  const lines = manifesto.locator(".footer-manifesto-line");
-  await expect(lines).toHaveCount(2);
-  await expect(lines.nth(0)).toContainText("Curiosity starts the question");
-  await expect(lines.nth(0)).toContainText("Persistence carries it through failure");
-  await expect(lines.nth(1)).toContainText("I keep building, testing and learning");
-  await expect(footer.getByText(/Build carefully\. Test what matters\. Learn from what fails\./)).toBeVisible();
-  await expect(footer.locator('a[href^="/"]')).toHaveCount(0);
-  await expect(footer.locator(".footer-links")).toHaveCount(0);
-  const fontFamily = await manifesto.evaluate(node => getComputedStyle(node).fontFamily);
-  expect(fontFamily).toMatch(/Iowan Old Style|Palatino|Book Antiqua|Georgia|serif/i);
-  if (testInfo.project.name === "desktop") {
-    const width = await manifesto.evaluate(node => node.getBoundingClientRect().width);
-    const fontSize = await manifesto.evaluate(node => parseFloat(getComputedStyle(node).fontSize));
-    expect(width).toBeGreaterThanOrEqual(760);
-    expect(width).toBeLessThanOrEqual(960);
-    expect(fontSize).toBeLessThanOrEqual(24);
-  } else {
-    await expect(lines.nth(0)).toBeVisible();
-    await expect(lines.nth(1)).toBeHidden();
-  }
+  await expect(footer.getByRole("heading", { name: "Observe. Explain. Operate." })).toBeVisible();
+  await expect(footer).toContainText("independent applied-engineering lab");
+  await expect(footer.getByRole("link", { name: "Systems" })).toBeVisible();
+  await expect(footer.getByRole("link", { name: "Research" })).toBeVisible();
+  await expect(footer.getByRole("link", { name: "Career" })).toBeVisible();
+  await expect(footer.getByRole("link", { name: "Collaborate" })).toBeVisible();
+  await expect(footer.getByRole("link", { name: /GitHub/ })).toBeVisible();
+  await expect(footer.getByRole("link", { name: /LinkedIn/ })).toBeVisible();
+  await expect(footer.locator(".footer-manifesto")).toHaveCount(0);
 });

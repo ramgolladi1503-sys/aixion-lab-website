@@ -1,17 +1,16 @@
 export function SiteFooter() {
   return (
-    <footer className="site-footer site-footer--statement">
+    <footer className="site-footer">
       <div className="shell footer-closing">
-        <p className="eyebrow">AIXION LAB · CLOSING PRINCIPLE</p>
-        <p className="footer-manifesto">
-          <span className="footer-manifesto-line">Curiosity starts the question. Discipline keeps the work honest. Persistence carries it through failure.</span>
-          <span className="footer-manifesto-line">I keep building, testing and learning until the system can explain its state, its evidence and its limits.</span>
-        </p>
-        <p className="footer-signoff">Build carefully. Test what matters. Learn from what fails.</p>
+        <div className="footer-brand-block">
+          <p className="eyebrow">AIXION LAB</p>
+          <p>Independent applied-engineering lab</p>
+        </div>
       </div>
-      <div className="shell build-line build-line--quiet">
+
+      <div className="shell build-line">
         <span>© 2026 Aixion Lab</span>
-        <span>Curiosity → Discipline → Evidence → Learn</span>
+        <span>Independent applied-engineering lab · Built by Ram</span>
       </div>
     </footer>
   );

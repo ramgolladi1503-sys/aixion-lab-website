@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SectionHeading } from "@/components/ui";
 import { ResearchIndex } from "@/components/research-index";
+import { PageArtwork } from "@/components/page-artwork";
 
 export const metadata: Metadata = {
   title: "Research Notes",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 export default function ResearchPage() {
   return (
     <>
-      <section className="page-hero research-hero">
+      <section className="page-hero research-hero"><PageArtwork kind="research" />
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · RESEARCH</p>

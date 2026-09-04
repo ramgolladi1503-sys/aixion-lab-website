@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { journey } from "@/lib/site-data";
 import { SectionHeading } from "@/components/ui";
 import { AixionSignal, SystemVisual } from "@/components/system-visuals";
+import { PageArtwork } from "@/components/page-artwork";
 
 export const metadata: Metadata = {
   title: "Journey",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 export default function JourneyPage() {
   return (
     <>
-      <section className="page-hero journey-hero" data-reveal="journey-hero">
+      <section className="page-hero journey-hero" data-reveal="journey-hero"><PageArtwork kind="journey" />
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · JOURNEY</p>

@@ -29,16 +29,39 @@ jobs:
         run: npm run build
 
       - name: Verify deployable static export
+        shell: bash
         run: |
-          test -f out/index.html
-          test -f out/systems/tradebot.html || test -f out/systems/tradebot/index.html
-          test -f out/research/evidence-bound-autonomy.html || test -f out/research/evidence-bound-autonomy/index.html
-          test -f out/robots.txt
-          test -f out/sitemap.xml
-          test -f out/manifest.webmanifest
-          test -f out/icon.svg
-          test -f out/_headers
-          ! grep -R -i -E "publication pending|will be added|build preview" out --include='*.html'
+          set -euo pipefail
+          require_file() {
+            if [[ ! -f "$1" ]]; then
+              echo "MISSING_EXPORT_ARTIFACT=$1"
+              exit 1
+            fi
+          }
+          require_either() {
+            if [[ ! -f "$1" && ! -f "$2" ]]; then
+              echo "MISSING_EXPORT_ARTIFACT=$1 OR $2"
+              exit 1
+            fi
+          }
+
+          require_file out/index.html
+          require_either out/systems/tradebot.html out/systems/tradebot/index.html
+          require_either out/research/evidence-bound-autonomy.html out/research/evidence-bound-autonomy/index.html
+          require_file out/robots.txt
+          require_file out/sitemap.xml
+          require_file out/manifest.webmanifest
+          require_file out/icon.svg
+
+          # Preserve the repository security-policy source contract. GitHub Pages does not consume Netlify-style _headers from the static export.
+          require_file public/_headers
+
+          if grep -R -n -i -E "publication pending|will be added|build preview" out --include='*.html'; then
+            echo "PROHIBITED_PLACEHOLDER_COPY_FOUND=true"
+            exit 1
+          fi
+
+          echo "STATIC_EXPORT_VERIFIED=true"
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium

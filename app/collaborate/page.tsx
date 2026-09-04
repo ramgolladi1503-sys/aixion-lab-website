@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui";
+import { PageArtwork } from "@/components/page-artwork";
 
 export const metadata: Metadata = {
   title: "Collaborate",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 export default function CollaboratePage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero"><PageArtwork kind="collaborate" />
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · COLLABORATE</p>

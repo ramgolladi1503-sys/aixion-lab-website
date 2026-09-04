@@ -50,6 +50,13 @@ const researchDetail: Record<string, {
   },
 };
 
+const researchArtwork: Record<string, string> = {
+  "opening-session-market-structure": "/visual-authority/generated/research-opening-session-clean.png",
+  "rec-md-structural-interaction": "/visual-authority/generated/research-rec-md-clean.png",
+  "mean-reversion-candidate": "/visual-authority/generated/research-mean-reversion-clean.png",
+  "evidence-bound-autonomy": "/visual-authority/generated/research-autonomy-clean.png",
+};
+
 export function generateStaticParams() {
   return researchNotes.map(note => ({ slug: note.slug }));
 }
@@ -77,6 +84,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
             <p className="lede">{note.question}</p>
             <StateTag state={note.state} />
           </div>
+          <div className="detail-hero-art" aria-hidden="true"><img src={researchArtwork[slug]} alt="" /></div>
           <div className="panel meta-board">
             <div><span>Visibility</span><strong>Public summary</strong></div>
             <div><span>Method</span><strong>Evidence-gated</strong></div>
