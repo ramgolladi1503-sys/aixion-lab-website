@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { systems } from "@/lib/site-data";
 import { SectionHeading, StateTag } from "@/components/ui";
+import { PageArtwork } from "@/components/page-artwork";
 
 export const metadata: Metadata = {
   title: "Systems Registry",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 export default function SystemsPage() {
   return (
     <>
-      <section className="page-hero systems-hero">
+      <section className="page-hero systems-hero"><PageArtwork kind="systems" />
         <div className="shell systems-hero-copy">
           <p className="eyebrow">AIXION LAB · SYSTEMS</p>
           <h1>Systems Registry</h1>

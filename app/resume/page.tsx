@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PrintResumeButton } from "@/components/print-resume-button";
+import { PageArtwork } from "@/components/page-artwork";
 
 export const metadata: Metadata = {
   title: "Career Snapshot",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 export default function ResumePage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero"><PageArtwork kind="resume" />
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · CAREER SNAPSHOT</p>

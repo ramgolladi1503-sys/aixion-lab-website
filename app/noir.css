@@ -155,7 +155,8 @@ a{color:inherit;text-decoration:none}
 
 /* Shared secondary-route treatment */
 .page-hero,.section{background:transparent;color:var(--text)}
-.page-hero{padding:clamp(76px,8vw,124px) 0 clamp(54px,6vw,88px);border-bottom:1px solid var(--line)}
+.page-hero{padding:clamp(76px,8vw,124px) 0 clamp(54px,6vw,88px);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.page-artwork{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}.page-artwork img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 42%;opacity:.48;filter:saturate(.9) contrast(1.08)}.page-artwork:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,11,18,.96) 0%,rgba(4,11,18,.76) 42%,rgba(4,11,18,.28) 100%),linear-gradient(180deg,rgba(4,11,18,.35),rgba(4,11,18,.82))}.page-hero>.shell{position:relative;z-index:1}
 .page-hero-grid{align-items:start!important}
 .detail-hero-art{grid-column:2;grid-row:1 / span 2;min-height:380px;border:1px solid var(--line);overflow:hidden;background:#06111c;position:relative}
 .detail-hero-art img{width:100%;height:100%;min-height:380px;display:block;object-fit:cover;object-position:center;filter:saturate(.9) contrast(1.08);opacity:.9}

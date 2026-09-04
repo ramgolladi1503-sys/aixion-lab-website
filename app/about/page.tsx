@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui";
+import { PageArtwork } from "@/components/page-artwork";
 
 export const metadata: Metadata = {
   title: "About",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero"><PageArtwork kind="about" />
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · ABOUT</p>
