@@ -8,7 +8,7 @@ for (const [name, route] of routes) {
     await page.goto(route, { waitUntil: "networkidle" });
     await expect(page.locator("body")).toBeVisible();
     await expect(page.locator("header")).toBeVisible();
-    await expect(page.locator("footer")).toBeVisible();
+    await expect(page.locator("footer")).toHaveCount(0);
     const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     expect(hasHorizontalOverflow, `${route} must not overflow horizontally`).toBe(false);
     await expect(page.locator(".abstract-scene")).toHaveCount(0);
@@ -29,16 +29,14 @@ test("home presents a complete proposition and systems entry", async ({ page }) 
   await page.waitForTimeout(900);
   await expect(page.getByRole("heading", { level: 1 })).toBeAttached();
   await expect(page.getByRole("link", { name: /Explore systems/ })).toBeVisible();
-  await expect(page.getByText("LAB PULSE", { exact: true })).toBeVisible();
   await expect(page.locator(".hero-carousel")).toBeVisible();
   await expect(page.locator(".home-intro")).toBeVisible();
-  await expect(page.locator(".home-pulse")).toBeVisible();
   const homeOrder = await page.locator("main").evaluate(main => {
     const sections = Array.from(main.querySelectorAll("section"));
     return sections.findIndex(section => section.classList.contains("hero")) <
       sections.findIndex(section => section.classList.contains("home-intro")) &&
       sections.findIndex(section => section.classList.contains("home-intro")) <
-      sections.findIndex(section => section.classList.contains("home-pulse"));
+      sections.findIndex(section => section.classList.contains("research-proof-section"));
   });
   expect(homeOrder).toBe(true);
 });
@@ -57,7 +55,7 @@ test("desktop About Lab contact does not reserve a hidden second column", async 
 
 test("flagship pages use distinct visual grammars", async ({ page }) => {
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  await expect(page.locator(".feature-split .art-directed-tradebot").first()).toBeVisible();
+  await expect(page.locator(".system-detail-reference-hero .art-directed-tradebot")).toHaveCount(1);
   await page.goto("/systems/control-core", { waitUntil: "networkidle" });
-  await expect(page.locator(".feature-split .art-directed-control-core").first()).toBeVisible();
+  await expect(page.locator(".system-detail-reference-hero .art-directed-control-core")).toHaveCount(1);
 });

@@ -41,7 +41,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section research-proof-section">
         <div className="shell">
           <SectionHeading eyebrow="RESEARCH / PROOF" title="The lab keeps the questions, failures and evidence visible." copy="A rejected mechanism is still useful engineering evidence. Research is not silently promoted into a system claim." />
           <div className="research-list">
