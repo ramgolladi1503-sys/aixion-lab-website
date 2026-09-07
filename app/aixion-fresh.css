@@ -487,6 +487,15 @@ main > .route-motion > section:nth-of-type(6) { animation-delay:400ms; }
 .pulse-system-card dd { margin:5px 0 0; color:var(--fresh-muted); font-size:14px; line-height:1.45; }
 @media(max-width:700px){.pulse-now-grid{grid-template-columns:1fr}.pulse-system-card{min-height:0;padding:22px}.pulse-system-card h3{margin:28px 0 18px;font-size:25px !important}.pulse-reference-hero .meta-board{justify-self:stretch}}
 
+/* Pulse: a calm observability surface, not another dashboard card grid. */
+.pulse-reference-hero { background-image:linear-gradient(90deg,rgba(5,5,8,.96),rgba(5,5,8,.78) 52%,rgba(5,5,8,.38)),url('/brand/aixion-systems-visual.png') !important; background-size:cover; background-position:center 46%; }
+.pulse-reference-hero .meta-board { background:transparent !important; border:0 !important; padding:24px 0 !important; box-shadow:none !important; }
+.pulse-now-grid { gap:0; border-top:1px solid var(--fresh-line); }
+.pulse-system-card { min-height:250px; padding:28px 22px; background:#0b0b0d !important; border-width:0 1px 1px 0 !important; }
+.pulse-system-card:nth-child(2n) { border-right:0 !important; }
+.pulse-system-card h3 { margin:30px 0 22px; }
+@media(max-width:700px){.pulse-system-card{border-right:0 !important;border-bottom:1px solid var(--fresh-line) !important;padding:24px 0}.pulse-system-card:last-child{border-bottom:0 !important}}
+
 /* System details: one identity visual, then an evidence-led architecture panel. */
 .system-detail-page > .section,
 .system-detail-page > .section-tight { padding-top:54px !important; padding-bottom:68px !important; }
