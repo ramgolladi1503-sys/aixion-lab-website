@@ -3,6 +3,7 @@ import { systems } from "@/lib/site-data";
 import labState from "@/content/lab-state.json";
 import { ProgressLane, SectionHeading, StateTag } from "@/components/ui";
 import { AixionSignal } from "@/components/system-visuals";
+import { FlipCard } from "@/components/flip-card";
 
 export const metadata: Metadata = {
   title: "Aixion Pulse",
@@ -41,17 +42,19 @@ export default function PulsePage() {
       <section className="section">
         <div className="shell">
           <SectionHeading eyebrow="NOW" title="Current cycle" copy="These cards answer four things quickly: state, current focus, latest milestone and next gate." />
-          <div className="pulse-now-grid">
-            {labState.systems.map(system => (
-              <article className="pulse-system-card reveal-on-scroll" key={system.id}>
-                <div className="system-card-top"><span className="system-id">{system.id}</span><StateTag state={system.state} /></div>
-                <h3>{system.name}</h3>
-                <dl>
-                  <div><dt>Current focus</dt><dd>{system.current_focus}</dd></div>
-                  <div><dt>Latest evidence</dt><dd>{system.latest_milestone}</dd></div>
-                  <div><dt>Next gate</dt><dd>{system.next_gate}</dd></div>
-                </dl>
-              </article>
+          <div className="flip-card-deck pulse-card-deck">
+            {labState.systems.map((system, index) => (
+              <FlipCard
+                key={system.slug}
+                index={index}
+                eyebrow={system.state}
+                title={system.name}
+                front={`${system.current_focus} Latest evidence: ${system.latest_milestone} Next gate: ${system.next_gate}`}
+                backLabel="CURRENT FOCUS"
+                back={system.current_focus}
+                state={system.state}
+                href={`/systems/${system.slug}`}
+              />
             ))}
           </div>
         </div>

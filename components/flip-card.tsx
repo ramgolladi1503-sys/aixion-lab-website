@@ -38,9 +38,9 @@ export function FlipCard({ eyebrow, title, front, backLabel, back, href, state, 
           <span className="flip-card-hint">Return to overview ↺</span>
         </button>
       </div>
+      {href ? <Link className="flip-card-route-link" href={href}>Explore →</Link> : null}
       <div className="flip-card-detail" aria-hidden={!expanded}>
         <p>{front}</p>
-        {href ? <Link className="text-link" href={href}>Explore →</Link> : null}
       </div>
     </article>
   );

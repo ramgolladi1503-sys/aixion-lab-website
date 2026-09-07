@@ -1,9 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { researchNotes } from "@/lib/site-data";
-import { StateTag } from "./ui";
+import { FlipCard } from "./flip-card";
 
 const filters = ["ALL", "ACTIVE", "VALIDATING", "VALIDATED", "REJECTED", "ARCHIVED"] as const;
 
@@ -30,16 +29,23 @@ export function ResearchIndex() {
         ))}
       </div>
       <div className="research-list" aria-live="polite">
-        {visible.length ? visible.map(note => (
-          <Link className="research-row" href={`/research/${note.slug}`} key={note.slug}>
-            <div>
-              <h3>{note.title}</h3>
-              <p>{note.question}</p>
-            </div>
-            <span className="research-domain">{note.domain}</span>
-            <StateTag state={note.state} />
-          </Link>
-        )) : (
+        {visible.length ? (
+          <div className="flip-card-deck research-index-card-deck">
+            {visible.map((note, index) => (
+              <FlipCard
+                key={note.slug}
+                index={index}
+                eyebrow={note.domain}
+                title={note.title}
+                front={note.question}
+                backLabel={note.state}
+                back={note.question}
+                state={note.state}
+                href={`/research/${note.slug}`}
+              />
+            ))}
+          </div>
+        ) : (
           <div className="detail-card">
             <h3>No public notes in this state yet.</h3>
             <p>The filter is working; Aixion does not invent research records to fill an empty category.</p>
