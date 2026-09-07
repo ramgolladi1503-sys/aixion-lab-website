@@ -501,6 +501,19 @@ main > .route-motion > section:nth-of-type(6) { animation-delay:400ms; }
 .system-detail-signal-line i { flex:1; height:1px; background:linear-gradient(90deg,var(--fresh-cyan),var(--fresh-violet)); }
 @media(max-width:600px){.system-detail-page > .section,.system-detail-page > .section-tight{padding-top:44px !important;padding-bottom:54px !important}.system-detail-page .system-subnav-wrap{top:68px}.system-detail-signal{min-height:280px;padding:28px}.system-detail-signal-line{gap:7px;font-size:9px}}
 
+/* System details: use a continuous case-study rhythm instead of repeated card islands. */
+.system-detail-page .detail-grid { gap:0; border-top:1px solid var(--fresh-line); }
+.system-detail-page .detail-grid .detail-card { min-height:190px; padding:28px 24px; border-width:0 1px 1px 0 !important; background:transparent !important; }
+.system-detail-page .detail-grid .detail-card:nth-child(4n) { border-right:0 !important; }
+.system-detail-page .system-grid { gap:0; border-top:1px solid var(--fresh-line); }
+.system-detail-page .system-grid .detail-card { border-width:0 1px 1px 0 !important; background:rgba(13,13,15,.48) !important; }
+.system-detail-page .system-grid .detail-card:nth-child(4n) { border-right:0 !important; }
+.system-detail-page .feature-split .feature-copy { background:rgba(13,13,15,.46) !important; }
+.system-detail-page .evidence-list { border-top:1px solid var(--fresh-line); }
+.system-detail-page .evidence-row { border-width:0 0 1px !important; padding:24px 0; background:transparent !important; }
+@media(max-width:980px){.system-detail-page .detail-grid .detail-card:nth-child(4n),.system-detail-page .system-grid .detail-card:nth-child(4n){border-right:1px solid var(--fresh-line) !important}.system-detail-page .detail-grid .detail-card:nth-child(2n),.system-detail-page .system-grid .detail-card:nth-child(2n){border-right:0 !important}}
+@media(max-width:600px){.system-detail-page .detail-grid,.system-detail-page .system-grid{display:block}.system-detail-page .detail-grid .detail-card,.system-detail-page .system-grid .detail-card{min-height:0;border-right:0 !important;padding:24px 0}.system-detail-page .evidence-row{gap:12px;padding:20px 0}}
+
 /* Editorial route identities: destination pages should not inherit one universal hero. */
 .journey-reference-hero {
   background:radial-gradient(circle at 78% 28%,rgba(142,232,237,.12),transparent 26rem),#07080a !important;
