@@ -104,10 +104,6 @@ export function HeroCarousel() {
           <p className="eyebrow">{slide.eyebrow}</p>
           <h1>{slide.title}</h1>
           <p className="lede">{slide.copy}</p>
-          <div className="hero-attribution">
-            <strong>Built by Ram</strong>
-            <span>Quality Engineering · Automation · Software · Data · Applied AI</span>
-          </div>
           <div className="button-row hero-actions-visible">
             <Link className="button" href={slide.primaryHref}>{slide.primary}</Link>
             <Link className="button-secondary" href={slide.secondaryHref}>{slide.secondary}</Link>
