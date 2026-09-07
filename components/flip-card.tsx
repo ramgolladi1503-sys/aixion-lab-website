@@ -42,11 +42,15 @@ export function FlipCard({ eyebrow, title, front, backLabel, back, href, state, 
           <span className="flip-card-hint">Auto reveal</span>
           {state ? <span className="flip-card-state">{state}</span> : null}
         </div>}
-        <div className="flip-card-face flip-card-back">
+        {href ? <Link className="flip-card-face flip-card-back" href={href} aria-label={`Open ${title}`}>
+          <span className="flip-card-kicker">{backLabel}</span>
+          <p>{back}</p>
+          <span className="flip-card-hint">View page ↗</span>
+        </Link> : <div className="flip-card-face flip-card-back">
           <span className="flip-card-kicker">{backLabel}</span>
           <p>{back}</p>
           <span className="flip-card-hint">Auto return</span>
-        </div>
+        </div>}
       </div>
     </article>
   );

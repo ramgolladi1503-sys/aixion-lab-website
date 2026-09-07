@@ -127,6 +127,7 @@ test("research note links resolve to detail pages", async ({ page }) => {
 test("cards navigate only when a detail route exists", async ({ page }) => {
   await page.goto("/research", { waitUntil: "networkidle" });
   await expect(page.locator(".research-index-card-deck .flip-card-front").first()).toHaveAttribute("href", /\/research\/.+/);
+  await expect(page.locator(".research-index-card-deck .flip-card-back").first()).toHaveAttribute("href", /\/research\/.+/);
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
   await expect(page.locator(".system-engineering-deck .flip-card-front").first()).not.toHaveAttribute("href");
   await expect(page.locator(".system-engineering-deck .flip-card-front")).toHaveCount(3);
