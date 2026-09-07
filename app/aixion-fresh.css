@@ -332,6 +332,19 @@ p, li, .text-link, .button, .button-secondary { font-size:15px; line-height:1.55
   .route-motion > .section { padding-top:44px !important; padding-bottom:52px !important; }
   .route-motion > .section-tight { padding-top:34px !important; padding-bottom:40px !important; }
 }
+
+/* Image-backed editorial cards: the image is a transition layer, never a competing surface. */
+.registry-row,
+.research-row { position:relative; overflow:hidden; isolation:isolate; transition:background .45s ease, border-color .45s ease, transform .45s var(--motion-soft); }
+.registry-row::before,
+.research-row::before { content:""; position:absolute; inset:0; z-index:-2; background-image:url('/brand/aixion-systems-visual.png'); background-size:cover; background-position:center 48%; opacity:0; transform:scale(1.06); transition:opacity .55s ease, transform 1.1s var(--motion-soft), filter .55s ease; filter:saturate(.6) contrast(.9); }
+.registry-row::after,
+.research-row::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(13,13,15,.98),rgba(13,13,15,.9) 58%,rgba(13,13,15,.7)); opacity:0; transition:opacity .45s ease; }
+.registry-row > *, .research-row > * { position:relative; z-index:1; }
+.registry-row:hover, .registry-row:focus-visible, .research-row:hover, .research-row:focus-visible { transform:translateY(-2px); border-color:rgba(142,232,237,.45) !important; background:rgba(20,22,25,.88) !important; }
+.registry-row:hover::before, .registry-row:focus-visible::before, .research-row:hover::before, .research-row:focus-visible::before { opacity:.72; transform:scale(1); }
+.registry-row:hover::after, .registry-row:focus-visible::after, .research-row:hover::after, .research-row:focus-visible::after { opacity:1; }
+@media(prefers-reduced-motion:reduce){.registry-row,.research-row,.registry-row::before,.research-row::before,.registry-row::after,.research-row::after{transition:none !important}.registry-row:hover,.registry-row:focus-visible,.research-row:hover,.research-row:focus-visible{transform:none}}
 .evidence-dialog { border:0; padding:0; background:transparent; max-width:none; max-height:none; }
 .evidence-dialog::backdrop { background:rgba(0,0,0,.72); backdrop-filter:blur(8px); }
 .evidence-drawer { width:min(520px,100vw); min-height:100vh; overflow-y:auto; background:#111113; border-left:1px solid var(--fresh-line); box-shadow:-24px 0 70px rgba(0,0,0,.5); padding:28px; color:var(--fresh-text); }
