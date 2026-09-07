@@ -124,6 +124,15 @@ test("research note links resolve to detail pages", async ({ page }) => {
   await expect(page).toHaveURL(/\/research\/.+$/);
 });
 
+test("cards navigate only when a detail route exists", async ({ page }) => {
+  await page.goto("/research", { waitUntil: "networkidle" });
+  await expect(page.locator(".research-index-card-deck .flip-card-front").first()).toHaveAttribute("href", /\/research\/.+/);
+  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
+  await expect(page.locator(".system-engineering-deck .flip-card-front").first()).not.toHaveAttribute("href");
+  await expect(page.locator(".system-engineering-deck .flip-card-front")).toHaveCount(3);
+  await expect(page.locator(".system-engineering-deck a.flip-card-front")).toHaveCount(0);
+});
+
 test("Mobile navigation exposes locked routes with usable targets", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "mobile", "Mobile navigation test runs only in mobile project");
   await page.goto("/", { waitUntil: "networkidle" });
