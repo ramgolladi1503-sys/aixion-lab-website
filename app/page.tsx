@@ -3,6 +3,7 @@ import { systems, researchNotes } from "@/lib/site-data";
 import { CareerStrip, SectionHeading, StateTag } from "@/components/ui";
 import { SystemVisual } from "@/components/system-visuals";
 import { HeroCarousel } from "@/components/hero-carousel";
+import { FlipCard } from "@/components/flip-card";
 
 export default function HomePage() {
   const tradebot = systems[0];
@@ -29,7 +30,7 @@ export default function HomePage() {
       <section className="section-tight">
         <div className="shell feature-split">
           <article className="panel feature-copy">
-            <p className="eyebrow">AX-SYS-001 · FLAGSHIP · VALIDATING</p>
+            <p className="eyebrow">FLAGSHIP SYSTEM · VALIDATING</p>
             <h2>TradeBot</h2>
             <p>{tradebot.descriptor}</p>
             <p>Market data, research output and automated analysis are deliberately separated from risk and human execution authority.</p>
@@ -44,13 +45,9 @@ export default function HomePage() {
       <section className="section research-proof-section">
         <div className="shell">
           <SectionHeading eyebrow="RESEARCH / PROOF" title="The lab keeps the questions, failures and evidence visible." copy="A rejected mechanism is still useful engineering evidence. Research is not silently promoted into a system claim." />
-          <div className="research-list">
+          <div className="flip-card-deck research-card-deck">
             {researchNotes.slice(0, 3).map(note => (
-              <Link className="research-row" href={`/research/${note.slug}`} key={note.slug}>
-                <div><h3>{note.title}</h3><p>{note.question}</p></div>
-                <span className="research-domain">{note.domain}</span>
-                <StateTag state={note.state} />
-              </Link>
+              <FlipCard key={note.slug} index={researchNotes.indexOf(note)} eyebrow={note.domain} title={note.title} front={note.question} backLabel={note.state} back={note.question} state={note.state} href={`/research/${note.slug}`} />
             ))}
           </div>
           <Link className="text-link" href="/research">View research index →</Link>
@@ -65,10 +62,10 @@ export default function HomePage() {
             <p className="lede">Quality engineering taught me to distrust systems that cannot explain their state. That principle now shapes automation, data and AI work.</p>
             <Link className="text-link" href="/journey">View the engineering journey →</Link>
           </div>
-          <div className="journey-quiet-panel" aria-label="A quiet transition into the engineering journey">
-            <p className="eyebrow">PRACTICE, NOT PERFORMANCE</p>
-            <p>Tools change. The requirement for observable state does not.</p>
-            <span>Journey · principles · working history</span>
+          <div className="flip-card-deck home-journey-deck">
+            <FlipCard eyebrow="PRACTICE" title="How the way I build evolved." front="Quality engineering taught me to distrust systems that cannot explain their state." backLabel="NOT PERFORMANCE" back="Tools change. The requirement for observable state does not." href="/journey" />
+            <FlipCard eyebrow="METHOD" title="Make the state visible." front="Every system carries a current state, a failure surface and a next decision." backLabel="WORKING PRINCIPLE" back="The interface should make the engineering legible." href="/journey" index={1} />
+            <FlipCard eyebrow="JOURNEY" title="Read the working history." front="The path from quality engineering to governed applied systems." backLabel="CONTINUE" back="Follow the decisions that shaped the lab." href="/journey" index={2} />
           </div>
         </div>
       </section>

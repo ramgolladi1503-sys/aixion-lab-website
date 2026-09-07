@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { systems } from "@/lib/site-data";
-import { SectionHeading, StateTag } from "@/components/ui";
+import { SectionHeading } from "@/components/ui";
+import { FlipCard } from "@/components/flip-card";
 
 export const metadata: Metadata = {
   title: "Systems Registry",
@@ -30,25 +30,9 @@ export default function SystemsPage() {
       <section className="section-tight systems-registry-section">
         <div className="shell">
           <SectionHeading eyebrow="THE WORKING MAP" title="What is being built, and what is proven." copy="Each system carries its current state, evidence boundary and next gate. The registry is a live view of capability in progress, not a gallery of finished claims." />
-          <div className="registry">
+          <div className="flip-card-deck systems-card-deck">
             {systems.map(system => (
-              <article className="registry-row" key={system.id}>
-                <span className="system-id">{system.id}</span>
-                <div>
-                  <h3>{system.name}</h3>
-                  <p>{system.descriptor}</p>
-                </div>
-                <div className="registry-hide-mobile">
-                  <span className="registry-label">Domain</span>
-                  <p>{system.domain}</p>
-                </div>
-                <StateTag state={system.state} />
-                <div className="registry-hide-tablet">
-                  <span className="registry-label">Current gate</span>
-                  <p>{system.currentGate}</p>
-                </div>
-                <Link className="text-link" href={`/systems/${system.slug}`}>View →</Link>
-              </article>
+              <FlipCard key={system.id} index={systems.indexOf(system)} eyebrow={system.domain} title={system.name} front={`${system.descriptor} Current gate: ${system.currentGate}.`} backLabel={system.state} back={system.domain} state={system.state} href={`/systems/${system.slug}`} />
             ))}
           </div>
         </div>
