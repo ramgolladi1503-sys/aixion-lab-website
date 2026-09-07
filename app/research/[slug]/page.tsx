@@ -68,7 +68,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
   if (!note || !detail) notFound();
 
   return (
-    <>
+    <div className="research-detail-page">
       <section className="page-hero">
         <div className="shell page-hero-grid">
           <div>
@@ -114,6 +114,6 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
           <h2>{detail.next}</h2>
         </div>
       </section>
-    </>
+    </div>
   );
 }
