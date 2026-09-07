@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { AbstractScene } from "@/components/ui";
 
 export default function NotFound() {
   return (
@@ -9,7 +8,11 @@ export default function NotFound() {
         <h1>404</h1>
         <h2>Lost in the Lab?</h2>
         <p className="lede" style={{ marginInline: "auto" }}>The page you were looking for does not exist, but the system still knows where home is.</p>
-        <AbstractScene variant="blue" />
+        <div className="not-found-signal" aria-hidden="true">
+          <span>ROUTE / NOT FOUND</span>
+          <i />
+          <span>HOME / AVAILABLE</span>
+        </div>
         <Link className="button" href="/">Return home →</Link>
       </div>
     </section>

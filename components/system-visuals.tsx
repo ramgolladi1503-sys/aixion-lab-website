@@ -30,142 +30,29 @@ export function AixionSignal({ compact = false }: { compact?: boolean }) {
 export function LabFieldVisual() {
   return (
     <div className="system-visual lab-field-visual" aria-hidden="true">
-      <div className="visual-kicker"><span>AIXION / SYSTEM FIELD</span><span>PUBLIC VIEW</span></div>
-      <SignalDots />
-      <svg className="lab-field-lines" viewBox="0 0 620 360" preserveAspectRatio="none">
-        <path d="M35 265 C140 265 120 96 255 96 S380 252 585 112" />
-        <path d="M34 302 C160 315 205 206 318 206 S430 322 585 264" />
-      </svg>
-      <div className="field-node node-tradebot"><b>01</b><span>TRADEBOT</span><small>VALIDATING</small></div>
-      <div className="field-node node-core"><b>02</b><span>CONTROL CORE</span><small>BUILDING</small></div>
-      <div className="field-node node-auto"><b>03</b><span>AUTOMATION</span><small>BUILDING</small></div>
-      <div className="field-node node-analytics"><b>04</b><span>ANALYTICS</span><small>RESEARCH</small></div>
+      <img className="hero-intelligence-art" src="/brand/aixion-hero-intelligence.png" alt="" />
+      <div className="hero-art-overlay"><span>AIXION / SYSTEM FIELD</span><span>PUBLIC VIEW</span></div>
       <div className="field-caption">One lifecycle. Different systems. Evidence at every boundary.</div>
     </div>
   );
 }
 
-function TradeBotVisual() {
-  const lanes = [
-    ["FEED", "Connection / freshness"],
-    ["STATE", "Normalization / truth"],
-    ["RESEARCH", "Candidate / isolation"],
-    ["RISK", "Limits / controls"],
-    ["AUTHORITY", "Human decision"],
-  ];
+function ArtDirectedVisual({ kind, kicker, caption }: { kind: string; kicker: string; caption: string }) {
   return (
-    <div className="system-visual visual-tradebot" aria-hidden="true">
-      <div className="visual-kicker"><span>MARKET INTELLIGENCE TOPOLOGY</span><span>READ-ONLY PUBLIC MODEL</span></div>
-      <div className="tradebot-rail">
-        {lanes.map(([label, copy], index) => (
-          <div className="tradebot-stage" key={label}>
-            <span className="tradebot-index">0{index + 1}</span>
-            <strong>{label}</strong>
-            <small>{copy}</small>
-          </div>
-        ))}
-      </div>
-      <div className="tradebot-evidence-strip">
-        <span>DATA TRUTH</span><i /> <span>RESEARCH BOUNDARY</span><i /> <span>RISK GATE</span><i /> <span>HUMAN AUTHORITY</span>
-      </div>
-      <svg className="tradebot-wave" viewBox="0 0 620 88" preserveAspectRatio="none">
-        <path d="M0 51 C44 8 79 79 123 38 S200 58 242 29 S311 67 354 35 S432 58 468 23 S550 65 620 31" />
-        <path d="M0 63 C65 49 101 73 153 58 S253 61 300 47 S390 67 438 49 S531 60 620 43" />
-      </svg>
+    <div className={`system-visual art-directed-visual art-directed-${kind}`} aria-hidden="true">
+      <img src="/brand/aixion-systems-visual.png" alt="" />
+      <div className="visual-kicker"><span>{kicker}</span><span>AIXION / PUBLIC VIEW</span></div>
+      <div className="art-directed-caption">{caption}</div>
     </div>
   );
 }
 
-function ControlCoreVisual() {
-  const nodes = ["INTENT", "CONTEXT", "PLANNER", "AGENTS", "TOOLS", "EVIDENCE", "POLICY", "HUMAN"];
-  return (
-    <div className="system-visual visual-core" aria-hidden="true">
-      <div className="visual-kicker"><span>GOVERNED ORCHESTRATION</span><span>MVP MODEL</span></div>
-      <div className="core-map">
-        <div className="core-center"><span>CONTROL</span><strong>CORE</strong><small>observable authority</small></div>
-        {nodes.map((node, index) => <span className={`core-node core-node-${index + 1}`} key={node}>{node}</span>)}
-      </div>
-      <div className="trace-preview">
-        <span>10:42:14</span><b>PLANNER</b><em>tasks decomposed</em>
-        <span>10:42:22</span><b>EVIDENCE</b><em>result captured</em>
-        <span>10:42:24</span><b>POLICY</b><em>review required</em>
-      </div>
-    </div>
-  );
-}
-
-function AutomationVisual() {
-  const rows = [
-    ["01", "TRIGGER", "input received", "READY"],
-    ["02", "VALIDATE", "contract + preconditions", "PASS"],
-    ["03", "PROCESS", "bounded workflow", "RUNNING"],
-    ["04", "RETRY", "failure recovery", "POLICY"],
-    ["05", "EVIDENCE", "trace + outcome", "CAPTURE"],
-  ];
-  return (
-    <div className="system-visual visual-automation" aria-hidden="true">
-      <div className="visual-kicker"><span>WORKFLOW / RPA LANE</span><span>OBSERVABLE BY DESIGN</span></div>
-      <div className="workflow-lanes">
-        {rows.map(([id, label, copy, state]) => (
-          <div className="workflow-row" key={id}>
-            <span>{id}</span><strong>{label}</strong><em>{copy}</em><b>{state}</b>
-          </div>
-        ))}
-      </div>
-      <div className="workflow-rule">Retries, state changes and failure handling stay visible.</div>
-    </div>
-  );
-}
-
-function AnalyticsVisual() {
-  return (
-    <div className="system-visual visual-analytics" aria-hidden="true">
-      <div className="visual-kicker"><span>DECISION VIEW</span><span>DATA → INSIGHT → VALIDATE</span></div>
-      <div className="analytics-grid">
-        <div className="analytics-chart analytics-chart-main">
-          <svg viewBox="0 0 360 150" preserveAspectRatio="none">
-            <path d="M0 116 C38 101 58 110 91 75 S151 97 183 58 S247 74 281 38 S326 52 360 24" />
-            <path d="M0 127 C47 119 74 132 119 105 S187 119 222 87 S294 99 360 67" />
-          </svg>
-          <span>Operational trend / public-safe placeholder</span>
-        </div>
-        <div className="analytics-metric"><small>QUESTION</small><strong>What changed?</strong></div>
-        <div className="analytics-metric"><small>QUALITY</small><strong>Can we trust it?</strong></div>
-        <div className="analytics-metric"><small>OUTCOME</small><strong>What decision follows?</strong></div>
-      </div>
-    </div>
-  );
-}
-
-function JourneyVisual() {
-  const stages = ["QUALITY", "AUTOMATION", "SOFTWARE", "DATA", "ML", "AUTONOMY", "AIXION"];
-  return (
-    <div className="system-visual visual-journey" aria-hidden="true">
-      <div className="visual-kicker"><span>ENGINEERING EVOLUTION</span><span>STATE → EVIDENCE → AUTHORITY</span></div>
-      <div className="journey-visual-track">
-        {stages.map((stage, index) => (
-          <div className="journey-visual-stage" key={stage}><b>0{index + 1}</b><span>{stage}</span></div>
-        ))}
-      </div>
-      <div className="journey-visual-note">The tools changed. The requirement for observable state did not.</div>
-    </div>
-  );
-}
-
-function AboutVisual() {
-  return (
-    <div className="system-visual visual-about" aria-hidden="true">
-      <div className="visual-kicker"><span>RAM / ENGINEERING PROFILE</span><span>NO GENERATED PORTRAIT</span></div>
-      <div className="about-monogram">R</div>
-      <div className="about-notes">
-        <span>QUALITY → systems must explain failure</span>
-        <span>AUTOMATION → state must remain observable</span>
-        <span>AI → authority must remain explicit</span>
-      </div>
-      <div className="about-signature">Builder behind Aixion Lab</div>
-    </div>
-  );
-}
+function TradeBotVisual() { return <ArtDirectedVisual kind="tradebot" kicker="MARKET INTELLIGENCE" caption="Data truth, research boundaries and human authority remain distinct." />; }
+function ControlCoreVisual() { return <ArtDirectedVisual kind="control-core" kicker="GOVERNED ORCHESTRATION" caption="Context, tools, policy and evidence form an inspectable execution path." />; }
+function AutomationVisual() { return <ArtDirectedVisual kind="automation" kicker="WORKFLOW SYSTEMS" caption="State changes, retries and outcomes stay visible by design." />; }
+function AnalyticsVisual() { return <ArtDirectedVisual kind="analytics" kicker="DECISION INTELLIGENCE" caption="Questions become observable views before they become decisions." />; }
+function JourneyVisual() { return <ArtDirectedVisual kind="journey" kicker="ENGINEERING EVOLUTION" caption="The tools changed. The requirement for observable state did not." />; }
+function AboutVisual() { return <ArtDirectedVisual kind="about" kicker="AIXION / ENGINEERING PROFILE" caption="Quality engineering is the thread connecting systems, automation, data and AI." />; }
 
 export function SystemVisual({ kind }: { kind: VisualKind }) {
   if (kind === "home") return <LabFieldVisual />;

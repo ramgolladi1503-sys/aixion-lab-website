@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function SystemsPage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero systems-reference-hero">
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · SYSTEMS</p>

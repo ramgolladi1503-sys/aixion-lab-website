@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "./mobile.css";
-import "./interactions.css";
-import "./convergence.css";
-import "./accessibility.css";
-import "./final-polish.css";
+import "./aixion-fresh.css";
 import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
+import { MotionEnhancer } from "@/components/motion-enhancer";
+import { RouteMotion } from "@/components/route-motion";
+import { ContextBar } from "@/components/context-bar";
 
 export const metadata: Metadata = {
   title: {
@@ -28,8 +26,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" data-view="lab">
       <body>
         <SiteHeader />
-        <main>{children}</main>
-        <SiteFooter />
+        <ContextBar />
+        <main><RouteMotion>{children}</RouteMotion></main>
+        <MotionEnhancer />
       </body>
     </html>
   );

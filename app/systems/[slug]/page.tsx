@@ -157,8 +157,8 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
   if (!system || !spec) notFound();
 
   return (
-    <>
-      <section className="page-hero anchor-section" id="overview">
+    <div className="system-detail-page">
+      <section className="page-hero anchor-section system-detail-reference-hero" id="overview">
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">{system.id} · {system.domain}</p>
@@ -186,7 +186,12 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
             <p><strong>Current focus:</strong> {system.currentFocus}</p>
             <p><strong>Next gate:</strong> {system.nextGate}</p>
           </div>
-          <VisualForSystem system={system} />
+          <div className="system-detail-signal" aria-label={`${system.name} public architecture summary`}>
+            <p className="eyebrow">PUBLIC SIGNAL</p>
+            <strong>State remains visible across the system boundary.</strong>
+            <div className="system-detail-signal-line"><span>INPUT</span><i /><span>DECISION</span><i /><span>EVIDENCE</span></div>
+            <p>Private mechanics stay private; the public surface shows the controlled flow, current focus and next gate.</p>
+          </div>
         </div>
       </section>
 
@@ -227,6 +232,6 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
           <div className="detail-card"><p className="eyebrow">NEXT GATE</p><h3>{system.nextGate}</h3></div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

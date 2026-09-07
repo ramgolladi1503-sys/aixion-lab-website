@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function ResumePage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero resume-reference-hero">
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · CAREER SNAPSHOT</p>

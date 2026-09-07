@@ -22,7 +22,7 @@ export function StateTag({ state }: { state: string }) {
 
 export function SystemCard({ system }: { system: SystemRecord }) {
   return (
-    <article className={`system-card accent-${system.accent}`}>
+    <article className="system-card">
       <div className="system-card-top">
         <span className="system-id">{system.id}</span>
         <StateTag state={system.state} />
@@ -65,18 +65,6 @@ export function ArchitectureFlow({ nodes }: { nodes: string[] }) {
           {index < nodes.length - 1 ? <b aria-hidden="true">→</b> : null}
         </div>
       ))}
-    </div>
-  );
-}
-
-export function AbstractScene({ variant = "sage" }: { variant?: "sage" | "blue" | "lavender" | "peach" }) {
-  return (
-    <div className={`abstract-scene scene-${variant}`} aria-hidden="true">
-      <span className="scene-platform platform-a" />
-      <span className="scene-platform platform-b" />
-      <span className="scene-platform platform-c" />
-      <span className="scene-orb" />
-      <span className="scene-grid" />
     </div>
   );
 }

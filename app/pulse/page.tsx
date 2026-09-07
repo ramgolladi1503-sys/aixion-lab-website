@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function PulsePage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero pulse-reference-hero">
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · PULSE</p>

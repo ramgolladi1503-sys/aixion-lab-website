@@ -7,7 +7,7 @@ export function SiteFooter() {
       <div className="shell footer-grid">
         <div>
           <p className="eyebrow">AIXION LAB</p>
-          <p className="footer-statement">Engineering applied intelligence. Building systems that can explain their state.</p>
+          <p className="footer-statement">Applied intelligence, engineered with evidence.</p>
         </div>
         <div className="footer-links">
           <Link href="/systems">Systems</Link>
@@ -16,9 +16,9 @@ export function SiteFooter() {
           <Link href="/about">About</Link>
         </div>
         <div className="footer-links">
-          <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <Link href="/pulse">Pulse</Link>
           <Link href="/resume">Résumé</Link>
-          <Link href="/about#contact">Contact</Link>
+          <Link href="/contact">Contact</Link>
         </div>
       </div>
       <div className="shell build-line">

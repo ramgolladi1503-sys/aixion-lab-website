@@ -1,55 +1,28 @@
 import Link from "next/link";
 import { systems, researchNotes } from "@/lib/site-data";
-import { CareerStrip, ProgressLane, SectionHeading, StateTag, SystemCard } from "@/components/ui";
-import { AixionSignal, LabFieldVisual, SystemVisual } from "@/components/system-visuals";
+import { CareerStrip, SectionHeading, StateTag } from "@/components/ui";
+import { SystemVisual } from "@/components/system-visuals";
+import { HeroCarousel } from "@/components/hero-carousel";
 
 export default function HomePage() {
   const tradebot = systems[0];
-  const controlCore = systems[1];
 
   return (
     <>
       <section className="hero">
-        <div className="shell hero-grid">
-          <div className="hero-copy">
-            <p className="eyebrow">AIXION LAB · INDEPENDENT APPLIED ENGINEERING</p>
-            <h1>Applied intelligence, automation and decision systems.</h1>
-            <p className="lede">A living engineering lab where research becomes systems through explicit validation, evidence and authority boundaries.</p>
-            <div className="hero-attribution">
-              <strong>Built by Ram</strong>
-              <span>Quality Engineering · Automation · Software · Data · Applied AI</span>
-            </div>
-            <div className="button-row hero-actions-visible">
-              <Link className="button" href="/systems">Explore systems →</Link>
-              <Link className="button-secondary" href="/pulse">View Lab Pulse</Link>
-            </div>
-            <AixionSignal compact />
-          </div>
-          <LabFieldVisual />
-        </div>
-
-        <div className="shell panel pulse-preview">
-          <div className="pulse-head">
-            <div>
-              <p className="eyebrow">LAB PULSE</p>
-              <h2>Current system state, evidence and next gates.</h2>
-            </div>
-            <p>Curated public-safe state · no arbitrary completion percentages</p>
-          </div>
-          <ProgressLane label="TradeBot" stage="VALIDATING" />
-          <ProgressLane label="Control Core" stage="BUILDING" />
-          <ProgressLane label="Automation" stage="BUILDING" />
-          <ProgressLane label="Analytics Lab" stage="RESEARCH" />
-          <Link className="text-link" href="/pulse">Open operational Pulse →</Link>
-        </div>
+        <div className="shell"><HeroCarousel /></div>
       </section>
 
-      <section className="section">
-        <div className="shell">
-          <SectionHeading eyebrow="SYSTEMS REGISTRY" title="Four systems. Different problems. One engineering discipline." copy="Each system exposes maturity, current gate, public-safe evidence and the next decision point." />
-          <div className="system-grid">
-            {systems.map(system => <SystemCard key={system.id} system={system} />)}
+      <section className="section home-intro">
+        <div className="shell home-intro-grid">
+          <div className="home-intro-copy">
+            <p className="eyebrow">WHO WE ARE</p>
+            <h2>Engineering that makes its state visible.</h2>
+            <p className="lede">Aixion is an independent applied engineering lab where research becomes inspectable systems. I work across quality engineering, automation, software, data and applied AI with one discipline: make the decision, evidence and authority boundary explicit.</p>
+            <p>That means the work is not presented as a collection of demos. Each system has a purpose, a current gate, a failure surface and a next decision.</p>
+            <Link className="text-link" href="/about">Read the lab story →</Link>
           </div>
+          <SystemVisual kind="analytics" />
         </div>
       </section>
 
@@ -65,21 +38,6 @@ export default function HomePage() {
             <Link className="text-link" href="/systems/tradebot">Explore the system →</Link>
           </article>
           <SystemVisual kind="tradebot" />
-        </div>
-      </section>
-
-      <section className="section-tight">
-        <div className="shell feature-split">
-          <SystemVisual kind="control-core" />
-          <article className="panel feature-copy">
-            <p className="eyebrow">AX-SYS-002 · SECOND FLAGSHIP · BUILDING</p>
-            <h2>Aixion Control Core</h2>
-            <p>{controlCore.descriptor}</p>
-            <p>The MVP focuses on inspectable orchestration: intent, context, tools, policy, evidence and human/system authority are explicit stages.</p>
-            <StateTag state={controlCore.state} />
-            <CareerStrip skills={controlCore.competencies} />
-            <Link className="text-link" href="/systems/control-core">Explore Control Core →</Link>
-          </article>
         </div>
       </section>
 
@@ -107,7 +65,11 @@ export default function HomePage() {
             <p className="lede">Quality engineering taught me to distrust systems that cannot explain their state. That principle now shapes automation, data and AI work.</p>
             <Link className="text-link" href="/journey">View the engineering journey →</Link>
           </div>
-          <SystemVisual kind="journey" />
+          <div className="journey-quiet-panel" aria-label="A quiet transition into the engineering journey">
+            <p className="eyebrow">PRACTICE, NOT PERFORMANCE</p>
+            <p>Tools change. The requirement for observable state does not.</p>
+            <span>Journey · principles · working history</span>
+          </div>
         </div>
       </section>
 
@@ -124,7 +86,7 @@ export default function HomePage() {
             <p>Career view translates the same systems into competencies without changing the underlying evidence.</p>
             <div className="button-row">
               <Link className="button" href="/resume">Career snapshot →</Link>
-              <Link className="button-secondary" href="/about#contact">Contact</Link>
+              <Link className="button-secondary" href="/contact">Contact</Link>
             </div>
           </div>
         </div>

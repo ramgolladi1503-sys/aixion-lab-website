@@ -17,7 +17,7 @@ export function ResearchIndex() {
 
   return (
     <>
-      <div className="tabs" aria-label="Research status filters">
+      <div className="tabs research-filters" aria-label="Research status filters">
         {filters.map(item => (
           <button
             className={`tab ${filter === item ? "active" : ""}`}

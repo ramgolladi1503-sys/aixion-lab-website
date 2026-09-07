@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function JourneyPage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero journey-reference-hero">
         <div className="shell page-hero-grid">
           <div>
             <p className="eyebrow">AIXION LAB · JOURNEY</p>
