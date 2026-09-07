@@ -15,7 +15,7 @@ function SignalDots() {
 export function AixionSignal({ compact = false }: { compact?: boolean }) {
   const stages = ["RESEARCH", "BUILD", "VALIDATE", "EVIDENCE", "OPERATE", "LEARN"];
   return (
-    <div className={compact ? "aixion-signal aixion-signal--compact" : "aixion-signal"} aria-label="Aixion engineering lifecycle">
+    <div className={compact ? "aixion-signal aixion-signal--compact" : "aixion-signal"} role="region" tabIndex={0} aria-label="Aixion engineering lifecycle">
       {stages.map((stage, index) => (
         <div className="signal-stage" key={stage}>
           <span className="signal-node" aria-hidden="true" />
