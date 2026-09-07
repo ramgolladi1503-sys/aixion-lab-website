@@ -5,6 +5,7 @@ import { systems } from "@/lib/site-data";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { CareerStrip, SectionHeading, StateTag } from "@/components/ui";
 import { AixionSignal, VisualForSystem } from "@/components/system-visuals";
+import { FlipCard } from "@/components/flip-card";
 
 const detail: Record<string, {
   problem: string;
@@ -161,7 +162,7 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
       <section className="page-hero anchor-section system-detail-reference-hero" id="overview">
         <div className="shell page-hero-grid">
           <div>
-            <p className="eyebrow">{system.id} · {system.domain}</p>
+            <p className="eyebrow">{system.domain} · {system.state}</p>
             <h1>{system.name}</h1>
             <p className="lede">{system.descriptor}</p>
             <div className="button-row"><StateTag state={system.state} /><Link className="button-secondary" href="#evidence">View evidence ↓</Link></div>
@@ -198,14 +199,14 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
       <section className="section anchor-section" id="engineering">
         <div className="shell">
           <SectionHeading eyebrow="IMPACT FRAME" title="Problem → challenge → build → outcome" copy="Engineering pages lead with the problem and proof, not a technology-logo wall." />
-          <div className="detail-grid">
-            <div className="detail-card"><p className="eyebrow">PROBLEM</p><h3>What makes this difficult?</h3><p>{spec.problem}</p></div>
-            <div className="detail-card"><p className="eyebrow">ENGINEERING CHALLENGE</p><h3>What must remain controlled?</h3><p>{spec.challenge}</p></div>
-            <div className="detail-card"><p className="eyebrow">WHAT I BUILT</p><h3>The system response</h3><p>{spec.built}</p></div>
-            <div className="detail-card"><p className="eyebrow">OUTCOME</p><h3>What exists now</h3><p>{spec.outcome}</p></div>
+          <div className="flip-card-deck system-impact-deck">
+            <FlipCard index={0} eyebrow="PROBLEM" title="What makes this difficult?" front={spec.problem} backLabel="ENGINEERING CHALLENGE" back={spec.challenge} />
+            <FlipCard index={1} eyebrow="WHAT I BUILT" title="The system response" front={spec.built} backLabel="OUTCOME" back={spec.outcome} />
           </div>
-          <div className="system-grid section-inline">
-            {spec.engineering.map(item => <article className="detail-card" key={item.title}><h3>{item.title}</h3><p>{item.body}</p></article>)}
+          <div className="flip-card-deck system-engineering-deck section-inline">
+            {spec.engineering.map((item, index) => (
+              <FlipCard key={item.title} index={index} eyebrow="ENGINEERING" title={item.title} front={item.body} backLabel="PUBLIC SIGNAL" back="The boundary remains explicit, observable and evidence-led." />
+            ))}
           </div>
         </div>
       </section>

@@ -636,9 +636,13 @@ main > .route-motion > section:nth-of-type(6) { animation-delay:400ms; }
 .research-index-card-deck,.pulse-card-deck { grid-template-columns:repeat(4,minmax(0,1fr)); }
 .research-index-card-deck .flip-card,.pulse-card-deck .flip-card { min-height:300px; }
 .research-index-card-deck .flip-card-face,.pulse-card-deck .flip-card-face { min-height:300px; }
+.system-impact-deck { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.system-engineering-deck { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.system-impact-deck .flip-card,.system-impact-deck .flip-card-face,.system-engineering-deck .flip-card,.system-engineering-deck .flip-card-face { min-height:260px; }
 @media(max-width:980px){.systems-card-deck{grid-template-columns:repeat(2,minmax(0,1fr))}.flip-card-deck{gap:10px}}
 @media(max-width:980px){.research-index-card-deck,.pulse-card-deck{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.flip-card-deck,.systems-card-deck,.home-journey-deck,.research-index-card-deck,.pulse-card-deck{grid-template-columns:1fr}.flip-card,.flip-card-inner,.flip-card-face,.home-journey-deck .flip-card,.home-journey-deck .flip-card-face,.research-index-card-deck .flip-card,.pulse-card-deck .flip-card,.research-index-card-deck .flip-card-face,.pulse-card-deck .flip-card-face{min-height:220px}.flip-card-face{padding:22px}.flip-card-detail{padding-inline:22px}.flip-card.is-expanded .flip-card-detail{padding-inline:22px}}
+@media(max-width:980px){.system-engineering-deck{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.flip-card-deck,.systems-card-deck,.home-journey-deck,.research-index-card-deck,.pulse-card-deck,.system-impact-deck,.system-engineering-deck{grid-template-columns:1fr}.flip-card,.flip-card-inner,.flip-card-face,.home-journey-deck .flip-card,.home-journey-deck .flip-card-face,.research-index-card-deck .flip-card,.pulse-card-deck .flip-card,.research-index-card-deck .flip-card-face,.pulse-card-deck .flip-card-face,.system-impact-deck .flip-card,.system-impact-deck .flip-card-face,.system-engineering-deck .flip-card,.system-engineering-deck .flip-card-face{min-height:220px}.flip-card-face{padding:22px}.flip-card-detail{padding-inline:22px}.flip-card.is-expanded .flip-card-detail{padding-inline:22px}}
 @media(prefers-reduced-motion:reduce){.flip-card-inner,.flip-card-detail,.flip-card-face::before{transition:none !important;animation:none !important}.flip-card.is-flipped .flip-card-inner{transform:none}.flip-card.is-expanded .flip-card-detail{max-height:180px}}
 
 @keyframes card-drift { from { background-position:46% 44%; } to { background-position:56% 58%; } }
