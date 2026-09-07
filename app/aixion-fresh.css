@@ -558,6 +558,31 @@ main > .route-motion > section:nth-of-type(6) { animation-delay:400ms; }
 .about-reference-hero .page-hero-grid > div:first-child { background:rgba(10,10,12,.86); }
 @media(max-width:600px){.journey-reference-hero .art-directed-visual{min-height:280px}.resume-reference-hero .meta-board{justify-self:stretch}}
 
+/* Narrative pages: editorial surfaces with deliberate emphasis, not generic panels. */
+.about-reference-hero .page-hero-grid > div:first-child { padding:clamp(28px,4vw,56px) 0 !important; border:0; border-radius:0; background:transparent; }
+.about-grid { gap:0; border-top:1px solid var(--fresh-line); }
+.about-grid > .panel { border-width:0 1px 1px 0 !important; background:transparent !important; }
+.about-grid > .panel:nth-child(2) { border-right:0 !important; }
+.about-grid .principle { background:transparent !important; border-width:0 0 1px !important; padding:18px 0; }
+.journey-timeline { border-top:1px solid var(--fresh-line); }
+.journey-step { min-height:112px; border-bottom:1px solid var(--fresh-line); padding:28px 0; }
+.journey-step .number { color:var(--fresh-cyan); font-size:11px; }
+.journey-step h3 { font-size:clamp(23px,2.1vw,31px); }
+.journey-step p { max-width:620px; color:#bdbdc2; font-size:15px; line-height:1.55; }
+.journey-quiet-panel { border-color:var(--fresh-line) !important; background:rgba(13,13,15,.44) !important; }
+.resume-reference-hero + .section-tight .panel { background:transparent !important; border:0 !important; }
+.resume-reference-hero + .section-tight .principle { background:transparent !important; border-width:0 0 1px !important; padding:18px 0; }
+.resume-reference-hero ~ .section .detail-grid { gap:0; border-top:1px solid var(--fresh-line); }
+.resume-reference-hero ~ .section .detail-card { border-width:0 1px 1px 0 !important; background:transparent !important; }
+.resume-reference-hero ~ .section .detail-card:nth-child(2n) { border-right:0 !important; }
+.contact-reference-hero + .section-tight .detail-grid { gap:0; border-top:1px solid var(--fresh-line); }
+.contact-reference-hero + .section-tight .detail-card { border-width:0 1px 1px 0 !important; background:transparent !important; }
+.contact-reference-hero + .section-tight .detail-card:nth-child(2n) { border-right:0 !important; }
+.about-reference-hero ~ .section .system-grid .detail-card { background:#0b0b0d !important; }
+.about-reference-hero ~ .section-tight#contact .contact-copy { background:#0b0b0d !important; }
+.resume-reference-hero ~ .section .detail-card { background:#0b0b0d !important; }
+@media(max-width:600px){.about-grid{display:block}.about-grid > .panel{border-right:0 !important}.journey-step{min-height:0;padding:24px 0}.resume-reference-hero ~ .section .detail-grid,.contact-reference-hero + .section-tight .detail-grid{display:block}.resume-reference-hero ~ .section .detail-card,.contact-reference-hero + .section-tight .detail-card{border-right:0 !important;padding:24px 0}}
+
 /* Research page polish: controlled hierarchy, readable index controls, and a continuous lifecycle. */
 .research-reference-hero {
   background-image: linear-gradient(90deg,rgba(5,5,8,.985) 0%,rgba(5,5,8,.9) 52%,rgba(5,5,8,.66) 100%),url('/brand/aixion-hero-intelligence.png') !important;
