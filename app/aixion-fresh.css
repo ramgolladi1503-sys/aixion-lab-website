@@ -333,6 +333,19 @@ p, li, .text-link, .button, .button-secondary { font-size:15px; line-height:1.55
   .route-motion > .section-tight { padding-top:34px !important; padding-bottom:40px !important; }
 }
 
+/* Homepage hero: one continuous cinematic field instead of a text block beside a card. */
+.hero .hero-carousel { position:relative; min-height:560px; }
+.hero .hero-carousel .hero-grid { position:relative; min-height:560px; display:block; }
+.hero .hero-carousel .hero-grid::after { content:""; position:absolute; inset:0; z-index:0; pointer-events:none; background:linear-gradient(90deg,rgba(5,5,5,.98) 0%,rgba(5,5,5,.88) 42%,rgba(5,5,5,.3) 76%,rgba(5,5,5,.66) 100%); }
+.hero .hero-carousel-visual { position:absolute; inset:0 0 0 38%; z-index:0; overflow:visible; }
+.hero .hero-carousel-visual .system-visual { height:100%; min-height:560px; border:0 !important; background:transparent !important; }
+.hero .hero-carousel-visual .system-visual::after { background:linear-gradient(180deg,rgba(7,7,7,.04),rgba(7,7,7,.6) 92%); }
+.hero .hero-carousel .hero-copy { position:relative; z-index:2; width:min(760px,64%); padding-top:108px; }
+.hero .hero-carousel .hero-copy h1 { max-width:760px; }
+.hero .hero-carousel .hero-carousel-controls { margin-top:36px; }
+@media(max-width:980px){.hero .hero-carousel{min-height:0}.hero .hero-carousel .hero-grid{min-height:0;display:grid}.hero .hero-carousel .hero-grid::after{display:none}.hero .hero-carousel-visual{position:relative;inset:auto}.hero .hero-carousel-visual .system-visual{min-height:360px;height:360px}.hero .hero-carousel .hero-copy{width:auto;padding-top:0}}
+@media(max-width:600px){.hero .hero-carousel-visual .system-visual{min-height:300px;height:300px}.hero .hero-carousel .hero-copy{padding-top:0}.hero .hero-carousel-visual{padding-bottom:30px}.hero .hero-carousel-visual .system-visual .visual-caption{bottom:12px}}
+
 /* Image-backed editorial cards: the image is a transition layer, never a competing surface. */
 .registry-row,
 .research-row { position:relative; overflow:hidden; isolation:isolate; transition:background .45s ease, border-color .45s ease, transform .45s var(--motion-soft); }
@@ -345,6 +358,7 @@ p, li, .text-link, .button, .button-secondary { font-size:15px; line-height:1.55
 .registry-row:hover::before, .registry-row:focus-visible::before, .research-row:hover::before, .research-row:focus-visible::before { opacity:.72; transform:scale(1); }
 .registry-row:hover::after, .registry-row:focus-visible::after, .research-row:hover::after, .research-row:focus-visible::after { opacity:1; }
 @media(prefers-reduced-motion:reduce){.registry-row,.research-row,.registry-row::before,.research-row::before,.registry-row::after,.research-row::after{transition:none !important}.registry-row:hover,.registry-row:focus-visible,.research-row:hover,.research-row:focus-visible{transform:none}}
+
 .evidence-dialog { border:0; padding:0; background:transparent; max-width:none; max-height:none; }
 .evidence-dialog::backdrop { background:rgba(0,0,0,.72); backdrop-filter:blur(8px); }
 .evidence-drawer { width:min(520px,100vw); min-height:100vh; overflow-y:auto; background:#111113; border-left:1px solid var(--fresh-line); box-shadow:-24px 0 70px rgba(0,0,0,.5); padding:28px; color:var(--fresh-text); }
