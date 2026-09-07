@@ -12,6 +12,7 @@ export function MotionEnhancer() {
     document.documentElement.classList.add("motion-ready");
     const sections = Array.from(document.querySelectorAll<HTMLElement>("main > section, main .section"));
     const visualTargets = Array.from(document.querySelectorAll<HTMLElement>(".art-directed-visual, .lab-field-visual, .journey-quiet-panel, .system-detail-signal"));
+    const cardTargets = Array.from(document.querySelectorAll<HTMLElement>(".flip-card"));
     // Mark sections as reveal targets; only the initial viewport is settled immediately below.
     // Later sections remain observable so scroll-linked entrance motion is real rather than decorative.
     sections.forEach(section => section.classList.add("reveal-on-scroll"));
@@ -20,12 +21,18 @@ export function MotionEnhancer() {
     }), { threshold: 0.08, rootMargin: MOTION_CONFIG.reference.viewportRootMargin });
     sections.forEach(section => observer.observe(section));
     visualTargets.forEach(visual => observer.observe(visual));
+    cardTargets.forEach(card => observer.observe(card));
     const revealVisible = () => {
       sections.forEach(section => {
         if (section.getBoundingClientRect().top < window.innerHeight * 1.08) section.classList.add("is-revealed");
       });
       visualTargets.forEach(visual => {
         if (visual.getBoundingClientRect().top < window.innerHeight * 1.08) visual.classList.add("is-revealed");
+      });
+      cardTargets.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const distanceFromCenter = (rect.top + rect.height / 2 - window.innerHeight / 2) / Math.max(window.innerHeight, 1);
+        card.style.setProperty("--card-shift", `${Math.max(-12, Math.min(12, distanceFromCenter * -18))}px`);
       });
     };
     const onScroll = () => {

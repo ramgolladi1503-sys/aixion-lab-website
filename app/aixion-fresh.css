@@ -611,9 +611,9 @@ main > .route-motion > section:nth-of-type(6) { animation-delay:400ms; }
 .flip-card-inner { position:relative; min-height:250px; height:100%; transform-style:preserve-3d; transition:transform 900ms var(--motion-soft); }
 .flip-card.is-flipped .flip-card-inner { transform:rotateY(180deg); }
 .flip-card-face { position:absolute; inset:0; display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start; width:100%; min-height:250px; padding:24px; border:1px solid var(--fresh-line) !important; border-radius:0 !important; color:var(--fresh-text); text-align:left; overflow:hidden; backface-visibility:hidden; cursor:pointer; background:linear-gradient(135deg,rgba(17,20,24,.94),rgba(7,8,10,.82)) !important; }
-.flip-card-face::before { content:""; position:absolute; inset:0; z-index:-1; background:url('/brand/aixion-systems-visual.png') center/cover; opacity:.38; transform:scale(1.08); transition:opacity 900ms ease,transform 1400ms var(--motion-soft); animation:card-drift 18s ease-in-out infinite alternate; }
+.flip-card-face::before { content:""; position:absolute; inset:-14px 0; z-index:-1; background:url('/brand/aixion-systems-visual.png') center/cover; opacity:.38; transform:translate3d(0,var(--card-shift,0px),0) scale(1.08); transition:opacity 900ms ease,transform 1400ms var(--motion-soft); animation:card-drift 18s ease-in-out infinite alternate; }
 .flip-card-face::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(135deg,rgba(4,5,7,.36),rgba(4,5,7,.82) 78%); }
-.flip-card-face:hover::before,.flip-card-face:focus-visible::before { opacity:.5; transform:scale(1); }
+.flip-card-face:hover::before,.flip-card-face:focus-visible::before { opacity:.5; transform:translate3d(0,0,0) scale(1); }
 .flip-card-back { transform:rotateY(180deg); background:linear-gradient(135deg,rgba(19,19,25,.96),rgba(9,10,13,.9)) !important; }
 .flip-card-back p { position:relative; z-index:1; margin:auto 0; font:clamp(18px,1.7vw,25px) var(--fresh-serif); line-height:1.2; color:var(--fresh-text) !important; }
 .flip-card-kicker,.flip-card-hint,.flip-card-state { position:relative; z-index:1; font:10px var(--fresh-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--fresh-muted); }
@@ -643,7 +643,7 @@ main > .route-motion > section:nth-of-type(6) { animation-delay:400ms; }
 @media(max-width:980px){.research-index-card-deck,.pulse-card-deck{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:980px){.system-engineering-deck{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.flip-card-deck,.systems-card-deck,.home-journey-deck,.research-index-card-deck,.pulse-card-deck,.system-impact-deck,.system-engineering-deck{grid-template-columns:1fr}.flip-card,.flip-card-inner,.flip-card-face,.home-journey-deck .flip-card,.home-journey-deck .flip-card-face,.research-index-card-deck .flip-card,.pulse-card-deck .flip-card,.research-index-card-deck .flip-card-face,.pulse-card-deck .flip-card-face,.system-impact-deck .flip-card,.system-impact-deck .flip-card-face,.system-engineering-deck .flip-card,.system-engineering-deck .flip-card-face{min-height:220px}.flip-card-face{padding:22px}.flip-card-detail{padding-inline:22px}.flip-card.is-expanded .flip-card-detail{padding-inline:22px}}
-@media(prefers-reduced-motion:reduce){.flip-card-inner,.flip-card-detail,.flip-card-face::before{transition:none !important;animation:none !important}.flip-card.is-flipped .flip-card-inner{transform:none}.flip-card.is-expanded .flip-card-detail{max-height:180px}}
+@media(prefers-reduced-motion:reduce){.flip-card-inner,.flip-card-detail,.flip-card-face::before{transition:none !important;animation:none !important}.flip-card-face::before{transform:none !important}.flip-card.is-flipped .flip-card-inner{transform:none}.flip-card.is-expanded .flip-card-detail{max-height:180px}}
 
 @keyframes card-drift { from { background-position:46% 44%; } to { background-position:56% 58%; } }
 
