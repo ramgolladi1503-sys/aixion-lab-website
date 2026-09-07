@@ -28,8 +28,7 @@ export default function JourneyPage() {
           <SectionHeading eyebrow="TIMELINE" title="Seven stages. One increasingly strict engineering philosophy." copy="This is not a second résumé. Each stage captures a change in how I think about reliability, evidence and authority." />
           <div className="journey-timeline">
             {journey.map(([number, title, copy]) => (
-              <article className="journey-step" key={number}>
-                <span className="number">{number}</span>
+              <article className="journey-step reveal-on-scroll" key={number}>
                 <h3>{title}</h3>
                 <p>{copy}</p>
               </article>

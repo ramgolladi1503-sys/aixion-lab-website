@@ -43,7 +43,7 @@ export default function PulsePage() {
           <SectionHeading eyebrow="NOW" title="Current cycle" copy="These cards answer four things quickly: state, current focus, latest milestone and next gate." />
           <div className="pulse-now-grid">
             {labState.systems.map(system => (
-              <article className="pulse-system-card" key={system.id}>
+              <article className="pulse-system-card reveal-on-scroll" key={system.id}>
                 <div className="system-card-top"><span className="system-id">{system.id}</span><StateTag state={system.state} /></div>
                 <h3>{system.name}</h3>
                 <dl>
