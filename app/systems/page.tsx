@@ -27,9 +27,9 @@ export default function SystemsPage() {
         </div>
       </section>
 
-      <section className="section-tight">
+      <section className="section-tight systems-registry-section">
         <div className="shell">
-          <SectionHeading eyebrow="REGISTRY" title="One place to understand what exists and where it stands." copy="Each entry carries a system ID, maturity, current gate and public-safe focus so visitors do not have to infer project status from marketing copy." />
+          <SectionHeading eyebrow="THE WORKING MAP" title="What is being built, and what is proven." copy="Each system carries its current state, evidence boundary and next gate. The registry is a live view of capability in progress, not a gallery of finished claims." />
           <div className="registry">
             {systems.map(system => (
               <article className="registry-row" key={system.id}>
