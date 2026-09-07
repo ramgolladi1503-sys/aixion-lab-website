@@ -27,23 +27,24 @@ export function FlipCard({ eyebrow, title, front, backLabel, back, href, state, 
   }, [flipped, index]);
 
   return (
-    <article className={`flip-card reveal-on-scroll ${flipped ? "is-flipped" : ""} ${expanded ? "is-expanded" : ""}`}>
+    <article className={`flip-card reveal-on-scroll ${flipped ? "is-flipped" : ""} ${href ? "has-route" : "is-passive"}`}>
       <div className="flip-card-inner">
-        <button className="flip-card-face flip-card-front" type="button" onClick={() => setExpanded(value => !value)} aria-expanded={expanded}>
+        {href ? <Link className="flip-card-face flip-card-front" href={href} aria-label={`Open ${title}`}>
           <span className="flip-card-kicker">{eyebrow}</span>
           <h3>{title}</h3>
-          <span className="flip-card-hint">{expanded ? "Close detail ↑" : "Open detail ↗"}</span>
+          <span className="flip-card-hint">View page ↗</span>
           {state ? <span className="flip-card-state">{state}</span> : null}
-        </button>
-        <button className="flip-card-face flip-card-back" type="button" onClick={() => setFlipped(false)}>
+        </Link> : <div className="flip-card-face flip-card-front">
+          <span className="flip-card-kicker">{eyebrow}</span>
+          <h3>{title}</h3>
+          <span className="flip-card-hint">Auto reveal</span>
+          {state ? <span className="flip-card-state">{state}</span> : null}
+        </div>}
+        <div className="flip-card-face flip-card-back">
           <span className="flip-card-kicker">{backLabel}</span>
           <p>{back}</p>
-          <span className="flip-card-hint">Return to overview ↺</span>
-        </button>
-      </div>
-      {href ? <Link className="flip-card-route-link" href={href}>Explore →</Link> : null}
-      <div className="flip-card-detail" aria-hidden={!expanded}>
-        <p>{front}</p>
+          <span className="flip-card-hint">Auto return</span>
+        </div>
       </div>
     </article>
   );
