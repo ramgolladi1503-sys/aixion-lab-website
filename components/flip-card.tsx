@@ -19,7 +19,10 @@ export function FlipCard({ eyebrow, title, front, backLabel, back, href, state, 
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setFlipped(value => !value), 10000 + index * 850);
+    // Let the concise front state breathe for ~10s, then hold the explanatory
+    // state longer so the interaction is readable rather than a frantic loop.
+    const delay = (flipped ? 20000 : 10000) + index * 850;
+    const timer = window.setTimeout(() => setFlipped(value => !value), delay);
     return () => window.clearTimeout(timer);
   }, [flipped, index]);
 
