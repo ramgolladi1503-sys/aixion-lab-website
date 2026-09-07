@@ -11,6 +11,7 @@ export function MotionEnhancer() {
   useEffect(() => {
     document.documentElement.classList.add("motion-ready");
     const sections = Array.from(document.querySelectorAll<HTMLElement>("main > section, main .section"));
+    const visualTargets = Array.from(document.querySelectorAll<HTMLElement>(".art-directed-visual, .lab-field-visual, .journey-quiet-panel, .system-detail-signal"));
     // Mark sections as reveal targets; only the initial viewport is settled immediately below.
     // Later sections remain observable so scroll-linked entrance motion is real rather than decorative.
     sections.forEach(section => section.classList.add("reveal-on-scroll"));
@@ -18,9 +19,13 @@ export function MotionEnhancer() {
       if (entry.isIntersecting) entry.target.classList.add("is-revealed");
     }), { threshold: 0.08, rootMargin: MOTION_CONFIG.reference.viewportRootMargin });
     sections.forEach(section => observer.observe(section));
+    visualTargets.forEach(visual => observer.observe(visual));
     const revealVisible = () => {
       sections.forEach(section => {
         if (section.getBoundingClientRect().top < window.innerHeight * 1.08) section.classList.add("is-revealed");
+      });
+      visualTargets.forEach(visual => {
+        if (visual.getBoundingClientRect().top < window.innerHeight * 1.08) visual.classList.add("is-revealed");
       });
     };
     const onScroll = () => {
