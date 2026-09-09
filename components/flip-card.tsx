@@ -16,20 +16,14 @@ type FlipCardProps = {
 
 export function FlipCard({ eyebrow, title, front, backLabel, back, href, state, index = 0 }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false);
-  const [paused, setPaused] = useState(false);
-  const [expanded, setExpanded] = useState(false);
-
-  useEffect(() => {
-    if (paused) return;
-    // Let the concise front state breathe for ~10s, then hold the explanatory
-    // state longer so the interaction is readable rather than a frantic loop.
-    const delay = (flipped ? 20000 : 10000) + index * 850;
-    const timer = window.setTimeout(() => setFlipped(value => !value), delay);
-    return () => window.clearTimeout(timer);
-  }, [flipped, index, paused]);
 
   return (
-    <article className={`flip-card reveal-on-scroll ${flipped ? "is-flipped" : ""} ${href ? "has-route" : "is-passive"}`} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
+    <article
+      className={`flip-card reveal-on-scroll ${flipped ? "is-flipped" : ""} ${href ? "has-route" : "is-passive"}`}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+      onClick={() => setFlipped(prev => !prev)}
+    >
       <div className="flip-card-inner">
         {href ? <Link className="flip-card-face flip-card-front" href={href} aria-label={`Open ${title}`}>
           <span className="flip-card-kicker">{eyebrow}</span>

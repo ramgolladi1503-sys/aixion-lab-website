@@ -42,15 +42,25 @@ export function ProgressLane({ label, stage }: { label: string; stage: "RESEARCH
   const stages = ["RESEARCH", "BUILDING", "VALIDATING", "OPERATING"] as const;
   const activeIndex = stages.indexOf(stage);
   return (
-    <div className="progress-lane">
-      <strong>{label}</strong>
-      <div className="lane-track">
-        {stages.map((item, index) => (
-          <div className={`lane-stage ${index <= activeIndex ? "reached" : ""} ${index === activeIndex ? "current" : ""}`} key={item}>
-            <i aria-hidden="true" />
-            <span>{item}</span>
-          </div>
-        ))}
+    <div className="progress-lane-modern">
+      <div className="progress-lane-label">
+        <strong>{label}</strong>
+        <span className={`lane-current-tag state-${stage.toLowerCase()}`}>{stage}</span>
+      </div>
+      <div className="lane-capsule-track" role="group" aria-label={`${label} maturity progress`}>
+        {stages.map((item, index) => {
+          const isReached = index <= activeIndex;
+          const isCurrent = index === activeIndex;
+          return (
+            <div
+              className={`lane-segment ${isReached ? "is-reached" : ""} ${isCurrent ? "is-current" : ""}`}
+              key={item}
+            >
+              <div className="lane-segment-bar" />
+              <span className="lane-segment-text">{item}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

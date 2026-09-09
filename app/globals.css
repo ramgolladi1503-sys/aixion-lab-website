@@ -39,7 +39,7 @@ body {
 a { color: inherit; text-decoration: none; }
 button, input, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
-::selection { background: rgba(142,232,237,.35); color: #050505; }
+::selection { background: rgba(169, 94, 255, 0.35); color: #ffffff; }
 
 .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
 .section { padding: 92px 0; }

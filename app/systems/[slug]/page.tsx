@@ -137,9 +137,27 @@ function FlagshipSpecific({ slug }: { slug: string }) {
       </section>
       <section className="section-tight anchor-section" id="capabilities">
         <div className="shell">
-          <SectionHeading eyebrow="CAPABILITIES" title="The control plane is built from explicit capabilities." />
-          <div className="system-grid">
-            {["Intent routing", "Context assembly", "Planning", "Agent coordination", "Tool execution", "Policy boundaries", "Evidence capture", "Human approval"].map(item => <div className="detail-card" key={item}><h3>{item}</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></div>)}
+          <SectionHeading eyebrow="ORCHESTRATION CAPABILITIES" title="The control plane is built from explicit capabilities." copy="Each capability operates as an inspectable stage with deterministic boundaries rather than an opaque model side effect." />
+          <div className="capabilities-matrix-grid">
+            {[
+              { id: "01", name: "Intent routing", desc: "Decomposes and validates raw user directives before task execution.", badge: "STAGE BOUNDARY" },
+              { id: "02", name: "Context assembly", desc: "Aggregates deterministic state snapshots without prompt pollution.", badge: "MEMORY PROOF" },
+              { id: "03", name: "Planning", desc: "Generates structured acyclic execution graphs with explicit gates.", badge: "GOVERNED" },
+              { id: "04", name: "Agent coordination", desc: "Synchronizes subagent swarms under unified authority tokens.", badge: "ISOLATED" },
+              { id: "05", name: "Tool execution", desc: "Sandboxes external system actions behind strict policy schemas.", badge: "PERMISSIVE GATE" },
+              { id: "06", name: "Policy boundaries", desc: "Hard kill-switches and exposure constraints prevent runaway state.", badge: "ENFORCED" },
+              { id: "07", name: "Evidence capture", desc: "Cryptographically logs every tool invocation and intermediate artifact.", badge: "IMMUTABLE TRACE" },
+              { id: "08", name: "Human approval", desc: "Pauses autonomous execution pending cryptographic supervisor signoff.", badge: "AUTHORITY LOCK" },
+            ].map(item => (
+              <div className="capability-node-card" key={item.id}>
+                <div className="capability-node-header">
+                  <span className="capability-node-num">{item.id}</span>
+                  <span className="capability-node-badge">{item.badge}</span>
+                </div>
+                <h3>{item.name}</h3>
+                <p>{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -182,12 +200,6 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
           <VisualForSystem system={system} />
         </div>
       </section>
-
-      <div className="system-subnav-wrap">
-        <nav className="shell system-subnav" aria-label={`${system.name} page sections`}>
-          {tabs[slug].map(([label, id]) => <a href={`#${id}`} key={id}>{label}</a>)}
-        </nav>
-      </div>
 
       <section className="section-tight anchor-section" id="architecture">
         <div className="shell feature-split">
