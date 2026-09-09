@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { researchNotes } from "@/lib/site-data";
 import { SectionHeading, StateTag } from "@/components/ui";
+import { ResearchWorkbench } from "@/components/research-workbench";
 
 const researchDetail: Record<string, {
   why: string;
@@ -105,6 +106,12 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
             <SectionHeading eyebrow="BOUNDARIES" title="What this page will not claim" />
             <ul>{detail.boundaries.map(item => <li key={item}>{item}</li>)}</ul>
           </article>
+        </div>
+      </section>
+
+      <section className="section-tight">
+        <div className="shell">
+          <ResearchWorkbench slug={slug} />
         </div>
       </section>
 

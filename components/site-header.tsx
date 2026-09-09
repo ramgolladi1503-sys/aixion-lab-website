@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { nav } from "@/lib/site-data";
+import { CommandPalette } from "./command-palette";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -35,6 +36,7 @@ export function SiteHeader() {
           {nav.slice(2).map(([label, href]) => <Link className={pathname.startsWith(href) ? "is-active" : undefined} key={href} href={href}>{label}</Link>)}
         </nav>
         <div className="header-actions">
+          <CommandPalette />
           <Link className="fresh-header-cta" href="/contact">Contact <span>↗</span></Link>
           <details className="mobile-menu">
             <summary aria-label="Open navigation">Menu</summary>

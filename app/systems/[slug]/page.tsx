@@ -6,6 +6,7 @@ import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { CareerStrip, SectionHeading, StateTag } from "@/components/ui";
 import { AixionSignal, VisualForSystem } from "@/components/system-visuals";
 import { FlipCard } from "@/components/flip-card";
+import { InteractiveTelemetryScrubber } from "@/components/telemetry-scrubber";
 
 const detail: Record<string, {
   problem: string;
@@ -82,8 +83,8 @@ const detail: Record<string, {
 };
 
 const tabs: Record<string, [string, string][]> = {
-  tradebot: [["Overview", "overview"], ["Architecture", "architecture"], ["Engineering", "engineering"], ["Research", "research"], ["Evidence", "evidence"], ["Timeline", "timeline"]],
-  "control-core": [["Overview", "overview"], ["Architecture", "architecture"], ["Capabilities", "capabilities"], ["MVP", "mvp"], ["Evidence", "evidence"], ["Roadmap", "roadmap"]],
+  tradebot: [["Overview", "overview"], ["Telemetry", "telemetry"], ["Architecture", "architecture"], ["Engineering", "engineering"], ["Research", "research"], ["Evidence", "evidence"], ["Timeline", "timeline"]],
+  "control-core": [["Overview", "overview"], ["Telemetry", "telemetry"], ["Architecture", "architecture"], ["Capabilities", "capabilities"], ["MVP", "mvp"], ["Evidence", "evidence"], ["Roadmap", "roadmap"]],
   automation: [["Overview", "overview"], ["Workflow", "architecture"], ["Engineering", "engineering"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
   analytics: [["Overview", "overview"], ["Decision model", "architecture"], ["Engineering", "engineering"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
 };
@@ -99,6 +100,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 function FlagshipSpecific({ slug }: { slug: string }) {
   if (slug === "tradebot") return (
     <>
+      <section className="section-tight anchor-section" id="telemetry">
+        <div className="shell">
+          <InteractiveTelemetryScrubber systemName="TradeBot" />
+        </div>
+      </section>
       <section className="section-tight anchor-section" id="research">
         <div className="shell panel panel-pad">
           <SectionHeading eyebrow="RESEARCH" title="Research is a gated lifecycle, not a shortcut to authority." copy="The public page explains method without publishing proprietary strategy mechanics." />
@@ -124,6 +130,11 @@ function FlagshipSpecific({ slug }: { slug: string }) {
 
   if (slug === "control-core") return (
     <>
+      <section className="section-tight anchor-section" id="telemetry">
+        <div className="shell">
+          <InteractiveTelemetryScrubber systemName="Aixion Control Core" />
+        </div>
+      </section>
       <section className="section-tight anchor-section" id="capabilities">
         <div className="shell">
           <SectionHeading eyebrow="CAPABILITIES" title="The control plane is built from explicit capabilities." />
