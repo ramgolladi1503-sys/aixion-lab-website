@@ -4,9 +4,10 @@ import { DeployStamp } from "./deploy-stamp";
 export function SiteFooter() {
   return (
     <footer className="site-footer">
+      <div className="footer-gradient-accent" aria-hidden="true" />
       <div className="shell footer-grid">
         <div>
-          <p className="eyebrow">AIXION LAB</p>
+          <p className="eyebrow"><span className="brand-dot" /> AIXION LAB</p>
           <p className="footer-statement">Applied intelligence, engineered with evidence.</p>
         </div>
         <div className="footer-links">
@@ -25,6 +26,7 @@ export function SiteFooter() {
         <DeployStamp />
         <span>Research → Build → Validate → Observe → Operate → Learn</span>
       </div>
+      <div className="footer-gradient-bottom" aria-hidden="true" />
     </footer>
   );
 }
