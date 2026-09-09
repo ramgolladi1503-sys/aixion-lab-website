@@ -20,21 +20,9 @@ export function AudioToggle() {
     <button
       type="button"
       onClick={handleToggle}
-      className="btn btn-ghost audio-toggle"
+      className={`btn btn-ghost audio-toggle ${enabled ? "is-active" : ""}`}
       aria-label={enabled ? "Mute interface audio feedback" : "Enable interface audio feedback"}
       title={enabled ? "Haptic audio active (Click to mute)" : "Haptic audio muted (Click to enable)"}
-      style={{
-        padding: "6px 8px",
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "1px solid var(--line)",
-        borderRadius: "999px",
-        background: enabled ? "rgba(79, 125, 249, 0.12)" : "rgba(255, 255, 255, 0.03)",
-        color: enabled ? "var(--accent)" : "var(--muted)",
-        cursor: "pointer",
-        transition: "all 0.15s ease",
-      }}
     >
       <svg
         width="14"
