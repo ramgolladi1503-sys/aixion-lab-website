@@ -63,7 +63,7 @@ export default function HomePage() {
             <Link className="text-link" href="/journey">View the engineering journey →</Link>
           </div>
           <div className="flip-card-deck home-journey-deck">
-            <FlipCard eyebrow="PRACTICE" title="How the way I build evolved." front="Quality engineering taught me to distrust systems that cannot explain their state." backLabel="NOT PERFORMANCE" back="Tools change. The requirement for observable state does not." href="/journey" />
+            <FlipCard eyebrow="PRACTICE" title="From Quality to Autonomy." front="Quality engineering taught me to distrust systems that cannot explain their state." backLabel="NOT PERFORMANCE" back="Tools change. The requirement for observable state does not." href="/journey" />
             <FlipCard eyebrow="METHOD" title="Make the state visible." front="Every system carries a current state, a failure surface and a next decision." backLabel="WORKING PRINCIPLE" back="The interface should make the engineering legible." href="/journey" index={1} />
             <FlipCard eyebrow="JOURNEY" title="Read the working history." front="The path from quality engineering to governed applied systems." backLabel="CONTINUE" back="Follow the decisions that shaped the lab." href="/journey" index={2} />
           </div>
