@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { researchNotes } from "@/lib/site-data";
-import { FlipCard } from "./flip-card";
+import { ResearchCard } from "./research-card";
 
 const filters = ["ALL", "ACTIVE", "VALIDATING", "VALIDATED", "REJECTED", "ARCHIVED"] as const;
 
@@ -30,16 +30,14 @@ export function ResearchIndex() {
       </div>
       <div className="research-list" aria-live="polite">
         {visible.length ? (
-          <div className="flip-card-deck research-index-card-deck">
+          <div className="research-cards-grid">
             {visible.map((note, index) => (
-              <FlipCard
+              <ResearchCard
                 key={note.slug}
                 index={index}
-                eyebrow={note.domain}
+                domain={note.domain}
                 title={note.title}
-                front={note.question}
-                backLabel={note.state}
-                back={note.question}
+                question={note.question}
                 state={note.state}
                 href={`/research/${note.slug}`}
               />

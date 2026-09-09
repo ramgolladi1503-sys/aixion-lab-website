@@ -110,12 +110,13 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
         </div>
       </section>
 
-      <section className="section-tight">
-        <div className="shell">
-          <ResearchWorkbench slug={slug} />
-          {slug === "opening-session-market-structure" && <OrderBookVisualizer />}
-        </div>
-      </section>
+      {slug === "opening-session-market-structure" && (
+        <section className="section-tight">
+          <div className="shell">
+            <OrderBookVisualizer />
+          </div>
+        </section>
+      )}
 
       <section className="section-tight">
         <div className="shell panel panel-pad">

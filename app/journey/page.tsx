@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { journey } from "@/lib/site-data";
 import { SectionHeading } from "@/components/ui";
 import { AixionSignal, SystemVisual } from "@/components/system-visuals";
+import { JourneyRoadmap } from "@/components/journey-roadmap";
 
 export const metadata: Metadata = {
   title: "Journey",
@@ -26,23 +27,7 @@ export default function JourneyPage() {
       <section className="section-tight">
         <div className="shell">
           <SectionHeading eyebrow="TIMELINE" title="Seven stages. One increasingly strict engineering philosophy." copy="This is not a second résumé. Each stage captures a change in how I think about reliability, evidence and authority." />
-          <div className="journey-timeline-modern">
-            {journey.map(([number, title, copy]) => (
-              <article className="journey-step-modern reveal-on-scroll" key={number}>
-                <div className="journey-node-badge">
-                  <span className="journey-node-index">{number}</span>
-                  <div className="journey-node-line" />
-                </div>
-                <div className="journey-step-card">
-                  <div className="journey-step-header">
-                    <h3>{title}</h3>
-                    <span className="journey-phase-tag">PHASE {number}</span>
-                  </div>
-                  <p>{copy}</p>
-                </div>
-              </article>
-            ))}
-          </div>
+          <JourneyRoadmap />
         </div>
       </section>
 

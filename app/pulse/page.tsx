@@ -5,6 +5,7 @@ import { ProgressLane, SectionHeading, StateTag } from "@/components/ui";
 import { AixionSignal } from "@/components/system-visuals";
 import { FlipCard } from "@/components/flip-card";
 import { LiveTelemetryFeed } from "@/components/live-telemetry-feed";
+import { SystemMaturityHUD } from "@/components/maturity-hud";
 
 export const metadata: Metadata = {
   title: "Aixion Pulse",
@@ -32,11 +33,13 @@ export default function PulsePage() {
       </section>
 
       <section className="section-tight">
-        <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="SYSTEM MATURITY" title="Where each system sits now" copy="State is categorical and evidence-led. A percentage would pretend we know more than we do." />
-          {systems.map(system => (
-            <ProgressLane key={system.id} label={system.shortName} stage={system.state === "VALIDATING" || system.state === "BUILDING" || system.state === "OPERATING" ? system.state : "RESEARCH"} />
-          ))}
+        <div className="shell panel panel-pad maturity-panel-shell">
+          <SectionHeading
+            eyebrow="SYSTEM MATURITY"
+            title="Where each system sits now"
+            copy="State is categorical and evidence-led. Each telemetry stage, boundary condition, and gate verification metric is inspectable in real time."
+          />
+          <SystemMaturityHUD />
           <LiveTelemetryFeed />
         </div>
       </section>

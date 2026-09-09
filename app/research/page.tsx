@@ -34,11 +34,31 @@ export default function ResearchPage() {
       </section>
 
       <section className="section">
-        <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="METHOD" title="Question → Observation → Hypothesis → Freeze → Test → Validation → Decision" copy="Research moves forward through explicit gates. A candidate can be promoted, rejected or iterated, but the lifecycle remains visible." />
-          <div className="architecture-flow research-lifecycle">
-            {['Question','Observation','Hypothesis','Freeze','Test','Validation','Decision'].map((stage, index, stages) => (
-              <div className="architecture-step research-lifecycle-step" key={stage}><span>{stage}</span>{index < stages.length - 1 ? <b aria-hidden="true">→</b> : null}</div>
+        <div className="shell panel panel-pad research-pipeline-shell">
+          <SectionHeading
+            eyebrow="SCIENTIFIC METHOD"
+            title="A seven-stage empirical lifecycle."
+            copy="Research moves forward through explicit, auditable gates. A candidate can be promoted, rejected, or iterated, but the lifecycle remains visible and reproducible."
+          />
+          <div className="research-pipeline-grid">
+            {[
+              { num: "01", name: "Question", desc: "Domain problem definition & inquiry scope", tag: "GATE 01" },
+              { num: "02", name: "Observation", desc: "Empirical baseline & market data collection", tag: "GATE 02" },
+              { num: "03", name: "Hypothesis", desc: "Formulated model & pre-registered assumptions", tag: "GATE 03" },
+              { num: "04", name: "Freeze", desc: "Immutable candidate logic lock before evaluation", tag: "INVARIANT" },
+              { num: "05", name: "Test", desc: "Stress regimes, holdouts & execution bounds", tag: "STRESS" },
+              { num: "06", name: "Validation", desc: "Empirical significance & metric verification", tag: "VERIFIED" },
+              { num: "07", name: "Decision", desc: "Promotion to system claim or retained failure evidence", tag: "AUTHORITY" },
+            ].map((stage, idx) => (
+              <div className="pipeline-node-card" key={stage.num}>
+                <div className="pipeline-node-top">
+                  <span className="pipeline-node-num">{stage.num}</span>
+                  <span className="pipeline-node-tag">{stage.tag}</span>
+                </div>
+                <h4 className="pipeline-node-name">{stage.name}</h4>
+                <p className="pipeline-node-desc">{stage.desc}</p>
+                {idx < 6 && <div className="pipeline-node-connector" aria-hidden="true" />}
+              </div>
             ))}
           </div>
         </div>

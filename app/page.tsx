@@ -4,6 +4,7 @@ import { CareerStrip, SectionHeading, StateTag } from "@/components/ui";
 import { SystemVisual } from "@/components/system-visuals";
 import { HeroCarousel } from "@/components/hero-carousel";
 import { FlipCard } from "@/components/flip-card";
+import { ResearchCard } from "@/components/research-card";
 
 export default function HomePage() {
   const tradebot = systems[0];
@@ -45,9 +46,17 @@ export default function HomePage() {
       <section className="section research-proof-section">
         <div className="shell">
           <SectionHeading eyebrow="RESEARCH / PROOF" title="The lab keeps the questions, failures and evidence visible." copy="A rejected mechanism is still useful engineering evidence. Research is not silently promoted into a system claim." />
-          <div className="flip-card-deck research-card-deck">
-            {researchNotes.slice(0, 3).map(note => (
-              <FlipCard key={note.slug} index={researchNotes.indexOf(note)} eyebrow={note.domain} title={note.title} front={note.question} backLabel={note.state} back={note.question} state={note.state} href={`/research/${note.slug}`} />
+          <div className="research-cards-grid">
+            {researchNotes.slice(0, 3).map((note, index) => (
+              <ResearchCard
+                key={note.slug}
+                index={index}
+                domain={note.domain}
+                title={note.title}
+                question={note.question}
+                state={note.state}
+                href={`/research/${note.slug}`}
+              />
             ))}
           </div>
           <Link className="text-link" href="/research">View research index →</Link>
