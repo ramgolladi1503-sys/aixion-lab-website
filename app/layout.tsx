@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./aixion-fresh.css";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { MotionEnhancer } from "@/components/motion-enhancer";
 import { RouteMotion } from "@/components/route-motion";
 import { ContextBar } from "@/components/context-bar";
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SiteHeader />
         <ContextBar />
         <main><RouteMotion>{children}</RouteMotion></main>
+        <SiteFooter />
         <MotionEnhancer />
       </body>
     </html>

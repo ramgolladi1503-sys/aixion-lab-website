@@ -8,7 +8,7 @@ for (const [name, route] of routes) {
     await page.goto(route, { waitUntil: "networkidle" });
     await expect(page.locator("body")).toBeVisible();
     await expect(page.locator("header")).toBeVisible();
-    await expect(page.locator("footer")).toHaveCount(0);
+    await expect(page.locator("footer")).toBeVisible();
     const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     expect(hasHorizontalOverflow, `${route} must not overflow horizontally`).toBe(false);
     await expect(page.locator(".abstract-scene")).toHaveCount(0);
