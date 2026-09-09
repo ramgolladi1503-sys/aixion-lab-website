@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { haptics } from "@/lib/audio-haptics";
 
 type Stage = {
   id: string;
@@ -95,7 +96,10 @@ export function InteractiveTelemetryScrubber({ systemName = "TradeBot" }: { syst
               type="button"
               aria-selected={isActive}
               className={`telemetry-step-node ${isActive ? "is-active" : ""} ${isPassed ? "is-passed" : ""}`}
-              onClick={() => setActiveStep(index)}
+              onClick={() => {
+                setActiveStep(index);
+                haptics.playStage();
+              }}
             >
               <span className="node-pip">
                 <i />

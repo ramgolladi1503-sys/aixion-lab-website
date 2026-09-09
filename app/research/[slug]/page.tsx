@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { researchNotes } from "@/lib/site-data";
 import { SectionHeading, StateTag } from "@/components/ui";
 import { ResearchWorkbench } from "@/components/research-workbench";
+import { OrderBookVisualizer } from "@/components/orderbook-visualizer";
 
 const researchDetail: Record<string, {
   why: string;
@@ -112,6 +113,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
       <section className="section-tight">
         <div className="shell">
           <ResearchWorkbench slug={slug} />
+          {slug === "opening-session-market-structure" && <OrderBookVisualizer />}
         </div>
       </section>
 

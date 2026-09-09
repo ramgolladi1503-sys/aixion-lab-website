@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { haptics } from "@/lib/audio-haptics";
 
 type Scenario = {
   id: string;
@@ -97,7 +98,10 @@ export function ResearchWorkbench({ slug }: { slug: string }) {
             type="button"
             aria-selected={idx === selectedIdx}
             className={`workbench-scenario-btn ${idx === selectedIdx ? "is-active" : ""}`}
-            onClick={() => setSelectedIdx(idx)}
+            onClick={() => {
+              setSelectedIdx(idx);
+              haptics.playToggle();
+            }}
           >
             {item.name}
           </button>

@@ -4,6 +4,7 @@ import labState from "@/content/lab-state.json";
 import { ProgressLane, SectionHeading, StateTag } from "@/components/ui";
 import { AixionSignal } from "@/components/system-visuals";
 import { FlipCard } from "@/components/flip-card";
+import { LiveTelemetryFeed } from "@/components/live-telemetry-feed";
 
 export const metadata: Metadata = {
   title: "Aixion Pulse",
@@ -36,6 +37,7 @@ export default function PulsePage() {
           {systems.map(system => (
             <ProgressLane key={system.id} label={system.shortName} stage={system.state === "VALIDATING" || system.state === "BUILDING" || system.state === "OPERATING" ? system.state : "RESEARCH"} />
           ))}
+          <LiveTelemetryFeed />
         </div>
       </section>
 
