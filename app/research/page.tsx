@@ -1,48 +1,61 @@
-import type { Metadata } from "next";
-import { SectionHeading } from "@/components/ui";
-import { ResearchIndex } from "@/components/research-index";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Research Notes",
-  description: "Questions, hypotheses, experiments and failures that move Aixion systems forward.",
-};
+import Link from "next/link";
+import { researchNotes } from "@/lib/site-data";
 
 export default function ResearchPage() {
   return (
-    <>
-      <section className="page-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">AIXION LAB · RESEARCH</p>
-            <h1>Research Notes</h1>
-            <p className="lede">Questions, hypotheses, experiments and failures that move the systems forward. A rejected result is still useful when the method and boundary are clear.</p>
-          </div>
-          <div className="panel meta-board">
-            <div><span>Lifecycle</span><strong>Question → Evidence</strong></div>
-            <div><span>Promotion rule</span><strong>No silent authority</strong></div>
-            <div><span>Negative results</span><strong>Retained</strong></div>
-            <div><span>Private boundary</span><strong>Mechanics stay private</strong></div>
-          </div>
-        </div>
-      </section>
+    <div className="unseen-projects-section" style={{ paddingTop: "8rem" }}>
+      <header className="unseen-projects-header">
+        <h1 className="unseen-projects-title">Research & Validation</h1>
+        <p style={{ maxWidth: "600px", margin: "0 auto 2.5rem", color: "var(--unseen-muted)", fontSize: "1.05rem" }}>
+          Visible hypotheses, stress testing, and rejected assumptions. In this lab, research is not dressed up as production.
+        </p>
+      </header>
 
-      <section className="section-tight">
-        <div className="shell">
-          <SectionHeading eyebrow="INDEX" title="Research is not a success gallery." copy="The public index keeps active, frozen and rejected work visible so the site reflects how engineering actually progresses." />
-          <ResearchIndex />
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="METHOD" title="Question → Observation → Hypothesis → Freeze → Test → Validation → Decision" copy="Research moves forward through explicit gates. A candidate can be promoted, rejected or iterated, but the lifecycle remains visible." />
-          <div className="architecture-flow">
-            {['Question','Observation','Hypothesis','Freeze','Test','Validation','Decision'].map((stage, index, stages) => (
-              <div className="architecture-step" key={stage}><span>{stage}</span>{index < stages.length - 1 ? <b aria-hidden="true">→</b> : null}</div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gap: "1px", background: "var(--unseen-border)" }}>
+        {researchNotes.map((note) => (
+          <Link
+            key={note.slug}
+            href={`/research/${note.slug}`}
+            style={{
+              background: "var(--unseen-bg)",
+              padding: "2.4rem 2rem",
+              textDecoration: "none",
+              color: "inherit",
+              display: "grid",
+              gridTemplateColumns: "1fr auto",
+              alignItems: "center",
+              gap: "2rem",
+              transition: "background 0.2s ease",
+            }}
+          >
+            <div>
+              <div style={{ display: "flex", gap: "0.8rem", alignItems: "center", marginBottom: "0.6rem" }}>
+                <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-mono)", textTransform: "uppercase", opacity: 0.6 }}>
+                  {note.domain}
+                </span>
+                <span style={{ 
+                  fontSize: "0.68rem", 
+                  fontFamily: "var(--font-mono)", 
+                  padding: "0.2rem 0.6rem", 
+                  borderRadius: "999px",
+                  background: note.state === "REJECTED" ? "rgba(185, 130, 120, 0.2)" : "rgba(33, 33, 33, 0.08)"
+                }}>
+                  {note.state}
+                </span>
+              </div>
+              <h2 style={{ fontSize: "1.6rem", fontWeight: 400, margin: "0 0 0.5rem", letterSpacing: "-0.02em" }}>
+                {note.title}
+              </h2>
+              <p style={{ margin: 0, color: "var(--unseen-muted)", fontSize: "0.95rem" }}>
+                {note.question}
+              </p>
+            </div>
+            <div style={{ fontSize: "1.3rem" }}>↘</div>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }

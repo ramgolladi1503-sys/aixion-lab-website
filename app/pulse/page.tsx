@@ -1,72 +1,98 @@
-import type { Metadata } from "next";
-import { systems } from "@/lib/site-data";
-import labState from "@/content/lab-state.json";
-import { ProgressLane, SectionHeading, StateTag } from "@/components/ui";
-import { AixionSignal } from "@/components/system-visuals";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Aixion Pulse",
-  description: "What the lab is building, testing and learning right now.",
-};
+import Link from "next/link";
+import { systems } from "@/lib/site-data";
 
 export default function PulsePage() {
   return (
-    <>
-      <section className="page-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">AIXION LAB · PULSE</p>
-            <h1>The operational pulse of the lab.</h1>
-            <p className="lede">Current focus, latest public-safe milestone and next gate for each system. Pulse is curated engineering state—not raw repository activity.</p>
-            <AixionSignal compact />
-          </div>
-          <div className="panel meta-board pulse-meta">
-            <div><span>Source model</span><strong>Curated manifest</strong></div>
-            <div><span>Last update</span><strong>{labState.updated_at}</strong></div>
-            <div><span>Raw commits</span><strong>Not a progress metric</strong></div>
-            <div><span>Completion %</span><strong>Not used</strong></div>
-          </div>
-        </div>
-      </section>
+    <div className="unseen-projects-section" style={{ paddingTop: "8rem" }}>
+      <header className="unseen-projects-header">
+        <h1 className="unseen-projects-title">Lab Pulse</h1>
+        <p style={{ maxWidth: "620px", margin: "0 auto 2.5rem", color: "var(--unseen-muted)", fontSize: "1.05rem" }}>
+          Live operational status, verification gates, and evidence boundaries across all Aixion Lab engineering tracks.
+        </p>
+      </header>
 
-      <section className="section-tight">
-        <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="SYSTEM MATURITY" title="Where each system sits now" copy="State is categorical and evidence-led. A percentage would pretend we know more than we do." />
-          {systems.map(system => (
-            <ProgressLane key={system.id} label={system.shortName} stage={system.state === "VALIDATING" || system.state === "BUILDING" || system.state === "OPERATING" ? system.state : "RESEARCH"} />
-          ))}
-        </div>
-      </section>
+      <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gap: "2rem" }}>
+        {systems.map((system) => (
+          <div 
+            key={system.id} 
+            style={{ 
+              background: "#ffffff", 
+              padding: "2.5rem", 
+              borderRadius: "16px",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.03)",
+              border: "1px solid rgba(33, 33, 33, 0.08)"
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem" }}>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "var(--unseen-muted)" }}>
+                {system.id}
+              </span>
+              <span style={{ 
+                fontFamily: "var(--font-mono)", 
+                fontSize: "0.75rem", 
+                padding: "0.3rem 0.8rem", 
+                borderRadius: "999px",
+                background: "var(--unseen-bg)",
+                fontWeight: 500
+              }}>
+                {system.state}
+              </span>
+            </div>
+            
+            <h2 style={{ fontSize: "1.8rem", fontWeight: 400, margin: "0 0 0.8rem", letterSpacing: "-0.02em" }}>
+              {system.name}
+            </h2>
+            <p style={{ color: "var(--unseen-muted)", fontSize: "1rem", lineHeight: 1.5, marginBottom: "1.5rem" }}>
+              {system.descriptor}
+            </p>
 
-      <section className="section">
-        <div className="shell">
-          <SectionHeading eyebrow="NOW" title="Current cycle" copy="These cards answer four things quickly: state, current focus, latest milestone and next gate." />
-          <div className="pulse-now-grid">
-            {labState.systems.map(system => (
-              <article className="pulse-system-card" key={system.id}>
-                <div className="system-card-top"><span className="system-id">{system.id}</span><StateTag state={system.state} /></div>
-                <h3>{system.name}</h3>
-                <dl>
-                  <div><dt>Current focus</dt><dd>{system.current_focus}</dd></div>
-                  <div><dt>Latest evidence</dt><dd>{system.latest_milestone}</dd></div>
-                  <div><dt>Next gate</dt><dd>{system.next_gate}</dd></div>
-                </dl>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+            <div style={{ 
+              display: "grid", 
+              gridTemplateColumns: "repeat(3, 1fr)", 
+              gap: "1.2rem", 
+              borderTop: "1px solid rgba(33, 33, 33, 0.08)",
+              paddingTop: "1.2rem"
+            }}>
+              <div>
+                <span style={{ display: "block", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "var(--unseen-muted)" }}>
+                  CURRENT GATE
+                </span>
+                <strong style={{ fontSize: "0.9rem", fontWeight: 500 }}>{system.currentGate}</strong>
+              </div>
+              <div>
+                <span style={{ display: "block", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "var(--unseen-muted)" }}>
+                  FOCUS
+                </span>
+                <span style={{ fontSize: "0.85rem" }}>{system.currentFocus}</span>
+              </div>
+              <div>
+                <span style={{ display: "block", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "var(--unseen-muted)" }}>
+                  NEXT GATE
+                </span>
+                <span style={{ fontSize: "0.85rem" }}>{system.nextGate}</span>
+              </div>
+            </div>
 
-      <section className="section-tight">
-        <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="SHIP LOG" title="Changes that meaningfully altered capability, evidence or authority" copy="The log deliberately ignores cosmetic commit volume." />
-          <div className="evidence-list">
-            <div className="evidence-row"><span>23 AUG 2026</span><strong>Website architecture and visual authority frozen for clean rebuild</strong><StateTag state="LOCKED" /></div>
-            <div className="evidence-row"><span>TRADEBOT</span><strong>Live and research evidence remain separated from proprietary strategy details</strong><StateTag state="BOUNDARY" /></div>
-            <div className="evidence-row"><span>CONTROL CORE</span><strong>MVP orchestration translated into inspectable stages and authority boundaries</strong><StateTag state="BUILDING" /></div>
+            <div style={{ marginTop: "1.5rem", textAlign: "right" }}>
+              <Link 
+                href={`/systems/${system.slug}`}
+                style={{ 
+                  textDecoration: "none", 
+                  color: "var(--unseen-stone)", 
+                  fontSize: "0.85rem", 
+                  fontWeight: 500,
+                  borderBottom: "1px solid var(--unseen-stone)",
+                  paddingBottom: "0.2rem"
+                }}
+              >
+                Inspect System Architecture ↘
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
-    </>
+        ))}
+      </div>
+    </div>
   );
 }

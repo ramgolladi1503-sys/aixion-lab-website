@@ -1,58 +1,73 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { systems } from "@/lib/site-data";
-import { SectionHeading, StateTag } from "@/components/ui";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Systems Registry",
-  description: "The engineered systems, tools and platforms being built inside Aixion Lab.",
+import Link from "next/link";
+import { useState } from "react";
+import { systems } from "@/lib/site-data";
+
+const systemImages: Record<string, string> = {
+  tradebot: "/textures/card-tradebot.webp",
+  "control-core": "/textures/card-control.webp",
+  automation: "/textures/card-automation.webp",
+  analytics: "/textures/card-analytics.webp",
 };
 
 export default function SystemsPage() {
-  return (
-    <>
-      <section className="page-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">AIXION LAB · SYSTEMS</p>
-            <h1>Systems Registry</h1>
-            <p className="lede">The engineered systems, tools and platforms being built inside Aixion Lab. Maturity is shown explicitly; research is not dressed up as production.</p>
-          </div>
-          <div className="panel meta-board">
-            <div><span>Authority</span><strong>Blueprint v1.0</strong></div>
-            <div><span>State model</span><strong>Research → Operating</strong></div>
-            <div><span>Public boundary</span><strong>Evidence-led summaries</strong></div>
-            <div><span>Flagship</span><strong>TradeBot</strong></div>
-          </div>
-        </div>
-      </section>
+  const [activeFilter, setActiveFilter] = useState("all");
 
-      <section className="section-tight">
-        <div className="shell">
-          <SectionHeading eyebrow="REGISTRY" title="One place to understand what exists and where it stands." copy="Each entry carries a system ID, maturity, current gate and public-safe focus so visitors do not have to infer project status from marketing copy." />
-          <div className="registry">
-            {systems.map(system => (
-              <article className="registry-row" key={system.id}>
-                <span className="system-id">{system.id}</span>
-                <div>
-                  <h3>{system.name}</h3>
-                  <p>{system.descriptor}</p>
-                </div>
-                <div className="registry-hide-mobile">
-                  <span className="registry-label">Domain</span>
-                  <p>{system.domain}</p>
-                </div>
-                <StateTag state={system.state} />
-                <div className="registry-hide-tablet">
-                  <span className="registry-label">Current gate</span>
-                  <p>{system.currentGate}</p>
-                </div>
-                <Link className="text-link" href={`/systems/${system.slug}`}>View →</Link>
-              </article>
-            ))}
-          </div>
+  const filteredSystems = activeFilter === "all" 
+    ? systems 
+    : systems.filter(s => s.state.toLowerCase() === activeFilter.toLowerCase());
+
+  return (
+    <div className="unseen-projects-section" style={{ paddingTop: "8rem" }}>
+      <header className="unseen-projects-header">
+        <h1 className="unseen-projects-title">Systems Registry</h1>
+        <div className="unseen-filter-bar">
+          {[
+            { id: "all", label: "All Systems", count: 4 },
+            { id: "validating", label: "Validating", count: 1 },
+            { id: "building", label: "Building", count: 2 },
+            { id: "research", label: "Research", count: 1 },
+          ].map(tab => (
+            <button
+              key={tab.id}
+              type="button"
+              className={`unseen-filter-btn ${activeFilter === tab.id ? "active" : ""}`}
+              onClick={() => setActiveFilter(tab.id)}
+            >
+              {tab.label} <span className="count">{tab.count}</span>
+            </button>
+          ))}
         </div>
-      </section>
-    </>
+      </header>
+
+      <div className="unseen-cards-grid">
+        {filteredSystems.map(system => (
+          <Link 
+            key={system.id} 
+            href={`/systems/${system.slug}`}
+            className="unseen-card"
+          >
+            <div className="unseen-card-image-wrap">
+              <img 
+                src={systemImages[system.slug] || "/textures/card-tradebot.webp"} 
+                alt={system.name}
+                className="unseen-card-image"
+              />
+            </div>
+            <div className="unseen-card-footer">
+              <div>
+                <h2 className="unseen-card-name" style={{ fontSize: "1.25rem" }}>{system.name}</h2>
+                <p className="unseen-card-desc">{system.descriptor}</p>
+                <p style={{ margin: "0.4rem 0 0", fontSize: "0.75rem", fontFamily: "var(--font-mono)", opacity: 0.6 }}>
+                  GATE: {system.currentGate.toUpperCase()} · STATUS: {system.state}
+                </p>
+              </div>
+              <div className="unseen-card-arrow">↘</div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
