@@ -39,11 +39,7 @@ export default function Journey() {
       <ProgressScene className="journey-story shell">
         <aside className="journey-sticky">
           <Layers />
-          <p className="caption">
-            Nothing disappeared.
-            <br />
-            Capability accumulated.
-          </p>
+          <p className="caption">Nothing disappeared. Capability accumulated.</p>
         </aside>
         <div>
           {journey.map(([label, title, line, copy, question], i) => (
