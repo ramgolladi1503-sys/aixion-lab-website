@@ -20,8 +20,9 @@ export default function Home() {
           <p className="eyebrow">AIXION LAB</p>
           <h1>Building systems that have to survive more than the happy path.</h1>
           <p className="lead">
-            I’m Ram, a quality and automation engineer. My work has expanded
-            into real-time systems, reliability, applied AI and research.
+            I’m Ram, a quality and automation engineer whose work has expanded
+            into real-time systems, reliability engineering, applied AI,
+            research infrastructure and human-controlled autonomous workflows.
           </p>
           <p className="hero-note">
             Aixion Lab is where I build, test, challenge and document those
