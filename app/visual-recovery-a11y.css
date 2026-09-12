@@ -1,0 +1,20 @@
+/* Accessibility guard for the Calm Minimalism recovery palette.
+ * Keep these as shared token corrections rather than page-specific exceptions.
+ */
+
+:root {
+  --recovery-muted: #62655f;
+  --recovery-indigo: #5f6e9f;
+}
+
+.eyebrow {
+  color: var(--recovery-muted);
+}
+
+.hero-note {
+  color: #626760;
+}
+
+.journey-preview .layer:last-child {
+  background: var(--recovery-indigo);
+}
