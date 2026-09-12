@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+<title id="title">Calm editorial landscape</title>
+<desc id="desc">A warm architectural landscape with distant stone ridges, soft light and restrained indigo accents.</desc>
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbf8f1"/><stop offset="0.48" stop-color="#eee7dc"/><stop offset="1" stop-color="#c9c7be"/></linearGradient>
+  <radialGradient id="sun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff8df" stop-opacity="1"/><stop offset="0.45" stop-color="#fff4d8" stop-opacity=".72"/><stop offset="1" stop-color="#fff4d8" stop-opacity="0"/></radialGradient>
+  <linearGradient id="ridge1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d5d2c8"/><stop offset="1" stop-color="#bfc2bc"/></linearGradient>
+  <linearGradient id="ridge2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b9b8ae"/><stop offset="1" stop-color="#929b99"/></linearGradient>
+  <linearGradient id="cliff" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7d8582"/><stop offset="1" stop-color="#404a4d"/></linearGradient>
+  <linearGradient id="stone" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#eee8df"/><stop offset="1" stop-color="#c9bfb2"/></linearGradient>
+  <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="2" seed="9"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .045"/></feComponentTransfer></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="1200" height="820" fill="url(#sky)"/>
+<circle cx="825" cy="178" r="160" fill="url(#sun)"/>
+<path d="M0 525 C180 440 270 466 418 400 C570 330 718 346 930 270 C1060 224 1140 236 1200 210 L1200 820 L0 820Z" fill="url(#ridge1)" opacity=".82"/>
+<path d="M0 612 C192 530 324 566 480 492 C622 425 792 456 948 370 C1080 296 1160 304 1200 286 L1200 820 L0 820Z" fill="url(#ridge2)" opacity=".90"/>
+<path d="M1200 206 C1098 245 1030 296 956 365 C882 434 846 515 780 602 C722 678 658 736 560 820 L1200 820Z" fill="url(#cliff)"/>
+<path d="M916 330 C1032 384 1106 442 1200 544 L1200 820 L998 820 C960 724 930 614 902 528 C878 453 872 390 916 330Z" fill="#596466" opacity=".84"/>
+<path d="M0 670 L588 540 L816 618 L504 820 L0 820Z" fill="url(#stone)"/>
+<path d="M0 736 L458 650 L614 707 L520 820 L0 820Z" fill="#f7f3eb"/>
+<path d="M120 0 L392 0 L224 820 L0 820 L0 444Z" fill="#fffdf8" opacity=".72"/>
+<path d="M330 0 L470 0 L268 820 L154 820Z" fill="#f9f4e8" opacity=".48"/>
+<path d="M640 112 L1160 34" stroke="#ffffff" stroke-opacity=".7" stroke-width="2"/>
+<path d="M884 514 L1148 468" stroke="#7581aa" stroke-opacity=".75" stroke-width="3"/>
+<rect width="1200" height="820" filter="url(#grain)" opacity=".65"/>
+<ellipse cx="942" cy="176" rx="185" ry="98" fill="#fff9e8" opacity=".18" filter="url(#soft)"/>
+</svg>
