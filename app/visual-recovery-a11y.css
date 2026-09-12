@@ -210,6 +210,28 @@ h2,
   .research-trace {
     margin-top: 30px;
   }
+
+  /* Tablet Journey retains the two-column narrative, so its per-chapter trace
+     must become a small grid instead of forcing a horizontal rail. */
+  .journey-path {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .journey-path li,
+  .journey-path li + li {
+    padding: 14px 12px 14px 0;
+    border-bottom: 1px solid rgba(43, 49, 51, 0.08);
+  }
+
+  .journey-path li:nth-child(even) {
+    padding-left: 16px;
+  }
+
+  .journey-path li + li::before {
+    display: none;
+  }
 }
 
 @media (max-width: 700px) {
@@ -254,26 +276,6 @@ h2,
 
   .research-trace li > span {
     margin-bottom: 0;
-  }
-
-  .journey-path {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0;
-  }
-
-  .journey-path li,
-  .journey-path li + li {
-    padding: 14px 12px 14px 0;
-    border-bottom: 1px solid rgba(43, 49, 51, 0.08);
-  }
-
-  .journey-path li:nth-child(even) {
-    padding-left: 16px;
-  }
-
-  .journey-path li + li::before {
-    display: none;
   }
 }
 
