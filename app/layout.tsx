@@ -4,6 +4,7 @@ import { Header, Footer } from "@/components/shell";
 import { MotionController } from "@/components/motion";
 import "./globals.css";
 import "./visual-recovery.css";
+import "./visual-recovery-a11y.css";
 import { site } from "@/lib/content";
 
 const inter = localFont({
