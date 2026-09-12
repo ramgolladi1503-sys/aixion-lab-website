@@ -70,38 +70,40 @@ export default function Home() {
             View all work →
           </Link>
         </SectionTitle>
-        {projects.map((p, i) => {
-          const visual =
-            p.slug === "tradebot"
-              ? "/visuals/tradebot-editorial.svg"
-              : "/visuals/control-tower-editorial.svg";
-          return (
-            <article
-              className={`selected-project selected-${i}`}
-              key={p.slug}
-              data-reveal
-            >
-              <div className="selected-copy">
-                <p className="eyebrow">
-                  0{i + 1} / {p.state}
-                </p>
-                <h3>{p.name}</h3>
-                <p className="project-subtitle">{p.subtitle}</p>
-                <p>{p.intro}</p>
-                <Link className="text-link" href={`/work/${p.slug}`}>
-                  Explore {i ? "Control Tower" : "TradeBot"} →
-                </Link>
-              </div>
-              <figure className="project-editorial-visual">
-                <img src={visual} alt={`${p.name} project preview`} />
-                <figcaption>
-                  {p.name} / selected system / deeper architecture and evidence
-                  inside
-                </figcaption>
-              </figure>
-            </article>
-          );
-        })}
+        <div className="selected-grid">
+          {projects.map((p, i) => {
+            const visual =
+              p.slug === "tradebot"
+                ? "/visuals/tradebot-editorial.svg"
+                : "/visuals/control-tower-editorial.svg";
+            return (
+              <article
+                className={`selected-project selected-${i}`}
+                key={p.slug}
+                data-reveal
+              >
+                <div className="selected-copy">
+                  <p className="eyebrow">
+                    0{i + 1} / {p.state}
+                  </p>
+                  <h3>{p.name}</h3>
+                  <p className="project-subtitle">{p.subtitle}</p>
+                  <p>{p.intro}</p>
+                  <Link className="text-link" href={`/work/${p.slug}`}>
+                    Explore {i ? "Control Tower" : "TradeBot"} →
+                  </Link>
+                </div>
+                <figure className="project-editorial-visual">
+                  <img src={visual} alt={`${p.name} project preview`} />
+                  <figcaption>
+                    {p.name} / selected system / deeper architecture and evidence
+                    inside
+                  </figcaption>
+                </figure>
+              </article>
+            );
+          })}
+        </div>
       </section>
 
       <Statement>Better systems come from questioning assumptions.</Statement>
