@@ -1,0 +1,402 @@
+/*
+ * Aixion Lab — Calm Minimalism visual recovery layer.
+ * This file intentionally overrides visual treatment without disturbing
+ * the existing content, accessibility, evidence, routing or motion systems.
+ */
+
+:root {
+  --recovery-canvas: #f3efe8;
+  --recovery-paper: #fbf8f2;
+  --recovery-ink: #252b2f;
+  --recovery-muted: #636862;
+  --recovery-line: rgba(44, 50, 52, 0.14);
+  --recovery-indigo: #6875a5;
+  --recovery-clay: #b97963;
+  --recovery-stone: #ddd4c8;
+  --recovery-soft: #ebe4da;
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255,255,255,.62), transparent 34rem),
+    var(--recovery-canvas);
+  color: var(--recovery-ink);
+}
+
+.header {
+  height: 88px;
+  background: rgba(243, 239, 232, .86);
+  backdrop-filter: blur(14px);
+}
+
+.header[data-scrolled="true"] {
+  background: rgba(243, 239, 232, .96);
+  border-color: var(--recovery-line);
+}
+
+.wordmark {
+  color: var(--recovery-ink);
+  letter-spacing: .24em;
+}
+
+.hero {
+  min-height: 690px;
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+  gap: clamp(48px, 6vw, 96px);
+  align-items: center;
+  padding-top: 38px;
+  padding-bottom: 92px;
+}
+
+.hero-copy {
+  align-self: center;
+  padding-block: 18px;
+}
+
+.hero h1 {
+  max-width: 11.5ch;
+  font-size: clamp(58px, 5.05vw, 76px);
+  line-height: .99;
+  letter-spacing: -.052em;
+  margin: 20px 0 28px;
+  color: var(--recovery-ink);
+}
+
+.hero .lead {
+  max-width: 48ch;
+  color: #4d5350;
+}
+
+.hero-note {
+  max-width: 45ch;
+  color: #77766f;
+}
+
+.hero-art {
+  min-height: 565px;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(50, 44, 37, .10);
+  background: #ddd5c9;
+}
+
+/* Replace the previous geometric sculpture with an image-led editorial scene.
+   The composition remains entirely local and deterministic. */
+.hero-art .material {
+  min-height: 565px;
+  border-radius: 0;
+  background:
+    linear-gradient(180deg, rgba(21,27,31,.02), rgba(21,27,31,.12)),
+    linear-gradient(145deg, #e9e2d8 0%, #d8d0c5 33%, #b7b6ae 68%, #8c9699 100%);
+  overflow: hidden;
+}
+
+.hero-art .material::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 74% 22%, rgba(255,248,230,.95) 0 9%, rgba(255,248,230,.4) 10% 20%, transparent 38%),
+    linear-gradient(123deg, transparent 0 45%, rgba(250,244,231,.78) 45.4% 54%, transparent 54.4%),
+    linear-gradient(164deg, transparent 0 57%, rgba(64,74,75,.27) 57.3% 58%, transparent 58.5%);
+}
+
+.hero-art .material::after {
+  opacity: .11;
+  mix-blend-mode: multiply;
+}
+
+.hero-art .material-disc {
+  width: 116%;
+  aspect-ratio: 1.55;
+  border-radius: 50%;
+  top: auto;
+  left: -22%;
+  bottom: -49%;
+  background:
+    linear-gradient(145deg, rgba(250,247,238,.96), rgba(185,178,165,.9));
+  box-shadow: 0 -28px 60px rgba(50,48,42,.14);
+  transform: rotate(-6deg);
+}
+
+.hero-art .material-slab {
+  border-radius: 1px;
+  transform: none;
+  box-shadow: none;
+}
+
+.hero-art .slab-back {
+  width: 62%;
+  height: 32%;
+  left: 43%;
+  bottom: 18%;
+  background:
+    linear-gradient(160deg, rgba(117,126,126,.92), rgba(70,79,82,.96));
+  clip-path: polygon(18% 0,100% 30%,100% 100%,0 100%);
+}
+
+.hero-art .slab-mid {
+  width: 70%;
+  height: 26%;
+  left: 24%;
+  bottom: 11%;
+  background:
+    linear-gradient(160deg, #d1c6b8, #b8ad9f);
+  clip-path: polygon(12% 0,100% 12%,100% 100%,0 100%);
+}
+
+.hero-art .slab-front {
+  width: 67%;
+  height: 22%;
+  left: 2%;
+  bottom: 0;
+  background:
+    linear-gradient(160deg, #eee8df, #d7cfc4);
+  clip-path: polygon(0 12%,100% 0,88% 100%,0 100%);
+}
+
+.hero-art .material-line {
+  width: 36%;
+  height: 1px;
+  right: 6%;
+  top: 18%;
+  background: rgba(255,255,255,.72);
+  transform: rotate(-13deg);
+}
+
+.art-caption {
+  z-index: 3;
+  bottom: 28px;
+  left: 30px;
+  right: 30px;
+  color: #30383a;
+}
+
+/* Calm editorial rhythm: less technical furniture, more spacing and hierarchy. */
+.section {
+  padding-block: 118px;
+}
+
+.section-heading {
+  margin-bottom: 66px;
+}
+
+.section-heading h2 {
+  max-width: 760px;
+  font-size: clamp(42px, 3.5vw, 54px);
+  line-height: 1.04;
+  letter-spacing: -.045em;
+}
+
+.eyebrow {
+  letter-spacing: .065em;
+}
+
+.capabilities {
+  gap: 50px;
+}
+
+.capabilities article {
+  border-top-color: transparent;
+  padding-top: 0;
+}
+
+.capabilities article::before {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 1px;
+  margin-bottom: 28px;
+  background: var(--recovery-indigo);
+}
+
+.capabilities h3 {
+  margin: 18px 0 15px;
+  font-size: 25px;
+}
+
+.selected-project {
+  grid-template-columns: minmax(0,.72fr) minmax(0,1.28fr);
+  gap: clamp(62px,7vw,110px);
+  padding: 76px 0 104px;
+  border-top: 0;
+}
+
+.selected-project + .selected-project {
+  border-top: 1px solid var(--recovery-line);
+}
+
+.selected-copy {
+  align-self: center;
+}
+
+.selected-copy h3 {
+  font-size: clamp(42px, 3.7vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+  margin: 20px 0 18px;
+}
+
+.selected-project .architecture {
+  position: relative;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 38px;
+  border: 0;
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 75% 24%, rgba(255,250,236,.88) 0 8%, transparent 27%),
+    linear-gradient(145deg, #e7ded2 0%, #c8c0b4 54%, #8d9798 100%);
+  box-shadow: 0 25px 70px rgba(52,47,39,.09);
+}
+
+.selected-1 .architecture {
+  background:
+    radial-gradient(circle at 28% 23%, rgba(255,249,236,.95) 0 7%, transparent 25%),
+    linear-gradient(150deg, #eee7dc 0%, #d7cec1 45%, #9aa2a2 100%);
+}
+
+.selected-project .architecture::before,
+.selected-project .architecture::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.selected-project .architecture::before {
+  inset: auto -5% -27% 12%;
+  height: 76%;
+  border-radius: 50% 44% 0 0;
+  background: linear-gradient(150deg, rgba(248,244,235,.92), rgba(191,184,173,.68));
+  transform: rotate(-5deg);
+}
+
+.selected-project .architecture::after {
+  width: 58%;
+  height: 42%;
+  right: -6%;
+  bottom: 5%;
+  background: linear-gradient(150deg, rgba(72,82,84,.88), rgba(112,119,117,.52));
+  clip-path: polygon(20% 0,100% 18%,100% 100%,0 100%);
+}
+
+.selected-project .visual-heading,
+.selected-project .architecture figcaption {
+  position: relative;
+  z-index: 3;
+  color: rgba(39,45,46,.82);
+  border: 0;
+}
+
+.selected-project .architecture ol {
+  position: relative;
+  z-index: 3;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 9px;
+  margin-top: auto;
+  padding: 72px 0 18px;
+}
+
+.selected-project .architecture li {
+  min-height: 78px;
+  border-color: rgba(45,51,52,.16);
+  background: rgba(250,247,240,.72);
+  backdrop-filter: blur(8px);
+}
+
+.selected-project .architecture strong {
+  font-size: 16px;
+}
+
+/* Quiet statement / proof regions should read as editorial pauses, not dashboards. */
+.process-section,
+.proof-section {
+  background: #e9e3da;
+}
+
+.process-section .process-list article,
+.research-preview > a,
+.evidence-card,
+.evidence-strip > * {
+  box-shadow: none !important;
+}
+
+.research-preview > a {
+  border-color: var(--recovery-line) !important;
+}
+
+.journey-preview {
+  align-items: center;
+}
+
+.opportunity {
+  margin-block: 60px 120px;
+  padding-block: 110px;
+  border-top: 1px solid var(--recovery-line);
+}
+
+.opportunity h2 {
+  font-size: clamp(46px,4vw,62px);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding-top: 26px;
+  }
+  .hero h1 {
+    max-width: 12ch;
+    font-size: clamp(48px,9vw,66px);
+  }
+  .hero-art,
+  .hero-art .material {
+    min-height: 460px;
+  }
+  .selected-project {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+  .selected-project .architecture {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 0;
+    padding-bottom: 72px;
+  }
+  .hero h1 {
+    font-size: 46px;
+  }
+  .hero-art,
+  .hero-art .material {
+    min-height: 380px;
+  }
+  .section {
+    padding-block: 82px;
+  }
+  .section-heading {
+    margin-bottom: 42px;
+  }
+  .section-heading h2 {
+    font-size: 36px;
+  }
+  .selected-copy h3 {
+    font-size: 40px;
+  }
+  .selected-project .architecture {
+    min-height: 330px;
+    padding: 26px;
+  }
+  .selected-project .architecture ol {
+    grid-template-columns: 1fr 1fr;
+  }
+}
