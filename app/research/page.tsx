@@ -2,7 +2,33 @@ import type { Metadata } from "next";
 import { Opening, Statement, Opportunity } from "@/components/compositions";
 import { EvidenceStrip } from "@/components/evidence";
 import { research } from "@/lib/content";
+
 export const metadata: Metadata = { title: "Research" };
+
+const traces = [
+  ["Historical signal", "Challenge", "Verdict"],
+  ["Classification", "Allowed role", "Execution boundary"],
+  ["Live feed", "Freshness check", "Reconciliation"],
+  ["Agent request", "Human approval", "Validated action"],
+  ["Repository", "Cited retrieval", "Refuse unsupported"],
+];
+
+function ResearchTrace({ index, title }: { index: number; title: string }) {
+  return (
+    <figure className="research-trace" aria-label={`${title} investigation trace`}>
+      <figcaption>Investigation trace</figcaption>
+      <ol>
+        {traces[index].map((step, i) => (
+          <li key={step}>
+            <span aria-hidden="true">0{i + 1}</span>
+            <strong>{step}</strong>
+          </li>
+        ))}
+      </ol>
+    </figure>
+  );
+}
+
 export default function Research() {
   return (
     <>
@@ -25,6 +51,7 @@ export default function Research() {
               0{i + 1} / {r.title}
             </p>
             <h2>{r.question}</h2>
+            <ResearchTrace index={i} title={r.title} />
           </div>
           <div className="research-sequence">
             {[
