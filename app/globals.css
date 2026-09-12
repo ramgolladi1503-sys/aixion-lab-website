@@ -346,6 +346,56 @@
   }
 }
 @layer components {
+  .flagship-collection {
+    display: grid;
+    grid-template-columns: 0.85fr 1.35fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .collection-rail {
+    position: sticky;
+    top: 116px;
+  }
+  .collection-frame {
+    position: relative;
+  }
+  .collection-visual {
+    transition:
+      opacity 0.55s var(--ease),
+      transform 0.65s var(--ease);
+  }
+  .collection-visual[data-current="false"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(-18px);
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .collection-visual .architecture li[data-active="true"] {
+    background: var(--paper);
+    border-color: #9399ad;
+  }
+  .collection-visual .architecture li[data-active="false"] {
+    background: #e6e1d8;
+  }
+  .collection-visual h2 {
+    font-size: 32px;
+    margin: 18px 0;
+  }
+  .collection-visual .text-link {
+    margin-top: 22px;
+  }
+  .collection-stories .flagship {
+    width: 100%;
+  }
+  .collection-stories .flagship-grid {
+    display: block;
+  }
+  .collection-stories .project-sticky {
+    display: none;
+  }
+
   .hero {
     position: relative;
     display: grid;
@@ -479,7 +529,9 @@
   .capabilities h3 {
     margin: 30px 0 16px;
   }
-  .capabilities.six { grid-template-columns: repeat(3, 1fr); }
+  .capabilities.six {
+    grid-template-columns: repeat(3, 1fr);
+  }
   .capabilities.three {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1062,7 +1114,7 @@
     inset: 0;
     z-index: 5;
     pointer-events: none;
-    background: var(--canvas);
+    background: transparent;
     border-radius: 0;
     opacity: 0;
     transition: opacity 0.4s;
@@ -1070,7 +1122,7 @@
   .arrival[data-phase="active"] {
     opacity: 1;
     pointer-events: auto;
-    animation: arrival-open 3.5s var(--ease) forwards;
+    animation: none;
   }
   .arrival[data-phase="active"][data-repeat="true"] {
     animation: repeat-open 0.65s var(--ease) forwards;
@@ -1128,18 +1180,20 @@
   .hero:has(.arrival[data-phase="done"]) .hero-copy {
     opacity: 1;
   }
-  .hero:has(.arrival[data-phase="active"]) .material {
-    transform: translateX(-25%);
-    opacity: 0.1;
+  .hero-art .material {
+    transform-origin: top left;
   }
-  .material {
-    transition:
-      transform 1s var(--ease),
-      opacity 1s;
+  .hero:has(.arrival[data-phase="active"]) .hero-art {
+    z-index: 4;
   }
-  .hero:has(.arrival[data-phase="done"]) .material {
-    transform: none;
+  .hero:has(.arrival[data-phase="active"]) .art-caption {
+    opacity: 0;
+  }
+  .hero:has(.arrival[data-phase="active"][data-repeat="true"]) .hero-copy {
     opacity: 1;
+  }
+  .arrival[data-repeat="true"] {
+    background: var(--canvas);
   }
   @keyframes arrival-open {
     0%,
@@ -1194,11 +1248,23 @@
 }
 @layer responsive {
   @media (min-width: 701px) and (max-width: 900px) {
-    .hero.shell { grid-template-columns: 1.55fr 1fr; gap: 25px; }
-    .hero .hero-art { height: 430px; }
-    .hero .art-caption { left: 16px; right: 16px; }
-    .hero .art-caption > span:last-child { display: none; }
-    .capabilities.six { grid-template-columns: 1fr 1fr; }
+    .hero.shell {
+      grid-template-columns: 1.55fr 1fr;
+      gap: 25px;
+    }
+    .hero .hero-art {
+      height: 430px;
+    }
+    .hero .art-caption {
+      left: 16px;
+      right: 16px;
+    }
+    .hero .art-caption > span:last-child {
+      display: none;
+    }
+    .capabilities.six {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   @media (min-width: 1600px) {
@@ -1248,6 +1314,13 @@
     }
   }
   @media (max-width: 1000px) {
+    .flagship-collection { display: block; }
+    .collection-rail { display: none; }
+    .collection-stories .project-sticky { display: block; position: static; margin-bottom: 35px; }
+
+    .flagship-collection {
+      gap: 35px;
+    }
     .desktop-nav,
     .github-link {
       display: none;
@@ -1423,7 +1496,20 @@
     }
   }
   @media (max-width: 700px) {
-    .capabilities.six { grid-template-columns: 1fr; }
+    .flagship-collection {
+      display: block;
+    }
+    .collection-rail {
+      display: none;
+    }
+    .collection-stories .project-sticky {
+      display: block;
+      margin-bottom: 35px;
+    }
+
+    .capabilities.six {
+      grid-template-columns: 1fr;
+    }
     .shell {
       width: calc(100% - 40px);
     }

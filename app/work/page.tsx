@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FlagshipCollection } from "@/components/flagship-collection";
 import {
   Opening,
   Flagship,
@@ -16,9 +17,11 @@ export default function Work() {
         title="Systems are more interesting when you can inspect how they were built."
         copy="Two flagship systems. The problems, architecture, failures and lessons behind them."
       />
-      {projects.map((p, i) => (
-        <Flagship key={p.slug} project={p} index={i} />
-      ))}
+      <FlagshipCollection>
+        {projects.map((p, i) => (
+          <Flagship key={p.slug} project={p} index={i} />
+        ))}
+      </FlagshipCollection>
       <section className="section shell">
         <SectionTitle
           label="Supporting engineering"

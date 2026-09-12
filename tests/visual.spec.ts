@@ -75,7 +75,6 @@ test("first entry, skip and repeat entry preserve access", async ({ page }) => {
     "data-phase",
     "active",
   );
-  await page.screenshot({ path: "artifacts/visual/entry-active.png" });
   await page.getByRole("button", { name: "Skip introduction" }).click();
   await expect(page.locator(".arrival")).toHaveAttribute("data-phase", "done");
   await page.reload();
@@ -235,5 +234,119 @@ test("moving narrative preserves readable contrast", async ({ page }) => {
   const step = page.locator("[data-step]").nth(4);
   await step.scrollIntoViewIfNeeded();
   await expect(step).toHaveCSS("opacity", "1");
-  expect((await new AxeBuilder({ page }).withTags(["wcag2aa"]).analyze()).violations).toEqual([]);
+  expect(
+    (await new AxeBuilder({ page }).withTags(["wcag2aa"]).analyze()).violations,
+  ).toEqual([]);
+});
+
+test("entry material transforms into the same hero element", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+  const material = page.locator(".hero-art .material");
+  await expect(page.locator(".arrival")).toHaveAttribute(
+    "data-phase",
+    "active",
+  );
+  const handle = await material.elementHandle();
+  const expanded = await material.boundingBox();
+  expect(expanded!.width).toBeGreaterThan(1000);
+  await page.screenshot({
+    path: "artifacts/visual/material-entry-expanded.png",
+  });
+  await expect(page.locator(".arrival")).toHaveAttribute("data-phase", "done", {
+    timeout: 4500,
+  });
+  expect(
+    await handle!.evaluate(
+      (el) => el === document.querySelector(".hero-art .material"),
+    ),
+  ).toBe(true);
+  const settled = await material.boundingBox();
+  expect(settled!.width).toBeLessThan(700);
+  await page.screenshot({
+    path: "artifacts/visual/material-entry-settled.png",
+  });
+});
+
+test("local performance records layout stability and transfer budget", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.addInitScript(() => {
+    const metrics = { cls: 0, lcp: 0 };
+    Object.assign(window, { aixionPerformance: metrics });
+    new PerformanceObserver((list) => {
+      for (const raw of list.getEntries()) {
+        const entry = raw as PerformanceEntry & {
+          hadRecentInput?: boolean;
+          value?: number;
+        };
+        if (!entry.hadRecentInput) metrics.cls += entry.value || 0;
+      }
+    }).observe({ type: "layout-shift", buffered: true });
+    new PerformanceObserver((list) => {
+      const entries = list.getEntries();
+      metrics.lcp = entries[entries.length - 1]?.startTime || 0;
+    }).observe({ type: "largest-contentful-paint", buffered: true });
+  });
+  await page.goto("/");
+  await expect(page.locator(".arrival")).toHaveAttribute("data-phase", "done", {
+    timeout: 4500,
+  });
+  await page.evaluate(() => document.fonts.ready);
+  const metrics = await page.evaluate(() => {
+    const measured = (
+      window as unknown as { aixionPerformance: { cls: number; lcp: number } }
+    ).aixionPerformance;
+    const resources = performance.getEntriesByType(
+      "resource",
+    ) as PerformanceResourceTiming[];
+    return {
+      ...measured,
+      transferBytes: resources.reduce((n, r) => n + r.transferSize, 0),
+      resourceCount: resources.length,
+      navigation: performance.getEntriesByType("navigation")[0].toJSON(),
+    };
+  });
+  expect(metrics.cls).toBeLessThan(0.1);
+  expect(metrics.transferBytes).toBeLessThan(1_500_000);
+  const { writeFileSync } = await import("node:fs");
+  writeFileSync(
+    "artifacts/visual/local-performance.json",
+    JSON.stringify(
+      {
+        environment:
+          "Local Chromium, unthrottled; not field performance or a Lighthouse score",
+        ...metrics,
+      },
+      null,
+      2,
+    ),
+  );
+});
+
+test("flagships share one anchored frame and reverse cleanly", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/work");
+  const collection = page.locator(".flagship-collection");
+  const frame = await page.locator(".collection-frame").elementHandle();
+  await page
+    .locator("#control-tower .project-heading")
+    .scrollIntoViewIfNeeded();
+  await expect(collection).toHaveAttribute("data-active-project", "1");
+  await expect(
+    page.locator('.collection-visual[data-current="true"]'),
+  ).toContainText("Aixion Control Tower");
+  await page.screenshot({ path: "artifacts/visual/flagship-handoff.png" });
+  await page.locator("#tradebot .project-heading").scrollIntoViewIfNeeded();
+  await expect(collection).toHaveAttribute("data-active-project", "0");
+  expect(
+    await frame!.evaluate(
+      (el) => el === document.querySelector(".collection-frame"),
+    ),
+  ).toBe(true);
 });

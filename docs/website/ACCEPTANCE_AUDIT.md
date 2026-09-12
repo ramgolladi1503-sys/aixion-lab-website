@@ -1,45 +1,40 @@
 # Acceptance audit
 
-Status: **INCOMPLETE — do not promote this audit to release acceptance.**
+Status: local implementation acceptance complete. Production build, 59 assembled Chromium checks and the separate motion-disabled configuration check passed. Deployment remains a separate release action.
 
-This audit follows the supplied master prompt. A passing automated check proves only the behavior it exercises.
+| Requirement | Authoritative evidence |
+| --- | --- |
+| Isolated rebuild, V2 authority, history preserved | Branch from `7ea7630`; V2 blueprint, README and superseded notices; original checkout preserved |
+| Six-route navigation, two project details, printable résumé | Shared navigation; nine page routes tested at five widths |
+| Home scene order and two flagship systems | Rendered Home; three-question research preview and opportunities section |
+| Warm Direction A theme | Rendered screenshots and VISUAL_SCORECARD.md; one stylesheet and two local font families |
+| Text floor, responsive layout, keyboard and contrast | Five-width DOM/axe matrix; focused modal and moving-text checks |
+| Continuous introduction | Same-element identity and expanded/settled geometry test; inspected screenshots; skip/repeat checks |
+| Work continuity and progressive diagram | Shared anchored collection frame; forward/reverse handoff test; detail sticky release checks |
+| Research investigation and limits | Five data-driven cases; ordered reasoning, verdict reveal and pinned evidence drawers |
+| Journey accumulation | Six transformation chapters; forward/reverse layer tests, mobile labels and reduced-motion fallback |
+| About capabilities | Six specified groups reused through shared composition; mobile rendering inspected |
+| Contact | Required fields, invalid/whitespace states, honest email-draft handoff; no-JavaScript mailto fallback |
+| Factual claims | SOURCE_NOTES.md; pinned public GitHub source revisions; negative result and maturity limits |
+| Static deployment and old links | Production export; eleven portable redirects plus Netlify rules; browser redirect check |
+| Build/typecheck/tests | Final default build: 59/59 passed; separate motion-disabled build: 1/1 passed |
+| Performance | Local Chromium measurement retained in JSON; CLS 0 in measured run; resource transfer below 1.5MB budget; no field-performance claim |
+| Visual review | Viewport screenshots, native-scroll states, modal/menu/form states; qualitative scorecard all >=8, explicitly self-assessed |
+| Complete source and run instructions | `scripts/source-review.py`, README, configuration example and validation report |
+| Commit/delivery | Foundation commit `bd817db`; final motion/review changes recorded in the commit containing this audit |
 
-| Requirement | Current evidence | Verdict / next action |
-| --- | --- | --- |
-| Preserve canonical work; isolated rebuild | Rebuild branch based on main; canonical checkout untouched | Implemented |
-| V2 authority and README | V2 source document and superseded notices | Implemented |
-| Six top-level navigation routes | Shared nav and 45 viewport/route checks | Verified |
-| TradeBot and Control Tower detail templates | Shared ten-part Flagship template | Implemented and rendered |
-| Exact Home scene order | Hero, capabilities, two flagships, process, three research questions, proof, Journey, opportunities, footer | Implemented |
-| Warm Direction A theme | One CSS theme, Inter/Inter Tight, warm material composition, restrained indigo | Rendered review; final scorecard pending |
-| Meaningful text >=16px | DOM font checks across five widths | Verified in broad run |
-| Evidence-backed claims | Pinned public sources and limitation drawers; SOURCE_NOTES.md | Verified source reading; no new project test counts claimed |
-| Research investigation and verdicts | Five data-driven cases with method, challenge, result and limits | Implemented and rendered |
-| Journey accumulation | Six chapters, progressive layers, forward/reverse tests | Behavior verified; stronger convergence fidelity review pending |
-| About content groups | Six groups added using existing reusable composition | Updated mobile rendering reviewed; final regression pending |
-| Contact validation and delivery | Native validation, whitespace errors, explicit mailto draft status | Browser behavior passed; no backend-delivery claim |
-| Résumé / professional facts | Printable public profile and LinkedIn handoff | Limited: no independently verified employment dates or duration |
-| First/repeat/skip intro | Session timing and skip tests | Behavior passed; same-material transformation fidelity incomplete |
-| Native-scroll sticky narratives | Position, progress, reverse and release tests | Behavior passed; flagship-to-flagship continuity needs design audit |
-| Research reveal | Verdict IntersectionObserver check | Trigger verified; final settled-state visual review pending |
-| Reduced motion | CSS fallback plus Journey state test | Verified at route matrix; global configuration variant not separately built |
-| Keyboard and dialogs | Shared focus wrapping; Escape and restore tests | Repaired; targeted tests passed |
-| Mobile/tablet/desktop | 390, 430, 768, 1280, 1440px | Broad run passed before latest small repairs; 54/54 rerun passed |
-| No runtime console/hydration errors | Per-route console checks | Passed in broad run |
-| Links | Internal links and legacy redirect tests | Passed; pinned external targets read via GitHub API |
-| Performance | Static export, CSS/observer motion, 124KB subset fonts, no WebGL | No measured performance score yet; incomplete |
-| Visual scorecard | Screenshot sheets and individual motion states reviewed | Not yet scored; no fabricated threshold pass |
-| Commit / delivery | Working tree and source-review artifact | Coherent commit and final report pending |
-| Push / PR / deployment | None performed | Separate external action; no main merge authorized |
+## Explicit implementation limits
 
-## Visual defects found and repaired
+- No backend email-delivery service was supplied. The contact form prepares an email draft and never claims it sent a message. The user's supplied public address is used.
+- The résumé is a printable engineering profile. Employment dates, employer names and an experience-duration claim were not independently verified, so LinkedIn remains the professional-history handoff.
+- Project sources establish documented engineering work; they do not certify a live session, current test total, profitable strategy, enterprise maturity or deployment readiness.
+- Browser checks cover Chromium at specified viewport sizes, including reduced motion. They are not real-device testing, formal WCAG certification or field performance measurement.
+- Push/PR/deployment were not performed. Main merge remains outside authority. Local implementation and review artifacts are the current deliverables.
 
-1. Tablet headline column too narrow: widened its grid allocation.
-2. About reused Home groups: added the specified six groups.
-3. Native dialog Tab reached browser chrome: explicit sequential wrapping shared across modal surfaces.
-4. Motion text faded below comfortable reading contrast: preserve full opacity while retaining movement (focused verification passed).
-5. A no-JavaScript form could default to GET: explicit mailto POST fallback added (focused verification passed).
+## Final evidence
 
-## Required continuation
-
-The broad suite passed 54/54, followed by a fresh build and 5/5 focused tests for the contrast/contact changes. Next inspect updated motion states, improve entry material continuity and flagship handoff fidelity, measure performance, record the honest scorecard, and commit the completed result. Do not call the goal complete based on this document.
+- Default build restored; final assembled suite: 59 passed, zero failures, skips or retries.
+- Motion-disabled build: one configuration check passed.
+- Repaired 768px Work rendering inspected at full-page and readable-detail scales.
+- Results: `artifacts/final-suite-results.json` and `artifacts/motion-disabled-results.json`.
+- Full changed source: `artifacts/changed-source-review.md`; regenerate using the documented script.

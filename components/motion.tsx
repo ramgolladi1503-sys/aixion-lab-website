@@ -34,6 +34,7 @@ export function MotionController() {
 export function Arrival() {
   const [phase, setPhase] = useState("pending");
   const [repeat, setRepeat] = useState(false);
+  const entryAnimation = useRef<Animation | null>(null);
   useEffect(() => {
     let seen = false;
     try {
@@ -47,7 +48,36 @@ export function Arrival() {
       matchMedia("(prefers-reduced-motion: reduce)").matches;
     setRepeat(seen);
     setPhase(reduced ? "done" : "active");
-    const finish = () => setPhase("done");
+    const material = document.querySelector<HTMLElement>(".hero-art .material");
+    const hero = document.querySelector<HTMLElement>(".hero");
+    let materialAnimation: Animation | undefined;
+    if (!reduced && !seen && material && hero && typeof material.animate === "function") {
+      const target = material.getBoundingClientRect();
+      const canvas = hero.getBoundingClientRect();
+      const expanded = `translate(${canvas.left - target.left}px, ${canvas.top - target.top}px) scale(${canvas.width / target.width}, ${canvas.height / target.height})`;
+      materialAnimation = material.animate(
+        [
+          { transform: expanded, borderRadius: "0", offset: 0 },
+          {
+            transform: expanded,
+            borderRadius: "0",
+            offset: 0.65,
+            easing: "cubic-bezier(.22,.68,.12,1)",
+          },
+          {
+            transform: "none",
+            borderRadius: getComputedStyle(material).borderRadius,
+            offset: 1,
+          },
+        ],
+        { duration: site.motion.firstMs, easing: "linear", fill: "both" },
+      );
+    }
+    entryAnimation.current = materialAnimation ?? null;
+    const finish = () => {
+      materialAnimation?.cancel();
+      setPhase("done");
+    };
     const timer = setTimeout(
       finish,
       seen ? site.motion.repeatMs : site.motion.firstMs,
@@ -60,6 +90,7 @@ export function Arrival() {
     window.addEventListener("keydown", finish, { once: true });
     return () => {
       clearTimeout(timer);
+      materialAnimation?.cancel();
       window.removeEventListener("wheel", finish);
       window.removeEventListener("touchstart", finish);
       window.removeEventListener("keydown", finish);
@@ -77,7 +108,13 @@ export function Arrival() {
         <p>Build. Question. Understand.</p>
       </div>
       {phase === "active" && (
-        <button className="arrival-skip" onClick={() => setPhase("done")}>
+        <button
+          className="arrival-skip"
+          onClick={() => {
+            entryAnimation.current?.cancel();
+            setPhase("done");
+          }}
+        >
           Skip introduction <span aria-hidden="true">→</span>
         </button>
       )}

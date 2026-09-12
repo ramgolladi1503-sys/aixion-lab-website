@@ -30,4 +30,6 @@ Playwright starts a dedicated static server on port 3100 and never reuses an unr
 - No backend or data migration. The old visual runtime is removed; Git history retains it. Rollback means redeploying the prior approved revision.
 - Preview, review the contact handoff, then promote only with deployment authorization. Do not auto-merge.
 
+For a complete local text export of the changed source and binary hashes, run `python3 scripts/source-review.py`; output is `artifacts/changed-source-review.md`.
+
 See [validation report](docs/website/VALIDATION.md) for browser evidence and known limits.

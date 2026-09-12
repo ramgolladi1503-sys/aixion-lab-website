@@ -3,7 +3,8 @@ from pathlib import Path
 import hashlib
 import subprocess
 root = Path(__file__).resolve().parents[1]
-paths = set(subprocess.check_output(['git', 'diff', '--name-only', 'HEAD'], cwd=root, text=True).splitlines())
+base = subprocess.check_output(['git', 'merge-base', 'HEAD', 'origin/main'], cwd=root, text=True).strip()
+paths = set(subprocess.check_output(['git', 'diff', '--name-only', base], cwd=root, text=True).splitlines())
 paths.update(subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard'], cwd=root, text=True).splitlines())
 out = root / 'artifacts' / 'changed-source-review.md'
 out.parent.mkdir(exist_ok=True)

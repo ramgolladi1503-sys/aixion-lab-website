@@ -1,40 +1,23 @@
-# Rebuild validation — in progress
+# Validation
 
 ## Authority
 
-- Branch: `ram/astra-calm-minimalism-v1`
-- Clean base: `7ea7630`, fetched from main.
-- Canonical dirty checkout was preserved. This rebuild is isolated.
-- Design: supplied master prompt and Direction A from the supplied three-direction moodboard.
+The rebuild lives in `/Users/madhuram/aixion-calm-rebuild` on `ram/astra-calm-minimalism-v1`, based on `7ea7630`. The original dirty checkout is preserved. The supplied master brief and Direction A moodboard govern this implementation; previous dark-glass work is superseded.
 
-## Verified so far
+## Final verification
 
-- Production static build and TypeScript completed successfully.
-- Browser suite after modal, tablet and About repairs: **54/54 passed**. Every route at 390, 430, 768, 1280 and 1440 pixels passed render status, internal links, meaningful text >=16px, horizontal overflow and axe WCAG checks. Full result retained at `artifacts/viewport-suite-54-passed.json`.
-- Remaining modal focus failure was repaired with shared Tab/Shift-Tab wrapping. Both drawer and mobile-menu tests then passed (2/2).
-- First/repeat/skip entry, native sticky advance/reverse/release, Journey accumulation/reversal, research verdict reveal, reduced motion, no-JavaScript hero, portable legacy redirect and contact draft states passed in the broad run.
-- Rendered mobile openings, mobile middle sections, tablet openings, desktop openings, desktop middle sections and desktop footers have been inspected.
+The production static export and its TypeScript check pass. The separate `NEXT_PUBLIC_MOTION_ENABLED=false` build passed its browser configuration check. The default build was then restored for the assembled browser suite; its final result is recorded in the acceptance audit and retained at `artifacts/final-suite-results.json`.
 
-## Repairs from rendered review
+The suite covers nine routes at 390, 430, 768, 1280 and 1440 pixels: response status, runtime errors, internal links, text floor, overflow and axe checks. Interaction checks cover first/repeat/skip introduction, same-element material continuity, modal focus/escape/restore, mobile navigation, contact validation/draft handoff, native sticky advance/reverse/release, shared flagship handoff, Journey accumulation/reversal, research verdict, reduced motion, JavaScript-disabled content, legacy redirects and local performance.
 
-- Preview server now resolves extensionless static routes correctly.
-- Fonts reduced to roughly 124 KB of WOFF2.
-- Mobile Journey shows capability names, not unexplained numbered tiles.
-- Tablet hero composition widened for readable headline wrapping.
-- About now uses its six specified capability groups instead of repeating Home's four groups.
-- Motion-state screenshot review found faint narrative text during transitions. The source now keeps text opaque while retaining positional motion; rebuild verification is pending.
+## Rendered review and repairs
 
-## Remaining acceptance work
+Viewport screenshots and separate native-scroll states were inspected. Repairs include extensionless preview routing, subset fonts, labeled mobile Journey layers, wider tablet hero composition, six About capability groups, dialog focus wrapping, full-opacity moving text, continuous intro material and a shared desktop flagship frame. Tablet Work uses a vertical narrative after review found the anchored rail too tall at 768px. The repaired full-page tablet render and a readable detail crop were inspected.
 
-- Focused rebuild verification for full-opacity motion, contact fallback, drawer and sticky/Journey regression: **5/5 passed**.
-- Updated tablet hero and mobile About groups inspected; full viewport checks passed.
-- Complete motion fidelity audit, including material continuity on entry and flagship handoffs; existing trigger checks alone are insufficient proof.
-- Complete source/content and performance checks, and record an honest category-by-category visual scorecard.
-- Produce complete changed-source review artifact, coherent commit, and final delivery report.
+Artifacts are local and ignored by Git: `artifacts/visual/`, `artifacts/motion-disabled-results.json`, `artifacts/final-suite-results.json`, and the complete source export `artifacts/changed-source-review.md`. Reproduce with the README commands. The visual scorecard is explicitly a qualitative implementation-agent assessment.
 
-## Explicit limitations
+## Performance and scope limits
 
-- Contact prepares an addressed email draft. No server delivery service was supplied, so the site does not claim message delivery.
-- Résumé is a printable public engineering profile. Employment dates and employers remain linked through LinkedIn; they have not been independently verified here.
-- Project sources are pinned public documentation, not newly executed project tests or current live-runtime evidence.
-- No deployment, main merge, or private evidence publication has occurred.
+An earlier local unthrottled Chromium observation recorded CLS 0, LCP 284 ms and 739,040 resource bytes; the final suite refreshes `artifacts/visual/local-performance.json`. These are local observations, not field performance or Lighthouse certification. The intentional first introduction lasts 3.5 seconds and can be skipped.
+
+Contact prepares an email draft addressed to the supplied public email; no backend delivery service exists. Résumé is a printable engineering profile with LinkedIn for employment history. Project claims use pinned public documentation and do not certify live runtime, current project test totals, profitable strategies or enterprise maturity. Browser coverage is Chromium at the specified widths, not physical-device testing or formal WCAG certification. No deployment or main merge occurred.
