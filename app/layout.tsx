@@ -3,17 +3,21 @@ import localFont from "next/font/local";
 import { Header, Footer } from "@/components/shell";
 import { MotionController } from "@/components/motion";
 import "./globals.css";
+import "./visual-recovery.css";
 import { site } from "@/lib/content";
+
 const inter = localFont({
   src: "../public/fonts/inter.woff2",
   variable: "--font-body",
   display: "swap",
 });
+
 const tight = localFont({
   src: "../public/fonts/inter-tight.woff2",
   variable: "--font-display",
   display: "swap",
 });
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://aixionlab.com"),
   title: { default: "Aixion Lab — Ram Golladi", template: "%s — Aixion Lab" },
@@ -26,6 +30,7 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
+
 export default function RootLayout({
   children,
 }: {
