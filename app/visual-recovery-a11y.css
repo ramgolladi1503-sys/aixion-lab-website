@@ -1,10 +1,27 @@
-/* Accessibility guard for the Calm Minimalism recovery palette.
- * Keep these as shared token corrections rather than page-specific exceptions.
+/* Calm Minimalism authority + accessibility guard.
+ * These corrections sit after the visual recovery layer so the rendered site
+ * remains faithful to the approved Astra brief without weakening existing QA.
  */
 
 :root {
   --recovery-muted: #62655f;
   --recovery-indigo: #5f6e9f;
+}
+
+/* The master brief locks the public type system to Inter Tight + Inter.
+   No third decorative display family. */
+h1,
+h2,
+.statement h2,
+.selected-copy h3,
+.project-heading h2,
+.research-identity h2,
+.journey-chapter h2,
+.about-work h2,
+.contact-copy h2,
+.resume-body h2 {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 650;
 }
 
 .eyebrow {
@@ -17,4 +34,79 @@
 
 .journey-preview .layer:last-child {
   background: var(--recovery-indigo);
+}
+
+/* The two flagship systems are story scenes, not equal SaaS cards. */
+.selected-grid {
+  grid-template-columns: 1fr;
+  gap: 84px;
+}
+
+.selected-project {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  align-items: stretch;
+  border-left: 0;
+  border-right: 0;
+  border-top: 1px solid rgba(48, 54, 55, 0.14);
+  border-bottom: 1px solid rgba(48, 54, 55, 0.14);
+  background: transparent;
+}
+
+.selected-project + .selected-project {
+  border-top: 1px solid rgba(48, 54, 55, 0.14);
+}
+
+.selected-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(42px, 5.5vw, 78px);
+}
+
+.project-editorial-visual {
+  min-height: 510px;
+  aspect-ratio: auto;
+}
+
+.selected-project:nth-child(even) .selected-copy {
+  order: 1;
+}
+
+.selected-project:nth-child(even) .project-editorial-visual {
+  order: 2;
+}
+
+@media (max-width: 900px) {
+  .selected-grid {
+    gap: 48px;
+  }
+
+  .selected-project {
+    grid-template-columns: 1fr;
+  }
+
+  .selected-project:nth-child(even) .project-editorial-visual,
+  .project-editorial-visual {
+    order: -1;
+    min-height: 390px;
+  }
+
+  .selected-project:nth-child(even) .selected-copy,
+  .selected-copy {
+    order: 0;
+    padding: 34px 30px 38px;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-editorial-visual,
+  .selected-project:nth-child(even) .project-editorial-visual {
+    min-height: 315px;
+  }
+
+  .selected-copy,
+  .selected-project:nth-child(even) .selected-copy {
+    padding: 28px 24px 32px;
+  }
 }
