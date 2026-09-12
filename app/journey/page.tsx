@@ -1,58 +1,82 @@
 import type { Metadata } from "next";
-import { journey } from "@/lib/site-data";
-import { SectionHeading } from "@/components/ui";
-import { AixionSignal, SystemVisual } from "@/components/system-visuals";
+import Link from "next/link";
+import { Opening, Layers } from "@/components/compositions";
+import { ProgressScene } from "@/components/motion";
+import { journey } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Journey",
-  description: "From quality engineering to applied systems engineering.",
-};
+export const metadata: Metadata = { title: "Journey" };
 
-export default function JourneyPage() {
+const chapterPaths = [
+  ["Failure", "Reproduce", "Learn"],
+  ["Repeat", "Automate", "Feedback"],
+  ["Data", "State", "Decision", "Persistence"],
+  ["Hypothesis", "Challenge", "Evidence", "Verdict"],
+  ["Agent", "Scope", "Approval", "Validate", "Audit"],
+  ["Quality", "Automation", "Systems", "Research", "AI", "Aixion"],
+];
+
+function ChapterPath({ index, title }: { index: number; title: string }) {
+  return (
+    <ol className="journey-path" aria-label={`${title} capability path`}>
+      {chapterPaths[index].map((step, i) => (
+        <li key={step}>
+          <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+          <strong>{step}</strong>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+export default function Journey() {
   return (
     <>
-      <section className="page-hero journey-hero" data-reveal="journey-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">AIXION LAB · JOURNEY</p>
-            <h1>The tools changed. The questions got stricter.</h1>
-            <p className="lede">Quality engineering started with failure. Each step since then added a harder requirement: explain the state, trust the evidence, bound the authority.</p>
-            <AixionSignal compact />
-          </div>
-          <SystemVisual kind="journey" />
-        </div>
-      </section>
-
-      <section className="section-tight journey-timeline-section" data-reveal="journey-questions">
-        <div className="shell">
-          <SectionHeading eyebrow="SEVEN QUESTIONS" title="The questions that changed the way I build." copy="This is not a second résumé. Each stage records the engineering question that the previous stage made impossible to ignore." />
-          <div className="journey-timeline">
-            {journey.map(([number, title, question]) => (
-              <article className="journey-step" key={number} data-reveal={`journey-${number}`}>
-                <span className="number">{number}</span>
-                <div>
-                  <span className="journey-question-label">Question {number}</span>
-                  <h3>{title}</h3>
-                  <p className="journey-question">“{question}”</p>
+      <Opening
+        label="Journey"
+        title="The problems kept getting bigger."
+        copy="Testing applications led to automation. Automation led to whole systems. Then came data, research, and a new question about AI: who gets to act?"
+      />
+      <ProgressScene className="journey-story shell">
+        <aside className="journey-sticky">
+          <Layers />
+          <p className="caption">Nothing disappeared. Capability accumulated.</p>
+        </aside>
+        <div>
+          {journey.map(([label, title, line, copy, question], i) => (
+            <section
+              className="journey-chapter"
+              key={title}
+              data-step
+              data-reveal
+              id={`chapter-${i + 1}`}
+            >
+              <p className="eyebrow">
+                0{i + 1} / {label}
+              </p>
+              <h2>{title}</h2>
+              <h3>{line}</h3>
+              <p>{copy}</p>
+              <ChapterPath index={i} title={title} />
+              <div className="transition-question">
+                <span className="eyebrow">
+                  {i === 5 ? "One continuing question" : "Next question"}
+                </span>
+                <p>{question}</p>
+              </div>
+              {i === 5 && (
+                <div className="actions">
+                  <Link className="button" href="/work">
+                    Explore My Work →
+                  </Link>
+                  <Link className="text-link" href="/resume">
+                    View Résumé ↗
+                  </Link>
                 </div>
-              </article>
-            ))}
-          </div>
+              )}
+            </section>
+          ))}
         </div>
-      </section>
-
-      <section className="section-tight journey-principles-section" data-reveal="journey-principles">
-        <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="ENGINEERING PHILOSOPHY" title="The common thread is state, evidence and failure." copy="Testing software, automating workflows, working with data and building AI systems are different disciplines. Reliable systems still need explicit state, controlled authority and evidence when things go wrong." />
-          <div className="principles-grid">
-            <div className="principle"><strong>Observable by design</strong><p>If a system cannot explain what state it is in, the interface is hiding an engineering problem.</p></div>
-            <div className="principle"><strong>Failure is evidence</strong><p>A failed experiment or runtime path belongs in the learning system rather than being erased.</p></div>
-            <div className="principle"><strong>Authority stays explicit</strong><p>Automation should not quietly gain the ability to act beyond the boundary it was designed to hold.</p></div>
-            <div className="principle"><strong>Proof beats claims</strong><p>The site makes strong claims only when a public-safe proof path exists.</p></div>
-          </div>
-          <p className="system-principle">Aixion Lab is the current answer: intelligence can be useful without becoming opaque.</p>
-        </div>
-      </section>
+      </ProgressScene>
     </>
   );
 }

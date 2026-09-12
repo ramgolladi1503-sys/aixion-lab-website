@@ -1,0 +1,292 @@
+/* Calm Minimalism authority + accessibility guard.
+ * These corrections sit after the visual recovery layer so the rendered site
+ * remains faithful to the approved Astra brief without weakening existing QA.
+ */
+
+:root {
+  --recovery-muted: #62655f;
+  --recovery-indigo: #5f6e9f;
+}
+
+/* The master brief locks the public type system to Inter Tight + Inter.
+   No third decorative display family. */
+h1,
+h2,
+.statement h2,
+.selected-copy h3,
+.project-heading h2,
+.research-identity h2,
+.journey-chapter h2,
+.about-work h2,
+.contact-copy h2,
+.resume-body h2 {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 650;
+}
+
+.eyebrow {
+  color: var(--recovery-muted);
+}
+
+.hero-note {
+  color: #626760;
+}
+
+.journey-preview .layer:last-child {
+  background: var(--recovery-indigo);
+}
+
+/* The two flagship systems are story scenes, not equal SaaS cards. */
+.selected-grid {
+  grid-template-columns: 1fr;
+  gap: 84px;
+}
+
+.selected-project {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  align-items: stretch;
+  border-left: 0;
+  border-right: 0;
+  border-top: 1px solid rgba(48, 54, 55, 0.14);
+  border-bottom: 1px solid rgba(48, 54, 55, 0.14);
+  background: transparent;
+}
+
+.selected-project + .selected-project {
+  border-top: 1px solid rgba(48, 54, 55, 0.14);
+}
+
+.selected-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(42px, 5.5vw, 78px);
+}
+
+.project-editorial-visual {
+  min-height: 510px;
+  aspect-ratio: auto;
+}
+
+.selected-project:nth-child(even) .selected-copy {
+  order: 1;
+}
+
+.selected-project:nth-child(even) .project-editorial-visual {
+  order: 2;
+}
+
+/* Research uses a concise visual trace so each case communicates its logic
+   before the longer evidence sequence. These are qualitative process diagrams,
+   never fabricated performance charts. */
+.research-trace {
+  margin-top: 42px;
+  padding-top: 22px;
+  border-top: 1px solid var(--recovery-line);
+}
+
+.research-trace figcaption {
+  margin-bottom: 18px;
+  color: var(--recovery-muted);
+  font-weight: 600;
+}
+
+.research-trace ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.research-trace li {
+  position: relative;
+  min-height: 96px;
+  padding: 15px 14px 14px 0;
+  border-top: 2px solid #8c96b7;
+}
+
+.research-trace li:not(:last-child) {
+  margin-right: 16px;
+}
+
+.research-trace li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -16px;
+  width: 16px;
+  height: 2px;
+  background: #c9c4ba;
+}
+
+.research-trace li > span {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--recovery-muted);
+  font-size: 16px;
+}
+
+.research-trace li > strong {
+  display: block;
+  color: var(--recovery-ink);
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+/* Journey chapters carry one compact transformation path. The shared left
+   capability stack still provides continuity while each chapter gains a
+   meaningful visual rather than additional prose. */
+.journey-path {
+  display: flex;
+  align-items: stretch;
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--recovery-line);
+  border-bottom: 1px solid var(--recovery-line);
+}
+
+.journey-path li {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 18px 12px 18px 0;
+}
+
+.journey-path li + li {
+  padding-left: 18px;
+}
+
+.journey-path li + li::before {
+  content: "→";
+  position: absolute;
+  left: -7px;
+  top: 31px;
+  color: #777f9d;
+  font-size: 16px;
+}
+
+.journey-path span,
+.journey-path strong {
+  display: block;
+  font-size: 16px;
+}
+
+.journey-path span {
+  margin-bottom: 7px;
+  color: var(--recovery-muted);
+}
+
+.journey-path strong {
+  color: var(--recovery-ink);
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .selected-grid {
+    gap: 48px;
+  }
+
+  .selected-project {
+    grid-template-columns: 1fr;
+  }
+
+  .selected-project:nth-child(even) .project-editorial-visual,
+  .project-editorial-visual {
+    order: -1;
+    min-height: 390px;
+  }
+
+  .selected-project:nth-child(even) .selected-copy,
+  .selected-copy {
+    order: 0;
+    padding: 34px 30px 38px;
+  }
+
+  .research-trace {
+    margin-top: 30px;
+  }
+
+  /* Tablet Journey retains the two-column narrative, so its per-chapter trace
+     must become a small grid instead of forcing a horizontal rail. */
+  .journey-path {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .journey-path li,
+  .journey-path li + li {
+    padding: 14px 12px 14px 0;
+    border-bottom: 1px solid rgba(43, 49, 51, 0.08);
+  }
+
+  .journey-path li:nth-child(even) {
+    padding-left: 16px;
+  }
+
+  .journey-path li + li::before {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  /* On mobile keep capability copy aligned to the same reading edge rather
+     than indenting paragraphs under the numeric marker. */
+  .capabilities article {
+    grid-template-columns: 30px 1fr;
+    gap: 10px 12px;
+  }
+
+  .capabilities article p {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+  }
+
+  .research-trace {
+    margin-top: 30px;
+    padding-top: 18px;
+  }
+
+  .research-trace ol {
+    grid-template-columns: 1fr;
+  }
+
+  .research-trace li {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid #c9c4ba;
+  }
+
+  .research-trace li:not(:last-child) {
+    margin-right: 0;
+  }
+
+  .research-trace li:not(:last-child)::after {
+    display: none;
+  }
+
+  .research-trace li > span {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-editorial-visual,
+  .selected-project:nth-child(even) .project-editorial-visual {
+    min-height: 315px;
+  }
+
+  .selected-copy,
+  .selected-project:nth-child(even) .selected-copy {
+    padding: 28px 24px 32px;
+  }
+}

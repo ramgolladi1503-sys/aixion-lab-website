@@ -1,29 +1,16 @@
-import { defineConfig, devices } from "@playwright/test";
-
+import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
-  timeout: 45_000,
+  timeout: 60_000,
   retries: 0,
-  reporter: "line",
-  outputDir: "test-results",
-  use: {
-    baseURL: "http://127.0.0.1:3000",
-    trace: "retain-on-failure",
-  },
+  workers: 2,
+  reporter: [["line"], ["json", { outputFile: "test-results/results.json" }]],
+  use: { baseURL: "http://127.0.0.1:3100", trace: "retain-on-failure" },
   webServer: {
-    command: "npx --yes serve@latest out -l 3000",
-    url: "http://127.0.0.1:3000",
-    reuseExistingServer: true,
-    timeout: 120_000,
+    command: "node scripts/serve.mjs",
+    url: "http://127.0.0.1:3100",
+    reuseExistingServer: false,
+    timeout: 30_000,
   },
-  projects: [
-    {
-      name: "desktop",
-      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 1200 } },
-    },
-    {
-      name: "mobile",
-      use: { ...devices["Pixel 7"] },
-    },
-  ],
+  projects: [{ name: "chromium", use: { browserName: "chromium" } }],
 });

@@ -38,7 +38,7 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Typecheck
         run: npm run typecheck
@@ -49,8 +49,8 @@ jobs:
       - name: Verify export
         run: |
           test -f out/index.html
-          test -f out/systems/tradebot.html || test -f out/systems/tradebot/index.html
-          test -f out/research/evidence-bound-autonomy.html || test -f out/research/evidence-bound-autonomy/index.html
+          test -f out/work/tradebot.html || test -f out/work/tradebot/index.html
+          test -f out/work/control-tower.html || test -f out/work/control-tower/index.html
           grep -q '/_next/' out/index.html
           ! grep -q '/aixion-lab-website/_next/' out/index.html
 

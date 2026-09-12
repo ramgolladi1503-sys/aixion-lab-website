@@ -1,0 +1,10 @@
+/systems/tradebot /work/tradebot 301
+/systems/control-core /work/control-tower 301
+/systems/* /work 301
+/systems /work 301
+/collaborate /contact 301
+/pulse /research 301
+/research/evidence-bound-autonomy /research#human-controlled-ai 301
+/research/mean-reversion-candidate /research#strategy-robustness 301
+/research/opening-session-market-structure /research#strategy-robustness 301
+/research/rec-md-structural-interaction /research#regime-architecture 301

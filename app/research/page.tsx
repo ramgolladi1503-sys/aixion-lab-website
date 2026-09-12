@@ -1,48 +1,84 @@
 import type { Metadata } from "next";
-import { SectionHeading } from "@/components/ui";
-import { ResearchIndex } from "@/components/research-index";
+import { Opening, Statement, Opportunity } from "@/components/compositions";
+import { EvidenceStrip } from "@/components/evidence";
+import { research } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Research Notes",
-  description: "Questions, hypotheses, experiments and failures that move Aixion systems forward.",
-};
+export const metadata: Metadata = { title: "Research" };
 
-export default function ResearchPage() {
+const traces = [
+  ["Historical signal", "Challenge", "Verdict"],
+  ["Classification", "Allowed role", "Execution boundary"],
+  ["Live feed", "Freshness check", "Reconciliation"],
+  ["Agent request", "Human approval", "Validated action"],
+  ["Repository", "Cited retrieval", "Refuse unsupported"],
+];
+
+function ResearchTrace({ index, title }: { index: number; title: string }) {
+  return (
+    <figure className="research-trace" aria-label={`${title} investigation trace`}>
+      <figcaption>Investigation trace</figcaption>
+      <ol>
+        {traces[index].map((step, i) => (
+          <li key={step}>
+            <span aria-hidden="true">0{i + 1}</span>
+            <strong>{step}</strong>
+          </li>
+        ))}
+      </ol>
+    </figure>
+  );
+}
+
+export default function Research() {
   return (
     <>
-      <section className="page-hero research-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">AIXION LAB · RESEARCH</p>
-            <h1>Research Notes</h1>
-            <p className="lede">Questions, hypotheses, experiments and failures that move the systems forward. A rejected result is still useful when the method and boundary are clear.</p>
+      <Opening
+        label="Research"
+        title="The goal isn’t to prove an idea right. It’s to find out whether it survives being wrong."
+        copy="Investigations into robustness, real-time reliability and controlled AI. Conclusions stay within what the sources support."
+      />
+      <div className="shell research-jump" aria-label="Research questions">
+        {research.map((r) => (
+          <a key={r.id} href={`#${r.id}`}>
+            {r.title} ↘
+          </a>
+        ))}
+      </div>
+      {research.map((r, i) => (
+        <section key={r.id} id={r.id} className="research-case shell">
+          <div className="research-identity" data-reveal>
+            <p className="eyebrow">
+              0{i + 1} / {r.title}
+            </p>
+            <h2>{r.question}</h2>
+            <ResearchTrace index={i} title={r.title} />
           </div>
-          <div className="panel meta-board">
-            <div><span>Lifecycle</span><strong>Question → Evidence</strong></div>
-            <div><span>Promotion rule</span><strong>No silent authority</strong></div>
-            <div><span>Negative results</span><strong>Retained</strong></div>
-            <div><span>Private boundary</span><strong>Mechanics stay private</strong></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-tight research-index-section">
-        <div className="shell">
-          <SectionHeading eyebrow="INDEX" title="Research is not a success gallery." copy="The public index keeps active, frozen and rejected work visible so the site reflects how engineering actually progresses." />
-          <ResearchIndex />
-        </div>
-      </section>
-
-      <section className="section-tight research-method-section">
-        <div className="shell panel panel-pad research-method-panel">
-          <SectionHeading eyebrow="METHOD" title="How a claim earns authority." copy="Every candidate moves through explicit gates. The lifecycle makes promotion, rejection and iteration inspectable without repeating the research index above." />
-          <div className="architecture-flow research-method-flow" aria-label="Research validation lifecycle">
-            {['Question','Observation','Hypothesis','Freeze','Test','Validation','Decision'].map((stage, index, stages) => (
-              <div className="architecture-step" key={stage}><span>{stage}</span>{index < stages.length - 1 ? <b aria-hidden="true">→</b> : null}</div>
+          <div className="research-sequence">
+            {[
+              ["Initial observation", r.initial],
+              ["Method", r.method],
+              ["Challenge", r.challenge],
+              ["Result", r.result],
+            ].map(([label, copy]) => (
+              <article key={label} data-reveal>
+                <p className="eyebrow">{label}</p>
+                <p>{copy}</p>
+              </article>
             ))}
+            <div className="verdict" data-reveal>
+              <p className="eyebrow">Verdict</p>
+              <h3>{r.verdict}</h3>
+              <p>{r.why}</p>
+            </div>
+            <EvidenceStrip sources={[r.source]} />
           </div>
-        </div>
-      </section>
+        </section>
+      ))}
+      <Statement>
+        A successful backtest is the beginning of validation, not proof of an
+        edge.
+      </Statement>
+      <Opportunity />
     </>
   );
 }

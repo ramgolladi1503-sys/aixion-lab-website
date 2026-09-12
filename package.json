@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "visual": "playwright test"
+    "visual": "playwright test",
+    "postbuild": "node scripts/legacy-redirects.mjs"
   },
   "dependencies": {
     "next": "latest",
