@@ -1,107 +1,239 @@
 import { test, expect } from "@playwright/test";
-import path from "node:path";
-
-const routes = [["home", "/"], ["systems", "/systems"], ["tradebot", "/systems/tradebot"], ["control-core", "/systems/control-core"], ["automation", "/systems/automation"], ["analytics", "/systems/analytics"], ["research", "/research"], ["pulse", "/pulse"], ["journey", "/journey"], ["about", "/about"], ["resume", "/resume"]] as const;
-
-for (const [name, route] of routes) {
-  test(`${name} renders and captures`, async ({ page }, testInfo) => {
-    await page.goto(route, { waitUntil: "networkidle" });
-    await expect(page.locator("body")).toBeVisible();
-    await expect(page.locator("header")).toBeVisible();
-    await expect(page.locator("footer")).toBeVisible();
-    const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
-    expect(hasHorizontalOverflow, `${route} must not overflow horizontally`).toBe(false);
-    await expect(page.locator(".abstract-scene")).toHaveCount(0);
-    await page.waitForTimeout(1100);
-    const destination = path.join("test-results", "screenshots", testInfo.project.name, `${name}.png`);
-    await page.screenshot({ path: destination, fullPage: true });
-  });
-}
-
-test("home primary action is visible without scrolling", async ({ page }) => {
-  await page.goto("/", { waitUntil: "networkidle" });
-  const action = page.getByRole("link", { name: /Explore systems/i }).first();
-  await expect(action).toBeVisible();
-  const box = await action.boundingBox();
-  const viewport = page.viewportSize();
-  expect(box).not.toBeNull();
-  expect(viewport).not.toBeNull();
-  expect((box?.y ?? 99999) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0);
-});
-
-test("desktop approved hero begins near the sticky header", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
-  await page.goto("/", { waitUntil: "networkidle" });
-  const copy = await page.locator(".observable-copy").boundingBox();
-  expect(copy).not.toBeNull();
-  expect(copy?.y ?? 99999).toBeLessThan(230);
-});
-
-test("desktop About Lab contact does not reserve a hidden second column", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Desktop grid assertion");
-  await page.goto("/about", { waitUntil: "networkidle" });
-  const panel = page.locator(".about-contact-panel");
-  const visibleCard = panel.locator(".contact-copy").first();
-  const panelBox = await panel.boundingBox();
-  const cardBox = await visibleCard.boundingBox();
-  expect(panelBox).not.toBeNull();
-  expect(cardBox).not.toBeNull();
-  expect((cardBox?.width ?? 0) / (panelBox?.width ?? 1)).toBeGreaterThan(0.95);
-});
-
-test("flagship pages use distinct visual grammars", async ({ page }) => {
-  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  await expect(page.locator(".visual-tradebot").first()).toBeVisible();
-  await page.goto("/systems/control-core", { waitUntil: "networkidle" });
-  await expect(page.locator(".visual-core").first()).toBeVisible();
-});
-
-test("system hero snapshot and subnavigation stay inside the dark visual system", async ({ page }) => {
-  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  const snapshot = page.locator(".system-hero-summary");
-  const subnav = page.locator(".system-subnav-wrap");
-  await expect(snapshot).toBeVisible();
-  await expect(subnav).toBeVisible();
-  const snapshotBg = await snapshot.evaluate(node => getComputedStyle(node).backgroundColor);
-  const subnavBg = await subnav.evaluate(node => getComputedStyle(node).backgroundColor);
-  expect(snapshotBg).not.toBe("rgb(242, 244, 239)");
-  expect(subnavBg).not.toBe("rgb(233, 237, 231)");
-});
-
-test("Career mode has one visible state indicator", async ({ page }) => {
-  await page.goto("/", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Toggle Lab and Career view" }).click();
-  await expect(page.locator("html")).toHaveAttribute("data-view", "career");
-  const afterContent = await page.evaluate(() => getComputedStyle(document.body, "::after").content);
-  expect(afterContent === "none" || afterContent === "normal" || afterContent === '""').toBe(true);
-});
-
-test("Research method is compact and does not repeat the lifecycle as a giant title", async ({ page }, testInfo) => {
-  await page.goto("/research", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "How a claim earns authority." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: /Question.*Observation.*Hypothesis.*Freeze.*Test.*Validation.*Decision/ })).toHaveCount(0);
-  await expect(page.locator(".research-method-flow .architecture-step")).toHaveCount(7);
-
-  if (testInfo.project.name !== "mobile") {
-    const method = await page.locator(".research-method-section").boundingBox();
-    const footer = await page.locator("footer").boundingBox();
-    expect(method).not.toBeNull();
-    expect(footer).not.toBeNull();
-    const gap = (footer?.y ?? 0) - ((method?.y ?? 0) + (method?.height ?? 0));
-    expect(gap).toBeLessThan(120);
+import AxeBuilder from "@axe-core/playwright";
+import { mkdirSync } from "node:fs";
+const routes = [
+  "/",
+  "/work",
+  "/work/tradebot",
+  "/work/control-tower",
+  "/research",
+  "/journey",
+  "/about",
+  "/contact",
+  "/resume",
+];
+for (const width of [390, 430, 768, 1280, 1440])
+  for (const route of routes) {
+    test(`${route} at ${width}: render, semantics, overflow, typography and accessibility`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      const errors: string[] = [];
+      page.on("pageerror", (e) => errors.push(e.message));
+      page.on("console", (m) => {
+        if (m.type() === "error") errors.push(m.text());
+      });
+      expect((await page.goto(route))?.status()).toBe(200);
+      await page.evaluate(() => document.fonts.ready);
+      await expect(page.locator("h1")).toHaveCount(1);
+      const problems = await page.evaluate(() => {
+        const overflow = document.documentElement.scrollWidth > innerWidth + 1;
+        const tiny = [
+          ...document.querySelectorAll(
+            "p,a,button,label,input,select,textarea,h1,h2,h3,figcaption,strong,span",
+          ),
+        ]
+          .filter((e) => {
+            const s = getComputedStyle(e);
+            const r = e.getBoundingClientRect();
+            return (
+              r.width > 0 &&
+              r.height > 0 &&
+              s.visibility !== "hidden" &&
+              e.textContent?.trim() &&
+              parseFloat(s.fontSize) < 16
+            );
+          })
+          .map((e) => e.textContent?.slice(0, 60));
+        return { overflow, tiny };
+      });
+      expect(problems).toEqual({ overflow: false, tiny: [] });
+      const axe = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        .analyze();
+      expect(axe.violations).toEqual([]);
+      expect(errors).toEqual([]);
+      const slug = route === "/" ? "home" : route.slice(1).replaceAll("/", "-");
+      mkdirSync("artifacts/visual", { recursive: true });
+      await page.screenshot({
+        path: `artifacts/visual/${slug}-${width}.png`,
+        fullPage: true,
+      });
+      const links = await page
+        .locator('a[href^="/"]')
+        .evaluateAll((es) => [
+          ...new Set(es.map((e) => e.getAttribute("href")!.split("#")[0])),
+        ]);
+      for (const link of links)
+        expect((await page.request.get(link)).status(), link).toBe(200);
+    });
   }
+test("first entry, skip and repeat entry preserve access", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".arrival")).toHaveAttribute(
+    "data-phase",
+    "active",
+  );
+  await page.screenshot({ path: "artifacts/visual/entry-active.png" });
+  await page.getByRole("button", { name: "Skip introduction" }).click();
+  await expect(page.locator(".arrival")).toHaveAttribute("data-phase", "done");
+  await page.reload();
+  await expect(page.locator(".arrival")).toHaveAttribute("data-repeat", "true");
+  await expect(page.locator(".arrival")).toHaveAttribute("data-phase", "done", {
+    timeout: 1400,
+  });
+  await page.evaluate(() => sessionStorage.clear());
+  await page.reload();
+  await expect(page.locator(".arrival")).toHaveAttribute("data-phase", "done", {
+    timeout: 4500,
+  });
+});
+test("drawer traps focus, escapes, restores trigger and exposes limits", async ({
+  page,
+}) => {
+  await page.goto("/work");
+  const trigger = page
+    .locator("#tradebot")
+    .getByRole("button", { name: "TradeBot architecture" });
+  await trigger.click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText("not a current live-runtime certificate");
+  for (let i = 0; i < 8; i++) {
+    await page.keyboard.press("Tab");
+    expect(
+      await page.evaluate(
+        () => document.activeElement?.closest("dialog") !== null,
+      ),
+    ).toBe(true);
+  }
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.screenshot({ path: "artifacts/visual/evidence-drawer.png" });
+  await page.keyboard.press("Escape");
+  await expect(dialog).not.toBeVisible();
+  await expect(trigger).toBeFocused();
+});
+test("mobile menu keyboard, navigation and focus", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/work");
+  const trigger = page.getByRole("button", { name: "Open menu" });
+  await trigger.click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.screenshot({ path: "artifacts/visual/mobile-menu.png" });
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.keyboard.press("Escape");
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await page
+    .getByRole("navigation", { name: "Mobile navigation" })
+    .getByRole("link", { name: "Journey" })
+    .click();
+  await expect(page).toHaveURL(/journey/);
+  await expect(page.getByRole("dialog")).not.toBeVisible();
+});
+test("contact invalid, whitespace and honest email handoff", async ({
+  page,
+}) => {
+  await page.goto("/contact");
+  await page.getByRole("button", { name: "Prepare email" }).click();
+  await expect(page.locator("#name:invalid")).toHaveCount(1);
+  await page.getByLabel("Name", { exact: true }).fill("   ");
+  await page.getByLabel("Email", { exact: true }).fill("qa@example.com");
+  await page.getByLabel("Message", { exact: true }).fill("   ");
+  await page.getByRole("button", { name: "Prepare email" }).click();
+  await expect(page.getByRole("status")).toContainText("not just spaces");
+  await page.getByLabel("Name", { exact: true }).fill("QA Reviewer");
+  await page
+    .getByLabel("Message", { exact: true })
+    .fill("I would like to discuss a role.");
+  await page.getByRole("button", { name: "Prepare email" }).click();
+  await expect(page.getByRole("status")).toContainText(
+    "website has not sent a message",
+  );
+  await expect(
+    page.getByRole("link", { name: "Open the draft again" }),
+  ).toHaveAttribute("href", /^mailto:ramgolladi1503@gmail.com\?subject=/);
+  await page.screenshot({ path: "artifacts/visual/contact-draft.png" });
+});
+test("sticky scenes advance, reverse and release under native scroll", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/work/tradebot");
+  const scene = page.locator("[data-progress-scene]");
+  const steps = scene.locator("[data-step]");
+  await steps.nth(3).scrollIntoViewIfNeeded();
+  await expect(scene).not.toHaveAttribute("data-active", "0");
+  const box = await page.locator(".project-sticky").boundingBox();
+  expect(box!.y).toBeGreaterThan(90);
+  expect(box!.y).toBeLessThan(160);
+  await page.screenshot({ path: "artifacts/visual/work-sticky.png" });
+  await steps.nth(1).scrollIntoViewIfNeeded();
+  await expect(scene).toHaveAttribute("data-active", "1");
+  await page.locator(".next-project").scrollIntoViewIfNeeded();
+  const end = await page.locator(".project-sticky").boundingBox();
+  expect(end!.y).toBeLessThan(100);
+});
+test("Journey accumulates and reverses; reduced motion keeps layers", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/journey");
+  const scene = page.locator("[data-progress-scene]");
+  await page.locator("#chapter-4").scrollIntoViewIfNeeded();
+  await expect(scene).toHaveAttribute("data-active", "3");
+  await expect(page.locator(".layer[data-active=true]")).toHaveCount(4);
+  await page.screenshot({ path: "artifacts/visual/journey-middle.png" });
+  await page.locator("#chapter-6").scrollIntoViewIfNeeded();
+  await expect(page.locator(".layer[data-active=true]")).toHaveCount(6);
+  await page.screenshot({ path: "artifacts/visual/journey-convergence.png" });
+  await page.locator("#chapter-2").scrollIntoViewIfNeeded();
+  await expect(page.locator(".layer[data-active=true]")).toHaveCount(2);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  await expect(page.locator(".layer[data-active=true]")).toHaveCount(6);
+});
+test("research sequence reveals verdict and keyboard skip works", async ({
+  page,
+}) => {
+  await page.goto("/research");
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("link", { name: "Skip to content" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("main")).toBeFocused();
+  const verdict = page.locator("#strategy-robustness .verdict");
+  await verdict.scrollIntoViewIfNeeded();
+  await expect(verdict).toHaveAttribute("data-phase", "present");
+  await page.screenshot({ path: "artifacts/visual/research-verdict.png" });
+});
+test("content remains usable without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 390, height: 844 },
+  });
+  const page = await context.newPage();
+  await page.goto("http://127.0.0.1:3100/");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Explore My Work", exact: true }),
+  ).toBeVisible();
+  await context.close();
+});
+test("legacy project links reach their new pages", async ({ page }) => {
+  await page.goto("/systems/tradebot");
+  await expect(page).toHaveURL(/\/work\/tradebot$/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "fintech reliability",
+  );
 });
 
-test("Systems registry reaches the first system quickly on desktop", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
-  await page.goto("/systems", { waitUntil: "networkidle" });
-  const firstRow = await page.locator(".registry-row").first().boundingBox();
-  expect(firstRow).not.toBeNull();
-  expect(firstRow?.y ?? 99999).toBeLessThan(720);
-});
-
-test("Journey evolution labels remain readable rather than vertical", async ({ page }) => {
-  await page.goto("/journey", { waitUntil: "networkidle" });
-  const writingMode = await page.locator(".journey-visual-stage span").first().evaluate(node => getComputedStyle(node).writingMode);
-  expect(writingMode).toBe("horizontal-tb");
+test("moving narrative preserves readable contrast", async ({ page }) => {
+  await page.goto("/work/tradebot");
+  const step = page.locator("[data-step]").nth(4);
+  await step.scrollIntoViewIfNeeded();
+  await expect(step).toHaveCSS("opacity", "1");
+  expect((await new AxeBuilder({ page }).withTags(["wcag2aa"]).analyze()).violations).toEqual([]);
 });

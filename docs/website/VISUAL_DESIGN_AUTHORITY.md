@@ -1,3 +1,5 @@
+> SUPERSEDED: The active design specification is [V2](AIXION_WEBSITE_MASTER_BLUEPRINT_V2.md). This file is historical context only.
+
 # AIXION LAB — VISUAL DESIGN AUTHORITY
 
 **Status:** LOCKED  
