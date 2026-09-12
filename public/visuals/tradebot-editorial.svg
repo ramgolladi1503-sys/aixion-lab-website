@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" role="img" aria-labelledby="title desc">
+<title id="title">TradeBot editorial preview</title>
+<desc id="desc">A restrained workstation scene showing a market chart on a dark screen against warm stone and natural light.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f6f1e8"/><stop offset="1" stop-color="#c8c4bb"/></linearGradient>
+  <linearGradient id="desk" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#d7ccbf"/><stop offset="1" stop-color="#afa79d"/></linearGradient>
+  <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#263136"/><stop offset="1" stop-color="#151d21"/></linearGradient>
+  <radialGradient id="light" cx="50%" cy="50%" r="50%"><stop stop-color="#fff8dd"/><stop offset="1" stop-color="#fff8dd" stop-opacity="0"/></radialGradient>
+  <filter id="shadow"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="1000" height="620" fill="url(#bg)"/>
+<circle cx="786" cy="125" r="180" fill="url(#light)"/>
+<path d="M0 395 L1000 330 L1000 620 L0 620Z" fill="url(#desk)"/>
+<ellipse cx="526" cy="511" rx="310" ry="48" fill="#51483f" opacity=".16" filter="url(#shadow)"/>
+<g transform="translate(245 138)">
+  <rect x="0" y="0" width="510" height="304" rx="10" fill="#303a3e"/>
+  <rect x="15" y="15" width="480" height="272" rx="4" fill="url(#screen)"/>
+  <path d="M48 203 C94 174 116 190 152 160 C187 131 214 146 250 112 C288 76 324 101 360 80 C393 60 419 74 452 48" fill="none" stroke="#a7b2cf" stroke-width="5" stroke-linecap="round"/>
+  <path d="M48 218 C91 226 124 211 158 219 C193 227 224 197 260 205 C295 214 329 186 367 192 C402 198 427 177 455 181" fill="none" stroke="#c99778" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+  <g stroke="#b9c0c3" stroke-opacity=".16" stroke-width="1"><path d="M48 54H452"/><path d="M48 104H452"/><path d="M48 154H452"/><path d="M48 204H452"/><path d="M110 42V236"/><path d="M190 42V236"/><path d="M270 42V236"/><path d="M350 42V236"/><path d="M430 42V236"/></g>
+  <rect x="206" y="304" width="98" height="32" fill="#353c3e"/>
+  <path d="M160 336H350L405 378H106Z" fill="#9e9a93"/>
+</g>
+<path d="M105 76 L350 22" stroke="#ffffff" stroke-opacity=".68" stroke-width="3"/>
+<path d="M842 0 L1000 0 L1000 208" fill="#fffaf0" opacity=".52"/>
+</svg>
