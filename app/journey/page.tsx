@@ -3,7 +3,31 @@ import Link from "next/link";
 import { Opening, Layers } from "@/components/compositions";
 import { ProgressScene } from "@/components/motion";
 import { journey } from "@/lib/content";
+
 export const metadata: Metadata = { title: "Journey" };
+
+const chapterPaths = [
+  ["Failure", "Reproduce", "Learn"],
+  ["Repeat", "Automate", "Feedback"],
+  ["Data", "State", "Decision", "Persistence"],
+  ["Hypothesis", "Challenge", "Evidence", "Verdict"],
+  ["Agent", "Scope", "Approval", "Validate", "Audit"],
+  ["Quality", "Automation", "Systems", "Research", "AI", "Aixion"],
+];
+
+function ChapterPath({ index, title }: { index: number; title: string }) {
+  return (
+    <ol className="journey-path" aria-label={`${title} capability path`}>
+      {chapterPaths[index].map((step, i) => (
+        <li key={step}>
+          <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+          <strong>{step}</strong>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 export default function Journey() {
   return (
     <>
@@ -36,6 +60,7 @@ export default function Journey() {
               <h2>{title}</h2>
               <h3>{line}</h3>
               <p>{copy}</p>
+              <ChapterPath index={i} title={title} />
               <div className="transition-question">
                 <span className="eyebrow">
                   {i === 5 ? "One continuing question" : "Next question"}
