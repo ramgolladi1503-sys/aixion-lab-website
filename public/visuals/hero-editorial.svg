@@ -1,28 +1,68 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
-<title id="title">Calm editorial landscape</title>
-<desc id="desc">A warm architectural landscape with distant stone ridges, soft light and restrained indigo accents.</desc>
+<title id="title">Calm material study</title>
+<desc id="desc">A warm architectural still life of stone forms, a translucent plane, a muted green sphere and restrained indigo detail under soft natural light.</desc>
 <defs>
-  <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbf8f1"/><stop offset="0.48" stop-color="#eee7dc"/><stop offset="1" stop-color="#c9c7be"/></linearGradient>
-  <radialGradient id="sun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff8df" stop-opacity="1"/><stop offset="0.45" stop-color="#fff4d8" stop-opacity=".72"/><stop offset="1" stop-color="#fff4d8" stop-opacity="0"/></radialGradient>
-  <linearGradient id="ridge1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d5d2c8"/><stop offset="1" stop-color="#bfc2bc"/></linearGradient>
-  <linearGradient id="ridge2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b9b8ae"/><stop offset="1" stop-color="#929b99"/></linearGradient>
-  <linearGradient id="cliff" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7d8582"/><stop offset="1" stop-color="#404a4d"/></linearGradient>
-  <linearGradient id="stone" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#eee8df"/><stop offset="1" stop-color="#c9bfb2"/></linearGradient>
-  <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="2" seed="9"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .045"/></feComponentTransfer></filter>
-  <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fcfaf6"/>
+    <stop offset="0.56" stop-color="#eee8df"/>
+    <stop offset="1" stop-color="#d8d2c8"/>
+  </linearGradient>
+  <linearGradient id="stoneA" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fffdf8"/>
+    <stop offset="1" stop-color="#d8cfc2"/>
+  </linearGradient>
+  <linearGradient id="stoneB" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#efe8de"/>
+    <stop offset="1" stop-color="#c6b9aa"/>
+  </linearGradient>
+  <radialGradient id="orb" cx="34%" cy="28%" r="72%">
+    <stop offset="0" stop-color="#b8ccb9"/>
+    <stop offset="0.7" stop-color="#88a58f"/>
+    <stop offset="1" stop-color="#708b79"/>
+  </radialGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ffffff" stop-opacity=".55"/>
+    <stop offset="1" stop-color="#d9dee5" stop-opacity=".2"/>
+  </linearGradient>
+  <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+    <feGaussianBlur stdDeviation="18"/>
+  </filter>
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="table" tableValues="0 .035"/></feComponentTransfer>
+  </filter>
 </defs>
-<rect width="1200" height="820" fill="url(#sky)"/>
-<circle cx="825" cy="178" r="160" fill="url(#sun)"/>
-<path d="M0 525 C180 440 270 466 418 400 C570 330 718 346 930 270 C1060 224 1140 236 1200 210 L1200 820 L0 820Z" fill="url(#ridge1)" opacity=".82"/>
-<path d="M0 612 C192 530 324 566 480 492 C622 425 792 456 948 370 C1080 296 1160 304 1200 286 L1200 820 L0 820Z" fill="url(#ridge2)" opacity=".90"/>
-<path d="M1200 206 C1098 245 1030 296 956 365 C882 434 846 515 780 602 C722 678 658 736 560 820 L1200 820Z" fill="url(#cliff)"/>
-<path d="M916 330 C1032 384 1106 442 1200 544 L1200 820 L998 820 C960 724 930 614 902 528 C878 453 872 390 916 330Z" fill="#596466" opacity=".84"/>
-<path d="M0 670 L588 540 L816 618 L504 820 L0 820Z" fill="url(#stone)"/>
-<path d="M0 736 L458 650 L614 707 L520 820 L0 820Z" fill="#f7f3eb"/>
-<path d="M120 0 L392 0 L224 820 L0 820 L0 444Z" fill="#fffdf8" opacity=".72"/>
-<path d="M330 0 L470 0 L268 820 L154 820Z" fill="#f9f4e8" opacity=".48"/>
-<path d="M640 112 L1160 34" stroke="#ffffff" stroke-opacity=".7" stroke-width="2"/>
-<path d="M884 514 L1148 468" stroke="#7581aa" stroke-opacity=".75" stroke-width="3"/>
-<rect width="1200" height="820" filter="url(#grain)" opacity=".65"/>
-<ellipse cx="942" cy="176" rx="185" ry="98" fill="#fff9e8" opacity=".18" filter="url(#soft)"/>
+
+<rect width="1200" height="820" fill="url(#bg)"/>
+<rect x="118" y="84" width="520" height="572" rx="22" fill="#f7f1e7" opacity=".72"/>
+<rect x="760" y="106" width="280" height="498" rx="10" fill="url(#glass)" stroke="#ffffff" stroke-opacity=".52"/>
+
+<ellipse cx="548" cy="676" rx="360" ry="48" fill="#6f6558" opacity=".13" filter="url(#shadow)"/>
+<ellipse cx="834" cy="604" rx="168" ry="35" fill="#6f6558" opacity=".11" filter="url(#shadow)"/>
+
+<path d="M210 632V366c0-78 63-141 141-141h74v407Z" fill="url(#stoneA)"/>
+<path d="M286 632V420c0-50 40-90 90-90h49v302Z" fill="#e5dccf" opacity=".78"/>
+<rect x="410" y="462" width="236" height="170" rx="4" fill="url(#stoneB)"/>
+<rect x="558" y="548" width="210" height="84" rx="3" fill="#f9f6ef"/>
+<rect x="660" y="478" width="136" height="154" rx="3" fill="#d8d0c4"/>
+
+<circle cx="716" cy="444" r="74" fill="#576b5d" opacity=".12" filter="url(#shadow)"/>
+<circle cx="704" cy="424" r="67" fill="url(#orb)"/>
+<circle cx="682" cy="400" r="20" fill="#e4ede1" opacity=".34"/>
+
+<path d="M903 204V510" stroke="#ffffff" stroke-opacity=".72" stroke-width="2"/>
+<path d="M962 156V552" stroke="#ffffff" stroke-opacity=".38" stroke-width="1"/>
+<path d="M842 248H1040" stroke="#5f6e9f" stroke-opacity=".68" stroke-width="3"/>
+<circle cx="842" cy="248" r="5" fill="#5f6e9f"/>
+
+<g fill="#9f8e7a" opacity=".54">
+  <circle cx="878" cy="342" r="4"/><circle cx="914" cy="342" r="4"/><circle cx="950" cy="342" r="4"/>
+  <circle cx="878" cy="378" r="4"/><circle cx="914" cy="378" r="4"/><circle cx="950" cy="378" r="4"/>
+  <circle cx="878" cy="414" r="4"/><circle cx="914" cy="414" r="4"/><circle cx="950" cy="414" r="4"/>
+</g>
+
+<path d="M72 0H286L166 820H0V322Z" fill="#ffffff" opacity=".2"/>
+<path d="M1016 0H1200V820H1082Z" fill="#ffffff" opacity=".12"/>
+<rect width="1200" height="820" filter="url(#grain)" opacity=".72"/>
 </svg>
