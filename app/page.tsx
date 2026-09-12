@@ -2,15 +2,15 @@ import Link from "next/link";
 import { Arrival, ProgressScene } from "@/components/motion";
 import {
   Capabilities,
-  Material,
   SectionTitle,
-  Architecture,
   Opportunity,
   Socials,
   Layers,
+  Statement,
 } from "@/components/compositions";
 import { EvidenceStrip } from "@/components/evidence";
 import { projects, processSteps, research } from "@/lib/content";
+
 export default function Home() {
   return (
     <>
@@ -18,9 +18,7 @@ export default function Home() {
         <Arrival />
         <div className="hero-copy">
           <p className="eyebrow">AIXION LAB</p>
-          <h1>
-            Building systems that have to survive more than the happy path.
-          </h1>
+          <h1>Building systems that have to survive more than the happy path.</h1>
           <p className="lead">
             I’m Ram, a quality and automation engineer. My work has expanded
             into real-time systems, reliability, applied AI and research.
@@ -33,14 +31,20 @@ export default function Home() {
             <Link className="button" href="/work">
               Explore My Work <span aria-hidden="true">→</span>
             </Link>
-            <Link className="text-link" href="/journey">
+            <Link className="text-link hero-secondary" href="/journey">
               See My Journey <span aria-hidden="true">→</span>
             </Link>
           </div>
           <Socials />
         </div>
         <div className="hero-art">
-          <Material />
+          <div className="material hero-editorial-media">
+            <img
+              className="hero-editorial-image"
+              src="/visuals/hero-editorial.svg"
+              alt=""
+            />
+          </div>
           <div className="art-caption">
             <span>
               Build. Question.
@@ -51,43 +55,57 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="section shell">
+
+      <section className="section shell home-capabilities">
         <SectionTitle
           label="What I work on"
           title="Different disciplines. One engineering instinct."
         />
         <Capabilities />
       </section>
+
       <section className="section selected shell">
-        <SectionTitle
-          label="Selected work"
-          title="Real systems. Real problems."
-        >
+        <SectionTitle label="Selected work" title="Real systems. Real problems.">
           <Link className="text-link" href="/work">
             View all work →
           </Link>
         </SectionTitle>
-        {projects.map((p, i) => (
-          <article
-            className={`selected-project selected-${i}`}
-            key={p.slug}
-            data-reveal
-          >
-            <div className="selected-copy">
-              <p className="eyebrow">
-                0{i + 1} / {p.state}
-              </p>
-              <h3>{p.name}</h3>
-              <p className="project-subtitle">{p.subtitle}</p>
-              <p>{p.intro}</p>
-              <Link className="text-link" href={`/work/${p.slug}`}>
-                Explore {i ? "Control Tower" : "TradeBot"} →
-              </Link>
-            </div>
-            <Architecture nodes={p.nodes} kind={p.slug} />
-          </article>
-        ))}
+        {projects.map((p, i) => {
+          const visual =
+            p.slug === "tradebot"
+              ? "/visuals/tradebot-editorial.svg"
+              : "/visuals/control-tower-editorial.svg";
+          return (
+            <article
+              className={`selected-project selected-${i}`}
+              key={p.slug}
+              data-reveal
+            >
+              <div className="selected-copy">
+                <p className="eyebrow">
+                  0{i + 1} / {p.state}
+                </p>
+                <h3>{p.name}</h3>
+                <p className="project-subtitle">{p.subtitle}</p>
+                <p>{p.intro}</p>
+                <Link className="text-link" href={`/work/${p.slug}`}>
+                  Explore {i ? "Control Tower" : "TradeBot"} →
+                </Link>
+              </div>
+              <figure className="project-editorial-visual">
+                <img src={visual} alt={`${p.name} project preview`} />
+                <figcaption>
+                  {p.name} / selected system / deeper architecture and evidence
+                  inside
+                </figcaption>
+              </figure>
+            </article>
+          );
+        })}
       </section>
+
+      <Statement>Better systems come from questioning assumptions.</Statement>
+
       <section className="section process-section">
         <div className="shell">
           <SectionTitle
@@ -106,6 +124,7 @@ export default function Home() {
           </ProgressScene>
         </div>
       </section>
+
       <section className="section shell">
         <SectionTitle label="Research preview" title="Questions worth testing.">
           <Link className="text-link" href="/research">
@@ -125,6 +144,7 @@ export default function Home() {
           ))}
         </div>
       </section>
+
       <section className="section proof-section">
         <div className="shell">
           <SectionTitle
@@ -138,6 +158,7 @@ export default function Home() {
           <EvidenceStrip sources={["tradebot", "tower", "robustness"]} />
         </div>
       </section>
+
       <section className="section shell journey-preview">
         <div data-reveal>
           <p className="eyebrow">A continuing journey</p>
@@ -153,6 +174,7 @@ export default function Home() {
         </div>
         <Layers />
       </section>
+
       <Opportunity />
     </>
   );
