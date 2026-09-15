@@ -443,6 +443,7 @@ body.unseen-theme::after {
   perspective: 600px;
   width: 64px;
   height: 64px;
+  pointer-events: none;
 }
 
 .cube-wrapper {
@@ -450,6 +451,7 @@ body.unseen-theme::after {
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
+  pointer-events: none;
   animation: rotateUnseenCube 6s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
 
@@ -483,3 +485,81 @@ body.unseen-theme::after {
   75% { transform: rotateX(180deg) rotateY(90deg); }
   100% { transform: rotateX(360deg) rotateY(360deg); }
 }
+
+/* ==========================================================================
+   Responsive Adaptations matching Unseen.co
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .unseen-nav {
+    padding: 1.4rem 1.6rem;
+  }
+
+  .unseen-logo {
+    font-size: 1.15rem;
+  }
+
+  .unseen-link {
+    display: none; /* Hide individual desktop links on tablet/mobile, keep hamburger button */
+  }
+
+  .unseen-links {
+    gap: 0;
+  }
+
+  .unseen-status-bar {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .unseen-copyright {
+    display: none; /* Keep bottom bar minimal on mobile */
+  }
+
+  .unseen-hero-symbol {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .unseen-hero-desc {
+    font-size: 0.88rem;
+    margin-bottom: 2.2rem;
+    padding: 0 0.5rem;
+  }
+
+  .unseen-projects-section {
+    padding: 5rem 1.5rem 7rem;
+  }
+
+  .unseen-projects-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .unseen-nav {
+    padding: 1.2rem 1.2rem;
+  }
+
+  .unseen-status-bar {
+    padding: 1rem 1.2rem;
+  }
+
+  .unseen-pill-button {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.72rem;
+  }
+
+  .unseen-pill-button span {
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .unseen-center-ctrl {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
