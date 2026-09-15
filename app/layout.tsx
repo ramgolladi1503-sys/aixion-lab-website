@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./unseen.css";
+import "./structural-remediation.css";
 import { UnseenHeader, UnseenStatusBar } from "@/components/unseen-chrome";
 
 export const metadata: Metadata = {
