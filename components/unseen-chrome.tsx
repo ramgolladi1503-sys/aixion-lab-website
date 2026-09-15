@@ -2,33 +2,44 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function UnseenHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 24) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
-      <header className="unseen-nav">
+      <header className={`unseen-nav ${scrolled ? "scrolled" : ""}`}>
         <Link href="/" className="unseen-logo">
           aixion lab<span className="sup">®</span>
         </Link>
         <div className="unseen-links">
           <Link href="/systems" className={`unseen-link ${pathname.startsWith("/systems") ? "active" : ""}`}>
-            Systems
+            Work
           </Link>
           <Link href="/research" className={`unseen-link ${pathname.startsWith("/research") ? "active" : ""}`}>
             Research
           </Link>
-          <Link href="/pulse" className={`unseen-link ${pathname.startsWith("/pulse") ? "active" : ""}`}>
-            Pulse
-          </Link>
-          <Link href="/journey" className={`unseen-link ${pathname.startsWith("/journey") ? "active" : ""}`}>
-            Journey
-          </Link>
           <Link href="/about" className={`unseen-link ${pathname.startsWith("/about") ? "active" : ""}`}>
-            Contact
+            About
+          </Link>
+          <Link href="/about#collaborate" className={`unseen-link ${pathname.includes("collaborate") ? "active" : ""}`}>
+            Collaborate
           </Link>
           <button 
             type="button" 

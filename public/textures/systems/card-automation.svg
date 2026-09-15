@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="auCardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#131417" />
+      <stop offset="100%" stop-color="#181a1c" />
+    </linearGradient>
+    <pattern id="auCardGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#auCardBg)" />
+  <rect width="800" height="500" fill="url(#auCardGrid)" />
+
+  <circle cx="250" cy="200" r="200" fill="#7A2021" opacity="0.12" filter="blur(60px)" />
+  <circle cx="620" cy="320" r="180" fill="#39424c" opacity="0.15" filter="blur(50px)" />
+
+  <!-- Automation Systems Workflow Harness -->
+  <g transform="translate(60, 50)">
+    <rect width="680" height="400" rx="8" fill="#17181c" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+    <line x1="0" y1="44" x2="680" y2="44" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+    
+    <text x="24" y="28" fill="#8e8986" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" letter-spacing="1.5" font-weight="600">AUTOMATION SYSTEMS // DETERMINISTIC WORKFLOW HARNESS</text>
+    <circle cx="650" cy="24" r="4" fill="#78ab92" />
+
+    <!-- State Machine / Workflow DAG -->
+    <g transform="translate(30, 70)">
+      <!-- Step 1: Trigger -->
+      <g transform="translate(0, 40)">
+        <rect width="125" height="100" rx="6" fill="#131416" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+        <text x="14" y="24" fill="#666" font-family="monospace" font-size="9">STEP 01</text>
+        <text x="14" y="50" fill="#ecd5d2" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600">Ingest Event</text>
+        <rect x="14" y="66" width="60" height="16" rx="2" fill="#2d4a3e" opacity="0.3" />
+        <text x="44" y="77" fill="#78ab92" font-family="monospace" font-size="8.5" text-anchor="middle">RESOLVED</text>
+      </g>
+
+      <path d="M 125 90 L 165 90" stroke="#7A2021" stroke-width="2" />
+
+      <!-- Step 2: Idempotent Gate -->
+      <g transform="translate(165, 40)">
+        <rect width="125" height="100" rx="6" fill="#131416" stroke="#7A2021" stroke-width="1.5" />
+        <text x="14" y="24" fill="#cf7f80" font-family="monospace" font-size="9">STEP 02</text>
+        <text x="14" y="50" fill="#fff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600">Idempotency</text>
+        <rect x="14" y="66" width="70" height="16" rx="2" fill="#7A2021" />
+        <text x="49" y="77" fill="#fff" font-family="monospace" font-size="8.5" text-anchor="middle">KEY LOCKED</text>
+      </g>
+
+      <path d="M 290 90 L 330 90" stroke="#7A2021" stroke-width="2" />
+
+      <!-- Step 3: Atomic Mutation -->
+      <g transform="translate(330, 40)">
+        <rect width="125" height="100" rx="6" fill="#131416" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+        <text x="14" y="24" fill="#666" font-family="monospace" font-size="9">STEP 03</text>
+        <text x="14" y="50" fill="#ecd5d2" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600">State Mutation</text>
+        <rect x="14" y="66" width="60" height="16" rx="2" fill="#2d4a3e" opacity="0.3" />
+        <text x="44" y="77" fill="#78ab92" font-family="monospace" font-size="8.5" text-anchor="middle">COMMITTED</text>
+      </g>
+
+      <path d="M 455 90 L 495 90" stroke="#7A2021" stroke-width="2" />
+
+      <!-- Step 4: Trace Evidence -->
+      <g transform="translate(495, 40)">
+        <rect width="125" height="100" rx="6" fill="#131416" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+        <text x="14" y="24" fill="#666" font-family="monospace" font-size="9">STEP 04</text>
+        <text x="14" y="50" fill="#ecd5d2" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600">Trace Vault</text>
+        <rect x="14" y="66" width="65" height="16" rx="2" fill="#2d4a3e" opacity="0.3" />
+        <text x="46" y="77" fill="#78ab92" font-family="monospace" font-size="8.5" text-anchor="middle">RECORDED</text>
+      </g>
+
+      <!-- Reversible Compensating transaction branch -->
+      <path d="M 392 140 L 392 165 L 227 165 L 227 140" fill="none" stroke="#cf7f80" stroke-width="1.2" stroke-dasharray="3 3" />
+      <text x="310" y="178" fill="#cf7f80" font-family="monospace" font-size="8" text-anchor="middle">COMPENSATING ROLLBACK PATH</text>
+    </g>
+
+    <!-- Bottom summary row -->
+    <g transform="translate(24, 285)">
+      <rect width="630" height="85" rx="4" fill="#121315" stroke="rgba(255,255,255,0.04)" stroke-width="1" />
+      <g transform="translate(20, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">FAULT TOLERANCE</text>
+        <text x="0" y="20" fill="#78ab92" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Reversible Hooks</text>
+      </g>
+      <g transform="translate(200, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">IDEMPOTENCY</text>
+        <text x="0" y="20" fill="#ecd5d2" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Guaranteed Single-Exec</text>
+      </g>
+      <g transform="translate(420, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">TRACEABILITY</text>
+        <text x="0" y="20" fill="#78ab92" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Full State Audit</text>
+      </g>
+    </g>
+  </g>
+</svg>

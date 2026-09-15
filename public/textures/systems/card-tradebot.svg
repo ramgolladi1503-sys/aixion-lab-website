@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="tbCardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141518" />
+      <stop offset="100%" stop-color="#1f181c" />
+    </linearGradient>
+    <linearGradient id="tbBurgundy" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7A2021" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#9E2A2B" stop-opacity="0.4" />
+    </linearGradient>
+    <pattern id="tbCardGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#tbCardBg)" />
+  <rect width="800" height="500" fill="url(#tbCardGrid)" />
+
+  <circle cx="650" cy="180" r="220" fill="#7A2021" opacity="0.16" filter="blur(60px)" />
+  <circle cx="150" cy="380" r="180" fill="#2d4255" opacity="0.14" filter="blur(50px)" />
+
+  <!-- Market Depth & Execution Timeline Frame -->
+  <g transform="translate(60, 50)">
+    <rect width="680" height="400" rx="8" fill="#18191c" stroke="rgba(255,255,255,0.09)" stroke-width="1" />
+    <line x1="0" y1="44" x2="680" y2="44" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+    
+    <text x="24" y="28" fill="#8e8986" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" letter-spacing="1.5" font-weight="600">TRADEBOT // REAL-TIME EXECUTION TOPOLOGY</text>
+    <circle cx="650" cy="24" r="4" fill="#7A2021" />
+
+    <!-- Left side: Microstructure order ladder -->
+    <g transform="translate(24, 64)">
+      <text x="0" y="16" fill="#666" font-family="monospace" font-size="10">DEPTH LEVEL</text>
+      <text x="180" y="16" fill="#666" font-family="monospace" font-size="10">DELTA</text>
+      <line x1="0" y1="28" x2="240" y2="28" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+      
+      <rect x="0" y="40" width="140" height="18" rx="2" fill="#7A2021" opacity="0.25" />
+      <text x="180" y="53" fill="#cf7f80" font-family="monospace" font-size="10">+48.2</text>
+
+      <rect x="0" y="66" width="190" height="18" rx="2" fill="#7A2021" opacity="0.4" />
+      <text x="180" y="79" fill="#cf7f80" font-family="monospace" font-size="10">+82.6</text>
+
+      <rect x="0" y="92" width="110" height="18" rx="2" fill="#7A2021" opacity="0.2" />
+      <text x="180" y="105" fill="#cf7f80" font-family="monospace" font-size="10">+22.4</text>
+
+      <line x1="0" y1="122" x2="240" y2="122" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+      <rect x="0" y="134" width="160" height="18" rx="2" fill="#2d4a3e" opacity="0.25" />
+      <text x="180" y="147" fill="#78ab92" font-family="monospace" font-size="10">-34.1</text>
+
+      <rect x="0" y="160" width="220" height="18" rx="2" fill="#2d4a3e" opacity="0.4" />
+      <text x="180" y="173" fill="#78ab92" font-family="monospace" font-size="10">-95.0</text>
+    </g>
+
+    <!-- Right side: Multi-horizon structural curves -->
+    <g transform="translate(290, 64)">
+      <rect width="365" height="190" rx="6" fill="#121315" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+      <path d="M 20 130 Q 90 40 160 90 T 270 50 T 345 35" fill="none" stroke="#7A2021" stroke-width="2" />
+      <path d="M 20 150 Q 80 120 170 140 T 260 100 T 345 75" fill="none" stroke="#8199b0" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.8" />
+      
+      <!-- Regime Gate Marker -->
+      <line x1="220" y1="15" x2="220" y2="175" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="2 2" />
+      <rect x="180" y="18" width="80" height="18" rx="3" fill="#7A2021" />
+      <text x="220" y="30" fill="#fff" font-family="monospace" font-size="8.5" text-anchor="middle">REGIME LOCK</text>
+    </g>
+
+    <!-- Bottom telemetry ticker -->
+    <g transform="translate(24, 285)">
+      <rect width="630" height="85" rx="4" fill="#121315" stroke="rgba(255,255,255,0.04)" stroke-width="1" />
+      <g transform="translate(20, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">INGEST LATENCY</text>
+        <text x="0" y="20" fill="#ecd5d2" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">1.4ms (p99)</text>
+      </g>
+      <g transform="translate(180, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">HYPOTHESIS STATE</text>
+        <text x="0" y="20" fill="#78ab92" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Gated / Active</text>
+      </g>
+      <g transform="translate(360, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">HUMAN AUTHORITY</text>
+        <text x="0" y="20" fill="#ecd5d2" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Preserved (Manual)</text>
+      </g>
+      <g transform="translate(530, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">EVIDENCE</text>
+        <text x="0" y="20" fill="#cf7f80" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Reconciled</text>
+      </g>
+    </g>
+  </g>
+</svg>

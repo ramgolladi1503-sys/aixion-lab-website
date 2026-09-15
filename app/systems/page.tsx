@@ -6,10 +6,10 @@ import { systems } from "@/lib/site-data";
 import { systemDetails, PublicSystemState } from "@/lib/system-detail-data";
 
 const systemCardImages: Record<string, string> = {
-  tradebot: "/textures/card-tradebot.webp",
-  "control-core": "/textures/card-control.webp",
-  automation: "/textures/card-automation.webp",
-  analytics: "/textures/card-analytics.webp",
+  tradebot: "/textures/systems/card-tradebot.svg",
+  "control-core": "/textures/systems/card-control.svg",
+  automation: "/textures/systems/card-automation.svg",
+  analytics: "/textures/systems/card-analytics.svg",
 };
 
 export default function SystemsPage() {
@@ -64,45 +64,55 @@ export default function SystemsPage() {
       </header>
 
       <div className="systems-hierarchy-wrap">
-        {/* Section 1: Flagship Systems */}
+        {/* Section 1: Flagship Systems (Alternating stately editorial feature rows) */}
         {filteredFlagships.length > 0 && (
-          <section aria-label="Flagship Systems">
+          <section aria-label="Flagship Systems" style={{ marginBottom: "5rem" }}>
             <div className="systems-group-header">
               <span className="systems-group-label">Flagship Systems</span>
               <span className="systems-group-meta">Governed Architecture · Dedicated Case Studies</span>
             </div>
 
-            <div className="flagship-grid">
-              {filteredFlagships.map(system => {
+            <div className="flagship-list">
+              {filteredFlagships.map((system, idx) => {
                 const detail = systemDetails[system.slug];
                 const publicState = detail?.publicState || "Validation";
+                const isReverse = idx % 2 === 1;
+
                 return (
                   <Link
                     key={system.id}
                     href={`/systems/${system.slug}`}
-                    className="flagship-card group"
+                    className={`flagship-feature-row ${isReverse ? "reverse" : ""}`}
                   >
-                    <div className="unseen-card-image-wrap">
+                    <div className="flagship-media-col">
                       <img
-                        src={systemCardImages[system.slug] || "/textures/card-tradebot.webp"}
+                        src={systemCardImages[system.slug] || "/textures/systems/card-tradebot.svg"}
                         alt={system.name}
-                        className="unseen-card-image"
                       />
                     </div>
-                    <div className="unseen-card-footer" style={{ borderBottom: "1px solid rgba(33, 33, 33, 0.16)", paddingBottom: "1.2rem" }}>
-                      <div style={{ flex: 1, paddingRight: "1rem" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.5rem" }}>
-                          <h2 className="flagship-card-title">{system.name}</h2>
-                          <span className={`public-state-badge state-${publicState.toLowerCase()}`}>
-                            <i className="public-state-dot" />
-                            {publicState}
-                          </span>
-                        </div>
-                        <p className="unseen-card-desc" style={{ fontSize: "0.95rem", lineHeight: 1.5, maxWidth: "540px" }}>
-                          {system.descriptor}
-                        </p>
+                    <div className="flagship-info-col">
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.8rem" }}>
+                        <span style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "0.75rem",
+                          letterSpacing: "0.12em",
+                          color: "#7A2021",
+                          textTransform: "uppercase"
+                        }}>
+                          FLAGSHIP 0{idx + 1}
+                        </span>
+                        <span className={`public-state-badge state-${publicState.toLowerCase()}`}>
+                          <i className="public-state-dot" />
+                          {publicState}
+                        </span>
                       </div>
-                      <div className="unseen-card-arrow" style={{ fontSize: "1.3rem", color: "var(--unseen-stone)" }}>↘</div>
+                      <h2 className="flagship-card-title">{system.name}</h2>
+                      <p className="flagship-card-desc">
+                        {system.descriptor}
+                      </p>
+                      <span className="flagship-card-link">
+                        Explore architecture specification →
+                      </span>
                     </div>
                   </Link>
                 );
@@ -111,7 +121,7 @@ export default function SystemsPage() {
           </section>
         )}
 
-        {/* Section 2: Experimental & Early-Stage Work */}
+        {/* Section 2: Experimental & Early-Stage Work (Disciplined compact grid) */}
         {filteredExperimental.length > 0 && (
           <section aria-label="Experimental Systems">
             <div className="systems-group-header">
@@ -131,7 +141,7 @@ export default function SystemsPage() {
                   >
                     <div className="unseen-card-image-wrap">
                       <img
-                        src={systemCardImages[system.slug] || "/textures/card-tradebot.webp"}
+                        src={systemCardImages[system.slug] || "/textures/systems/card-analytics.svg"}
                         alt={system.name}
                         className="unseen-card-image"
                       />

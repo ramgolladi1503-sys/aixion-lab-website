@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="ctCardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111215" />
+      <stop offset="100%" stop-color="#1a1419" />
+    </linearGradient>
+    <pattern id="ctCardGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#ctCardBg)" />
+  <rect width="800" height="500" fill="url(#ctCardGrid)" />
+
+  <circle cx="200" cy="180" r="200" fill="#7A2021" opacity="0.16" filter="blur(60px)" />
+  <circle cx="650" cy="350" r="190" fill="#42354e" opacity="0.18" filter="blur(60px)" />
+
+  <!-- Orchestration Plane Wireframe -->
+  <g transform="translate(60, 50)">
+    <rect width="680" height="400" rx="8" fill="#18191c" stroke="rgba(255,255,255,0.09)" stroke-width="1" />
+    <line x1="0" y1="44" x2="680" y2="44" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+    
+    <text x="24" y="28" fill="#8e8986" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" letter-spacing="1.5" font-weight="600">AIXION CONTROL TOWER // ORCHESTRATION PLANE</text>
+    <circle cx="650" cy="24" r="4" fill="#7A2021" />
+
+    <!-- 3 Tiered Orchestration Architecture diagram -->
+    <g transform="translate(30, 65)">
+      <!-- Tier 1: Context & Routing -->
+      <g transform="translate(0, 0)">
+        <rect width="180" height="190" rx="6" fill="#131416" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+        <text x="16" y="26" fill="#cf7f80" font-family="monospace" font-size="10">01 // CONTEXT BUS</text>
+        <line x1="16" y1="36" x2="164" y2="36" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+        
+        <rect x="16" y="48" width="148" height="26" rx="3" fill="#1d1e22" />
+        <text x="26" y="65" fill="#aaa" font-family="monospace" font-size="9">Session State</text>
+
+        <rect x="16" y="82" width="148" height="26" rx="3" fill="#1d1e22" />
+        <text x="26" y="99" fill="#aaa" font-family="monospace" font-size="9">Intent Vector</text>
+
+        <rect x="16" y="116" width="148" height="26" rx="3" fill="#1d1e22" />
+        <text x="26" y="133" fill="#aaa" font-family="monospace" font-size="9">Tool Registry</text>
+
+        <rect x="16" y="150" width="148" height="26" rx="3" fill="#7A2021" opacity="0.35" />
+        <text x="26" y="167" fill="#fff" font-family="monospace" font-size="9">Policy Ruleset</text>
+      </g>
+
+      <!-- Connecting Flow -->
+      <path d="M 180 95 L 220 95" stroke="#7A2021" stroke-width="2" stroke-dasharray="3 3" />
+
+      <!-- Tier 2: Agent Dispatch & Policy Gate -->
+      <g transform="translate(220, 0)">
+        <rect width="180" height="190" rx="6" fill="#131416" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+        <text x="16" y="26" fill="#cf7f80" font-family="monospace" font-size="10">02 // POLICY GATE</text>
+        <line x1="16" y1="36" x2="164" y2="36" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+
+        <circle cx="90" cy="85" r="34" fill="#7A2021" opacity="0.2" stroke="#7A2021" stroke-width="1.5" />
+        <text x="90" y="88" fill="#ecd5d2" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" text-anchor="middle">GATE CHECK</text>
+
+        <rect x="16" y="142" width="148" height="32" rx="4" fill="#24171a" stroke="#7A2021" stroke-width="1" />
+        <text x="90" y="162" fill="#fff" font-family="monospace" font-size="9.5" text-anchor="middle">AUTHORITY: VERIFIED</text>
+      </g>
+
+      <!-- Connecting Flow -->
+      <path d="M 400 95 L 440 95" stroke="#7A2021" stroke-width="2" stroke-dasharray="3 3" />
+
+      <!-- Tier 3: Immutable Evidence Vault -->
+      <g transform="translate(440, 0)">
+        <rect width="180" height="190" rx="6" fill="#131416" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+        <text x="16" y="26" fill="#cf7f80" font-family="monospace" font-size="10">03 // AUDIT TRACE</text>
+        <line x1="16" y1="36" x2="164" y2="36" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+
+        <text x="16" y="60" fill="#666" font-family="monospace" font-size="9">SPAN 0x9F42A</text>
+        <rect x="16" y="66" width="148" height="8" rx="2" fill="#2d4a3e" opacity="0.4" />
+
+        <text x="16" y="94" fill="#666" font-family="monospace" font-size="9">SPAN 0x9F42B</text>
+        <rect x="16" y="100" width="120" height="8" rx="2" fill="#7A2021" opacity="0.5" />
+
+        <text x="16" y="128" fill="#666" font-family="monospace" font-size="9">SPAN 0x9F42C</text>
+        <rect x="16" y="134" width="140" height="8" rx="2" fill="#8199b0" opacity="0.4" />
+      </g>
+    </g>
+
+    <!-- Bottom Status Panel -->
+    <g transform="translate(30, 285)">
+      <rect width="620" height="85" rx="4" fill="#121315" stroke="rgba(255,255,255,0.04)" stroke-width="1" />
+      <g transform="translate(20, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">SUPERVISION STATE</text>
+        <text x="0" y="20" fill="#78ab92" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Governed Loop</text>
+      </g>
+      <g transform="translate(180, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">TOOL CONFINEMENT</text>
+        <text x="0" y="20" fill="#ecd5d2" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Strict Boundaries</text>
+      </g>
+      <g transform="translate(360, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">TRACE RETENTION</text>
+        <text x="0" y="20" fill="#ecd5d2" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">100% Deterministic</text>
+      </g>
+      <g transform="translate(520, 24)">
+        <text x="0" y="0" fill="#666" font-family="monospace" font-size="9.5">FALLBACK</text>
+        <text x="0" y="20" fill="#cf7f80" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Human Interrupt</text>
+      </g>
+    </g>
+  </g>
+</svg>
