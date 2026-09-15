@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./unseen.css";
 import "./structural-remediation.css";
 import "./system-variants.css";
+import "./mockup-rebuild.css";
 import { UnseenHeader, UnseenStatusBar } from "@/components/unseen-chrome";
 
 export const metadata: Metadata = {
@@ -19,9 +20,21 @@ export const metadata: Metadata = {
   },
 };
 
+const themeBoot = `
+(function(){
+  try {
+    var stored = localStorage.getItem('aixion-theme');
+    var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.dataset.theme = theme;
+  } catch (_) {
+    document.documentElement.dataset.theme = 'light';
+  }
+})();`;
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: themeBoot }} /></head>
       <body className="unseen-theme">
         <UnseenHeader />
         <main>{children}</main>
