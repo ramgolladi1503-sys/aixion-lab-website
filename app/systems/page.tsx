@@ -22,24 +22,18 @@ export default function SystemsPage() {
 
   return (
     <div className="systems-page">
-      <header className="systems-page-intro">
+      <header className="systems-page-intro compact-intro">
         <p className="systems-page-eyebrow">WORK / SYSTEMS</p>
         <h1>Systems built to earn trust.</h1>
         <p className="systems-page-lede">
-          Two flagship systems are moving through active engineering and validation.
-          The rest remain intentionally experimental until the work earns a stronger claim.
+          TradeBot and Aixion Control Tower are the two flagship systems. They are moving through active engineering and validation while the remaining work stays deliberately experimental until it earns a stronger claim.
         </p>
       </header>
 
       <section className="systems-flagships" aria-labelledby="flagship-heading">
-        <div className="systems-section-heading">
-          <div>
-            <p className="systems-page-eyebrow">FLAGSHIP SYSTEMS</p>
-            <h2 id="flagship-heading">The work carrying the lab forward.</h2>
-          </div>
-          <p>
-            Larger systems with dedicated architecture, evidence, and a clear public maturity state.
-          </p>
+        <div className="systems-flagship-label-row">
+          <p className="systems-page-eyebrow" id="flagship-heading">FLAGSHIP SYSTEMS</p>
+          <p>Dedicated architecture, evidence, and explicit maturity.</p>
         </div>
 
         <div className="flagship-list">
@@ -54,10 +48,7 @@ export default function SystemsPage() {
                 className={`flagship-feature-row ${reverse ? "reverse" : ""}`}
               >
                 <div className="flagship-media-col">
-                  <img
-                    src={systemCardImages[system.slug]}
-                    alt={`${system.name} visual`}
-                  />
+                  <img src={systemCardImages[system.slug]} alt={`${system.name} visual`} />
                 </div>
 
                 <div className="flagship-info-col">
@@ -68,7 +59,7 @@ export default function SystemsPage() {
                       {detail.publicState}
                     </span>
                   </div>
-                  <h3 className="flagship-card-title">{system.name}</h3>
+                  <h2 className="flagship-card-title">{system.name}</h2>
                   <p className="flagship-proposition">{detail.hero.proposition}</p>
                   <p className="flagship-card-desc">{system.descriptor}</p>
                   <span className="flagship-card-link">Explore system →</span>
@@ -85,26 +76,16 @@ export default function SystemsPage() {
             <p className="systems-page-eyebrow">EXPERIMENTAL / EARLY WORK</p>
             <h2 id="experimental-heading">Useful ideas, without inflated claims.</h2>
           </div>
-          <p>
-            These projects remain exploratory. They are shown as working directions, not as finished flagship products.
-          </p>
+          <p>These projects remain exploratory. They are shown as working directions, not as finished flagship products.</p>
         </div>
 
         <div className="experimental-grid">
           {experiments.map(system => {
             const detail = systemDetails[system.slug];
             return (
-              <Link
-                key={system.id}
-                href={publicHref(system.slug)}
-                className="experimental-card"
-              >
+              <Link key={system.id} href={publicHref(system.slug)} className="experimental-card">
                 <div className="unseen-card-image-wrap">
-                  <img
-                    src={systemCardImages[system.slug]}
-                    alt={`${system.name} visual`}
-                    className="unseen-card-image"
-                  />
+                  <img src={systemCardImages[system.slug]} alt={`${system.name} visual`} className="unseen-card-image" />
                 </div>
                 <div className="experimental-card-copy">
                   <div className="experimental-card-head">
