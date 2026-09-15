@@ -3,10 +3,10 @@ import { systems } from "@/lib/site-data";
 import { systemDetails } from "@/lib/system-detail-data";
 
 const systemCardImages: Record<string, string> = {
-  tradebot: "/textures/systems/card-tradebot.svg",
-  "control-core": "/textures/systems/card-control.svg",
-  analytics: "/textures/systems/card-analytics.svg",
-  automation: "/textures/systems/card-automation.svg",
+  tradebot: "/textures/systems/premium-tradebot-card.svg",
+  "control-core": "/textures/systems/premium-control-card.svg",
+  analytics: "/textures/systems/premium-analytics-card.svg",
+  automation: "/textures/systems/premium-automation-card.svg",
 };
 
 const publicHref = (slug: string) =>
