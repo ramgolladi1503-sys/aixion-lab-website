@@ -10,24 +10,21 @@ export function UnseenHeader() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 24) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const logoHref = pathname === "/" ? "/" : "/home";
+
   return (
     <>
       <header className={`unseen-nav ${scrolled ? "scrolled" : ""}`}>
-        <Link href="/" className="unseen-logo">
+        <Link href={logoHref} className="unseen-logo" aria-label="Aixion Lab home">
           aixion lab<span className="sup">®</span>
         </Link>
+
         <div className="unseen-links">
           <Link href="/systems" className={`unseen-link ${pathname.startsWith("/systems") ? "active" : ""}`}>
             Work
@@ -38,83 +35,42 @@ export function UnseenHeader() {
           <Link href="/about" className={`unseen-link ${pathname.startsWith("/about") ? "active" : ""}`}>
             About
           </Link>
-          <Link href="/about#collaborate" className={`unseen-link ${pathname.includes("collaborate") ? "active" : ""}`}>
+          <Link href="/about#collaborate" className="unseen-link">
             Collaborate
           </Link>
-          <button 
-            type="button" 
-            className="unseen-menu-toggle" 
-            aria-label="Toggle Navigation Drawer"
+          <button
+            type="button"
+            className="unseen-menu-toggle"
+            aria-label="Toggle navigation drawer"
+            aria-expanded={menuOpen}
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            <span>
-              <i />
-              <i />
-            </span>
+            <span><i /><i /></span>
           </button>
         </div>
       </header>
 
-      {/* Fullscreen Overlay Menu matching Unseen Studio */}
       {menuOpen && (
-        <div style={{
-          position: "fixed",
-          inset: 0,
-          background: "#efded9",
-          zIndex: 9998,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "4rem 8rem",
-        }}>
-          <button 
-            type="button" 
-            style={{
-              position: "absolute",
-              top: "2.5rem",
-              right: "3rem",
-              background: "#fff",
-              border: "none",
-              width: "2.8rem",
-              height: "2.8rem",
-              borderRadius: "50%",
-              cursor: "pointer",
-              fontSize: "1.2rem",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
+        <div className="unseen-overlay-menu" role="dialog" aria-modal="true" aria-label="Site navigation">
+          <button
+            type="button"
+            className="unseen-overlay-close"
+            aria-label="Close navigation"
             onClick={() => setMenuOpen(false)}
           >
             ✕
           </button>
-          <nav style={{ display: "grid", gap: "1.8rem" }}>
+
+          <nav className="unseen-overlay-nav">
             {[
-              ["01", "Systems", "/systems"],
+              ["01", "Work", "/systems"],
               ["02", "Research", "/research"],
-              ["03", "Lab Pulse", "/pulse"],
-              ["04", "Journey", "/journey"],
-              ["05", "About & Contact", "/about"],
-              ["06", "Résumé / Fast Path", "/resume"],
+              ["03", "About", "/about"],
+              ["04", "Collaborate", "/about#collaborate"],
             ].map(([num, label, href]) => (
-              <Link 
-                key={href} 
-                href={href}
-                onClick={() => setMenuOpen(false)}
-                style={{
-                  textDecoration: "none",
-                  color: "#212121",
-                  display: "flex",
-                  alignItems: "baseline",
-                  gap: "1.5rem",
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "clamp(2.5rem, 4vw, 4rem)",
-                  fontWeight: 400,
-                  letterSpacing: "-0.03em"
-                }}
-              >
-                <span style={{ fontSize: "1.1rem", fontFamily: "var(--font-mono)", opacity: 0.45 }}>{num}</span>
-                <span>{label}</span>
+              <Link key={href} href={href} onClick={() => setMenuOpen(false)}>
+                <span>{num}</span>
+                <strong>{label}</strong>
               </Link>
             ))}
           </nav>
@@ -128,8 +84,8 @@ export function UnseenStatusBar() {
   return (
     <footer className="unseen-status-bar">
       <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-        <button 
-          type="button" 
+        <button
+          type="button"
           aria-label="Audio status indicator"
           style={{
             width: "2.3rem",
@@ -142,7 +98,7 @@ export function UnseenStatusBar() {
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.04)"
+            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
           }}
         >
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -163,10 +119,8 @@ export function UnseenStatusBar() {
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
         </svg>
       </Link>
-      
-      <span className="unseen-copyright">
-        ©{new Date().getFullYear()}
-      </span>
+
+      <span className="unseen-copyright">©{new Date().getFullYear()}</span>
     </footer>
   );
 }
