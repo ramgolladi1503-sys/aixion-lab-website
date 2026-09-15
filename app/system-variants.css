@@ -1,3 +1,13 @@
+/* Final UAT typography and composition authority. */
+.systems-page-intro h1,
+.research-intro-grid h1,
+.about-hero-grid h1,
+.collaborate-hero h1 { font-size:clamp(4rem,5.5vw,5.5rem)!important; }
+.profile-hero h1 { font-size:clamp(3.8rem,5.2vw,5.3rem)!important; }
+.system-hero-title { font-size:clamp(3.8rem,5.2vw,5.5rem)!important; }
+.about-editorial-page,.collaborate-editorial-page,.profile-editorial-page { padding-bottom:1.5rem!important; }
+.about-closing,.collaborate-cta,.profile-closing { padding-bottom:0!important; margin-bottom:0!important; }
+
 /* Project-specific composition. Shared design system, different narrative rhythm. */
 .system-how-intro { margin-bottom:2rem; max-width:760px; }
 .system-how-intro>p:last-child { margin:.6rem 0 0; font-size:1.18rem; line-height:1.6; color:var(--aixion-body); }
@@ -40,4 +50,9 @@
   .system-hero-control-core .system-hero-media-wrap,.system-hero-control-core .system-hero-header,.system-detail-automation .system-hero-media-wrap,.system-detail-automation .system-hero-header { grid-column:auto; grid-row:auto; }
   .system-detail-control-core .system-how-grid { grid-template-columns:1fr; }
   .system-detail-control-core .system-how-sticky-col,.system-detail-control-core .system-how-steps { grid-column:auto; grid-row:auto; }
+}
+
+@media (max-width:620px) {
+  .systems-page-intro h1,.research-intro-grid h1,.about-hero-grid h1,.collaborate-hero h1 { font-size:clamp(3rem,14vw,3.65rem)!important; }
+  .profile-hero h1,.system-hero-title { font-size:clamp(3rem,13vw,3.65rem)!important; }
 }
