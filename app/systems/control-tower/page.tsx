@@ -13,16 +13,12 @@ const detail = systemDetails["control-core"];
 export const metadata: Metadata = {
   title: `${detail.name} — Aixion Lab`,
   description: detail.hero.proposition,
-  openGraph: {
-    title: `${detail.name} — Aixion Lab`,
-    description: detail.hero.summary,
-    images: [detail.hero.image],
-  },
+  openGraph: { title: `${detail.name} — Aixion Lab`, description: detail.hero.summary, images: [detail.hero.image] },
 };
 
 export default function ControlTowerPage() {
   return (
-    <article className="system-detail-container" aria-label={`${detail.name} Specification`}>
+    <article className="system-detail-container system-detail-control-core" aria-label={`${detail.name} Specification`}>
       <SystemHero data={detail} />
       <SystemProblem data={detail} />
       <SystemCapabilities data={detail} />
