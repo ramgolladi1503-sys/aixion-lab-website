@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import { systemDetails } from "@/lib/system-detail-data";
-import { SystemHero } from "@/components/system-detail/system-hero";
-import { SystemProblem } from "@/components/system-detail/system-problem";
-import { SystemCapabilities } from "@/components/system-detail/system-capabilities";
-import { SystemHowItWorks } from "@/components/system-detail/system-how-it-works";
-import { SystemWhyItMatters } from "@/components/system-detail/system-why-it-matters";
-import { SystemCurrentState } from "@/components/system-detail/system-current-state";
-import { SystemNextSteps } from "@/components/system-detail/system-next-steps";
+import { SystemShowcase } from "@/components/system-detail/system-showcase";
 
 const detail = systemDetails["control-core"];
 
@@ -17,15 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function ControlTowerPage() {
-  return (
-    <article className="system-detail-container system-detail-control-core" aria-label={`${detail.name} Specification`}>
-      <SystemHero data={detail} />
-      <SystemProblem data={detail} />
-      <SystemCapabilities data={detail} />
-      <SystemHowItWorks data={detail} />
-      <SystemWhyItMatters data={detail} />
-      <SystemCurrentState data={detail} />
-      <SystemNextSteps data={detail} />
-    </article>
-  );
+  return <SystemShowcase data={detail} />;
 }
