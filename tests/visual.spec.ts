@@ -1,18 +1,11 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Locator } from "@playwright/test";
 import path from "node:path";
 
 const routes = [
-  ["entry", "/"],
-  ["home", "/home"],
-  ["systems", "/systems"],
-  ["tradebot", "/systems/tradebot"],
-  ["control-tower", "/systems/control-tower"],
-  ["automation", "/systems/automation"],
-  ["analytics", "/systems/analytics"],
-  ["research", "/research"],
-  ["about", "/about"],
-  ["collaborate", "/collaborate"],
-  ["resume", "/resume"],
+  ["entry", "/"], ["home", "/home"], ["systems", "/systems"],
+  ["tradebot", "/systems/tradebot"], ["control-tower", "/systems/control-tower"],
+  ["automation", "/systems/automation"], ["analytics", "/systems/analytics"],
+  ["research", "/research"], ["about", "/about"], ["collaborate", "/collaborate"], ["resume", "/resume"],
 ] as const;
 
 for (const [name, route] of routes) {
@@ -27,9 +20,7 @@ for (const [name, route] of routes) {
   });
 }
 
-const fontPx = async (locator: ReturnType<import("@playwright/test").Page["locator"]>) => {
-  return locator.evaluate((el) => Number.parseFloat(getComputedStyle(el).fontSize));
-};
+const fontPx = async (locator: Locator) => locator.evaluate((el) => Number.parseFloat(getComputedStyle(el).fontSize));
 
 test("entry is an isolated non-scrolling gate", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
@@ -53,23 +44,48 @@ test("home only reaches systems by explicit navigation", async ({ page }) => {
 
 test("editorial body typography is comfortable on desktop", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "Desktop readability gate");
-
   await page.goto("/about", { waitUntil: "networkidle" });
   expect(await fontPx(page.locator(".about-lede p").first())).toBeGreaterThanOrEqual(18.5);
   expect(await fontPx(page.locator(".about-two-up article > p").first())).toBeGreaterThanOrEqual(17);
   expect(await fontPx(page.locator(".about-principle-grid p").first())).toBeGreaterThanOrEqual(16);
-
   await page.goto("/research", { waitUntil: "networkidle" });
   expect(await fontPx(page.locator(".research-intro-copy p").first())).toBeGreaterThanOrEqual(18.5);
   expect(await fontPx(page.locator(".research-topic-summary").first())).toBeGreaterThanOrEqual(15.5);
-
   await page.goto("/collaborate", { waitUntil: "networkidle" });
   expect(await fontPx(page.locator(".collaborate-hero-grid > p"))).toBeGreaterThanOrEqual(18.5);
   expect(await fontPx(page.locator(".collaborate-fit-grid li").first())).toBeGreaterThanOrEqual(16);
-
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
   expect(await fontPx(page.locator(".system-hero-summary"))).toBeGreaterThanOrEqual(18);
   expect(await fontPx(page.locator(".system-capability-desc").first())).toBeGreaterThanOrEqual(16);
+});
+
+test("display hierarchy does not crush body copy", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "Desktop hierarchy gate");
+  for (const [route, heading, body] of [
+    ["/about", ".about-hero-grid h1", ".about-lede p"],
+    ["/research", ".research-intro-grid h1", ".research-intro-copy p"],
+    ["/collaborate", ".collaborate-hero h1", ".collaborate-hero-grid > p"],
+  ] as const) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    const h = await fontPx(page.locator(heading).first());
+    const b = await fontPx(page.locator(body).first());
+    expect(h).toBeLessThanOrEqual(88.5);
+    expect(b).toBeGreaterThanOrEqual(18.5);
+  }
+});
+
+test("About and Collaborate do not reserve a blank trailing viewport", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "Desktop tail-space gate");
+  for (const [route, lastSelector] of [["/about", ".about-closing"], ["/collaborate", ".collaborate-cta"]] as const) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    const gap = await page.evaluate((selector) => {
+      const el = document.querySelector(selector);
+      if (!el) return 9999;
+      const bottom = el.getBoundingClientRect().bottom + window.scrollY;
+      return document.documentElement.scrollHeight - bottom;
+    }, lastSelector);
+    expect(gap).toBeLessThan(100);
+  }
 });
 
 test("research has hierarchy and reveals only one focus", async ({ page }) => {
@@ -91,12 +107,7 @@ test("systems removes duplicate introduction and preserves flagship hierarchy", 
 });
 
 test("every system uses premium project-specific hero art", async ({ page }) => {
-  const systems = [
-    ["/systems/tradebot", "premium-tradebot-hero.svg"],
-    ["/systems/control-tower", "premium-control-hero.svg"],
-    ["/systems/analytics", "premium-analytics-hero.svg"],
-    ["/systems/automation", "premium-automation-hero.svg"],
-  ] as const;
+  const systems = [["/systems/tradebot", "premium-tradebot-hero.svg"], ["/systems/control-tower", "premium-control-hero.svg"], ["/systems/analytics", "premium-analytics-hero.svg"], ["/systems/automation", "premium-automation-hero.svg"]] as const;
   for (const [route, asset] of systems) {
     await page.goto(route, { waitUntil: "networkidle" });
     await expect(page.locator(".system-hero-media")).toHaveAttribute("src", new RegExp(asset.replace(".", "\\.")));
