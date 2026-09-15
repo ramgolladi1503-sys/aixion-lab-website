@@ -3,10 +3,10 @@ import { systems } from "@/lib/site-data";
 import { systemDetails } from "@/lib/system-detail-data";
 
 const systemCardImages: Record<string, string> = {
-  tradebot: "/textures/systems/premium-tradebot-card.svg",
-  "control-core": "/textures/systems/premium-control-card.svg",
-  analytics: "/textures/systems/premium-analytics-card.svg",
-  automation: "/textures/systems/premium-automation-card.svg",
+  tradebot: "/textures/systems/tradebot-premium.webp",
+  "control-core": "/textures/systems/control-tower-premium.webp",
+  analytics: "/textures/systems/analytics-premium.webp",
+  automation: "/textures/systems/automation-premium.webp",
 };
 
 const publicHref = (slug: string) => slug === "control-core" ? "/systems/control-tower" : `/systems/${slug}`;
