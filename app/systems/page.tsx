@@ -1,173 +1,127 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
 import { systems } from "@/lib/site-data";
-import { systemDetails, PublicSystemState } from "@/lib/system-detail-data";
+import { systemDetails } from "@/lib/system-detail-data";
 
 const systemCardImages: Record<string, string> = {
   tradebot: "/textures/systems/card-tradebot.svg",
   "control-core": "/textures/systems/card-control.svg",
-  automation: "/textures/systems/card-automation.svg",
   analytics: "/textures/systems/card-analytics.svg",
+  automation: "/textures/systems/card-automation.svg",
 };
 
+const publicHref = (slug: string) =>
+  slug === "control-core" ? "/systems/control-tower" : `/systems/${slug}`;
+
 export default function SystemsPage() {
-  const [activeFilter, setActiveFilter] = useState("all");
-
-  const flagships = systems.filter(s => s.slug === "tradebot" || s.slug === "control-core");
-  const experimental = systems.filter(s => s.slug === "analytics" || s.slug === "automation");
-
-  const filterPasses = (slug: string) => {
-    if (activeFilter === "all") return true;
-    const detail = systemDetails[slug];
-    if (!detail) return false;
-    return detail.publicState.toLowerCase() === activeFilter.toLowerCase();
-  };
-
-  const filteredFlagships = flagships.filter(s => filterPasses(s.slug));
-  const filteredExperimental = experimental.filter(s => filterPasses(s.slug));
+  const flagships = systems.filter(
+    system => system.slug === "tradebot" || system.slug === "control-core",
+  );
+  const experiments = systems.filter(
+    system => system.slug === "analytics" || system.slug === "automation",
+  );
 
   return (
-    <div className="unseen-projects-section" style={{ paddingTop: "8rem", minHeight: "85vh" }}>
-      <header className="unseen-projects-header" style={{ marginBottom: "3.5rem" }}>
-        <p style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.75rem",
-          letterSpacing: "0.14em",
-          color: "var(--unseen-muted)",
-          textTransform: "uppercase",
-          margin: "0 0 0.6rem"
-        }}>
-          ENGINEERING DISCIPLINES &amp; WORKFLOWS
+    <div className="systems-page">
+      <header className="systems-page-intro">
+        <p className="systems-page-eyebrow">WORK / SYSTEMS</p>
+        <h1>Systems built to earn trust.</h1>
+        <p className="systems-page-lede">
+          Two flagship systems are moving through active engineering and validation.
+          The rest remain intentionally experimental until the work earns a stronger claim.
         </p>
-        <h1 className="unseen-projects-title" style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}>
-          Systems Registry
-        </h1>
-        <div className="unseen-filter-bar">
-          {[
-            { id: "all", label: "All Systems", count: 4 },
-            { id: "validation", label: "Validation", count: 1 },
-            { id: "development", label: "Development", count: 1 },
-            { id: "exploration", label: "Exploration", count: 2 },
-          ].map(tab => (
-            <button
-              key={tab.id}
-              type="button"
-              className={`unseen-filter-btn ${activeFilter === tab.id ? "active" : ""}`}
-              onClick={() => setActiveFilter(tab.id)}
-            >
-              {tab.label} <span className="count">{tab.count}</span>
-            </button>
-          ))}
-        </div>
       </header>
 
-      <div className="systems-hierarchy-wrap">
-        {/* Section 1: Flagship Systems (Alternating stately editorial feature rows) */}
-        {filteredFlagships.length > 0 && (
-          <section aria-label="Flagship Systems" style={{ marginBottom: "5rem" }}>
-            <div className="systems-group-header">
-              <span className="systems-group-label">Flagship Systems</span>
-              <span className="systems-group-meta">Governed Architecture · Dedicated Case Studies</span>
-            </div>
+      <section className="systems-flagships" aria-labelledby="flagship-heading">
+        <div className="systems-section-heading">
+          <div>
+            <p className="systems-page-eyebrow">FLAGSHIP SYSTEMS</p>
+            <h2 id="flagship-heading">The work carrying the lab forward.</h2>
+          </div>
+          <p>
+            Larger systems with dedicated architecture, evidence, and a clear public maturity state.
+          </p>
+        </div>
 
-            <div className="flagship-list">
-              {filteredFlagships.map((system, idx) => {
-                const detail = systemDetails[system.slug];
-                const publicState = detail?.publicState || "Validation";
-                const isReverse = idx % 2 === 1;
+        <div className="flagship-list">
+          {flagships.map((system, index) => {
+            const detail = systemDetails[system.slug];
+            const reverse = index % 2 === 1;
 
-                return (
-                  <Link
-                    key={system.id}
-                    href={`/systems/${system.slug}`}
-                    className={`flagship-feature-row ${isReverse ? "reverse" : ""}`}
-                  >
-                    <div className="flagship-media-col">
-                      <img
-                        src={systemCardImages[system.slug] || "/textures/systems/card-tradebot.svg"}
-                        alt={system.name}
-                      />
-                    </div>
-                    <div className="flagship-info-col">
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.8rem" }}>
-                        <span style={{
-                          fontFamily: "var(--font-mono)",
-                          fontSize: "0.75rem",
-                          letterSpacing: "0.12em",
-                          color: "#7A2021",
-                          textTransform: "uppercase"
-                        }}>
-                          FLAGSHIP 0{idx + 1}
-                        </span>
-                        <span className={`public-state-badge state-${publicState.toLowerCase()}`}>
-                          <i className="public-state-dot" />
-                          {publicState}
-                        </span>
-                      </div>
-                      <h2 className="flagship-card-title">{system.name}</h2>
-                      <p className="flagship-card-desc">
-                        {system.descriptor}
-                      </p>
-                      <span className="flagship-card-link">
-                        Explore architecture specification →
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-        )}
+            return (
+              <Link
+                key={system.id}
+                href={publicHref(system.slug)}
+                className={`flagship-feature-row ${reverse ? "reverse" : ""}`}
+              >
+                <div className="flagship-media-col">
+                  <img
+                    src={systemCardImages[system.slug]}
+                    alt={`${system.name} visual`}
+                  />
+                </div>
 
-        {/* Section 2: Experimental & Early-Stage Work (Disciplined compact grid) */}
-        {filteredExperimental.length > 0 && (
-          <section aria-label="Experimental Systems">
-            <div className="systems-group-header">
-              <span className="systems-group-label">Experimental &amp; Early-Stage Work</span>
-              <span className="systems-group-meta">Exploratory Prototypes</span>
-            </div>
+                <div className="flagship-info-col">
+                  <div className="flagship-kicker-row">
+                    <span className="flagship-index">FLAGSHIP 0{index + 1}</span>
+                    <span className={`public-state-badge state-${detail.publicState.toLowerCase()}`}>
+                      <i className="public-state-dot" />
+                      {detail.publicState}
+                    </span>
+                  </div>
+                  <h3 className="flagship-card-title">{system.name}</h3>
+                  <p className="flagship-proposition">{detail.hero.proposition}</p>
+                  <p className="flagship-card-desc">{system.descriptor}</p>
+                  <span className="flagship-card-link">Explore system →</span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
 
-            <div className="experimental-grid">
-              {filteredExperimental.map(system => {
-                const detail = systemDetails[system.slug];
-                const publicState = detail?.publicState || "Exploration";
-                return (
-                  <Link
-                    key={system.id}
-                    href={`/systems/${system.slug}`}
-                    className="experimental-card"
-                  >
-                    <div className="unseen-card-image-wrap">
-                      <img
-                        src={systemCardImages[system.slug] || "/textures/systems/card-analytics.svg"}
-                        alt={system.name}
-                        className="unseen-card-image"
-                      />
-                    </div>
-                    <div className="unseen-card-footer">
-                      <div style={{ flex: 1, paddingRight: "1rem" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.35rem" }}>
-                          <h2 className="experimental-card-title">{system.name}</h2>
-                          <span className={`public-state-badge state-${publicState.toLowerCase()}`}>
-                            <i className="public-state-dot" />
-                            {publicState}
-                          </span>
-                        </div>
-                        <p className="unseen-card-desc" style={{ fontSize: "0.85rem" }}>
-                          {system.descriptor}
-                        </p>
-                      </div>
-                      <div className="unseen-card-arrow">↘</div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-        )}
-      </div>
+      <section className="systems-experiments" aria-labelledby="experimental-heading">
+        <div className="systems-section-heading compact">
+          <div>
+            <p className="systems-page-eyebrow">EXPERIMENTAL / EARLY WORK</p>
+            <h2 id="experimental-heading">Useful ideas, without inflated claims.</h2>
+          </div>
+          <p>
+            These projects remain exploratory. They are shown as working directions, not as finished flagship products.
+          </p>
+        </div>
+
+        <div className="experimental-grid">
+          {experiments.map(system => {
+            const detail = systemDetails[system.slug];
+            return (
+              <Link
+                key={system.id}
+                href={publicHref(system.slug)}
+                className="experimental-card"
+              >
+                <div className="unseen-card-image-wrap">
+                  <img
+                    src={systemCardImages[system.slug]}
+                    alt={`${system.name} visual`}
+                    className="unseen-card-image"
+                  />
+                </div>
+                <div className="experimental-card-copy">
+                  <div className="experimental-card-head">
+                    <h3 className="experimental-card-title">{system.name}</h3>
+                    <span className={`public-state-badge state-${detail.publicState.toLowerCase()}`}>
+                      <i className="public-state-dot" />
+                      {detail.publicState}
+                    </span>
+                  </div>
+                  <p>{system.descriptor}</p>
+                  <span className="experimental-card-link">Explore direction →</span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 }
