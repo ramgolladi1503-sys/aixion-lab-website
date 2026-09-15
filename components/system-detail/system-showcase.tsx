@@ -5,10 +5,10 @@ import { useMemo, useState } from "react";
 import type { SystemDetailData } from "@/lib/system-detail-data";
 
 const premiumHeroImages: Record<string, string> = {
-  tradebot: "/textures/systems/premium-tradebot-hero.svg",
-  "control-core": "/textures/systems/premium-control-hero.svg",
-  analytics: "/textures/systems/premium-analytics-hero.svg",
-  automation: "/textures/systems/premium-automation-hero.svg",
+  tradebot: "/textures/systems/tradebot-detail-premium.png",
+  "control-core": "/textures/systems/control-tower-detail-premium.png",
+  analytics: "/textures/systems/analytics-detail-premium.png",
+  automation: "/textures/systems/automation-detail-premium.png",
 };
 
 type Tab = "overview" | "architecture" | "evidence" | "state" | "next";
