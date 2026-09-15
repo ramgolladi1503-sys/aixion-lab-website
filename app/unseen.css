@@ -437,3 +437,49 @@ body.unseen-theme::after {
 .unseen-card:hover .unseen-card-arrow {
   transform: translate(2px, 2px);
 }
+
+/* 3D Loader Cube Animation matching Unseen */
+.unseen-loader-cube {
+  perspective: 600px;
+  width: 64px;
+  height: 64px;
+}
+
+.cube-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotateUnseenCube 6s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+.cube-face {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(33, 33, 33, 0.35);
+  background: rgba(239, 222, 217, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #212121;
+}
+
+.cube-face.front  { transform: translateZ(32px); }
+.cube-face.back   { transform: rotateY(180deg) translateZ(32px); }
+.cube-face.right  { transform: rotateY(90deg) translateZ(32px); }
+.cube-face.left   { transform: rotateY(-90deg) translateZ(32px); }
+.cube-face.top    { transform: rotateX(90deg) translateZ(32px); }
+.cube-face.bottom { transform: rotateX(-90deg) translateZ(32px); }
+
+@keyframes rotateUnseenCube {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  25% { transform: rotateX(90deg) rotateY(0deg); }
+  50% { transform: rotateX(90deg) rotateY(90deg); }
+  75% { transform: rotateX(180deg) rotateY(90deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
