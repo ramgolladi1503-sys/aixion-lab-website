@@ -18,47 +18,26 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const detail = systemDetails[slug];
   if (!detail) return {};
-
   return {
     title: `${detail.name} — Aixion Lab`,
     description: detail.hero.proposition,
-    openGraph: {
-      title: `${detail.name} — Aixion Lab`,
-      description: detail.hero.summary,
-      images: [detail.hero.image],
-    },
+    openGraph: { title: `${detail.name} — Aixion Lab`, description: detail.hero.summary, images: [detail.hero.image] },
   };
 }
 
 export default async function SystemDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const detail = systemDetails[slug];
-
-  if (!detail) {
-    notFound();
-  }
+  if (!detail) notFound();
 
   return (
-    <article className="system-detail-container" aria-label={`${detail.name} Specification`}>
-      {/* 1. Hero */}
+    <article className={`system-detail-container system-detail-${slug}`} aria-label={`${detail.name} Specification`}>
       <SystemHero data={detail} />
-
-      {/* 2. Problem */}
       <SystemProblem data={detail} />
-
-      {/* 3. What it does (5-6 slim capabilities) */}
       <SystemCapabilities data={detail} />
-
-      {/* 4. How it works (Sticky diagram/media + scroll progression) */}
       <SystemHowItWorks data={detail} />
-
-      {/* 5. Why it matters (Editorial burgundy break) */}
       <SystemWhyItMatters data={detail} />
-
-      {/* 6. Current state & closing principle */}
       <SystemCurrentState data={detail} />
-
-      {/* 7. Related / next step */}
       <SystemNextSteps data={detail} />
     </article>
   );
