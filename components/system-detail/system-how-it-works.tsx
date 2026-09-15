@@ -8,66 +8,40 @@ export function SystemHowItWorks({ data }: { data: SystemDetailData }) {
   const [activeStep, setActiveStep] = useState<number | null>(null);
 
   return (
-    <section className="system-section-shell" id="how-it-works" aria-label="How the System Works">
-      <div style={{ marginBottom: "3rem" }}>
+    <section className="system-section-shell system-how-section" id="how-it-works" aria-label="How the System Works">
+      <div className="system-how-intro">
         <p className="system-section-label">HOW IT WORKS</p>
-        <p style={{
-          fontFamily: "var(--font-sans)",
-          fontSize: "1.25rem",
-          color: "var(--unseen-stone)",
-          maxWidth: "720px",
-          lineHeight: 1.5,
-          margin: 0
-        }}>
-          {howItWorks.intro}
-        </p>
+        <p>{howItWorks.intro}</p>
       </div>
 
       <div className="system-how-grid">
-        {/* Sticky Visual Diagram / Supporting Media */}
         <div className="system-how-sticky-col">
           <div className="system-how-media-wrap">
-            <img
-              src={howItWorks.supportingImage}
-              alt={howItWorks.supportingImageAlt}
-              className="system-how-media"
-              loading="lazy"
-            />
+            <img src={howItWorks.supportingImage} alt={howItWorks.supportingImageAlt} className="system-how-media" loading="lazy" />
           </div>
-          <p style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.72rem",
-            color: "var(--unseen-muted)",
-            marginTop: "0.8rem",
-            letterSpacing: "0.08em"
-          }}>
-            SUPPORTING EVIDENCE LAYER · VERIFIABLE EXECUTION MAP
-          </p>
+          <p className="system-how-caption">SUPPORTING EVIDENCE · EXECUTION MAP</p>
         </div>
 
-        {/* Scroll-Linked Architectural Progression with interactive focus */}
         <div className="system-how-steps" onMouseLeave={() => setActiveStep(null)}>
           {howItWorks.steps.map((step, idx) => {
-            const isHovered = activeStep === idx;
-            const hasHover = activeStep !== null;
-            const opacity = !hasHover || isHovered ? 1 : 0.45;
-
+            const isActive = activeStep === idx;
+            const hasActive = activeStep !== null;
             return (
-              <div
+              <button
+                type="button"
                 key={step.number}
-                className="system-how-step"
+                className={`system-how-step ${isActive ? "active" : ""} ${hasActive && !isActive ? "deemphasized" : ""}`}
                 onMouseEnter={() => setActiveStep(idx)}
-                style={{
-                  opacity,
-                  transition: "opacity 0.25s ease, transform 0.25s ease",
-                  cursor: "default",
-                  transform: isHovered ? "translateX(4px)" : "none"
-                }}
+                onFocus={() => setActiveStep(idx)}
+                onClick={() => setActiveStep(idx)}
+                aria-pressed={isActive}
               >
-                <div className="system-how-step-num">{step.number} / ARCHITECTURE STAGE</div>
-                <h3 className="system-how-step-title">{step.title}</h3>
-                <p className="system-how-step-desc">{step.description}</p>
-              </div>
+                <span className="system-how-step-num">{step.number}</span>
+                <span className="system-how-step-copy">
+                  <strong className="system-how-step-title">{step.title}</strong>
+                  <span className="system-how-step-desc">{step.description}</span>
+                </span>
+              </button>
             );
           })}
         </div>
