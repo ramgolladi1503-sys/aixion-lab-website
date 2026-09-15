@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { Water } from "three/examples/jsm/objects/Water.js";
-import { Sky } from "three/examples/jsm/objects/Sky.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
@@ -17,97 +15,75 @@ export function UnseenArchitecturalScene() {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    // 1. Scene & Atmosphere Setup
+    // 1. Scene & Atmospheric Settings
     const scene = new THREE.Scene();
+    scene.background = new THREE.Color("#efded9");
+    scene.fog = new THREE.FogExp2("#efded9", 0.032);
 
-    const camera = new THREE.PerspectiveCamera(55, width / height, 1, 20000);
+    const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 100);
+    camera.position.set(0, 1.7, 6.8);
+    camera.lookAt(0, 0.9, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true, powerPreference: "high-performance" });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.22;
+    renderer.toneMappingExposure = 1.3;
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     container.appendChild(renderer.domElement);
 
-    // 2. Realistic Three.js Ocean Water Mesh
-    const waterGeometry = new THREE.PlaneGeometry(10000, 10000);
-    const textureLoader = new THREE.TextureLoader();
-    const waterNormals = textureLoader.load("/textures/waternormals.jpg", (texture) => {
-      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    });
-
-    const sun = new THREE.Vector3();
-
-    const water = new Water(waterGeometry, {
-      textureWidth: 512,
-      textureHeight: 512,
-      waterNormals: waterNormals,
-      sunDirection: new THREE.Vector3(),
-      sunColor: 0xffffff,
-      waterColor: 0x001e0f,
-      distortionScale: 3.7,
-      fog: scene.fog !== undefined,
-    });
-    water.rotation.x = -Math.PI / 2;
-    scene.add(water);
-
-    // 3. Three.js Atmospheric Skydome
-    const sky = new Sky();
-    sky.scale.setScalar(10000);
-    scene.add(sky);
-
-    const skyUniforms = sky.material.uniforms;
-    skyUniforms["turbidity"].value = 10;
-    skyUniforms["rayleigh"].value = 2;
-    skyUniforms["mieCoefficient"].value = 0.005;
-    skyUniforms["mieDirectionalG"].value = 0.8;
-
-    // Atmospheric Sun Calculation
-    const parameters = {
-      elevation: 2,
-      azimuth: 180,
-    };
-
-    const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    const sceneEnv = new THREE.Scene();
-    let renderTarget: THREE.WebGLRenderTarget | undefined;
-
-    function updateSun() {
-      const phi = THREE.MathUtils.degToRad(90 - parameters.elevation);
-      const theta = THREE.MathUtils.degToRad(parameters.azimuth);
-
-      sun.setFromSphericalCoords(1, phi, theta);
-
-      sky.material.uniforms["sunPosition"].value.copy(sun);
-      water.material.uniforms["sunDirection"].value.copy(sun).normalize();
-
-      if (renderTarget !== undefined) renderTarget.dispose();
-
-      sceneEnv.add(sky);
-      renderTarget = pmremGenerator.fromScene(sceneEnv);
-      scene.add(sky);
-
-      scene.environment = renderTarget.texture;
-    }
-
-    updateSun();
-
-    // Natural Sunlight & Ambient Lighting for Rocks and Flora
-    const ambientLight = new THREE.AmbientLight(0xffeedd, 1.8);
+    // Warm Mediterranean Natural Sun & Ambient Skies
+    const ambientLight = new THREE.AmbientLight(0xfff5ea, 2.4);
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0xfff0dd, 2.8);
-    dirLight.position.set(30, 40, 50);
-    dirLight.castShadow = true;
-    scene.add(dirLight);
+    const sun = new THREE.DirectionalLight(0xfffaf0, 2.6);
+    sun.position.set(6, 9, 5);
+    sun.castShadow = true;
+    sun.shadow.mapSize.width = 2048;
+    sun.shadow.mapSize.height = 2048;
+    sun.shadow.camera.near = 0.5;
+    sun.shadow.camera.far = 25;
+    sun.shadow.bias = -0.0001;
+    scene.add(sun);
 
-    // 4. Central Architectural Stone Platform & Floating Kinetic Orb
-    const rockMat = new THREE.MeshStandardMaterial({
-      color: 0xead9d2,
+    const skyFill = new THREE.DirectionalLight(0xffeedd, 1.1);
+    skyFill.position.set(-6, 5, -2);
+    scene.add(skyFill);
+
+    // 2. High-Albedo Warm Clay Ground Platform
+    const groundGeo = new THREE.PlaneGeometry(36, 36, 64, 64);
+    groundGeo.rotateX(-Math.PI / 2);
+    const groundMat = new THREE.MeshStandardMaterial({
+      color: 0xfaeee8,
       roughness: 0.88,
-      metalness: 0.05,
+      metalness: 0.0,
+    });
+    const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.position.y = -0.05;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    // 3. Fluid Specular Water Surface with Wave Ripple Dynamics
+    const waterGeo = new THREE.PlaneGeometry(16, 16, 128, 128);
+    waterGeo.rotateX(-Math.PI / 2);
+    const waterMat = new THREE.MeshStandardMaterial({
+      color: 0xf3e5e0,
+      roughness: 0.06,
+      metalness: 0.45,
+      transparent: true,
+      opacity: 0.72,
+    });
+    const water = new THREE.Mesh(waterGeo, waterMat);
+    water.position.y = 0.02;
+    water.receiveShadow = true;
+    scene.add(water);
+
+    // 4. Natural Organic Rock Formations
+    const rockMat = new THREE.MeshStandardMaterial({
+      color: 0xf2e1db,
+      roughness: 0.9,
+      metalness: 0.0,
       flatShading: true,
     });
 
@@ -123,83 +99,106 @@ export function UnseenArchitecturalScene() {
       return rock;
     };
 
-    // Natural stone formation rising out of the water on both flanks
-    createRock([32, 16, 26], [42, 6, -20], 0.4);
-    createRock([20, 12, 18], [55, 4, 10], 0.8);
-    createRock([30, 18, 24], [-42, 7, -25], 1.2);
-    createRock([18, 10, 16], [-28, 4, 15], 0.2);
+    createRock([1.1, 0.6, 0.9], [2.2, 0.15, 0.2], 0.4);
+    createRock([0.65, 0.4, 0.6], [2.9, 0.1, 1.0], 0.8);
+    createRock([0.95, 0.7, 0.85], [-2.3, 0.2, -0.4], 1.2);
+    createRock([0.5, 0.35, 0.5], [-1.6, 0.08, 0.7], 0.2);
 
-    // Iridescent Pearl Orb (Floating Kinetic Centerpiece)
-    const pearlGeo = new THREE.SphereGeometry(11, 64, 64);
+    // 5. Iridescent Pearl Orb (Kinetic Floating Core)
+    const pearlGeo = new THREE.SphereGeometry(0.72, 64, 64);
     const pearlMat = new THREE.MeshPhysicalMaterial({
-      color: 0xfffcf9,
-      roughness: 0.04,
-      metalness: 0.05,
-      transmission: 0.55,
+      color: 0xffffff,
+      roughness: 0.05,
+      metalness: 0.08,
+      transmission: 0.52,
       ior: 1.5,
       iridescence: 1.0,
       iridescenceIOR: 1.35,
       iridescenceThicknessRange: [100, 450],
       clearcoat: 1.0,
-      clearcoatRoughness: 0.04,
+      clearcoatRoughness: 0.06,
     });
     const pearl = new THREE.Mesh(pearlGeo, pearlMat);
-    pearl.position.set(0, 14, 5);
+    pearl.position.set(0.2, 1.35, -0.6);
     pearl.castShadow = true;
     scene.add(pearl);
 
-    // 5. Botanical 3D Nature Assets on Rock Outcrops
+    // 6. External GLTF 3D Nature Models
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath("/draco/");
 
     const gltfLoader = new GLTFLoader();
     gltfLoader.setDRACOLoader(dracoLoader);
 
-    // Botanical Plant (Left Outcrop)
+    // Diffuse Transmission Botanical Plant (Left rock bank)
     gltfLoader.load(
       "/models/plant.glb",
       (gltf) => {
         const plant = gltf.scene;
-        plant.scale.set(24, 24, 24);
-        plant.position.set(-42, 12, -35);
+        plant.scale.set(1.4, 1.4, 1.4);
+        plant.position.set(-2.0, 0.15, -0.2);
         plant.rotation.y = 0.5;
+        plant.traverse((node) => {
+          if ((node as THREE.Mesh).isMesh) {
+            node.castShadow = true;
+            node.receiveShadow = true;
+          }
+        });
         scene.add(plant);
       },
       undefined,
       (err) => console.warn("Plant load:", err)
     );
 
-    // Botanical Glass Flowers (Right Outcrop)
+    // Botanical Glass Flowers (Right rock bank)
     gltfLoader.load(
       "/models/flowers.glb",
       (gltf) => {
         const flowers = gltf.scene;
-        flowers.scale.set(130, 130, 130);
-        flowers.position.set(45, 9, -25);
+        flowers.scale.set(7.5, 7.5, 7.5);
+        flowers.position.set(2.35, 0.28, 0.4);
         flowers.rotation.y = -0.3;
+        flowers.traverse((node) => {
+          if ((node as THREE.Mesh).isMesh) {
+            node.castShadow = true;
+            node.receiveShadow = true;
+          }
+        });
         scene.add(flowers);
       },
       undefined,
       (err) => console.warn("Flowers load:", err)
     );
 
-    // 6. Responsive Camera Framing & Dynamic Inertia
+    // 7. Kinetic Fluid Dynamics & Mouse Parallax Loop
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 0.7;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 0.4;
+    };
+    window.addEventListener("mousemove", onMouseMove);
+
     const getResponsiveCameraConfig = (w: number, h: number) => {
       const aspect = w / h;
       if (aspect < 0.8) {
-        // Mobile portrait: further back and higher elevation
-        return { x: 0, y: 22, z: 140, lookY: 15, pearlScale: 0.8 };
+        // Mobile portrait: wider view so rocks and orb fit proportionally
+        return { z: 11.5, y: 1.5, lookY: 0.8, pearlScale: 0.7 };
       } else if (aspect < 1.2) {
-        // Tablet
-        return { x: 0, y: 20, z: 115, lookY: 15, pearlScale: 0.9 };
+        // Tablet portrait / square
+        return { z: 9.0, y: 1.6, lookY: 0.85, pearlScale: 0.85 };
       }
       // Desktop landscape
-      return { x: 0, y: 16, z: 95, lookY: 14, pearlScale: 1.0 };
+      return { z: 6.8, y: 1.7, lookY: 0.9, pearlScale: 1.0 };
     };
 
     let camConfig = getResponsiveCameraConfig(width, height);
-    camera.position.set(camConfig.x, camConfig.y, camConfig.z);
+    camera.position.set(0, camConfig.y, camConfig.z);
     camera.lookAt(0, camConfig.lookY, 0);
+    pearl.scale.set(camConfig.pearlScale, camConfig.pearlScale, camConfig.pearlScale);
 
     const onResize = () => {
       const w = window.innerWidth;
@@ -212,39 +211,43 @@ export function UnseenArchitecturalScene() {
     };
     window.addEventListener("resize", onResize);
 
-    // 7. Kinetic Parallax & Realtime Fluid Animation Loop
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
-
-    const onMouseMove = (e: MouseEvent) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    };
-    window.addEventListener("mousemove", onMouseMove);
-
     let animationId: number;
     let startTime = performance.now();
+
+    // Cache water plane vertex positions for fluid motion
+    const waterPos = waterGeo.attributes.position;
+    const initialY = new Float32Array(waterPos.count);
+    for (let i = 0; i < waterPos.count; i++) {
+      initialY[i] = waterPos.getY(i);
+    }
 
     const animate = () => {
       const elapsed = (performance.now() - startTime) * 0.001;
 
-      // Realtime ocean wave optics animation
-      water.material.uniforms["time"].value += 1.0 / 60.0;
-
-      // Smooth responsive camera inertia
+      // 1. Smooth responsive camera inertia with adaptive distance
       targetX += (mouseX - targetX) * 0.045;
       targetY += (mouseY - targetY) * 0.045;
 
-      camera.position.x = camConfig.x + targetX * 14;
-      camera.position.y = camConfig.y - targetY * 6;
+      camera.position.x = targetX * 1.4;
+      camera.position.y = camConfig.y - targetY * 0.5;
       camera.position.z = camConfig.z;
       camera.lookAt(0, camConfig.lookY, 0);
 
-      // Kinetic pearl breathing float & gentle rotation
-      pearl.position.y = 14 + Math.sin(elapsed * 1.4) * 0.9;
-      pearl.rotation.y = elapsed * 0.15;
+      // 2. Pearl breathing float & smooth rotation
+      pearl.position.y = 1.35 + Math.sin(elapsed * 1.3) * 0.04;
+      pearl.rotation.y = elapsed * 0.14;
+
+      // 3. Kinetic water wave ripples
+      for (let i = 0; i < waterPos.count; i++) {
+        const x = waterPos.getX(i);
+        const z = waterPos.getZ(i);
+        const wave = Math.sin(x * 1.5 + elapsed * 1.8) * 0.018 +
+                     Math.cos(z * 1.5 + elapsed * 1.6) * 0.018 +
+                     Math.sin((x + z) * 2.0 + elapsed * 2.2) * 0.012;
+        waterPos.setY(i, initialY[i] + wave);
+      }
+      waterPos.needsUpdate = true;
+      waterGeo.computeVertexNormals();
 
       renderer.render(scene, camera);
       animationId = requestAnimationFrame(animate);
@@ -258,8 +261,6 @@ export function UnseenArchitecturalScene() {
       cancelAnimationFrame(animationId);
       dracoLoader.dispose();
       renderer.dispose();
-      pmremGenerator.dispose();
-      if (renderTarget) renderTarget.dispose();
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
@@ -268,4 +269,3 @@ export function UnseenArchitecturalScene() {
 
   return <div ref={containerRef} style={{ position: "absolute", inset: 0, zIndex: 1 }} />;
 }
-
