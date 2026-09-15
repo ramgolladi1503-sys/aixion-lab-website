@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Locator } from "@playwright/test";
 import path from "node:path";
 
 const routes = [
@@ -17,7 +17,7 @@ for (const [name, route] of routes) {
   });
 }
 
-const fontPx = async (locator: ReturnType<import("@playwright/test").Page["locator"]>) => locator.evaluate(el => Number.parseFloat(getComputedStyle(el).fontSize));
+const fontPx = async (locator: Locator) => locator.evaluate(el => Number.parseFloat(getComputedStyle(el).fontSize));
 
 test("entry remains isolated from scroll navigation", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
