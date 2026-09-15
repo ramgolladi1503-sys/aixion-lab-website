@@ -16,6 +16,10 @@ export function UnseenHeader() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
   const logoHref = pathname === "/" ? "/" : "/home";
 
   return (
@@ -26,18 +30,10 @@ export function UnseenHeader() {
         </Link>
 
         <div className="unseen-links">
-          <Link href="/systems" className={`unseen-link ${pathname.startsWith("/systems") ? "active" : ""}`}>
-            Work
-          </Link>
-          <Link href="/research" className={`unseen-link ${pathname.startsWith("/research") ? "active" : ""}`}>
-            Research
-          </Link>
-          <Link href="/about" className={`unseen-link ${pathname.startsWith("/about") ? "active" : ""}`}>
-            About
-          </Link>
-          <Link href="/about#collaborate" className="unseen-link">
-            Collaborate
-          </Link>
+          <Link href="/systems" className={`unseen-link ${pathname.startsWith("/systems") ? "active" : ""}`}>Work</Link>
+          <Link href="/research" className={`unseen-link ${pathname.startsWith("/research") ? "active" : ""}`}>Research</Link>
+          <Link href="/about" className={`unseen-link ${pathname === "/about" ? "active" : ""}`}>About</Link>
+          <Link href="/collaborate" className={`unseen-link ${pathname === "/collaborate" ? "active" : ""}`}>Collaborate</Link>
           <button
             type="button"
             className="unseen-menu-toggle"
@@ -51,29 +47,44 @@ export function UnseenHeader() {
       </header>
 
       {menuOpen && (
-        <div className="unseen-overlay-menu" role="dialog" aria-modal="true" aria-label="Site navigation">
-          <button
-            type="button"
-            className="unseen-overlay-close"
-            aria-label="Close navigation"
-            onClick={() => setMenuOpen(false)}
+        <div className="unseen-drawer-backdrop" role="presentation" onClick={() => setMenuOpen(false)}>
+          <aside
+            className="unseen-drawer-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
+            onClick={(event) => event.stopPropagation()}
           >
-            ✕
-          </button>
+            <div className="unseen-drawer-top">
+              <span>Aixion Lab</span>
+              <button type="button" aria-label="Close navigation" onClick={() => setMenuOpen(false)}>×</button>
+            </div>
 
-          <nav className="unseen-overlay-nav">
-            {[
-              ["01", "Work", "/systems"],
-              ["02", "Research", "/research"],
-              ["03", "About", "/about"],
-              ["04", "Collaborate", "/about#collaborate"],
-            ].map(([num, label, href]) => (
-              <Link key={href} href={href} onClick={() => setMenuOpen(false)}>
-                <span>{num}</span>
-                <strong>{label}</strong>
-              </Link>
-            ))}
-          </nav>
+            <nav className="unseen-drawer-nav">
+              {[
+                ["01", "Work", "/systems"],
+                ["02", "Research", "/research"],
+                ["03", "About", "/about"],
+                ["04", "Collaborate", "/collaborate"],
+              ].map(([num, label, href]) => (
+                <Link key={href} href={href} onClick={() => setMenuOpen(false)}>
+                  <span>{num}</span>
+                  <strong>{label}</strong>
+                </Link>
+              ))}
+            </nav>
+
+            <div className="unseen-drawer-secondary">
+              <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
+              <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              <Link href="/resume">Résumé →</Link>
+            </div>
+
+            <div className="unseen-drawer-footer">
+              <span>Applied engineering · research · systems</span>
+              <a href="mailto:ram@aixionlab.com">ram@aixionlab.com</a>
+            </div>
+          </aside>
         </div>
       )}
     </>
@@ -81,6 +92,11 @@ export function UnseenHeader() {
 }
 
 export function UnseenStatusBar() {
+  const pathname = usePathname();
+  const hideStatus = pathname === "/about" || pathname === "/collaborate";
+
+  if (hideStatus) return null;
+
   return (
     <footer className="unseen-status-bar">
       <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
@@ -107,9 +123,7 @@ export function UnseenStatusBar() {
             <line x1="12" y1="20" x2="12" y2="8" />
           </svg>
         </button>
-        <Link href="/pulse" className="unseen-pill-button">
-          <span>TradeBot: Validating Live</span>
-        </Link>
+        <Link href="/pulse" className="unseen-pill-button"><span>TradeBot: Validating Live</span></Link>
       </div>
 
       <Link href="/about" className="unseen-center-ctrl" aria-label="Built by Ram">
