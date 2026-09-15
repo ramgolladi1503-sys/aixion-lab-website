@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { SystemDetailData, systemDetails } from "@/lib/system-detail-data";
 
+const publicSystemHref = (slug: string) =>
+  slug === "control-core" ? "/systems/control-tower" : `/systems/${slug}`;
+
 export function SystemNextSteps({ data }: { data: SystemDetailData }) {
   const { closingCtas, relatedSlug } = data;
   const relatedSystem = systemDetails[relatedSlug];
@@ -21,7 +24,7 @@ export function SystemNextSteps({ data }: { data: SystemDetailData }) {
 
       <div className="system-next-actions">
         {relatedSystem && (
-          <Link href={`/systems/${relatedSystem.slug}`} className="system-btn-primary">
+          <Link href={publicSystemHref(relatedSystem.slug)} className="system-btn-primary">
             Explore {relatedSystem.name} →
           </Link>
         )}
