@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
 export function UnseenArchitecturalScene() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -18,157 +16,88 @@ export function UnseenArchitecturalScene() {
     // 1. Scene & Atmospheric Settings
     const scene = new THREE.Scene();
     scene.background = new THREE.Color("#efded9");
-    scene.fog = new THREE.FogExp2("#efded9", 0.032);
+    scene.fog = new THREE.FogExp2("#efded9", 0.024);
 
-    const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 100);
-    camera.position.set(0, 1.7, 6.8);
-    camera.lookAt(0, 0.9, 0);
+    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
+    camera.position.set(0, 1.6, 6.4);
+    camera.lookAt(0, 1.0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true, powerPreference: "high-performance" });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.3;
+    renderer.toneMappingExposure = 1.15;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFShadowMap;
     container.appendChild(renderer.domElement);
 
-    // Warm Mediterranean Natural Sun & Ambient Skies
-    const ambientLight = new THREE.AmbientLight(0xfff5ea, 2.4);
+    // Warm Architectural Ambient Light
+    const ambientLight = new THREE.AmbientLight(0xfff7f0, 2.8);
     scene.add(ambientLight);
 
-    const sun = new THREE.DirectionalLight(0xfffaf0, 2.6);
-    sun.position.set(6, 9, 5);
-    sun.castShadow = true;
-    sun.shadow.mapSize.width = 2048;
-    sun.shadow.mapSize.height = 2048;
-    sun.shadow.camera.near = 0.5;
-    sun.shadow.camera.far = 25;
-    sun.shadow.bias = -0.0001;
-    scene.add(sun);
+    // Skylight Oculus Sunbeam Light
+    const oculusSun = new THREE.DirectionalLight(0xfffaf2, 3.2);
+    oculusSun.position.set(0, 12, 1);
+    oculusSun.castShadow = true;
+    oculusSun.shadow.mapSize.width = 2048;
+    oculusSun.shadow.mapSize.height = 2048;
+    oculusSun.shadow.camera.near = 0.5;
+    oculusSun.shadow.camera.far = 30;
+    oculusSun.shadow.bias = -0.0001;
+    scene.add(oculusSun);
 
-    const skyFill = new THREE.DirectionalLight(0xffeedd, 1.1);
-    skyFill.position.set(-6, 5, -2);
-    scene.add(skyFill);
+    // Soft lateral bounce light
+    const bounceLight = new THREE.DirectionalLight(0xf5e6de, 1.4);
+    bounceLight.position.set(-6, 3, 4);
+    scene.add(bounceLight);
 
-    // 2. High-Albedo Warm Clay Ground Platform
-    const groundGeo = new THREE.PlaneGeometry(36, 36, 64, 64);
-    groundGeo.rotateX(-Math.PI / 2);
-    const groundMat = new THREE.MeshStandardMaterial({
-      color: 0xfaeee8,
-      roughness: 0.88,
-      metalness: 0.0,
+    // 2. High-Resolution Architectural Curved Backdrop (The Biophilic Sanctuary)
+    const textureLoader = new THREE.TextureLoader();
+    const sanctuaryTex = textureLoader.load("/textures/sanctuary-room.jpg");
+    sanctuaryTex.colorSpace = THREE.SRGBColorSpace;
+
+    const bgPlaneGeo = new THREE.PlaneGeometry(16, 9);
+    const bgPlaneMat = new THREE.MeshBasicMaterial({
+      map: sanctuaryTex,
+      depthWrite: false,
     });
-    const ground = new THREE.Mesh(groundGeo, groundMat);
-    ground.position.y = -0.05;
-    ground.receiveShadow = true;
-    scene.add(ground);
+    const bgPlane = new THREE.Mesh(bgPlaneGeo, bgPlaneMat);
+    bgPlane.position.set(0, 1.6, -2.8);
+    scene.add(bgPlane);
 
     // 3. Fluid Specular Water Surface with Wave Ripple Dynamics
-    const waterGeo = new THREE.PlaneGeometry(16, 16, 128, 128);
+    const waterGeo = new THREE.PlaneGeometry(12, 8, 128, 128);
     waterGeo.rotateX(-Math.PI / 2);
     const waterMat = new THREE.MeshStandardMaterial({
-      color: 0xf3e5e0,
-      roughness: 0.06,
-      metalness: 0.45,
+      color: 0xeadfd8,
+      roughness: 0.04,
+      metalness: 0.5,
       transparent: true,
-      opacity: 0.72,
+      opacity: 0.65,
     });
     const water = new THREE.Mesh(waterGeo, waterMat);
-    water.position.y = 0.02;
+    water.position.set(0, -0.45, -0.4);
     water.receiveShadow = true;
     scene.add(water);
 
-    // 4. Natural Organic Rock Formations
-    const rockMat = new THREE.MeshStandardMaterial({
-      color: 0xf2e1db,
-      roughness: 0.9,
-      metalness: 0.0,
-      flatShading: true,
-    });
-
-    const createRock = (scale: [number, number, number], p: [number, number, number], rotY: number = 0) => {
-      const geo = new THREE.DodecahedronGeometry(1, 1);
-      const rock = new THREE.Mesh(geo, rockMat);
-      rock.scale.set(...scale);
-      rock.position.set(...p);
-      rock.rotation.y = rotY;
-      rock.castShadow = true;
-      rock.receiveShadow = true;
-      scene.add(rock);
-      return rock;
-    };
-
-    createRock([1.1, 0.6, 0.9], [2.2, 0.15, 0.2], 0.4);
-    createRock([0.65, 0.4, 0.6], [2.9, 0.1, 1.0], 0.8);
-    createRock([0.95, 0.7, 0.85], [-2.3, 0.2, -0.4], 1.2);
-    createRock([0.5, 0.35, 0.5], [-1.6, 0.08, 0.7], 0.2);
-
-    // 5. Iridescent Pearl Orb (Kinetic Floating Core)
+    // 4. Iridescent Pearl Orb (Kinetic Floating Core beneath Oculus)
     const pearlGeo = new THREE.SphereGeometry(0.72, 64, 64);
     const pearlMat = new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
-      roughness: 0.05,
-      metalness: 0.08,
-      transmission: 0.52,
-      ior: 1.5,
+      roughness: 0.02,
+      metalness: 0.04,
+      transmission: 0.68,
+      ior: 1.55,
       iridescence: 1.0,
       iridescenceIOR: 1.35,
-      iridescenceThicknessRange: [100, 450],
+      iridescenceThicknessRange: [100, 480],
       clearcoat: 1.0,
-      clearcoatRoughness: 0.06,
+      clearcoatRoughness: 0.03,
     });
     const pearl = new THREE.Mesh(pearlGeo, pearlMat);
-    pearl.position.set(0.2, 1.35, -0.6);
+    pearl.position.set(0, 0.45, -0.6);
     pearl.castShadow = true;
     scene.add(pearl);
-
-    // 6. External GLTF 3D Nature Models
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("/draco/");
-
-    const gltfLoader = new GLTFLoader();
-    gltfLoader.setDRACOLoader(dracoLoader);
-
-    // Diffuse Transmission Botanical Plant (Left rock bank)
-    gltfLoader.load(
-      "/models/plant.glb",
-      (gltf) => {
-        const plant = gltf.scene;
-        plant.scale.set(1.4, 1.4, 1.4);
-        plant.position.set(-2.0, 0.15, -0.2);
-        plant.rotation.y = 0.5;
-        plant.traverse((node) => {
-          if ((node as THREE.Mesh).isMesh) {
-            node.castShadow = true;
-            node.receiveShadow = true;
-          }
-        });
-        scene.add(plant);
-      },
-      undefined,
-      (err) => console.warn("Plant load:", err)
-    );
-
-    // Botanical Glass Flowers (Right rock bank)
-    gltfLoader.load(
-      "/models/flowers.glb",
-      (gltf) => {
-        const flowers = gltf.scene;
-        flowers.scale.set(7.5, 7.5, 7.5);
-        flowers.position.set(2.35, 0.28, 0.4);
-        flowers.rotation.y = -0.3;
-        flowers.traverse((node) => {
-          if ((node as THREE.Mesh).isMesh) {
-            node.castShadow = true;
-            node.receiveShadow = true;
-          }
-        });
-        scene.add(flowers);
-      },
-      undefined,
-      (err) => console.warn("Flowers load:", err)
-    );
 
     // 7. Kinetic Fluid Dynamics & Mouse Parallax Loop
     let mouseX = 0;
@@ -234,7 +163,7 @@ export function UnseenArchitecturalScene() {
       camera.lookAt(0, camConfig.lookY, 0);
 
       // 2. Pearl breathing float & smooth rotation
-      pearl.position.y = 1.35 + Math.sin(elapsed * 1.3) * 0.04;
+      pearl.position.y = 0.45 + Math.sin(elapsed * 1.3) * 0.04;
       pearl.rotation.y = elapsed * 0.14;
 
       // 3. Kinetic water wave ripples
@@ -259,7 +188,6 @@ export function UnseenArchitecturalScene() {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("resize", onResize);
       cancelAnimationFrame(animationId);
-      dracoLoader.dispose();
       renderer.dispose();
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
