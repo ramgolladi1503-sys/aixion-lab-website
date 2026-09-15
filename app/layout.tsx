@@ -3,6 +3,7 @@ import "./unseen.css";
 import "./structural-remediation.css";
 import "./system-variants.css";
 import "./mockup-rebuild.css";
+import "./theme-global.css";
 import { UnseenHeader, UnseenStatusBar } from "@/components/unseen-chrome";
 
 export const metadata: Metadata = {
