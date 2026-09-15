@@ -1,0 +1,43 @@
+/* Project-specific composition. Shared design system, different narrative rhythm. */
+.system-how-intro { margin-bottom:2rem; max-width:760px; }
+.system-how-intro>p:last-child { margin:.6rem 0 0; font-size:1.18rem; line-height:1.6; color:var(--aixion-body); }
+.system-how-caption { margin:.75rem 0 0; font-size:.78rem; letter-spacing:.1em; color:var(--aixion-muted); }
+.system-how-step { width:100%; display:grid; grid-template-columns:2.4rem 1fr; gap:1rem; text-align:left; border:0; border-top:1px solid var(--aixion-rule); background:transparent; color:inherit; cursor:pointer; transition:opacity .22s ease, transform .22s ease, background .22s ease; }
+.system-how-step.active { transform:translateX(5px); background:rgba(122,32,33,.035); }
+.system-how-step.deemphasized { opacity:.48; }
+.system-how-step-num { padding-top:.18rem; font-size:.78rem; color:var(--aixion-burgundy); }
+.system-how-step-copy { display:block; }
+.system-how-step-title { display:block; }
+.system-how-step-desc { display:block; }
+
+/* TradeBot: evidence-heavy observatory, visual remains right in hero and left in architecture. */
+.system-detail-tradebot .system-how-media-wrap { background:#14171b; }
+.system-detail-tradebot .system-how-step.active { border-top-color:rgba(122,32,33,.55); }
+
+/* Control Tower: orchestration is the visual anchor; lead with the control plane. */
+.system-hero-control-core { grid-template-columns:minmax(470px,1.1fr) minmax(0,.9fr)!important; }
+.system-hero-control-core .system-hero-media-wrap { grid-column:1; grid-row:1; }
+.system-hero-control-core .system-hero-header { grid-column:2; grid-row:1; }
+.system-detail-control-core .system-how-grid { grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); }
+.system-detail-control-core .system-how-sticky-col { grid-column:2; }
+.system-detail-control-core .system-how-steps { grid-column:1; grid-row:1; }
+
+/* Analytics: lighter, measurement-led and more open. */
+.system-detail-analytics .system-hero-section { grid-template-columns:minmax(0,.78fr) minmax(520px,1.22fr)!important; }
+.system-detail-analytics .system-hero-media-wrap { aspect-ratio:16/10!important; }
+.system-detail-analytics .system-how-media-wrap { background:#f5ece7; }
+.system-detail-analytics .system-why-section { background:#f1e4df!important; color:var(--aixion-ink)!important; border:1px solid var(--aixion-rule); }
+.system-detail-analytics .system-why-body { color:var(--aixion-body)!important; }
+
+/* Automation: process-led; image arrives first, copy follows. */
+.system-detail-automation .system-hero-section { grid-template-columns:minmax(500px,1.08fr) minmax(0,.92fr)!important; }
+.system-detail-automation .system-hero-media-wrap { grid-column:1; grid-row:1; }
+.system-detail-automation .system-hero-header { grid-column:2; grid-row:1; }
+.system-detail-automation .system-how-step.active { background:rgba(122,32,33,.045); }
+
+@media (max-width:1000px) {
+  .system-hero-control-core,.system-detail-analytics .system-hero-section,.system-detail-automation .system-hero-section { grid-template-columns:1fr!important; }
+  .system-hero-control-core .system-hero-media-wrap,.system-hero-control-core .system-hero-header,.system-detail-automation .system-hero-media-wrap,.system-detail-automation .system-hero-header { grid-column:auto; grid-row:auto; }
+  .system-detail-control-core .system-how-grid { grid-template-columns:1fr; }
+  .system-detail-control-core .system-how-sticky-col,.system-detail-control-core .system-how-steps { grid-column:auto; grid-row:auto; }
+}
