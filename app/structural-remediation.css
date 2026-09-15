@@ -5,7 +5,6 @@
   --aixion-rule: rgba(33, 33, 33, 0.14);
 }
 
-/* Structural remediation layer. Keep page boundaries explicit. */
 html,
 body {
   overscroll-behavior-y: none;
@@ -212,7 +211,6 @@ body {
   color: var(--aixion-muted);
 }
 
-/* Keep detail pages dense enough to feel substantial rather than endless. */
 .system-detail-container .system-section-shell {
   padding-top: clamp(4.5rem, 7vw, 6.5rem);
   padding-bottom: clamp(4.5rem, 7vw, 6.5rem);
@@ -220,6 +218,61 @@ body {
 
 .system-detail-container p {
   text-wrap: pretty;
+}
+
+.unseen-overlay-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  background: #efded9;
+  padding: clamp(2rem, 6vw, 6rem);
+}
+
+.unseen-overlay-close {
+  position: absolute;
+  top: 2rem;
+  right: 2.5rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 1px solid rgba(33, 33, 33, 0.1);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--aixion-ink);
+  cursor: pointer;
+}
+
+.unseen-overlay-nav {
+  width: min(900px, 100%);
+  display: grid;
+  gap: 1.15rem;
+}
+
+.unseen-overlay-nav a {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 0.4rem 0 0.8rem;
+  border-bottom: 1px solid var(--aixion-rule);
+  color: var(--aixion-ink);
+  text-decoration: none;
+}
+
+.unseen-overlay-nav a > span {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--aixion-burgundy);
+}
+
+.unseen-overlay-nav a > strong {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 6.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
 }
 
 @media (max-width: 900px) {
@@ -273,5 +326,14 @@ body {
   .experimental-card .unseen-card-image-wrap {
     min-height: 0;
     aspect-ratio: 16 / 10;
+  }
+
+  .unseen-overlay-menu {
+    padding: 5rem 1.5rem 2rem;
+  }
+
+  .unseen-overlay-nav a {
+    grid-template-columns: 2rem 1fr;
+    gap: 0.75rem;
   }
 }
