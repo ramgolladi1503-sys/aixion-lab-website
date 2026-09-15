@@ -563,3 +563,585 @@ body.unseen-theme::after {
   }
 }
 
+/* ==========================================================================
+   Aixion Systems Registry Hierarchy & System Detail Styles
+   ========================================================================== */
+
+.systems-hierarchy-wrap {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.systems-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid rgba(33, 33, 33, 0.12);
+  padding-bottom: 0.8rem;
+  margin-bottom: 2.2rem;
+}
+
+.systems-group-label {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--unseen-muted);
+}
+
+.systems-group-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--unseen-light-muted);
+}
+
+/* Flagship Cards Grid: 2 expansive columns */
+.flagship-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3.5rem 2.8rem;
+}
+
+.flagship-card {
+  display: block;
+  text-decoration: none;
+  color: var(--unseen-stone);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flagship-card .unseen-card-image-wrap {
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  box-shadow: 0 12px 36px rgba(33, 33, 33, 0.04);
+}
+
+.flagship-card:hover .unseen-card-image-wrap img {
+  transform: scale(1.025);
+}
+
+.flagship-card-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0 0 0.4rem;
+  color: var(--unseen-stone);
+  letter-spacing: -0.02em;
+}
+
+/* Experimental Cards Grid: secondary 2 columns or compact rows */
+.experimental-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem 2.4rem;
+}
+
+.experimental-card {
+  display: block;
+  text-decoration: none;
+  color: var(--unseen-stone);
+}
+
+.experimental-card .unseen-card-image-wrap {
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  background: #ded1cb;
+}
+
+.experimental-card-title {
+  font-family: var(--font-sans);
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0 0 0.35rem;
+  color: var(--unseen-stone);
+}
+
+/* Public State Badge */
+.public-state-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  background: rgba(33, 33, 33, 0.06);
+  color: var(--unseen-stone);
+  border: 1px solid rgba(33, 33, 33, 0.1);
+}
+
+.public-state-badge.state-validation {
+  background: rgba(122, 32, 33, 0.08);
+  color: #7A2021;
+  border-color: rgba(122, 32, 33, 0.2);
+}
+
+.public-state-badge.state-development {
+  background: rgba(129, 153, 176, 0.14);
+  color: #4b6680;
+  border-color: rgba(129, 153, 176, 0.28);
+}
+
+.public-state-badge.state-exploration {
+  background: rgba(120, 153, 139, 0.12);
+  color: #436355;
+  border-color: rgba(120, 153, 139, 0.24);
+}
+
+.public-state-badge.state-operational {
+  background: rgba(80, 140, 90, 0.12);
+  color: #2e663a;
+  border-color: rgba(80, 140, 90, 0.25);
+}
+
+.public-state-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+@media (max-width: 900px) {
+  .flagship-grid, .experimental-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Aixion System Detail Primitives (Hero, Problem, Capabilities, HowItWorks, WhyItMatters, CurrentState, Closing)
+   ========================================================================== */
+
+.system-detail-container {
+  background-color: var(--unseen-bg);
+  color: var(--unseen-stone);
+  min-height: 100vh;
+  position: relative;
+}
+
+.system-section-shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 6rem 2.5rem;
+}
+
+/* 1. HERO */
+.system-hero-section {
+  padding: 8.5rem 2.5rem 4rem;
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+.system-hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 2rem;
+}
+
+.system-hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--unseen-muted);
+  margin: 0 0 0.8rem;
+}
+
+.system-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6.5vw, 5.8rem);
+  font-weight: 400;
+  line-height: 1.02;
+  margin: 0 0 1.2rem;
+  letter-spacing: -0.025em;
+  color: var(--unseen-stone);
+}
+
+.system-hero-proposition {
+  font-family: var(--font-sans);
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--unseen-stone);
+  max-width: 820px;
+  margin: 0 0 1.2rem;
+}
+
+.system-hero-summary {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--unseen-muted);
+  max-width: 720px;
+  margin: 0 0 2rem;
+}
+
+.system-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.system-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #7A2021;
+  color: #faf6f4;
+  padding: 0.75rem 1.6rem;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(122, 32, 33, 0.16);
+}
+
+.system-btn-primary:hover {
+  background: #631819;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(122, 32, 33, 0.24);
+}
+
+.system-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  color: var(--unseen-stone);
+  border: 1px solid rgba(33, 33, 33, 0.12);
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.system-btn-secondary:hover {
+  background: #ffffff;
+  border-color: rgba(33, 33, 33, 0.25);
+}
+
+.system-hero-media-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 8.5;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 3rem;
+  background: #18191c;
+  box-shadow: 0 24px 64px rgba(33, 33, 33, 0.08);
+  border: 1px solid rgba(33, 33, 33, 0.12);
+}
+
+.system-hero-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 2. PROBLEM (2-Column Editorial) */
+.system-problem-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.system-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7A2021;
+  margin: 0 0 1rem;
+}
+
+.system-problem-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.5rem;
+  color: var(--unseen-stone);
+}
+
+.system-problem-body {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #4a4a4a;
+  white-space: pre-line;
+}
+
+.system-problem-aside {
+  background: rgba(255, 255, 255, 0.5);
+  border-left: 2px solid #7A2021;
+  padding: 1.8rem 2rem;
+  border-radius: 0 10px 10px 0;
+}
+
+.system-problem-aside p {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--unseen-muted);
+  margin: 0;
+}
+
+/* 3. WHAT IT DOES (Slim rows / columns, no large SaaS cards) */
+.system-capabilities-header {
+  border-bottom: 1px solid rgba(33, 33, 33, 0.12);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.system-capabilities-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--unseen-stone);
+}
+
+.system-capabilities-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem 2rem;
+}
+
+.system-capability-row {
+  border-top: 1px solid rgba(33, 33, 33, 0.12);
+  padding-top: 1.4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.system-capability-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: #7A2021;
+  margin-bottom: 0.6rem;
+}
+
+.system-capability-name {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--unseen-stone);
+  margin: 0 0 0.5rem;
+}
+
+.system-capability-desc {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--unseen-muted);
+  margin: 0;
+}
+
+/* 4. HOW IT WORKS (Sticky media/diagram + scroll-linked progression) */
+.system-how-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4.5rem;
+  align-items: start;
+}
+
+.system-how-sticky-col {
+  position: sticky;
+  top: 6.5rem;
+}
+
+.system-how-media-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #151619;
+  border: 1px solid rgba(33, 33, 33, 0.12);
+  box-shadow: 0 16px 40px rgba(33, 33, 33, 0.07);
+}
+
+.system-how-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.system-how-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.system-how-step {
+  border-bottom: 1px solid rgba(33, 33, 33, 0.12);
+  padding-bottom: 1.8rem;
+}
+
+.system-how-step:last-child {
+  border-bottom: none;
+}
+
+.system-how-step-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: #7A2021;
+  margin-bottom: 0.4rem;
+}
+
+.system-how-step-title {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--unseen-stone);
+  margin: 0 0 0.5rem;
+}
+
+.system-how-step-desc {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4f4f4f;
+  margin: 0;
+}
+
+/* 5. WHY IT MATTERS (Editorial burgundy / dark canvas break) */
+.system-why-section {
+  background: #7A2021;
+  color: #FAF7F5;
+  border-radius: 20px;
+  max-width: 1280px;
+  margin: 3rem auto;
+  padding: 5rem 4rem;
+}
+
+.system-why-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #d49596;
+  margin: 0 0 1.2rem;
+}
+
+.system-why-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.5rem;
+  color: #ffffff;
+  max-width: 900px;
+}
+
+.system-why-body {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #ecd5d2;
+  max-width: 740px;
+  margin: 0;
+}
+
+/* 6. CURRENT STATE & CLOSING PRINCIPLE */
+.system-current-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  border-top: 1px solid rgba(33, 33, 33, 0.12);
+  border-bottom: 1px solid rgba(33, 33, 33, 0.12);
+  padding: 4rem 0;
+}
+
+.system-current-block h3 {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 400;
+  color: var(--unseen-stone);
+  margin: 0 0 0.8rem;
+}
+
+.system-current-block p {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--unseen-muted);
+  margin: 0;
+}
+
+/* 7. RELATED / NEXT STEPS */
+.system-next-section {
+  padding: 5rem 2.5rem 8rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.system-next-heading {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 400;
+  margin: 0 0 0.4rem;
+  color: var(--unseen-stone);
+}
+
+.system-next-sub {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--unseen-muted);
+  margin: 0;
+}
+
+.system-next-actions {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+@media (max-width: 960px) {
+  .system-problem-grid,
+  .system-how-grid,
+  .system-current-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .system-capabilities-list {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+  .system-how-sticky-col {
+    position: relative;
+    top: 0;
+  }
+  .system-why-section {
+    padding: 3.5rem 2rem;
+    border-radius: 0;
+  }
+  .system-next-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
