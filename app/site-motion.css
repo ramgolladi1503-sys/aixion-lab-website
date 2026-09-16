@@ -1,0 +1,66 @@
+/* Sitewide motion language derived from the approved Research choreography. Motion only. */
+.site-motion-item {
+  --site-motion-delay: 0ms;
+  --site-motion-direction: 1;
+  opacity: 0;
+  transform: translate3d(calc(var(--site-motion-direction) * 18px), 28px, 0) scale(.988);
+  filter: blur(3px);
+  transition:
+    opacity 560ms ease var(--site-motion-delay),
+    transform 760ms cubic-bezier(.16,1,.3,1) var(--site-motion-delay),
+    filter 520ms ease var(--site-motion-delay);
+  will-change: opacity, transform, filter;
+}
+
+.site-motion-item[data-site-motion="headline"] {
+  transform: translate3d(0, 34px, 0) scale(.985);
+  transition-duration: 620ms, 820ms, 560ms;
+}
+
+.site-motion-item[data-site-motion="media"] {
+  transform: translate3d(0, 38px, 0) scale(.978);
+}
+
+.site-motion-item[data-site-motion="media"] img {
+  transform: scale(1.045);
+  clip-path: inset(8% 0 8% 0);
+  transition:
+    transform 980ms cubic-bezier(.16,1,.3,1) calc(var(--site-motion-delay) + 70ms),
+    clip-path 820ms cubic-bezier(.16,1,.3,1) calc(var(--site-motion-delay) + 70ms);
+}
+
+.site-motion-item.site-motion-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.site-motion-item.site-motion-visible[data-site-motion="media"] img {
+  transform: scale(1);
+  clip-path: inset(0 0 0 0);
+}
+
+/* Premium interaction without changing locked geometry. */
+.site-motion-visible a,
+.site-motion-visible button {
+  transition: transform 240ms cubic-bezier(.16,1,.3,1), opacity 200ms ease;
+}
+.site-motion-visible a:hover,
+.site-motion-visible button:hover {
+  transform: translate3d(0,-2px,0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-motion-item,
+  .site-motion-item[data-site-motion="headline"],
+  .site-motion-item[data-site-motion="media"],
+  .site-motion-item[data-site-motion="media"] img,
+  .site-motion-item.site-motion-visible,
+  .site-motion-item.site-motion-visible[data-site-motion="media"] img {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}
