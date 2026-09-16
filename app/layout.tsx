@@ -11,6 +11,7 @@ import "./visual-audit-fixes.css";
 import "./typography-refresh.css";
 import "./pattern-a-premium.css";
 import "./page-backgrounds.css";
+import "./wallpaper-continuity-fix.css";
 import { UnseenHeader, UnseenStatusBar } from "@/components/unseen-chrome";
 
 const aixionDisplay = Instrument_Serif({
