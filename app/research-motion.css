@@ -1,0 +1,113 @@
+/* Research motion pilot — motion only. No locked visual/layout changes. */
+
+@keyframes aixionRevealUp {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes aixionHeroLine {
+  from { opacity: 0; transform: translate3d(0, 26px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes aixionWallBreathe {
+  from { transform: scale(1.008) translate3d(-.18%, 0, 0); }
+  to { transform: scale(1.018) translate3d(.18%, -.12%, 0); }
+}
+
+/* The wall remains fixed. This is deliberately almost imperceptible. */
+.mock-research-page::before {
+  transform-origin: 55% 50%;
+  animation: aixionWallBreathe 24s cubic-bezier(.22,.61,.36,1) alternate infinite;
+  will-change: transform;
+}
+
+/* Hero choreography: kicker -> title -> prose -> context rail. */
+.mock-research-intro .mock-kicker {
+  opacity: 0;
+  animation: aixionRevealUp 520ms cubic-bezier(.22,.61,.36,1) 80ms forwards;
+}
+
+.mock-research-intro h1 {
+  opacity: 0;
+  animation: aixionHeroLine 820ms cubic-bezier(.16,1,.3,1) 150ms forwards;
+}
+
+.mock-research-intro > div:nth-child(2) {
+  opacity: 0;
+  animation: aixionRevealUp 640ms cubic-bezier(.22,.61,.36,1) 360ms forwards;
+}
+
+.mock-research-intro .premium-context-rail {
+  opacity: 0;
+  animation: aixionRevealUp 580ms cubic-bezier(.22,.61,.36,1) 500ms forwards;
+}
+
+/* Scroll reveal state is controlled by IntersectionObserver. */
+.motion-reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 520ms cubic-bezier(.22,.61,.36,1),
+    transform 620ms cubic-bezier(.16,1,.3,1);
+  transition-delay: var(--motion-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.motion-reveal.motion-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Images resolve with a restrained editorial push rather than card movement. */
+.mock-research-card .mock-research-thumb img {
+  transform: scale(1.018);
+  transition: transform 700ms cubic-bezier(.16,1,.3,1);
+}
+
+.mock-research-card.motion-visible .mock-research-thumb img {
+  transform: scale(1);
+}
+
+.mock-research-card:hover .mock-research-thumb img {
+  transform: scale(1.012);
+}
+
+/* Selection/detail should feel continuous, not like a new sheet appearing. */
+.mock-research-detail {
+  animation: aixionRevealUp 560ms cubic-bezier(.16,1,.3,1) both;
+}
+
+.mock-research-detail img {
+  animation: aixionRevealUp 680ms cubic-bezier(.16,1,.3,1) 70ms both;
+}
+
+.mock-research-detail-copy {
+  animation: aixionRevealUp 620ms cubic-bezier(.16,1,.3,1) 120ms both;
+}
+
+/* Respect user motion preference completely. */
+@media (prefers-reduced-motion: reduce) {
+  .mock-research-page::before,
+  .mock-research-intro .mock-kicker,
+  .mock-research-intro h1,
+  .mock-research-intro > div:nth-child(2),
+  .mock-research-intro .premium-context-rail,
+  .mock-research-detail,
+  .mock-research-detail img,
+  .mock-research-detail-copy {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .motion-reveal,
+  .motion-reveal.motion-visible,
+  .mock-research-card .mock-research-thumb img,
+  .mock-research-card.motion-visible .mock-research-thumb img,
+  .mock-research-card:hover .mock-research-thumb img {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
