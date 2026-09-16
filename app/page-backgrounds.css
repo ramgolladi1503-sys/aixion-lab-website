@@ -1,0 +1,206 @@
+/* Premium page-background system
+   The image files are intentionally external to this commit. Upload the mapped WebP files to:
+   public/textures/page-backgrounds/
+
+   work-premium.webp         -> Work / Systems
+   research-premium.webp     -> Research
+   about-premium.webp        -> About
+   collaborate-premium.webp  -> Collaborate
+   profile-premium.webp      -> Professional Profile
+
+   Design intent: bright ivory/travertine imagery with restrained burgundy accents.
+   Images support the narrative; they never compete with text or become dark hero artwork. */
+
+:root {
+  --premium-bg-ivory: 242, 231, 226;
+  --premium-bg-dark: 18, 16, 15;
+  --premium-hero-min: clamp(30rem, 57vh, 39rem);
+  --premium-hero-pad-x: clamp(1.4rem, 4.2vw, 4.6rem);
+  --premium-hero-pad-y: clamp(2.6rem, 5vw, 4.8rem);
+}
+
+.mock-systems-intro { --premium-hero-image: url('/textures/page-backgrounds/work-premium.webp'); --premium-hero-position: center 52%; }
+.mock-research-intro { --premium-hero-image: url('/textures/page-backgrounds/research-premium.webp'); --premium-hero-position: center 48%; }
+.about-hero { --premium-hero-image: url('/textures/page-backgrounds/about-premium.webp'); --premium-hero-position: center 50%; }
+.mock-collaborate-hero { --premium-hero-image: url('/textures/page-backgrounds/collaborate-premium.webp'); --premium-hero-position: center 52%; }
+.mock-profile-hero { --premium-hero-image: url('/textures/page-backgrounds/profile-premium.webp'); --premium-hero-position: center 50%; }
+
+/* Shared hero canvas */
+.mock-systems-intro,
+.mock-research-intro,
+.about-hero,
+.mock-collaborate-hero,
+.mock-profile-hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: var(--premium-hero-min) !important;
+  padding: var(--premium-hero-pad-y) var(--premium-hero-pad-x) !important;
+  border: 1px solid var(--mock-rule) !important;
+  border-bottom-color: color-mix(in srgb, var(--mock-rule) 86%, transparent) !important;
+  background-color: rgb(var(--premium-bg-ivory)) !important;
+  background-image:
+    linear-gradient(90deg,
+      rgba(var(--premium-bg-ivory), .985) 0%,
+      rgba(var(--premium-bg-ivory), .955) 24%,
+      rgba(var(--premium-bg-ivory), .88) 43%,
+      rgba(var(--premium-bg-ivory), .60) 63%,
+      rgba(var(--premium-bg-ivory), .22) 82%,
+      rgba(var(--premium-bg-ivory), .08) 100%),
+    linear-gradient(180deg,
+      rgba(var(--premium-bg-ivory), .18) 0%,
+      rgba(var(--premium-bg-ivory), .02) 58%,
+      rgba(var(--premium-bg-ivory), .26) 100%),
+    var(--premium-hero-image) !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: var(--premium-hero-position) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.16) !important;
+}
+
+/* Keep narrative content anchored, readable and visibly part of the image rather than floating above it. */
+.mock-systems-intro,
+.mock-research-intro,
+.mock-collaborate-hero {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  align-items: flex-start !important;
+}
+
+.mock-systems-intro > div:first-child,
+.mock-research-intro > div:first-child,
+.mock-collaborate-hero > div:first-child {
+  width: min(100%, 56rem) !important;
+  max-width: 56rem !important;
+}
+
+.mock-systems-intro > p,
+.mock-research-intro > div:last-child,
+.mock-collaborate-hero > p {
+  width: min(100%, 54rem) !important;
+  max-width: 54rem !important;
+}
+
+/* Context rails become the finishing full-width editorial line inside the hero. */
+.mock-systems-intro .premium-context-rail,
+.mock-research-intro .premium-context-rail,
+.about-hero .premium-context-rail,
+.mock-collaborate-hero .premium-context-rail {
+  width: 100% !important;
+  margin-top: clamp(1.5rem, 3vw, 2.4rem) !important;
+  padding-top: .9rem !important;
+  border-top: 1px solid color-mix(in srgb, var(--mock-ink) 18%, transparent) !important;
+  background: transparent !important;
+}
+
+/* About uses the same premium canvas while preserving its editorial stack. */
+.about-hero {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+}
+.about-hero-grid {
+  width: min(100%, 61rem) !important;
+  max-width: 61rem !important;
+}
+.about-lede { max-width: 55rem !important; }
+
+/* Profile keeps useful structured metadata, but it reads as a refined editorial panel rather than an empty second column. */
+.mock-profile-hero {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.45fr) minmax(18rem, .55fr) !important;
+  gap: clamp(2rem, 5vw, 5rem) !important;
+  align-items: end !important;
+}
+.mock-profile-hero > div:first-child { max-width: 58rem !important; }
+.mock-profile-meta {
+  align-self: end !important;
+  padding: 1rem 1.15rem !important;
+  background: rgba(var(--premium-bg-ivory), .74) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid color-mix(in srgb, var(--mock-rule) 92%, transparent) !important;
+}
+
+/* Dark mode keeps the SAME bright source imagery, with a controlled warm veil so the site remains legible. */
+html[data-theme='dark'] .mock-systems-intro,
+html[data-theme='dark'] .mock-research-intro,
+html[data-theme='dark'] .about-hero,
+html[data-theme='dark'] .mock-collaborate-hero,
+html[data-theme='dark'] .mock-profile-hero {
+  background-color: rgb(var(--premium-bg-dark)) !important;
+  background-image:
+    linear-gradient(90deg,
+      rgba(var(--premium-bg-dark), .97) 0%,
+      rgba(var(--premium-bg-dark), .93) 28%,
+      rgba(var(--premium-bg-dark), .83) 48%,
+      rgba(var(--premium-bg-dark), .66) 68%,
+      rgba(var(--premium-bg-dark), .46) 100%),
+    linear-gradient(180deg,
+      rgba(var(--premium-bg-dark), .16) 0%,
+      rgba(var(--premium-bg-dark), .05) 58%,
+      rgba(var(--premium-bg-dark), .32) 100%),
+    var(--premium-hero-image) !important;
+}
+html[data-theme='dark'] .mock-profile-meta {
+  background: rgba(var(--premium-bg-dark), .66) !important;
+}
+html[data-theme='dark'] .premium-context-rail {
+  border-top-color: rgba(240,231,226,.18) !important;
+}
+
+/* Graceful fallback before the image assets are uploaded: the ivory canvas remains deliberate. */
+@media (max-width: 960px) {
+  :root { --premium-hero-min: clamp(27rem, 52vh, 34rem); }
+  .mock-profile-hero {
+    grid-template-columns: 1fr !important;
+    align-content: end !important;
+  }
+  .mock-profile-meta { max-width: 42rem !important; }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --premium-hero-min: 30rem;
+    --premium-hero-pad-x: 1.2rem;
+    --premium-hero-pad-y: 2rem;
+  }
+  .mock-systems-intro,
+  .mock-research-intro,
+  .about-hero,
+  .mock-collaborate-hero,
+  .mock-profile-hero {
+    background-position: 58% center !important;
+    background-image:
+      linear-gradient(180deg,
+        rgba(var(--premium-bg-ivory), .90) 0%,
+        rgba(var(--premium-bg-ivory), .80) 42%,
+        rgba(var(--premium-bg-ivory), .95) 100%),
+      var(--premium-hero-image) !important;
+  }
+  html[data-theme='dark'] .mock-systems-intro,
+  html[data-theme='dark'] .mock-research-intro,
+  html[data-theme='dark'] .about-hero,
+  html[data-theme='dark'] .mock-collaborate-hero,
+  html[data-theme='dark'] .mock-profile-hero {
+    background-image:
+      linear-gradient(180deg,
+        rgba(var(--premium-bg-dark), .88) 0%,
+        rgba(var(--premium-bg-dark), .80) 44%,
+        rgba(var(--premium-bg-dark), .96) 100%),
+      var(--premium-hero-image) !important;
+  }
+  .mock-profile-meta {
+    backdrop-filter: blur(7px) !important;
+    -webkit-backdrop-filter: blur(7px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mock-systems-intro,
+  .mock-research-intro,
+  .about-hero,
+  .mock-collaborate-hero,
+  .mock-profile-hero { background-attachment: scroll !important; }
+}
