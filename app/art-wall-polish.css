@@ -7,14 +7,14 @@
   --art-wall-dark-strength: .32;
 }
 
-/* Preserve each artwork's detail. Light mode is intentionally brighter and crisper
+/* Preserve each artwork's detail. Light mode is intentionally brighter and cleaner
    to match the approved reference without changing layout or content. */
 .mock-systems-page::before,
 .mock-research-page::before,
 .about-editorial-page::before,
 .mock-collaborate-page::before,
 .mock-profile-page::before {
-  filter: saturate(1.03) contrast(1.08) brightness(1.07) !important;
+  filter: saturate(1.02) contrast(1.06) brightness(1.10) !important;
 }
 
 html[data-theme='dark'] .mock-systems-page::before,
@@ -25,14 +25,14 @@ html[data-theme='dark'] .mock-profile-page::before {
   filter: saturate(.88) contrast(1.04) brightness(.74) !important;
 }
 
-/* The page tint is now only a very light atmospheric colour correction in light mode.
+/* The page tint is now only a minimal atmospheric colour correction in light mode.
    Readability is handled locally around text instead of washing out the artwork. */
 .mock-systems-page::after,
 .mock-research-page::after,
 .about-editorial-page::after,
 .mock-collaborate-page::after,
 .mock-profile-page::after {
-  background: rgba(246,239,234,.06) !important;
+  background: rgba(246,239,234,.03) !important;
 }
 
 html[data-theme='dark'] .mock-systems-page::after,
