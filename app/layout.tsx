@@ -6,6 +6,7 @@ import "./mockup-rebuild.css";
 import "./about-final.css";
 import "./theme-global.css";
 import "./applied-lab-refinement.css";
+import "./visual-audit-fixes.css";
 import { UnseenHeader, UnseenStatusBar } from "@/components/unseen-chrome";
 
 export const metadata: Metadata = {
