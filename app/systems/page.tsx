@@ -23,6 +23,9 @@ export default function SystemsPage() {
           <h1>Systems built to earn trust.</h1>
         </div>
         <p>From live market systems to governed AI orchestration, Aixion builds systems that are testable, observable and honest about what remains unproven.</p>
+        <div className="premium-context-rail" aria-label="Work focus areas">
+          <span>Applied AI</span><span>Automation</span><span>Decision Systems</span><span>Research Infrastructure</span><span>Reliability</span>
+        </div>
       </section>
 
       <section className="mock-system-group" aria-labelledby="flagship-title">
