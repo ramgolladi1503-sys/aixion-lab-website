@@ -3,18 +3,18 @@
    a fogged/meshed photograph. Loaded after art-wall-final.css. */
 
 :root {
-  --art-wall-light-strength: .44;
+  --art-wall-light-strength: .58;
   --art-wall-dark-strength: .32;
 }
 
-/* Preserve each artwork's detail. The previous low-opacity + heavy veil combination
-   visually milked the image. Keep contrast close to source and avoid blur here. */
+/* Preserve each artwork's detail. Light mode is intentionally brighter and crisper
+   to match the approved reference without changing layout or content. */
 .mock-systems-page::before,
 .mock-research-page::before,
 .about-editorial-page::before,
 .mock-collaborate-page::before,
 .mock-profile-page::before {
-  filter: saturate(.94) contrast(1.02) brightness(1.01) !important;
+  filter: saturate(1.03) contrast(1.08) brightness(1.07) !important;
 }
 
 html[data-theme='dark'] .mock-systems-page::before,
@@ -25,14 +25,14 @@ html[data-theme='dark'] .mock-profile-page::before {
   filter: saturate(.88) contrast(1.04) brightness(.74) !important;
 }
 
-/* The page tint is now only an atmospheric colour correction, not a white fog layer.
-   Readability is handled locally around text instead. */
+/* The page tint is now only a very light atmospheric colour correction in light mode.
+   Readability is handled locally around text instead of washing out the artwork. */
 .mock-systems-page::after,
 .mock-research-page::after,
 .about-editorial-page::after,
 .mock-collaborate-page::after,
 .mock-profile-page::after {
-  background: rgba(246,239,234,.12) !important;
+  background: rgba(246,239,234,.06) !important;
 }
 
 html[data-theme='dark'] .mock-systems-page::after,
@@ -107,12 +107,12 @@ html[data-theme='dark'] .mock-research-card:hover {
 .about-hero-grid::before,
 .mock-collaborate-hero > div:first-child::before,
 .mock-profile-hero > div:first-child::before {
-  inset: -1.4rem -2rem !important;
+  inset: -1.2rem -1.8rem !important;
   background: radial-gradient(ellipse at 28% 48%,
-    rgba(247,241,236,.30) 0%,
-    rgba(247,241,236,.11) 54%,
-    rgba(247,241,236,0) 78%) !important;
-  filter: blur(10px) !important;
+    rgba(247,241,236,.18) 0%,
+    rgba(247,241,236,.06) 50%,
+    rgba(247,241,236,0) 74%) !important;
+  filter: blur(4px) !important;
 }
 
 html[data-theme='dark'] .mock-systems-intro > div:first-child::before,
@@ -132,7 +132,7 @@ html[data-theme='dark'] .mock-profile-hero > div:first-child::before {
 .about-editorial-page p,
 .mock-collaborate-page p,
 .mock-profile-page p {
-  text-shadow: 0 1px 1px rgba(255,255,255,.16);
+  text-shadow: 0 1px 1px rgba(255,255,255,.10);
 }
 
 html[data-theme='dark'] .mock-systems-page p,
@@ -156,14 +156,14 @@ html[data-theme='dark'] .mock-profile-page p {
 
 @media (max-width: 960px) {
   :root {
-    --art-wall-light-strength: .38;
+    --art-wall-light-strength: .50;
     --art-wall-dark-strength: .28;
   }
 }
 
 @media (max-width: 640px) {
   :root {
-    --art-wall-light-strength: .32;
+    --art-wall-light-strength: .42;
     --art-wall-dark-strength: .24;
   }
 
