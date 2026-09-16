@@ -28,7 +28,7 @@
   --unseen-dark: #141414;
   --unseen-stone: #212121;
   --unseen-charcoal: #333333;
-  --unseen-muted: #757575;
+  --unseen-muted: #645d5a;
   --unseen-light-muted: #a39b98;
   --unseen-border: rgba(33, 33, 33, 0.15);
   --unseen-border-dark: rgba(255, 255, 255, 0.12);
@@ -81,12 +81,12 @@ body.unseen-theme::after {
 }
 
 .unseen-nav.scrolled {
-  background: rgba(239, 222, 217, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(33, 33, 33, 0.1);
+  background: rgba(239, 222, 217, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(33, 33, 33, 0.12);
   padding: 1rem 3rem;
-  box-shadow: 0 4px 20px rgba(33, 33, 33, 0.03);
+  box-shadow: 0 4px 20px rgba(33, 33, 33, 0.04);
 }
 
 .unseen-nav * {
@@ -796,20 +796,20 @@ body.unseen-theme::after {
 
 .public-state-badge.state-development {
   background: rgba(129, 153, 176, 0.14);
-  color: #4b6680;
-  border-color: rgba(129, 153, 176, 0.28);
+  color: #374e64;
+  border-color: rgba(129, 153, 176, 0.32);
 }
 
 .public-state-badge.state-exploration {
   background: rgba(120, 153, 139, 0.12);
-  color: #436355;
-  border-color: rgba(120, 153, 139, 0.24);
+  color: #324d42;
+  border-color: rgba(120, 153, 139, 0.28);
 }
 
 .public-state-badge.state-operational {
   background: rgba(80, 140, 90, 0.12);
-  color: #2e663a;
-  border-color: rgba(80, 140, 90, 0.25);
+  color: #24542f;
+  border-color: rgba(80, 140, 90, 0.28);
 }
 
 .public-state-dot {

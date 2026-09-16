@@ -39,5 +39,42 @@ html[data-theme="dark"] .unseen-drawer-menu {
   color:#f0e7e2;
 }
 
+html[data-theme="dark"] .unseen-nav.scrolled {
+  background: rgba(18, 16, 15, 0.96) !important;
+  border-bottom-color: rgba(240, 231, 226, 0.14) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme="dark"] .unseen-nav:not(.scrolled) .unseen-logo,
+html[data-theme="dark"] .unseen-nav:not(.scrolled) .unseen-link {
+  color: #f0e7e2;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="dark"] .unseen-menu-toggle {
+  background: #211c1a;
+  border-color: rgba(240, 231, 226, 0.16);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .unseen-menu-toggle span i {
+  background: #f0e7e2;
+}
+
+html[data-theme="dark"] .unseen-pill-button {
+  background: rgba(26, 23, 22, 0.92);
+  border-color: rgba(240, 231, 226, 0.16);
+  color: #f0e7e2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .unseen-pill-button:hover {
+  background: #25201e;
+}
+
+html[data-theme="dark"] .unseen-copyright {
+  color: #9f948e;
+}
+
 html[data-theme="dark"] ::selection { background:#b95e63; color:#fff; }
 html[data-theme="light"] ::selection { background:#7a2021; color:#fff; }

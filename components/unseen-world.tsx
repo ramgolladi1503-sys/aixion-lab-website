@@ -21,7 +21,7 @@ export function UnseenWorld({ entered, onEnter }: UnseenWorldProps) {
             position: "absolute",
             inset: 0,
             zIndex: 50,
-            background: "#efded9",
+            background: "var(--unseen-bg)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -49,14 +49,15 @@ export function UnseenWorld({ entered, onEnter }: UnseenWorldProps) {
             letterSpacing: "0.02em", 
             textTransform: "uppercase", 
             marginBottom: "0.4rem", 
-            fontWeight: 500 
+            fontWeight: 500,
+            color: "var(--unseen-stone)"
           }}>
             AIXION LAB®
           </h2>
           <p style={{ 
             fontFamily: "var(--font-sans)", 
             fontSize: "0.95rem", 
-            color: "#4a4a4a", 
+            color: "var(--unseen-charcoal)", 
             maxWidth: "420px", 
             lineHeight: 1.4, 
             margin: "0 auto 2.5rem" 
@@ -70,7 +71,7 @@ export function UnseenWorld({ entered, onEnter }: UnseenWorldProps) {
             style={{
               background: "transparent",
               border: "none",
-              borderBottom: "1px solid #212121",
+              borderBottom: "1px solid var(--unseen-stone)",
               fontFamily: "var(--font-sans)",
               fontSize: "0.75rem",
               fontWeight: 500,
@@ -81,6 +82,7 @@ export function UnseenWorld({ entered, onEnter }: UnseenWorldProps) {
               display: "inline-flex",
               alignItems: "center",
               gap: "0.4rem",
+              color: "var(--unseen-stone)",
               transition: "opacity 0.2s ease",
             }}
           >
@@ -99,7 +101,7 @@ export function UnseenWorld({ entered, onEnter }: UnseenWorldProps) {
               fontFamily: "var(--font-sans)",
               textTransform: "uppercase",
               letterSpacing: "0.06em",
-              color: "#666",
+              color: "var(--unseen-muted)",
               cursor: "pointer",
             }}
           >

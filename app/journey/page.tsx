@@ -26,7 +26,7 @@ export default function JourneyPage() {
               alignItems: "baseline"
             }}
           >
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "1.1rem", opacity: 0.4 }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "1.1rem", color: "var(--unseen-charcoal)", opacity: 0.75 }}>
               {num}
             </span>
             <div>
