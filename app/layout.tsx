@@ -14,6 +14,7 @@ import "./page-backgrounds.css";
 import "./wallpaper-continuity-fix.css";
 import "./art-wall-final.css";
 import "./art-wall-polish.css";
+import "./editorial-flow.css";
 import { UnseenHeader, UnseenStatusBar } from "@/components/unseen-chrome";
 
 const aixionDisplay = Instrument_Serif({
