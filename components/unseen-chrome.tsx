@@ -24,7 +24,7 @@ export function UnseenHeader() {
   return (
     <>
       <header className={`unseen-nav ${scrolled ? "scrolled" : ""}`}>
-        <Link href={logoHref} className="unseen-logo" aria-label="Aixion Lab home">aixion lab<span className="sup">®</span></Link>
+        <Link href={logoHref} className="unseen-logo" aria-label="Aixion Lab home">Aixion Lab<span className="sup">®</span></Link>
         <div className="unseen-links">
           <Link href="/systems" className={`unseen-link ${pathname.startsWith("/systems") ? "active" : ""}`}>Work</Link>
           <Link href="/research" className={`unseen-link ${pathname.startsWith("/research") ? "active" : ""}`}>Research</Link>
