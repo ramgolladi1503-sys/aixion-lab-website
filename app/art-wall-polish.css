@@ -1,42 +1,56 @@
-/* Art-wall polish pass
-   Keeps the fixed-wall concept intact while improving hierarchy and readability in
-   the lower content regions seen in rendered QA. Loaded after art-wall-final.css. */
+/* Art-wall clarity pass
+   Keep the fixed-wall concept, but render the artwork as a crisp wall rather than
+   a fogged/meshed photograph. Loaded after art-wall-final.css. */
 
 :root {
-  --art-wall-light-strength: .27;
-  --art-wall-dark-strength: .24;
+  --art-wall-light-strength: .44;
+  --art-wall-dark-strength: .32;
 }
 
-/* Keep the wallpaper visible, but reduce visual competition with dense content. */
+/* Preserve each artwork's detail. The previous low-opacity + heavy veil combination
+   visually milked the image. Keep contrast close to source and avoid blur here. */
+.mock-systems-page::before,
+.mock-research-page::before,
+.about-editorial-page::before,
+.mock-collaborate-page::before,
+.mock-profile-page::before {
+  filter: saturate(.94) contrast(1.02) brightness(1.01) !important;
+}
+
+html[data-theme='dark'] .mock-systems-page::before,
+html[data-theme='dark'] .mock-research-page::before,
+html[data-theme='dark'] .about-editorial-page::before,
+html[data-theme='dark'] .mock-collaborate-page::before,
+html[data-theme='dark'] .mock-profile-page::before {
+  filter: saturate(.88) contrast(1.04) brightness(.74) !important;
+}
+
+/* The page tint is now only an atmospheric colour correction, not a white fog layer.
+   Readability is handled locally around text instead. */
+.mock-systems-page::after,
+.mock-research-page::after,
+.about-editorial-page::after,
+.mock-collaborate-page::after,
+.mock-profile-page::after {
+  background: rgba(246,239,234,.12) !important;
+}
+
+html[data-theme='dark'] .mock-systems-page::after,
+html[data-theme='dark'] .mock-research-page::after,
+html[data-theme='dark'] .about-editorial-page::after,
+html[data-theme='dark'] .mock-collaborate-page::after,
+html[data-theme='dark'] .mock-profile-page::after {
+  background: rgba(18,16,15,.30) !important;
+}
+
+/* Refined focal points after rendered QA. */
 .mock-research-page { --art-wall-position: 57% center; }
 .mock-systems-page { --art-wall-position: 59% center; }
+.about-editorial-page { --art-wall-position: 57% center; }
+.mock-collaborate-page { --art-wall-position: 55% center; }
+.mock-profile-page { --art-wall-position: 58% center; }
 
-/* Content modules should read as transparent panes, not opaque paper sheets. */
-.mock-project-card,
-.mock-research-card {
-  background: color-mix(in srgb, var(--mock-surface) 34%, transparent) !important;
-  backdrop-filter: blur(6px) saturate(.94) !important;
-  -webkit-backdrop-filter: blur(6px) saturate(.94) !important;
-  border-color: color-mix(in srgb, var(--mock-rule) 88%, transparent) !important;
-}
-
-.mock-project-card:hover,
-.mock-research-card:hover {
-  background: color-mix(in srgb, var(--mock-surface) 46%, transparent) !important;
-}
-
-html[data-theme='dark'] .mock-project-card,
-html[data-theme='dark'] .mock-research-card {
-  background: color-mix(in srgb, var(--mock-surface) 30%, transparent) !important;
-  border-color: rgba(240,231,226,.12) !important;
-}
-
-html[data-theme='dark'] .mock-project-card:hover,
-html[data-theme='dark'] .mock-research-card:hover {
-  background: color-mix(in srgb, var(--mock-surface) 42%, transparent) !important;
-}
-
-/* Preserve the wall illusion: sections themselves remain fully transparent. */
+/* Sections stay transparent: there must be no paper sheet over the wall. */
 .mock-system-group,
 .mock-research-grid,
 .mock-research-detail,
@@ -53,81 +67,113 @@ html[data-theme='dark'] .mock-research-card:hover {
   background: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
 }
 
-/* Make card copy read cleanly over the persistent artwork without a visible sheet. */
-.mock-project-copy,
-.mock-project-cta,
-.mock-research-card strong,
-.mock-research-card > span {
-  position: relative;
-  z-index: 1;
+/* Content modules are translucent panes, but do NOT blur the wall underneath.
+   Backdrop blur was the second source of the meshed/frosted appearance. */
+.mock-project-card,
+.mock-research-card {
+  background: rgba(247,239,235,.19) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-color: rgba(52,43,39,.16) !important;
 }
 
-.mock-project-copy p,
-.mock-research-card > span {
-  color: var(--mock-body) !important;
+.mock-project-card:hover,
+.mock-research-card:hover {
+  background: rgba(247,239,235,.30) !important;
 }
 
-html[data-theme='dark'] .mock-project-copy p,
-html[data-theme='dark'] .mock-research-card > span {
-  color: var(--mock-body) !important;
+html[data-theme='dark'] .mock-project-card,
+html[data-theme='dark'] .mock-research-card {
+  background: rgba(20,18,17,.20) !important;
+  border-color: rgba(240,231,226,.14) !important;
 }
 
-/* Slightly strengthen section headings against detailed wallpaper areas. */
-.mock-group-title-row,
-.mock-section-title,
-.about-principles-heading,
-.mock-fit-intro {
-  position: relative;
-  z-index: 1;
+html[data-theme='dark'] .mock-project-card:hover,
+html[data-theme='dark'] .mock-research-card:hover {
+  background: rgba(20,18,17,.32) !important;
 }
 
-/* The signature should stay quiet and architectural. */
+.mock-research-card.selected {
+  background: color-mix(in srgb, var(--mock-accent) 90%, transparent) !important;
+}
+
+/* Keep local reading support subtle and bounded. It must never read as haze across
+   the whole page. */
+.mock-systems-intro > div:first-child::before,
+.mock-research-intro > div:first-child::before,
+.about-hero-grid::before,
+.mock-collaborate-hero > div:first-child::before,
+.mock-profile-hero > div:first-child::before {
+  inset: -1.4rem -2rem !important;
+  background: radial-gradient(ellipse at 28% 48%,
+    rgba(247,241,236,.30) 0%,
+    rgba(247,241,236,.11) 54%,
+    rgba(247,241,236,0) 78%) !important;
+  filter: blur(10px) !important;
+}
+
+html[data-theme='dark'] .mock-systems-intro > div:first-child::before,
+html[data-theme='dark'] .mock-research-intro > div:first-child::before,
+html[data-theme='dark'] .about-hero-grid::before,
+html[data-theme='dark'] .mock-collaborate-hero > div:first-child::before,
+html[data-theme='dark'] .mock-profile-hero > div:first-child::before {
+  background: radial-gradient(ellipse at 28% 48%,
+    rgba(18,16,15,.34) 0%,
+    rgba(18,16,15,.12) 54%,
+    rgba(18,16,15,0) 78%) !important;
+}
+
+/* Copy contrast now comes from the type itself rather than whitening the entire wall. */
+.mock-systems-page p,
+.mock-research-page p,
+.about-editorial-page p,
+.mock-collaborate-page p,
+.mock-profile-page p {
+  text-shadow: 0 1px 1px rgba(255,255,255,.16);
+}
+
+html[data-theme='dark'] .mock-systems-page p,
+html[data-theme='dark'] .mock-research-page p,
+html[data-theme='dark'] .about-editorial-page p,
+html[data-theme='dark'] .mock-collaborate-page p,
+html[data-theme='dark'] .mock-profile-page p {
+  text-shadow: 0 1px 2px rgba(0,0,0,.34);
+}
+
+/* Page signatures stay quiet and crisp. */
 .mock-systems-intro::before,
 .mock-research-intro::before,
 .about-hero::before,
 .mock-collaborate-hero::before,
 .mock-profile-hero::before {
-  opacity: .78;
+  opacity: .76;
   font-size: .68rem;
   letter-spacing: .19em;
 }
 
-/* Dark wallpaper was reading almost flat-black in the Work QA capture. Let the art
-   register slightly more while keeping white copy dominant. */
-html[data-theme='dark'] .mock-systems-page::after,
-html[data-theme='dark'] .mock-research-page::after,
-html[data-theme='dark'] .about-editorial-page::after,
-html[data-theme='dark'] .mock-collaborate-page::after,
-html[data-theme='dark'] .mock-profile-page::after {
-  background: rgba(18,16,15,.49) !important;
-}
-
-/* Light mode retains the ivory-gallery character without bleaching the artwork. */
-.mock-systems-page::after,
-.mock-research-page::after,
-.about-editorial-page::after,
-.mock-collaborate-page::after,
-.mock-profile-page::after {
-  background: rgba(246,239,234,.38) !important;
-}
-
 @media (max-width: 960px) {
   :root {
-    --art-wall-light-strength: .23;
-    --art-wall-dark-strength: .20;
+    --art-wall-light-strength: .38;
+    --art-wall-dark-strength: .28;
   }
 }
 
 @media (max-width: 640px) {
   :root {
-    --art-wall-light-strength: .18;
-    --art-wall-dark-strength: .16;
+    --art-wall-light-strength: .32;
+    --art-wall-dark-strength: .24;
   }
 
   .mock-project-card,
   .mock-research-card {
-    background: color-mix(in srgb, var(--mock-surface) 42%, transparent) !important;
+    background: rgba(247,239,235,.28) !important;
+  }
+
+  html[data-theme='dark'] .mock-project-card,
+  html[data-theme='dark'] .mock-research-card {
+    background: rgba(20,18,17,.28) !important;
   }
 }
