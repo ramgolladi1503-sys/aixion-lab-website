@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type ResearchCard = {
   id: string;
@@ -30,7 +30,38 @@ const researchCards: ResearchCard[] = [
 export default function ResearchPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const detailRef = useRef<HTMLElement | null>(null);
+  const gridRef = useRef<HTMLElement | null>(null);
   const selected = researchCards.find(item => item.id === selectedId) ?? null;
+
+  useEffect(() => {
+    const root = gridRef.current;
+    if (!root) return;
+
+    const cards = Array.from(root.querySelectorAll<HTMLElement>(".mock-research-card"));
+    cards.forEach((card, index) => {
+      card.classList.add("motion-reveal");
+      card.style.setProperty("--motion-delay", `${(index % 3) * 75}ms`);
+    });
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      cards.forEach(card => card.classList.add("motion-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          (entry.target as HTMLElement).classList.add("motion-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.14, rootMargin: "0px 0px -10% 0px" },
+    );
+
+    cards.forEach(card => observer.observe(card));
+    return () => observer.disconnect();
+  }, []);
 
   const reveal = (id: string) => {
     setSelectedId(id);
@@ -50,7 +81,7 @@ export default function ResearchPage() {
         </div>
       </section>
 
-      <section className="mock-research-grid" aria-label="Research themes">
+      <section ref={gridRef} className="mock-research-grid" aria-label="Research themes">
         {researchCards.map(item => (
           <button type="button" key={item.id} className={`mock-research-card ${selectedId === item.id ? "selected" : ""}`} onClick={() => reveal(item.id)} aria-pressed={selectedId === item.id}>
             <strong>{item.title}</strong>
