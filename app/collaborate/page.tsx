@@ -10,7 +10,7 @@ export default function CollaboratePage() {
   return (
     <main className="mock-collaborate-page">
       <section className="mock-collaborate-hero">
-        <div><p className="mock-kicker">COLLABORATE</p><h1>Bring us the problem.<br />Not an AI requirement.</h1></div>
+        <div><p className="mock-kicker">COLLABORATE</p><h1>Bring us the problem. Not an AI requirement.</h1></div>
         <p>The better starting point is usually the problem itself: what is slow, unreliable, difficult to validate, dependent on too much manual judgment, or impossible to trust with the evidence you have today?</p>
       </section>
 
