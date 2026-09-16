@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Instrument_Serif, Inter } from "next/font/google";
 import "./unseen.css";
 import "./structural-remediation.css";
 import "./system-variants.css";
@@ -7,7 +8,22 @@ import "./about-final.css";
 import "./theme-global.css";
 import "./applied-lab-refinement.css";
 import "./visual-audit-fixes.css";
+import "./typography-refresh.css";
 import { UnseenHeader, UnseenStatusBar } from "@/components/unseen-chrome";
+
+const aixionDisplay = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-aixion-display",
+  display: "swap",
+});
+
+const aixionSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-aixion-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -39,7 +55,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: themeBoot }} /></head>
-      <body className="unseen-theme">
+      <body className={`unseen-theme ${aixionDisplay.variable} ${aixionSans.variable}`}>
         <UnseenHeader />
         <main>{children}</main>
         <UnseenStatusBar />
