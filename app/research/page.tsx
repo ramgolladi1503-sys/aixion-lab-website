@@ -45,6 +45,9 @@ export default function ResearchPage() {
           <p>These are recurring questions that have shaped what Aixion builds, rejects, validates and changes.</p>
           <p>The work is not a catalogue of strategies. It is the discipline used to make systems more reliable, more honest about uncertainty and more useful in the real world.</p>
         </div>
+        <div className="premium-context-rail" aria-label="Research focus areas">
+          <span>Data Integrity</span><span>Validation</span><span>Execution Reality</span><span>Human Authority</span><span>Reproducibility</span>
+        </div>
       </section>
 
       <section className="mock-research-grid" aria-label="Research themes">
