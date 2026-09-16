@@ -1,0 +1,133 @@
+/* Art-wall polish pass
+   Keeps the fixed-wall concept intact while improving hierarchy and readability in
+   the lower content regions seen in rendered QA. Loaded after art-wall-final.css. */
+
+:root {
+  --art-wall-light-strength: .27;
+  --art-wall-dark-strength: .24;
+}
+
+/* Keep the wallpaper visible, but reduce visual competition with dense content. */
+.mock-research-page { --art-wall-position: 57% center; }
+.mock-systems-page { --art-wall-position: 59% center; }
+
+/* Content modules should read as transparent panes, not opaque paper sheets. */
+.mock-project-card,
+.mock-research-card {
+  background: color-mix(in srgb, var(--mock-surface) 34%, transparent) !important;
+  backdrop-filter: blur(6px) saturate(.94) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(.94) !important;
+  border-color: color-mix(in srgb, var(--mock-rule) 88%, transparent) !important;
+}
+
+.mock-project-card:hover,
+.mock-research-card:hover {
+  background: color-mix(in srgb, var(--mock-surface) 46%, transparent) !important;
+}
+
+html[data-theme='dark'] .mock-project-card,
+html[data-theme='dark'] .mock-research-card {
+  background: color-mix(in srgb, var(--mock-surface) 30%, transparent) !important;
+  border-color: rgba(240,231,226,.12) !important;
+}
+
+html[data-theme='dark'] .mock-project-card:hover,
+html[data-theme='dark'] .mock-research-card:hover {
+  background: color-mix(in srgb, var(--mock-surface) 42%, transparent) !important;
+}
+
+/* Preserve the wall illusion: sections themselves remain fully transparent. */
+.mock-system-group,
+.mock-research-grid,
+.mock-research-detail,
+.about-two-up,
+.about-principles,
+.about-closing,
+.mock-collab-paths,
+.mock-fit-section,
+.mock-collab-cta,
+.mock-profile-competencies,
+.mock-profile-experience,
+.mock-profile-work,
+.mock-profile-next {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Make card copy read cleanly over the persistent artwork without a visible sheet. */
+.mock-project-copy,
+.mock-project-cta,
+.mock-research-card strong,
+.mock-research-card > span {
+  position: relative;
+  z-index: 1;
+}
+
+.mock-project-copy p,
+.mock-research-card > span {
+  color: var(--mock-body) !important;
+}
+
+html[data-theme='dark'] .mock-project-copy p,
+html[data-theme='dark'] .mock-research-card > span {
+  color: var(--mock-body) !important;
+}
+
+/* Slightly strengthen section headings against detailed wallpaper areas. */
+.mock-group-title-row,
+.mock-section-title,
+.about-principles-heading,
+.mock-fit-intro {
+  position: relative;
+  z-index: 1;
+}
+
+/* The signature should stay quiet and architectural. */
+.mock-systems-intro::before,
+.mock-research-intro::before,
+.about-hero::before,
+.mock-collaborate-hero::before,
+.mock-profile-hero::before {
+  opacity: .78;
+  font-size: .68rem;
+  letter-spacing: .19em;
+}
+
+/* Dark wallpaper was reading almost flat-black in the Work QA capture. Let the art
+   register slightly more while keeping white copy dominant. */
+html[data-theme='dark'] .mock-systems-page::after,
+html[data-theme='dark'] .mock-research-page::after,
+html[data-theme='dark'] .about-editorial-page::after,
+html[data-theme='dark'] .mock-collaborate-page::after,
+html[data-theme='dark'] .mock-profile-page::after {
+  background: rgba(18,16,15,.49) !important;
+}
+
+/* Light mode retains the ivory-gallery character without bleaching the artwork. */
+.mock-systems-page::after,
+.mock-research-page::after,
+.about-editorial-page::after,
+.mock-collaborate-page::after,
+.mock-profile-page::after {
+  background: rgba(246,239,234,.38) !important;
+}
+
+@media (max-width: 960px) {
+  :root {
+    --art-wall-light-strength: .23;
+    --art-wall-dark-strength: .20;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --art-wall-light-strength: .18;
+    --art-wall-dark-strength: .16;
+  }
+
+  .mock-project-card,
+  .mock-research-card {
+    background: color-mix(in srgb, var(--mock-surface) 42%, transparent) !important;
+  }
+}
