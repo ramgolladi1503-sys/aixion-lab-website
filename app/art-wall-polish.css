@@ -154,6 +154,49 @@ html[data-theme='dark'] .mock-profile-page p {
   letter-spacing: .19em;
 }
 
+/* Locked-baseline micro-fixes only:
+   1. Make the current primary route read like the approved mockup.
+   2. Keep the collaborate closing CTA readable over the bright lower artwork. */
+.desktop-nav a.active,
+.desktop-nav a[aria-current='page'] {
+  color: #7d2929 !important;
+  font-weight: 650;
+}
+
+.desktop-nav a.active::after,
+.desktop-nav a[aria-current='page']::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  height: 1px;
+  border-radius: 999px;
+  background: #7d2929 !important;
+}
+
+.mock-collab-cta,
+.mock-collab-cta strong,
+.mock-collab-cta a,
+.mock-collab-cta span {
+  color: var(--mock-ink) !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 2px rgba(255,255,255,.78) !important;
+}
+
+.mock-collab-cta strong,
+.mock-collab-cta a {
+  font-weight: 650 !important;
+}
+
+html[data-theme='dark'] .mock-collab-cta,
+html[data-theme='dark'] .mock-collab-cta strong,
+html[data-theme='dark'] .mock-collab-cta a,
+html[data-theme='dark'] .mock-collab-cta span {
+  color: var(--mock-ink) !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.72) !important;
+}
+
 @media (max-width: 960px) {
   :root {
     --art-wall-light-strength: .50;
