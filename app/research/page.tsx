@@ -30,36 +30,41 @@ const researchCards: ResearchCard[] = [
 export default function ResearchPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const detailRef = useRef<HTMLElement | null>(null);
-  const gridRef = useRef<HTMLElement | null>(null);
+  const pageRef = useRef<HTMLElement | null>(null);
   const selected = researchCards.find(item => item.id === selectedId) ?? null;
 
   useEffect(() => {
-    const root = gridRef.current;
+    const root = pageRef.current;
     if (!root) return;
 
-    const cards = Array.from(root.querySelectorAll<HTMLElement>(".mock-research-card"));
-    cards.forEach((card, index) => {
-      card.classList.add("motion-reveal");
-      card.style.setProperty("--motion-delay", `${(index % 3) * 75}ms`);
+    const targets = Array.from(root.querySelectorAll<HTMLElement>("[data-motion]"));
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    targets.forEach((target, index) => {
+      const group = target.dataset.motionGroup;
+      const order = Number(target.dataset.motionOrder ?? index);
+      const step = group === "cards" ? 95 : 110;
+      target.style.setProperty("--reveal-delay", `${Math.min(order * step, 380)}ms`);
+      if (reduced) target.classList.add("is-revealed");
     });
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      cards.forEach(card => card.classList.add("motion-visible"));
-      return;
-    }
+    if (reduced) return;
 
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          (entry.target as HTMLElement).classList.add("motion-visible");
-          observer.unobserve(entry.target);
+          const target = entry.target as HTMLElement;
+          if (entry.isIntersecting) {
+            target.classList.add("is-revealed");
+          } else if (entry.boundingClientRect.top > 0 || entry.boundingClientRect.bottom < 0) {
+            target.classList.remove("is-revealed");
+          }
         });
       },
-      { threshold: 0.14, rootMargin: "0px 0px -10% 0px" },
+      { threshold: 0.16, rootMargin: "-4% 0px -10% 0px" },
     );
 
-    cards.forEach(card => observer.observe(card));
+    targets.forEach(target => observer.observe(target));
     return () => observer.disconnect();
   }, []);
 
@@ -69,21 +74,21 @@ export default function ResearchPage() {
   };
 
   return (
-    <main className="mock-research-page">
+    <main ref={pageRef} className="mock-research-page">
       <section className="mock-research-intro">
-        <div><p className="mock-kicker">RESEARCH</p><h1>Research that changes what we build.</h1></div>
-        <div>
+        <div data-motion="headline" data-motion-group="intro" data-motion-order="0"><p className="mock-kicker">RESEARCH</p><h1>Research that changes what we build.</h1></div>
+        <div data-motion="copy" data-motion-group="intro" data-motion-order="1">
           <p>These are recurring questions that have shaped what Aixion builds, rejects, validates and changes.</p>
           <p>The work is not a catalogue of strategies. It is the discipline used to make systems more reliable, more honest about uncertainty and more useful in the real world.</p>
         </div>
-        <div className="premium-context-rail" aria-label="Research focus areas">
+        <div data-motion="rail" data-motion-group="intro" data-motion-order="2" className="premium-context-rail" aria-label="Research focus areas">
           <span>Data Integrity</span><span>Validation</span><span>Execution Reality</span><span>Human Authority</span><span>Reproducibility</span>
         </div>
       </section>
 
-      <section ref={gridRef} className="mock-research-grid" aria-label="Research themes">
-        {researchCards.map(item => (
-          <button type="button" key={item.id} className={`mock-research-card ${selectedId === item.id ? "selected" : ""}`} onClick={() => reveal(item.id)} aria-pressed={selectedId === item.id}>
+      <section className="mock-research-grid" aria-label="Research themes">
+        {researchCards.map((item, index) => (
+          <button data-motion="card" data-motion-group="cards" data-motion-order={index % 3} type="button" key={item.id} className={`mock-research-card ${selectedId === item.id ? "selected" : ""}`} onClick={() => reveal(item.id)} aria-pressed={selectedId === item.id}>
             <strong>{item.title}</strong>
             <div className="mock-research-thumb"><img src={item.image} alt="" /></div>
             <span>{item.summary}</span>
@@ -92,7 +97,7 @@ export default function ResearchPage() {
       </section>
 
       {selected && (
-        <section ref={detailRef} className="mock-research-detail" aria-live="polite">
+        <section ref={detailRef} className="mock-research-detail">
           <div className="mock-research-detail-media"><img src={selected.image} alt="" /></div>
           <div className="mock-research-detail-copy">
             <div className="mock-detail-head"><p className="mock-kicker">{selected.title}</p><button type="button" onClick={() => setSelectedId(null)}>Close ×</button></div>
@@ -103,6 +108,65 @@ export default function ResearchPage() {
           </div>
         </section>
       )}
+
+      <style jsx global>{`
+        .mock-research-page [data-motion] {
+          --reveal-delay: 0ms;
+          will-change: transform, opacity, clip-path;
+        }
+        .mock-research-page [data-motion="headline"] {
+          opacity: 0;
+          transform: translate3d(0, 34px, 0) scale(.985);
+          filter: blur(5px);
+          transition: opacity 620ms cubic-bezier(.22,1,.36,1) var(--reveal-delay), transform 720ms cubic-bezier(.16,1,.3,1) var(--reveal-delay), filter 560ms ease var(--reveal-delay);
+        }
+        .mock-research-page [data-motion="copy"] {
+          opacity: 0;
+          transform: translate3d(0, 24px, 0);
+          transition: opacity 540ms ease var(--reveal-delay), transform 650ms cubic-bezier(.16,1,.3,1) var(--reveal-delay);
+        }
+        .mock-research-page [data-motion="rail"] {
+          opacity: 0;
+          clip-path: inset(0 100% 0 0);
+          transform: translate3d(-12px,0,0);
+          transition: opacity 480ms ease var(--reveal-delay), clip-path 760ms cubic-bezier(.16,1,.3,1) var(--reveal-delay), transform 650ms cubic-bezier(.16,1,.3,1) var(--reveal-delay);
+        }
+        .mock-research-page [data-motion="card"] {
+          opacity: 0;
+          transform: translate3d(0, 42px, 0) scale(.975);
+          transition: opacity 560ms ease var(--reveal-delay), transform 760ms cubic-bezier(.16,1,.3,1) var(--reveal-delay);
+        }
+        .mock-research-page [data-motion="card"] .mock-research-thumb {
+          overflow: hidden;
+          clip-path: inset(0 0 100% 0);
+          transition: clip-path 820ms cubic-bezier(.16,1,.3,1) calc(var(--reveal-delay) + 80ms);
+        }
+        .mock-research-page [data-motion="card"] .mock-research-thumb img {
+          transform: scale(1.055);
+          transition: transform 1050ms cubic-bezier(.16,1,.3,1) calc(var(--reveal-delay) + 80ms);
+        }
+        .mock-research-page [data-motion].is-revealed {
+          opacity: 1;
+          transform: none;
+          filter: none;
+          clip-path: inset(0 0 0 0);
+        }
+        .mock-research-page [data-motion="card"].is-revealed .mock-research-thumb { clip-path: inset(0 0 0 0); }
+        .mock-research-page [data-motion="card"].is-revealed .mock-research-thumb img { transform: scale(1); }
+        .mock-research-card.is-revealed:hover .mock-research-thumb img { transform: scale(1.025); transition-duration: 420ms; }
+        .mock-research-card.is-revealed:hover { transform: translate3d(0,-4px,0); transition-duration: 260ms; }
+        @media (prefers-reduced-motion: reduce) {
+          .mock-research-page [data-motion],
+          .mock-research-page [data-motion] .mock-research-thumb,
+          .mock-research-page [data-motion] .mock-research-thumb img {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+            clip-path: none !important;
+            transition: none !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }
