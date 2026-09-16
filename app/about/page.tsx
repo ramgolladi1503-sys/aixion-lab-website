@@ -19,6 +19,9 @@ export default function AboutPage() {
             <p>The work is less interested in making technology look impressive than in understanding when a system is reliable enough to deserve trust.</p>
           </div>
         </div>
+        <div className="premium-context-rail" aria-label="About focus areas">
+          <span>Applied Engineering</span><span>Evidence</span><span>Reliability</span><span>Human Authority</span><span>Reproducibility</span>
+        </div>
       </section>
 
       <section className="about-two-up">
