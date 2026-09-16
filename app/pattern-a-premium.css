@@ -4,8 +4,8 @@
    brand presence, and development-preview chrome. */
 
 :root {
-  --premium-reading: 66ch;
-  --premium-wide-reading: 78ch;
+  --premium-reading: 72ch;
+  --premium-wide-reading: 88ch;
   --premium-stack-gap: clamp(.85rem, 1.4vw, 1.25rem);
   --premium-section-gap: clamp(2.6rem, 4.5vw, 4rem);
 }
@@ -28,7 +28,8 @@ nextjs-portal { display: none !important; }
 .mock-research-intro,
 .mock-collaborate-hero {
   display: block !important;
-  padding-bottom: clamp(2rem, 3vw, 2.75rem) !important;
+  width: 100% !important;
+  padding-bottom: clamp(1.6rem, 2.4vw, 2.2rem) !important;
 }
 
 .mock-systems-intro > div,
@@ -40,7 +41,7 @@ nextjs-portal { display: none !important; }
 .mock-systems-intro h1,
 .mock-research-intro h1,
 .mock-collaborate-hero h1 {
-  max-width: 16ch !important;
+  max-width: 18ch !important;
   margin-bottom: 1rem !important;
   text-wrap: balance;
 }
@@ -54,6 +55,34 @@ nextjs-portal { display: none !important; }
 
 .mock-research-intro > div:last-child p { max-width: var(--premium-reading) !important; }
 
+/* Full-width context rail: fills the canvas with useful structure, not filler. */
+.premium-context-rail {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)) !important;
+  margin-top: clamp(1.7rem, 2.5vw, 2.35rem) !important;
+  border-top: 1px solid var(--mock-rule) !important;
+  border-bottom: 1px solid var(--mock-rule) !important;
+  padding: .9rem 0 !important;
+  gap: 0 !important;
+}
+
+.premium-context-rail span {
+  min-width: 0 !important;
+  padding: .1rem clamp(.8rem, 1.5vw, 1.35rem) !important;
+  border-right: 1px solid var(--mock-rule) !important;
+  color: var(--mock-body) !important;
+  font-family: var(--font-sans) !important;
+  font-size: clamp(.82rem, .84vw, .94rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+  letter-spacing: .015em !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+.premium-context-rail span:last-child { border-right: 0 !important; }
+
 /* Systems section headings: label + explanation belong to one narrative block. */
 .mock-group-title-row {
   display: block !important;
@@ -64,7 +93,7 @@ nextjs-portal { display: none !important; }
   font-size: clamp(1.35rem, 1.7vw, 1.6rem) !important;
 }
 .mock-group-title-row p {
-  max-width: 58ch !important;
+  max-width: 68ch !important;
   margin: 0 !important;
 }
 
@@ -81,7 +110,7 @@ nextjs-portal { display: none !important; }
   text-wrap: balance;
 }
 .showcase-proposition {
-  max-width: 52ch !important;
+  max-width: 58ch !important;
 }
 .showcase-context {
   display: flex !important;
@@ -105,7 +134,7 @@ nextjs-portal { display: none !important; }
   margin-bottom: 1.35rem !important;
 }
 .showcase-panel-grid h2 {
-  max-width: 24ch !important;
+  max-width: 26ch !important;
   text-wrap: balance;
 }
 .showcase-panel-grid > div:last-child {
@@ -130,12 +159,15 @@ nextjs-portal { display: none !important; }
   display: block !important;
 }
 .about-hero-grid h1 {
-  max-width: 17ch !important;
+  max-width: 19ch !important;
   margin-bottom: 1.3rem !important;
   text-wrap: balance;
 }
 .about-lede {
   max-width: var(--premium-reading) !important;
+}
+.about-hero .premium-context-rail {
+  margin-top: clamp(1.7rem, 2.5vw, 2.35rem) !important;
 }
 
 .about-principles-stacked .about-principles-heading {
@@ -219,6 +251,8 @@ nextjs-portal { display: none !important; }
   .showcase-architecture-list { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
   .mock-profile-experience .mock-section-title h2,
   .mock-profile-work .mock-section-title h2 { white-space: normal !important; }
+  .premium-context-rail { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .premium-context-rail span { border-right: 0 !important; text-align: left !important; padding: .45rem .7rem !important; }
 }
 
 @media (max-width: 640px) {
@@ -233,4 +267,6 @@ nextjs-portal { display: none !important; }
   .showcase-context .public-state-badge { display: inline-flex !important; margin-top: .85rem !important; }
   .showcase-architecture-list { grid-template-columns: 1fr !important; }
   .mock-section-title h2 { white-space: normal !important; }
+  .premium-context-rail { grid-template-columns: 1fr 1fr !important; padding: .65rem 0 !important; }
+  .premium-context-rail span { white-space: normal !important; font-size: .82rem !important; }
 }
