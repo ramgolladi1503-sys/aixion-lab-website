@@ -1,0 +1,129 @@
+/* Production launch layer — final UX, print and deployment polish. */
+
+.skip-link {
+  position: fixed;
+  left: 18px;
+  top: 12px;
+  z-index: 1000;
+  transform: translateY(-180%);
+  padding: 10px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font: 700 12px var(--sans);
+  transition: transform 140ms ease;
+}
+.skip-link:focus { transform: translateY(0); }
+
+.system-hero-summary {
+  min-height: 350px;
+  display: grid;
+  align-content: space-between;
+  gap: 26px;
+  padding: 30px;
+  border: 1px solid rgba(53,58,55,.16);
+  border-radius: 26px;
+  background: linear-gradient(145deg, rgba(246,248,244,.93), rgba(232,237,232,.86));
+  box-shadow: 0 24px 48px rgba(71,81,74,.07);
+}
+.system-hero-summary.summary-blue { background: linear-gradient(145deg, rgba(246,248,246,.96), rgba(229,237,242,.9)); }
+.system-hero-summary.summary-lavender { background: linear-gradient(145deg, rgba(247,246,248,.96), rgba(238,233,243,.9)); }
+.system-hero-summary.summary-sage { background: linear-gradient(145deg, rgba(246,248,244,.96), rgba(229,238,232,.9)); }
+.system-hero-summary.summary-peach { background: linear-gradient(145deg, rgba(248,247,245,.96), rgba(243,234,229,.9)); }
+.system-summary-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.system-summary-head p { margin: 0; }
+.system-hero-summary h2 {
+  max-width: 540px;
+  margin: 0;
+  font-size: clamp(30px, 3.2vw, 44px);
+  line-height: 1.04;
+}
+.system-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 0;
+}
+.system-summary-grid div {
+  min-width: 0;
+  padding: 14px 15px;
+  border: 1px solid rgba(53,58,55,.12);
+  border-radius: 14px;
+  background: rgba(250,251,248,.58);
+}
+.system-summary-grid dt {
+  margin-bottom: 5px;
+  color: #59645d;
+  font: 700 9px var(--mono);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.system-summary-grid dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.system-summary-skills { display: flex; flex-wrap: wrap; gap: 7px; }
+.system-summary-skills span {
+  padding: 7px 9px;
+  border: 1px solid rgba(53,58,55,.13);
+  border-radius: 999px;
+  background: rgba(250,251,248,.72);
+  color: #4f5c55;
+  font: 650 9px var(--mono);
+  letter-spacing: .025em;
+}
+
+.resume-actions { margin-top: 24px; }
+.print-resume-button { cursor: pointer; font: inherit; }
+
+.not-found-status {
+  max-width: 760px;
+  margin: 32px auto;
+  text-align: left;
+}
+.not-found-status .aixion-signal { margin-bottom: 0; }
+
+.footer-build-static { white-space: nowrap; }
+
+@media (max-width: 700px) {
+  .system-hero-summary { min-height: 0; padding: 20px; border-radius: 20px; gap: 20px; }
+  .system-hero-summary h2 { font-size: 30px; }
+  .system-summary-grid { grid-template-columns: 1fr; gap: 8px; }
+  .system-summary-grid div { padding: 12px; }
+  .system-summary-skills span { font-size: 8px; }
+  .resume-actions { display: grid; grid-template-columns: 1fr; }
+  .resume-actions > * { width: 100%; justify-content: center; }
+  .footer-build-static { white-space: normal; }
+}
+
+@media print {
+  @page { size: A4; margin: 13mm; }
+  html, body { background: #fff !important; color: #222 !important; }
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .print-resume-button,
+  .command-dialog,
+  .career-only { display: none !important; }
+  main { display: block; }
+  .page-hero,
+  .section,
+  .section-tight { padding: 14px 0 !important; background: #fff !important; }
+  .shell { width: 100% !important; max-width: none !important; padding: 0 !important; }
+  .page-hero-grid,
+  .detail-grid,
+  .principles-grid,
+  .system-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+  .panel,
+  .detail-card,
+  .principle,
+  .meta-board { box-shadow: none !important; background: #fff !important; border-color: #bbb !important; break-inside: avoid; }
+  h1 { font-size: 34px !important; }
+  h2 { font-size: 25px !important; }
+  h3 { font-size: 17px !important; }
+  p, li, dd { color: #333 !important; }
+  a { color: #222 !important; text-decoration: none !important; }
+}

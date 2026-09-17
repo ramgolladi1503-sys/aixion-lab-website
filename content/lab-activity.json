@@ -1,0 +1,128 @@
+{
+  "updated_at": "2026-09-01",
+  "principle": "Only meaningful, public-safe engineering work is published. Raw commits, private conversations, credentials, proprietary logic and unverified claims stay out of the public feed.",
+  "active": [
+    {
+      "id": "AX-WORK-2026-0901-05",
+      "date": "2026-09-01",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "DESIGN / UAT",
+      "state": "VALIDATING",
+      "title": "Approved dark system refinement and release validation",
+      "summary": "Aixion Lab is converging on the approved 70/20/10 black-wallpaper authority while reducing template repetition, improving mobile hierarchy and preserving evidence, career and accessibility boundaries.",
+      "evidence": "The current candidate is admitted only after production build, static export, desktop/mobile browser checks, accessibility gates and fresh visual review artifacts pass on the exact implementation SHA.",
+      "next_gate": "Complete recruiter-fast-path and mobile subtraction, inspect fresh desktop/mobile artifacts and preserve a green regression baseline."
+    }
+  ],
+  "entries": [
+    {
+      "id": "AX-WORK-2026-0901-04",
+      "date": "2026-09-01",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "HARDENING",
+      "state": "VALIDATED",
+      "title": "Hydration and regression baseline stabilized",
+      "summary": "A Home-only hydration mismatch, stale browser assertions, semantic landmark duplication and Career-mode regression were corrected before further visual work continued.",
+      "evidence": "The stabilized release candidate passes TypeScript, production build, static export, browser-error checks, accessibility, interactions and desktop/mobile visual capture gates.",
+      "next_gate": "Keep every design iteration subordinate to the same release gates."
+    },
+    {
+      "id": "AX-WORK-2026-0901-03",
+      "date": "2026-09-01",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "DESIGN AUTHORITY",
+      "state": "LOCKED",
+      "title": "Black-wallpaper 70/20/10 authority restored",
+      "summary": "The approved near-black wallpaper system is the current visual authority: roughly 70% atmospheric field, 20% structured dark surfaces and 10% restrained signal accents. Earlier light-editorial convergence is superseded.",
+      "evidence": "The approved reference was matched back to the earlier repository composition, restored as the Home authority and hardened through exact-SHA desktop/mobile visual and accessibility validation.",
+      "next_gate": "Preserve this authority across every route and use future changes only to improve hierarchy, clarity and implementation quality."
+    },
+    {
+      "id": "AX-WORK-2026-0901-02",
+      "date": "2026-09-01",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "HARDENING",
+      "state": "VALIDATED",
+      "title": "Discoverability, public proof and recruiter handoff hardening",
+      "summary": "Post-launch review tightened how Aixion Lab is discovered, shared and trusted: production-facing placeholders were removed, evidence summaries became more explicit and public identity was strengthened without adding unverified claims.",
+      "evidence": "The review used production-tested desktop/mobile artifacts and existing accessibility, interaction and visual regression gates rather than unverified presentation claims.",
+      "next_gate": "Continue publishing only evidence-backed recruiter and public-proof improvements."
+    },
+    {
+      "id": "AX-WORK-2026-0901-01",
+      "date": "2026-09-01",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "UAT",
+      "state": "VALIDATED",
+      "title": "Editorial closing principle became the authored site endpoint",
+      "summary": "The closing statement was rebuilt from an oversized repeated text block into an intentional footer-level editorial signature with a quieter supporting sign-off.",
+      "evidence": "The production browser suite measures footer structure, line wrapping and desktop/mobile behavior.",
+      "next_gate": "Keep the full manifesto at the site endpoint rather than repeating it as page boilerplate."
+    },
+    {
+      "id": "AX-WORK-2026-0831-03",
+      "date": "2026-08-31",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "BUILD",
+      "state": "VALIDATED",
+      "title": "Public worklog and activity publishing",
+      "summary": "Ongoing Aixion engineering work feeds a curated public activity layer that surfaces current work, evidence and next gates without exposing raw repository or conversation data.",
+      "evidence": "Home and Pulse read from a structured public-safe activity manifest, with dedicated worklog acceptance tests in the production suite.",
+      "next_gate": "Use the manifest for meaningful milestones and keep publication evidence-led."
+    },
+    {
+      "id": "AX-WORK-2026-0831-01",
+      "date": "2026-08-31",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "INTERACTION",
+      "state": "VALIDATED",
+      "title": "Aixion Signal became the interaction language",
+      "summary": "The site uses state-driven motion, architecture-specific reveal patterns and reduced-motion fallbacks instead of generic decorative animation.",
+      "evidence": "Interaction acceptance tests and desktop/mobile renders exercise the signal and reduced-motion behavior.",
+      "next_gate": "Evolve the signal into a more distinctive lifecycle grammar without making it decorative."
+    },
+    {
+      "id": "AX-WORK-2026-0823-03",
+      "date": "2026-08-23",
+      "area": "AIXION LAB",
+      "system_slug": "lab",
+      "type": "HISTORICAL DESIGN AUTHORITY",
+      "state": "SUPERSEDED",
+      "title": "Earlier light-mineral website authority",
+      "summary": "An earlier clean rebuild was anchored to a light soft-neutral mineral visual system. That visual authority is retained only as historical project evidence and was superseded by the explicitly approved black-wallpaper direction on 2026-09-01.",
+      "evidence": "Repository history preserves the earlier blueprint and implementation while the current exact-SHA visual authority is governed by the approved dark reference and regression suite.",
+      "next_gate": "Do not reintroduce the superseded light authority unless a future explicit design decision replaces the current one."
+    },
+    {
+      "id": "AX-WORK-2026-0823-02",
+      "date": "2026-08-23",
+      "area": "TRADEBOT",
+      "system_slug": "tradebot",
+      "type": "BOUNDARY",
+      "state": "ENFORCED",
+      "title": "Research and live evidence kept separate from proprietary strategy detail",
+      "summary": "The public TradeBot story exposes architecture, validation method and evidence boundaries without publishing private signal mechanics or execution rules.",
+      "evidence": "Public pages distinguish research evidence, live observation, risk and human authority instead of collapsing them into one claim.",
+      "next_gate": "Add sanitized operational proof only when it is safe and evidence-backed."
+    },
+    {
+      "id": "AX-WORK-2026-0823-01",
+      "date": "2026-08-23",
+      "area": "CONTROL CORE",
+      "system_slug": "control-core",
+      "type": "ARCHITECTURE",
+      "state": "BUILDING",
+      "title": "MVP orchestration translated into inspectable stages",
+      "summary": "Intent, context, planning, agents, tools, evidence, policy and authority were separated into explicit stages for the public architecture.",
+      "evidence": "The site presents a labelled demo trace while explicitly avoiding fake production telemetry.",
+      "next_gate": "Promote a policy-bound execution trace backed by implementation evidence."
+    }
+  ]
+}

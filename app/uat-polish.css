@@ -1,0 +1,224 @@
+/* Narrow UAT polish pass — hierarchy, density and readability only. */
+
+/* Remove redundant floating Career badge; the header toggle is the single state authority. */
+html[data-view="career"] body:after { content: none !important; display: none !important; }
+
+/* Page-specific light tonal separation without introducing dark surfaces. */
+.systems-hero {
+  background: linear-gradient(180deg, rgba(237,241,243,.42), rgba(233,237,231,0));
+  padding-bottom: 30px;
+}
+.research-hero {
+  background: linear-gradient(180deg, rgba(240,237,243,.38), rgba(233,237,231,0));
+  padding-bottom: 30px;
+}
+.journey-hero {
+  background: linear-gradient(180deg, rgba(242,236,231,.42), rgba(233,237,231,0));
+  padding-bottom: 32px;
+}
+
+/* Technical typography should remain technical, not microscopic. */
+.system-id,
+.registry-label,
+.meta-board span,
+.mini-meta dt,
+.state-tag,
+.visual-kicker,
+.tradebot-index,
+.tradebot-stage small,
+.tradebot-evidence-strip,
+.core-center span,
+.core-center small,
+.core-node,
+.trace-preview,
+.workflow-row span,
+.workflow-row b,
+.analytics-chart span,
+.analytics-metric small,
+.journey-visual-stage b {
+  font-size: 9px;
+  color: #53605a;
+}
+
+.lane-stage,
+.aixion-signal--compact .signal-stage strong {
+  font-size: 8px;
+  color: #53605a;
+}
+
+.registry-row p,
+.meta-board strong {
+  font-size: 12px;
+}
+
+/* Systems Registry: reach useful content sooner and improve row scanning. */
+.registry-section { padding-top: 24px; }
+.registry-section .section-heading { margin-bottom: 20px; }
+.registry-row {
+  padding: 18px 20px;
+  gap: 16px;
+  background: rgba(246,248,245,.66);
+}
+.registry-row h3 { font-size: 22px; }
+.registry-row .text-link { margin-top: 0; }
+
+/* Research: remove duplicated methodology headline and dead tail space. */
+.research-index-section { padding-top: 26px; }
+.research-method-section { padding: 28px 0 12px; }
+.research-method-panel { background: rgba(240,237,243,.36); }
+.research-method-panel .section-heading {
+  max-width: 680px;
+  margin-bottom: 22px;
+}
+.research-method-panel .section-heading h2 {
+  font-size: clamp(30px, 3.3vw, 44px);
+  max-width: 640px;
+}
+.research-method-flow { justify-content: flex-start; }
+.research-method-flow .architecture-step span {
+  min-width: 112px;
+  min-height: 60px;
+  padding: 12px;
+}
+
+/* Journey: turn the old vertical-label graph into a readable engineered progression. */
+.visual-journey { padding: 68px 24px 24px; }
+.journey-visual-track {
+  position: relative;
+  height: 210px;
+  border-bottom: 0;
+  align-items: center;
+  gap: 8px;
+}
+.journey-visual-track:before {
+  content: "";
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 50%;
+  height: 1px;
+  background: rgba(105,91,82,.24);
+}
+.journey-visual-stage {
+  position: relative;
+  height: auto !important;
+  min-height: 72px;
+  padding: 12px 9px;
+  border: 1px solid rgba(105,91,82,.15);
+  border-radius: 11px;
+  background: rgba(249,247,244,.74);
+  align-content: center;
+  gap: 5px;
+  box-shadow: 0 8px 18px rgba(91,78,70,.045);
+}
+.journey-visual-stage:nth-child(odd) { transform: translateY(-30px); }
+.journey-visual-stage:nth-child(even) { transform: translateY(30px); }
+.journey-visual-stage:after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #9c887c;
+  border: 2px solid rgba(249,247,244,.96);
+  left: 50%;
+  transform: translateX(-50%);
+}
+.journey-visual-stage:nth-child(odd):after { bottom: -22px; }
+.journey-visual-stage:nth-child(even):after { top: -22px; }
+.journey-visual-stage span {
+  writing-mode: horizontal-tb;
+  transform: none;
+  font-size: 9px;
+  line-height: 1.25;
+  letter-spacing: .035em;
+}
+.journey-visual-note { font-size: 10px; }
+.journey-timeline-section { padding-top: 30px; }
+.journey-step { padding: 21px 0; }
+.journey-step h3 { font-size: 23px; }
+.journey-principles-section { padding-top: 30px; }
+
+/* Footer: still quiet, but no longer near-invisible. */
+.site-footer {
+  margin-top: 44px;
+  border-top-color: rgba(53,58,55,.18);
+  background: linear-gradient(180deg, rgba(237,241,243,.44), rgba(230,235,229,.72));
+}
+.footer-grid { padding: 44px 0 30px; }
+.footer-statement { font-size: 22px; }
+.footer-links {
+  gap: 10px;
+  font-size: 12px;
+  color: #53605a;
+}
+.footer-links a:hover,
+.footer-links a:focus-visible { color: var(--text); }
+.build-line {
+  padding: 15px 0 18px;
+  color: #59645e;
+  font-size: 9px;
+}
+
+@media (max-width: 980px) {
+  .registry-section { padding-top: 20px; }
+  .registry-row { padding: 17px; }
+}
+
+@media (max-width: 700px) {
+  .systems-hero,
+  .research-hero,
+  .journey-hero { padding-bottom: 20px; }
+
+  .registry-section,
+  .research-index-section,
+  .journey-timeline-section { padding-top: 18px; }
+
+  .registry-row { gap: 8px; padding: 16px; }
+  .registry-row h3 { font-size: 21px; }
+
+  .research-method-section { padding: 20px 0 6px; }
+  .research-method-flow { display: grid; grid-template-columns: 1fr; width: 100%; }
+  .research-method-flow .architecture-step { display: grid; grid-template-columns: 1fr; width: 100%; }
+  .research-method-flow .architecture-step span { width: 100%; min-height: 48px; }
+  .research-method-flow .architecture-step b { transform: rotate(90deg); text-align: center; }
+
+  .visual-journey { padding: 60px 18px 20px; }
+  .journey-visual-track {
+    height: auto;
+    grid-template-columns: 1fr;
+    gap: 7px;
+    padding-left: 18px;
+  }
+  .journey-visual-track:before {
+    left: 6px;
+    right: auto;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    height: auto;
+  }
+  .journey-visual-stage,
+  .journey-visual-stage:nth-child(odd),
+  .journey-visual-stage:nth-child(even) {
+    transform: none;
+    min-height: 48px;
+    padding: 9px 11px;
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    align-items: center;
+  }
+  .journey-visual-stage:after,
+  .journey-visual-stage:nth-child(odd):after,
+  .journey-visual-stage:nth-child(even):after {
+    left: -17px;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+  }
+  .journey-visual-stage span { font-size: 9px; }
+  .journey-visual-note { margin-top: 12px; }
+
+  .footer-grid { padding: 34px 0 26px; gap: 28px; }
+  .build-line { font-size: 8px; }
+}

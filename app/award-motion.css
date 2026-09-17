@@ -1,0 +1,228 @@
+/* Award interaction layer — motion communicates state, flow and authority. */
+
+:root {
+  --motion-ease: cubic-bezier(.2,.78,.2,1);
+  --motion-spring: cubic-bezier(.18,.89,.32,1.18);
+}
+
+html { scroll-behavior: smooth; }
+
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: aixion-page-out 180ms ease both; }
+::view-transition-new(root) { animation: aixion-page-in 280ms var(--motion-ease) both; }
+.brand-mark { view-transition-name: aixion-brand; }
+
+@keyframes aixion-page-out { to { opacity: .84; transform: translateY(-3px); } }
+@keyframes aixion-page-in { from { opacity: .72; transform: translateY(7px); } }
+@keyframes aixion-reveal { from { opacity: .76; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes signal-arrive { 0% { transform: scale(.72); opacity: .38; } 55% { transform: scale(1.28); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes signal-line { from { transform: scaleX(0); opacity: .2; } to { transform: scaleX(1); opacity: 1; } }
+@keyframes field-path { from { stroke-dashoffset: 1; opacity: .12; } to { stroke-dashoffset: 0; opacity: .72; } }
+@keyframes hub-arrive { 0% { transform: translate(-50%,-50%) scale(.72); opacity: .3; } 70% { transform: translate(-50%,-50%) scale(1.08); opacity: 1; } 100% { transform: translate(-50%,-50%) scale(1); } }
+@keyframes architecture-step { from { opacity: .56; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes architecture-side { from { opacity: .5; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes core-node-in { from { opacity: .45; transform: scale(.88); } to { opacity: 1; transform: scale(1); } }
+@keyframes core-breathe { 0%,100% { box-shadow: 0 16px 36px rgba(91,80,104,.09), 0 0 0 0 rgba(167,156,184,.06); } 50% { box-shadow: 0 18px 42px rgba(91,80,104,.11), 0 0 0 12px rgba(167,156,184,0); } }
+@keyframes trace-in { from { opacity: .5; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes chart-draw { from { stroke-dashoffset: 1; opacity: .28; } to { stroke-dashoffset: 0; opacity: 1; } }
+@keyframes command-in { from { opacity: 0; transform: translateY(-8px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes drawer-in { from { opacity: .4; transform: translateX(34px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes drawer-up { from { opacity: .4; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+.motion-ready [data-reveal].is-revealed { animation: aixion-reveal 680ms var(--motion-ease) both; }
+.motion-ready .hero-copy { animation: aixion-reveal 720ms var(--motion-ease) both; }
+
+/* The Aixion Signal is the shared motion grammar. */
+[data-aixion-signal] .signal-stage i { transform-origin: left center; }
+.motion-ready [data-aixion-signal] .signal-stage .signal-node { animation: signal-arrive 460ms var(--motion-spring) both; }
+.motion-ready [data-aixion-signal] .signal-stage i { animation: signal-line 420ms var(--motion-ease) both; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(1) .signal-node { animation-delay: 40ms; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(1) i { animation-delay: 120ms; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(2) .signal-node { animation-delay: 170ms; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(2) i { animation-delay: 250ms; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(3) .signal-node { animation-delay: 300ms; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(3) i { animation-delay: 380ms; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(4) .signal-node { animation-delay: 430ms; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(4) i { animation-delay: 510ms; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(5) .signal-node { animation-delay: 560ms; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(5) i { animation-delay: 640ms; }
+.motion-ready [data-aixion-signal] .signal-stage:nth-child(6) .signal-node { animation-delay: 690ms; }
+
+/* Pointer response is deliberately tiny: crafted, not theatrical. */
+[data-motion-visual] {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  transform: perspective(1200px) rotateX(var(--tilt-y)) rotateY(var(--tilt-x));
+  transform-origin: center;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 220ms ease;
+  will-change: transform;
+}
+[data-motion-visual]:hover { border-color: rgba(53,58,55,.23); box-shadow: 0 28px 58px rgba(71,81,74,.11); }
+
+/* Home signature system field. */
+.signature-hero .hero-copy h1 { max-width: 760px; }
+.signature-hero .hero-copy .lede { max-width: 650px; }
+.hero-philosophy {
+  margin: 18px 0 0;
+  max-width: 640px;
+  padding-left: 14px;
+  border-left: 2px solid rgba(120,153,139,.46);
+  color: #53605a;
+  font: 400 17px/1.45 var(--serif);
+}
+.lab-field-visual { isolation: isolate; }
+.lab-field-visual a { color: inherit; text-decoration: none; }
+.lab-field-lines .field-path {
+  pathLength: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition: opacity 180ms ease, stroke-width 180ms ease, stroke 180ms ease;
+}
+.motion-ready .lab-field-visual.is-revealed .field-path { animation: field-path 900ms var(--motion-ease) both; }
+.motion-ready .lab-field-visual.is-revealed .field-path-core { animation-delay: 80ms; }
+.motion-ready .lab-field-visual.is-revealed .field-path-auto { animation-delay: 160ms; }
+.motion-ready .lab-field-visual.is-revealed .field-path-analytics { animation-delay: 240ms; }
+.field-hub {
+  position: absolute;
+  left: 50%; top: 51%;
+  width: 82px; height: 82px;
+  transform: translate(-50%,-50%);
+  display: grid; place-content: center; gap: 1px;
+  border: 1px solid rgba(83,108,96,.22);
+  border-radius: 50%;
+  background: rgba(244,247,242,.92);
+  text-align: center;
+  box-shadow: 0 18px 34px rgba(66,82,73,.08);
+  z-index: 3;
+}
+.field-hub strong { font: 400 16px var(--serif); }
+.field-hub small { color: #657169; font: 650 7px var(--mono); letter-spacing: .06em; }
+.motion-ready .lab-field-visual.is-revealed .field-hub { animation: hub-arrive 700ms 260ms var(--motion-spring) both; }
+.field-node {
+  z-index: 4;
+  transition: transform 180ms var(--motion-ease), opacity 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.field-node:hover, .field-node:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(82,112,100,.38);
+  box-shadow: 0 16px 30px rgba(65,75,68,.11);
+  outline-offset: 4px;
+}
+.lab-field-visual:has(.node-tradebot:is(:hover,:focus-visible)) .field-path:not(.field-path-tradebot),
+.lab-field-visual:has(.node-core:is(:hover,:focus-visible)) .field-path:not(.field-path-core),
+.lab-field-visual:has(.node-auto:is(:hover,:focus-visible)) .field-path:not(.field-path-auto),
+.lab-field-visual:has(.node-analytics:is(:hover,:focus-visible)) .field-path:not(.field-path-analytics) { opacity: .1; }
+.lab-field-visual:has(.node-tradebot:is(:hover,:focus-visible)) .field-path-tradebot,
+.lab-field-visual:has(.node-core:is(:hover,:focus-visible)) .field-path-core,
+.lab-field-visual:has(.node-auto:is(:hover,:focus-visible)) .field-path-auto,
+.lab-field-visual:has(.node-analytics:is(:hover,:focus-visible)) .field-path-analytics { stroke-width: 2.4; opacity: 1; }
+
+/* Each architecture moves according to its actual logic. */
+.motion-ready .visual-tradebot.is-revealed .tradebot-stage { animation: architecture-step 520ms var(--motion-ease) both; }
+.motion-ready .visual-tradebot.is-revealed .tradebot-stage:nth-child(1) { animation-delay: 40ms; }
+.motion-ready .visual-tradebot.is-revealed .tradebot-stage:nth-child(2) { animation-delay: 130ms; }
+.motion-ready .visual-tradebot.is-revealed .tradebot-stage:nth-child(3) { animation-delay: 220ms; }
+.motion-ready .visual-tradebot.is-revealed .tradebot-stage:nth-child(4) { animation-delay: 310ms; }
+.motion-ready .visual-tradebot.is-revealed .tradebot-stage:nth-child(5) { animation-delay: 400ms; }
+.tradebot-wave path { pathLength: 1; stroke-dasharray: 1; }
+.motion-ready .visual-tradebot.is-revealed .tradebot-wave path { animation: chart-draw 900ms 280ms var(--motion-ease) both; }
+
+.motion-ready .visual-core.is-revealed .core-center { animation: core-node-in 580ms var(--motion-spring) both, core-breathe 5s 900ms ease-in-out infinite; }
+.motion-ready .visual-core.is-revealed .core-node { animation: core-node-in 440ms var(--motion-spring) both; }
+.motion-ready .visual-core.is-revealed .core-node-1, .motion-ready .visual-core.is-revealed .core-node-8 { animation-delay: 100ms; }
+.motion-ready .visual-core.is-revealed .core-node-2, .motion-ready .visual-core.is-revealed .core-node-7 { animation-delay: 180ms; }
+.motion-ready .visual-core.is-revealed .core-node-3, .motion-ready .visual-core.is-revealed .core-node-6 { animation-delay: 260ms; }
+.motion-ready .visual-core.is-revealed .core-node-4, .motion-ready .visual-core.is-revealed .core-node-5 { animation-delay: 340ms; }
+.motion-ready .visual-core.is-revealed .trace-preview { animation: trace-in 560ms 440ms var(--motion-ease) both; }
+
+.motion-ready .visual-automation.is-revealed .workflow-row { animation: architecture-side 500ms var(--motion-ease) both; }
+.motion-ready .visual-automation.is-revealed .workflow-row:nth-child(1) { animation-delay: 50ms; }
+.motion-ready .visual-automation.is-revealed .workflow-row:nth-child(2) { animation-delay: 130ms; }
+.motion-ready .visual-automation.is-revealed .workflow-row:nth-child(3) { animation-delay: 210ms; }
+.motion-ready .visual-automation.is-revealed .workflow-row:nth-child(4) { animation-delay: 290ms; }
+.motion-ready .visual-automation.is-revealed .workflow-row:nth-child(5) { animation-delay: 370ms; }
+
+.analytics-chart svg path { pathLength: 1; stroke-dasharray: 1; }
+.motion-ready .visual-analytics.is-revealed .analytics-chart svg path { animation: chart-draw 1000ms 130ms var(--motion-ease) both; }
+.motion-ready .visual-analytics.is-revealed .analytics-metric { animation: architecture-step 480ms var(--motion-ease) both; }
+.motion-ready .visual-analytics.is-revealed .analytics-metric:nth-child(2) { animation-delay: 210ms; }
+.motion-ready .visual-analytics.is-revealed .analytics-metric:nth-child(3) { animation-delay: 300ms; }
+.motion-ready .visual-analytics.is-revealed .analytics-metric:nth-child(4) { animation-delay: 390ms; }
+
+.motion-ready .visual-journey.is-revealed .journey-visual-stage { animation: architecture-step 500ms var(--motion-ease) both; }
+.motion-ready .visual-journey.is-revealed .journey-visual-stage:nth-child(1) { animation-delay: 40ms; }
+.motion-ready .visual-journey.is-revealed .journey-visual-stage:nth-child(2) { animation-delay: 110ms; }
+.motion-ready .visual-journey.is-revealed .journey-visual-stage:nth-child(3) { animation-delay: 180ms; }
+.motion-ready .visual-journey.is-revealed .journey-visual-stage:nth-child(4) { animation-delay: 250ms; }
+.motion-ready .visual-journey.is-revealed .journey-visual-stage:nth-child(5) { animation-delay: 320ms; }
+.motion-ready .visual-journey.is-revealed .journey-visual-stage:nth-child(6) { animation-delay: 390ms; }
+.motion-ready .visual-journey.is-revealed .journey-visual-stage:nth-child(7) { animation-delay: 460ms; }
+
+/* Story + state micro-interactions. */
+.system-principle {
+  max-width: 700px;
+  margin: 20px 0 22px;
+  padding: 14px 0 14px 18px;
+  border-left: 2px solid rgba(120,153,139,.5);
+  color: #46544d;
+  font: 400 clamp(17px,1.6vw,21px)/1.42 var(--serif);
+}
+.system-subnav a { position: relative; transition: color 160ms ease; }
+.system-subnav a::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -8px;
+  height: 2px; border-radius: 99px;
+  background: var(--sage);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--motion-ease);
+}
+.system-subnav a.is-active { color: var(--text); }
+.system-subnav a.is-active::after { transform: scaleX(1); }
+
+.system-card, .detail-card, .research-row, .principle {
+  transition: transform 180ms var(--motion-ease), border-color 180ms ease, box-shadow 200ms ease, background 180ms ease;
+}
+.system-card:hover, .detail-card:hover, .research-row:hover, .principle:hover { transform: translateY(-3px); }
+.text-link { position: relative; display: inline-flex; align-items: center; }
+.text-link::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px;
+  background: currentColor; transform: scaleX(.18); transform-origin: left;
+  opacity: .45; transition: transform 220ms var(--motion-ease), opacity 180ms ease;
+}
+.text-link:hover::after, .text-link:focus-visible::after { transform: scaleX(1); opacity: .8; }
+
+.journey-step { position: relative; overflow: hidden; }
+.journey-step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 1px;
+  background: rgba(156,136,124,.5); transition: width 420ms var(--motion-ease);
+}
+.journey-step:hover::after { width: 100%; }
+.journey-question-label { display: block; margin-bottom: 7px; color: #776d66; font: 650 8px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.journey-step .journey-question { color: #46514b; font: 400 18px/1.48 var(--serif); }
+
+/* Dialogs feel connected to the evidence / command system. */
+.command-dialog[open] .command-box { animation: command-in 230ms var(--motion-ease) both; }
+.evidence-dialog[open] .evidence-drawer { animation: drawer-in 320ms var(--motion-ease) both; }
+.command-meta { display: inline-flex; gap: 6px; align-items: center; }
+.command-meta em { color: #69756e; font: inherit; font-style: normal; }
+
+@media (max-width: 700px) {
+  [data-motion-visual] { transform: none !important; }
+  .field-hub { width: 66px; height: 66px; }
+  .field-hub strong { font-size: 14px; }
+  .hero-philosophy { font-size: 16px; }
+  .system-principle { font-size: 17px; margin-top: 16px; }
+  .evidence-dialog[open] .evidence-drawer { animation-name: drawer-up; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  [data-motion-visual] { transform: none !important; will-change: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
+}

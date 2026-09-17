@@ -1,0 +1,167 @@
+/* Site-wide visual universe derived from the locked Observable Temporal State Field.
+   Internal routes retain their editorial information architecture while sharing the same laboratory canvas. */
+
+:root {
+  --universe-bg: #071015;
+  --universe-bg-2: #091318;
+  --universe-panel: rgba(11, 21, 26, .78);
+  --universe-panel-soft: rgba(13, 25, 31, .6);
+  --universe-text: #edf1ec;
+  --universe-muted: #98a7a1;
+  --universe-line: rgba(205, 225, 218, .13);
+  --universe-line-strong: rgba(205, 225, 218, .22);
+  --universe-accent: #a8d66f;
+}
+
+body {
+  background:
+    radial-gradient(circle at 70% 4%, rgba(129,153,176,.07), transparent 31rem),
+    radial-gradient(circle at 18% 22%, rgba(120,153,139,.05), transparent 26rem),
+    linear-gradient(180deg, var(--universe-bg), var(--universe-bg-2));
+  color: var(--universe-text);
+}
+
+.site-header {
+  border-bottom-color: var(--universe-line);
+  background: rgba(7,16,21,.88);
+  color: var(--universe-text);
+}
+.site-header .brand small,
+.site-header .desktop-nav,
+.site-header .quiet-link { color: var(--universe-muted); }
+.site-header .desktop-nav a:hover,
+.site-header .quiet-link:hover { color: var(--universe-text); }
+.mode-toggle,
+.command-trigger {
+  border-color: var(--universe-line-strong) !important;
+  background: rgba(10,20,25,.74) !important;
+  color: var(--universe-text) !important;
+}
+
+body:not(:has(.observable-home)) main {
+  background:
+    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+  background-size: 74px 74px;
+}
+
+body:not(:has(.observable-home)) .page-hero,
+body:not(:has(.observable-home)) .section,
+body:not(:has(.observable-home)) .section-tight,
+body:not(:has(.observable-home)) .hero { background: transparent; }
+
+body:not(:has(.observable-home)) h1,
+body:not(:has(.observable-home)) h2,
+body:not(:has(.observable-home)) h3,
+body:not(:has(.observable-home)) h4 { color: var(--universe-text); }
+body:not(:has(.observable-home)) .eyebrow { color: #9fbc80; }
+body:not(:has(.observable-home)) .lede,
+body:not(:has(.observable-home)) p,
+body:not(:has(.observable-home)) .section-heading p,
+body:not(:has(.observable-home)) .system-id,
+body:not(:has(.observable-home)) dt { color: var(--universe-muted); }
+
+body:not(:has(.observable-home)) .panel,
+body:not(:has(.observable-home)) .detail-card,
+body:not(:has(.observable-home)) .system-card,
+body:not(:has(.observable-home)) .pulse-system-card,
+body:not(:has(.observable-home)) .worklog-card,
+body:not(:has(.observable-home)) .worklog-row,
+body:not(:has(.observable-home)) .research-row,
+body:not(:has(.observable-home)) .contact-copy,
+body:not(:has(.observable-home)) .meta-board,
+body:not(:has(.observable-home)) .resume-card,
+body:not(:has(.observable-home)) .principle-card,
+body:not(:has(.observable-home)) .frontier-card,
+body:not(:has(.observable-home)) .journey-card,
+body:not(:has(.observable-home)) .evidence-card,
+body:not(:has(.observable-home)) .impact-card {
+  background: var(--universe-panel) !important;
+  border-color: var(--universe-line) !important;
+  box-shadow: none !important;
+  color: var(--universe-text);
+}
+
+body:not(:has(.observable-home)) .feature-visual,
+body:not(:has(.observable-home)) .visual-frame,
+body:not(:has(.observable-home)) .architecture-step span,
+body:not(:has(.observable-home)) .system-visual,
+body:not(:has(.observable-home)) .architecture-visual,
+body:not(:has(.observable-home)) .case-study-panel,
+body:not(:has(.observable-home)) .resume-summary,
+body:not(:has(.observable-home)) .hero-visual,
+body:not(:has(.observable-home)) .about-profile-visual {
+  background: var(--universe-panel-soft) !important;
+  border-color: var(--universe-line) !important;
+  box-shadow: none !important;
+}
+
+body:not(:has(.observable-home)) .button {
+  background: #acd081;
+  color: #0b160f;
+  border-color: transparent;
+}
+body:not(:has(.observable-home)) .button-secondary {
+  background: rgba(10,20,25,.76);
+  color: var(--universe-text);
+  border-color: var(--universe-line-strong);
+}
+body:not(:has(.observable-home)) .text-link { color: #b6d98d; }
+body:not(:has(.observable-home)) .state-tag { border: 1px solid rgba(170,210,145,.12); }
+body:not(:has(.observable-home)) .state-building { background: rgba(121,167,255,.09); color: #a1bfff; }
+body:not(:has(.observable-home)) .state-research,
+body:not(:has(.observable-home)) .state-active { background: rgba(179,132,239,.09); color: #c8a4f2; }
+body:not(:has(.observable-home)) .state-rejected { background: rgba(225,107,93,.09); color: #ed9287; }
+
+body:not(:has(.observable-home)) .subnav,
+body:not(:has(.observable-home)) .system-subnav {
+  background: rgba(7,16,21,.78) !important;
+  border-color: var(--universe-line) !important;
+  backdrop-filter: blur(16px);
+}
+body:not(:has(.observable-home)) .subnav a,
+body:not(:has(.observable-home)) .system-subnav a { color: var(--universe-muted); }
+body:not(:has(.observable-home)) .subnav a:hover,
+body:not(:has(.observable-home)) .system-subnav a:hover { color: var(--universe-text); }
+
+body:not(:has(.observable-home)) .research-row,
+body:not(:has(.observable-home)) .worklog-row,
+body:not(:has(.observable-home)) .mini-meta div,
+body:not(:has(.observable-home)) .progress-lane,
+body:not(:has(.observable-home)) .evidence-row,
+body:not(:has(.observable-home)) .resume-row { border-color: var(--universe-line) !important; }
+
+body:not(:has(.observable-home)) .lane-track::before { background: var(--universe-line-strong); }
+body:not(:has(.observable-home)) .lane-stage i { border-color: #0d191e; background: #53615c; }
+body:not(:has(.observable-home)) .lane-stage.reached i { background: #719b71; }
+body:not(:has(.observable-home)) .lane-stage.current i { background: var(--universe-accent); }
+
+body:not(:has(.observable-home)) svg text { fill: currentColor; }
+body:not(:has(.observable-home)) .visual-label,
+body:not(:has(.observable-home)) .visual-meta,
+body:not(:has(.observable-home)) .architecture-caption { color: var(--universe-muted); }
+
+.site-footer--statement {
+  background: #071015 !important;
+  color: var(--universe-text) !important;
+  border-top-color: var(--universe-line) !important;
+}
+.footer-closing.shell { border-top-color: var(--universe-line) !important; }
+.footer-manifesto { color: var(--universe-text) !important; }
+.footer-signoff,
+.build-line--quiet { color: var(--universe-muted) !important; }
+.site-footer--statement .eyebrow { color: #9fbc80 !important; }
+
+/* Keep system identity visible without turning editorial pages into dashboards. */
+body:not(:has(.observable-home)) [data-system="tradebot"],
+body:not(:has(.observable-home)) .system-tradebot { --system-accent: #a8d66f; }
+body:not(:has(.observable-home)) [data-system="control-core"],
+body:not(:has(.observable-home)) .system-control-core { --system-accent: #79a7ff; }
+body:not(:has(.observable-home)) [data-system="automation"],
+body:not(:has(.observable-home)) .system-automation { --system-accent: #62d8d0; }
+body:not(:has(.observable-home)) [data-system="analytics"],
+body:not(:has(.observable-home)) .system-analytics { --system-accent: #eba94d; }
+
+@media (max-width: 700px) {
+  body:not(:has(.observable-home)) main { background-size: 52px 52px; }
+}
