@@ -1,0 +1,217 @@
+/* ==========================================================================
+   AIXION TOPOGRAPHIC CONTOUR LINE WALLPAPER AUTHORITY
+   Approved Option A: Whisper-thin topographic elevation contours
+   Applied across ALL subpages (/systems, /systems/*, /research, /about, /collaborate, /resume)
+   Home & entry pages remain completely untouched.
+   ========================================================================== */
+
+/* 1. Global Wallpaper Definition for all Subpages */
+:root {
+  --line-wallpaper-light: url('/textures/lines/contour-light.webp');
+  --line-wallpaper-dark: url('/textures/lines/contour-dark.webp');
+}
+
+/* Base canvas setup for main pages and system showcase subpages */
+.mock-systems-page,
+.mock-research-page,
+.about-editorial-page,
+.mock-collaborate-page,
+.mock-profile-page,
+.system-showcase {
+  position: relative !important;
+  isolation: isolate !important;
+  background-color: #faf8f5 !important;
+}
+
+html[data-theme='dark'] .mock-systems-page,
+html[data-theme='dark'] .mock-research-page,
+html[data-theme='dark'] .about-editorial-page,
+html[data-theme='dark'] .mock-collaborate-page,
+html[data-theme='dark'] .mock-profile-page,
+html[data-theme='dark'] .system-showcase {
+  background-color: #131110 !important;
+}
+
+/* 2. Topographic Line Layer (Fixed Viewport Background for ALL interior pages) */
+.mock-systems-page::before,
+.mock-research-page::before,
+.about-editorial-page::before,
+.mock-collaborate-page::before,
+.mock-profile-page::before,
+.system-showcase::before,
+.system-showcase-tradebot::before,
+.system-showcase-control-core::before,
+.system-showcase-analytics::before,
+.system-showcase-automation::before {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: -2 !important;
+  pointer-events: none !important;
+  background-image: var(--line-wallpaper-light) !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  opacity: 0.62 !important;
+  filter: contrast(1.02) brightness(1.01) !important;
+}
+
+html[data-theme='dark'] .mock-systems-page::before,
+html[data-theme='dark'] .mock-research-page::before,
+html[data-theme='dark'] .about-editorial-page::before,
+html[data-theme='dark'] .mock-collaborate-page::before,
+html[data-theme='dark'] .mock-profile-page::before,
+html[data-theme='dark'] .system-showcase::before,
+html[data-theme='dark'] .system-showcase-tradebot::before,
+html[data-theme='dark'] .system-showcase-control-core::before,
+html[data-theme='dark'] .system-showcase-analytics::before,
+html[data-theme='dark'] .system-showcase-automation::before {
+  background-image: var(--line-wallpaper-dark) !important;
+  opacity: 0.45 !important;
+  filter: contrast(1.05) brightness(0.95) !important;
+}
+
+/* 3. Disable heavy art-wall slabs, veils, and pseudo-elements */
+.mock-systems-page::after,
+.mock-research-page::after,
+.about-editorial-page::after,
+.mock-collaborate-page::after,
+.mock-profile-page::after,
+.system-showcase::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* 4. System Subpages (/systems/*): Clean Editorial Reading Canvas */
+.system-showcase,
+.system-showcase .showcase-hero,
+.system-showcase .showcase-hero-top,
+.system-showcase .showcase-editorial-context,
+.system-showcase .showcase-capability-strip,
+.system-showcase .showcase-active-panel {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* 5. Framed Media Specimen: Displays the 3D System Render cleanly inside an architectural glass plinth */
+.showcase-hero-media {
+  display: block !important;
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+  filter: none !important;
+  margin-top: clamp(2.4rem, 3.8vw, 4rem) !important;
+  margin-bottom: clamp(2.4rem, 3.8vw, 4rem) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  background: #f4efe9 !important;
+  border: 1px solid rgba(122, 32, 33, 0.12) !important;
+  box-shadow: 0 24px 48px -12px rgba(26, 20, 18, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+  aspect-ratio: 16 / 9 !important;
+  position: relative !important;
+}
+
+html[data-theme='dark'] .showcase-hero-media {
+  background: #181514 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.showcase-hero-media img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.showcase-hero-media:hover img {
+  transform: scale(1.02) !important;
+}
+
+/* 6. Pristine Editorial Typography & Readability */
+.system-showcase h1,
+.system-showcase h2,
+.system-showcase h3,
+.system-showcase p,
+.system-showcase li,
+.system-showcase a,
+.system-showcase button {
+  color: #211c1a !important;
+  text-shadow: none !important;
+}
+
+.system-showcase p,
+.system-showcase li {
+  font-size: clamp(1.05rem, 1.18vw, 1.22rem) !important;
+  line-height: 1.72 !important;
+  font-weight: 460 !important;
+}
+
+.showcase-editorial-columns {
+  gap: clamp(1.5rem, 2.8vw, 3.5rem) clamp(2rem, 3.5vw, 4.5rem) !important;
+}
+
+.showcase-editorial-columns p {
+  font-size: clamp(1.08rem, 1.22vw, 1.25rem) !important;
+  line-height: 1.76 !important;
+  font-weight: 460 !important;
+  color: #2b2523 !important;
+}
+
+.showcase-proposition {
+  font-size: clamp(1.18rem, 1.45vw, 1.4rem) !important;
+  line-height: 1.5 !important;
+  font-weight: 480 !important;
+  color: #3b3330 !important;
+}
+
+.showcase-context > p {
+  font-size: clamp(1.05rem, 1.2vw, 1.22rem) !important;
+  line-height: 1.68 !important;
+  font-weight: 460 !important;
+}
+
+/* Work index, Research, About, Collaborate text normalization */
+.mock-systems-page p,
+.mock-systems-page li,
+.mock-project-copy p,
+.mock-group-title-row p,
+.mock-research-page p,
+.about-editorial-page p,
+.mock-collaborate-page p,
+.mock-profile-page p {
+  font-size: clamp(1.03rem, 1.15vw, 1.18rem) !important;
+  line-height: 1.68 !important;
+  font-weight: 460 !important;
+  color: #241f1d !important;
+}
+
+/* 7. Dark Mode Typography */
+html[data-theme='dark'] .system-showcase h1,
+html[data-theme='dark'] .system-showcase h2,
+html[data-theme='dark'] .system-showcase h3,
+html[data-theme='dark'] .system-showcase p,
+html[data-theme='dark'] .system-showcase li,
+html[data-theme='dark'] .system-showcase a,
+html[data-theme='dark'] .system-showcase button,
+html[data-theme='dark'] .mock-systems-page p,
+html[data-theme='dark'] .mock-research-page p,
+html[data-theme='dark'] .about-editorial-page p,
+html[data-theme='dark'] .mock-collaborate-page p,
+html[data-theme='dark'] .mock-profile-page p {
+  color: #ede6e0 !important;
+  text-shadow: none !important;
+}
+
+html[data-theme='dark'] .showcase-editorial-columns p {
+  color: #ded6cf !important;
+}
+
+/* 8. Fixed Pill Clearance: prevent status bar from occluding bottom paragraphs */
+.system-showcase {
+  padding-bottom: 7.5rem !important;
+}
