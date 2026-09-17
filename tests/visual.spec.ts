@@ -100,7 +100,7 @@ test("theme can switch and persist", async ({ page }) => {
 });
 
 test("status controls stay off editorial pages", async ({ page }) => {
-  for (const route of ["/research", "/about", "/collaborate", "/resume", "/systems/control-tower", "/systems/analytics", "/systems/automation"]) {
+  for (const route of ["/systems", "/systems/tradebot", "/research", "/about", "/collaborate", "/resume", "/systems/control-tower", "/systems/analytics", "/systems/automation"]) {
     await page.goto(route, { waitUntil: "networkidle" });
     await expect(page.locator(".unseen-status-bar")).toHaveCount(0);
   }

@@ -58,7 +58,7 @@ export function UnseenHeader() {
 
 export function UnseenStatusBar() {
   const pathname = usePathname();
-  const showStatus = pathname === "/home" || pathname === "/systems" || pathname === "/systems/tradebot";
+  const showStatus = pathname === "/home";
   if (!showStatus) return null;
 
   return (
