@@ -1,111 +1,96 @@
-import type { Metadata } from "next";
-import { systems } from "@/lib/site-data";
-import labState from "@/content/lab-state.json";
-import labActivity from "@/content/lab-activity.json";
-import { SectionHeading, StateTag } from "@/components/ui";
-import { AixionSignal } from "@/components/system-visuals";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Aixion Pulse",
-  description: "What the lab is building, testing and learning right now.",
-};
+import Link from "next/link";
+import { systems } from "@/lib/site-data";
 
 export default function PulsePage() {
-  const currentCycle = systems.map(system => {
-    const evidence = labState.systems.find(item => item.slug === system.slug);
-    return {
-      ...system,
-      latestMilestone: evidence?.latest_milestone ?? "Public evidence summary pending the next curated update.",
-    };
-  });
-  const recentChanges = labActivity.entries.slice(0, 5);
-  const archivedCount = Math.max(0, labActivity.entries.length - recentChanges.length);
-
   return (
-    <>
-      <section className="page-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">AIXION LAB · PULSE</p>
-            <h1>The operational pulse of the lab.</h1>
-            <p className="lede">What is active now, what changed recently, what evidence is newly available and what gate comes next. Pulse is curated public engineering state—not a raw changelog.</p>
-            <AixionSignal compact />
-          </div>
-          <div className="panel meta-board pulse-meta">
-            <div><span>Source model</span><strong>Curated manifests</strong></div>
-            <div><span>Worklog update</span><strong>{labActivity.updated_at}</strong></div>
-            <div><span>Raw commits / chats</span><strong>Never published as progress</strong></div>
-            <div><span>Completion %</span><strong>Not used</strong></div>
-          </div>
-        </div>
-      </section>
+    <div className="unseen-projects-section" style={{ paddingTop: "8rem" }}>
+      <header className="unseen-projects-header">
+        <h1 className="unseen-projects-title">Lab Pulse</h1>
+        <p style={{ maxWidth: "620px", margin: "0 auto 2.5rem", color: "var(--unseen-muted)", fontSize: "1.05rem" }}>
+          Live operational status, verification gates, and evidence boundaries across all Aixion Lab engineering tracks.
+        </p>
+      </header>
 
-      <section className="section-tight" data-reveal="working-now">
-        <div className="shell">
-          <SectionHeading eyebrow="WORKING NOW" title="What is actively moving" copy="Meaningful work is published with its current state, the evidence we can safely show, and the next gate. Private details stay outside the public feed." />
-          <div className="worklog-grid">
-            {labActivity.active.map(item => (
-              <article className="detail-card worklog-card worklog-card--active" key={item.id}>
-                <div className="worklog-card-head">
-                  <span className="system-id">{item.id} · {item.date}</span>
-                  <StateTag state={item.state} />
-                </div>
-                <p className="eyebrow">{item.area} · {item.type}</p>
-                <h3>{item.title}</h3>
-                <p>{item.summary}</p>
-                <dl className="worklog-evidence">
-                  <div><dt>Public evidence</dt><dd>{item.evidence}</dd></div>
-                  <div><dt>Next gate</dt><dd>{item.next_gate}</dd></div>
-                </dl>
-              </article>
-            ))}
-          </div>
-          <p className="worklog-principle">{labActivity.principle}</p>
-        </div>
-      </section>
+      <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gap: "2rem" }}>
+        {systems.map((system) => (
+          <article
+            key={system.id} 
+            className="pulse-system-card"
+            style={{ 
+              padding: "2.5rem", 
+              borderRadius: "16px",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem" }}>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "var(--unseen-muted)" }}>
+                {system.id}
+              </span>
+              <span style={{ 
+                fontFamily: "var(--font-mono)", 
+                fontSize: "0.75rem", 
+                padding: "0.3rem 0.8rem", 
+                borderRadius: "999px",
+                background: "var(--unseen-bg)",
+                fontWeight: 500
+              }}>
+                {system.state}
+              </span>
+            </div>
+            
+            <h2 style={{ fontSize: "1.8rem", fontWeight: 400, margin: "0 0 0.8rem", letterSpacing: "-0.02em" }}>
+              {system.name}
+            </h2>
+            <p style={{ color: "var(--unseen-muted)", fontSize: "1rem", lineHeight: 1.5, marginBottom: "1.5rem" }}>
+              {system.descriptor}
+            </p>
 
-      <section className="section-tight">
-        <div className="shell">
-          <SectionHeading eyebrow="SYSTEM STATE" title="Current cycle" copy="One compact register carries the state, current focus, latest public-safe evidence and next gate. A second maturity visualization would only repeat the same information." />
-          <div className="pulse-now-grid">
-            {currentCycle.map(system => (
-              <article className="pulse-system-card" key={system.id}>
-                <div className="system-card-top"><span className="system-id">{system.id}</span><StateTag state={system.state} /></div>
-                <h3>{system.name}</h3>
-                <dl>
-                  <div><dt>Current focus</dt><dd>{system.currentFocus}</dd></div>
-                  <div><dt>Latest evidence</dt><dd>{system.latestMilestone}</dd></div>
-                  <div><dt>Next gate</dt><dd>{system.nextGate}</dd></div>
-                </dl>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+            <div style={{ 
+              display: "grid", 
+              gridTemplateColumns: "repeat(3, 1fr)", 
+              gap: "1.2rem", 
+              borderTop: "1px solid rgba(33, 33, 33, 0.08)",
+              paddingTop: "1.2rem"
+            }}>
+              <div>
+                <span style={{ display: "block", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "var(--unseen-muted)" }}>
+                  CURRENT GATE
+                </span>
+                <strong style={{ fontSize: "0.9rem", fontWeight: 500 }}>{system.currentGate}</strong>
+              </div>
+              <div>
+                <span style={{ display: "block", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "var(--unseen-muted)" }}>
+                  FOCUS
+                </span>
+                <span style={{ fontSize: "0.85rem" }}>{system.currentFocus}</span>
+              </div>
+              <div>
+                <span style={{ display: "block", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "var(--unseen-muted)" }}>
+                  NEXT GATE
+                </span>
+                <span style={{ fontSize: "0.85rem" }}>{system.nextGate}</span>
+              </div>
+            </div>
 
-      <section className="section-tight" data-reveal="worklog-history">
-        <div className="shell pulse-history">
-          <SectionHeading eyebrow="RECENT PUBLIC CHANGES" title="Only changes that matter outside the repository" copy="The latest meaningful capability, evidence and authority changes remain visible here. Older history is deliberately de-emphasized so Pulse stays useful to a public visitor." />
-          <div className="worklog-list">
-            {recentChanges.map(item => (
-              <article className="worklog-row" key={item.id}>
-                <div className="worklog-row-meta">
-                  <span>{item.date}</span>
-                  <span>{item.area}</span>
-                  <span>{item.type}</span>
-                </div>
-                <div className="worklog-row-copy">
-                  <h3>{item.title}</h3>
-                  <p>{item.summary}</p>
-                  <p className="worklog-next"><strong>Why it matters / next gate:</strong> {item.next_gate}</p>
-                </div>
-                <StateTag state={item.state} />
-              </article>
-            ))}
-          </div>
-          {archivedCount > 0 ? <p className="pulse-archive-note">{archivedCount} older public milestones remain preserved in the source manifest and repository history; they are not repeated here because recency and relevance outrank completeness.</p> : null}
-        </div>
-      </section>
-    </>
+            <div style={{ marginTop: "1.5rem", textAlign: "right" }}>
+              <Link 
+                href={`/systems/${system.slug}`}
+                style={{ 
+                  textDecoration: "none", 
+                  color: "var(--unseen-stone)", 
+                  fontSize: "0.85rem", 
+                  fontWeight: 500,
+                  borderBottom: "1px solid var(--unseen-stone)",
+                  paddingBottom: "0.2rem"
+                }}
+              >
+                Inspect System Architecture ↘
+              </Link>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
   );
 }

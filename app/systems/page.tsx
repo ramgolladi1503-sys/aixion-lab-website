@@ -1,50 +1,79 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { systems } from "@/lib/site-data";
-import { SectionHeading, StateTag } from "@/components/ui";
+import { systemDetails } from "@/lib/system-detail-data";
 
-export const metadata: Metadata = {
-  title: "Systems Registry",
-  description: "The engineered systems, tools and platforms being built inside Aixion Lab.",
+const systemCardImages: Record<string, string> = {
+  tradebot: "/textures/systems/tradebot-premium.webp",
+  "control-core": "/textures/systems/control-tower-premium.webp",
+  analytics: "/textures/systems/analytics-premium.webp",
+  automation: "/textures/systems/automation-premium.webp",
 };
 
+const publicHref = (slug: string) => slug === "control-core" ? "/systems/control-tower" : `/systems/${slug}`;
+
 export default function SystemsPage() {
+  const flagships = systems.filter(system => system.slug === "tradebot" || system.slug === "control-core");
+  const experiments = systems.filter(system => system.slug === "analytics" || system.slug === "automation");
+
   return (
-    <>
-      <section className="page-hero systems-hero">
-        <div className="shell systems-hero-copy">
-          <p className="eyebrow">AIXION LAB · SYSTEMS</p>
-          <h1>Systems Registry</h1>
-          <p className="lede">Four engineered systems, each with an explicit maturity state, current gate and public-safe focus. Research is not dressed up as production.</p>
+    <main className="mock-systems-page">
+      <section className="mock-systems-intro">
+        <div>
+          <p className="mock-kicker">WORK</p>
+          <h1>Systems built to earn trust.</h1>
+        </div>
+        <p>From live market systems to governed AI orchestration, Aixion builds systems that are testable, observable and honest about what remains unproven.</p>
+        <div className="premium-context-rail" role="region" tabIndex={0} aria-label="Work focus areas">
+          <span>Applied AI</span><span>Automation</span><span>Decision Systems</span><span>Research Infrastructure</span><span>Reliability</span>
         </div>
       </section>
 
-      <section className="section-tight registry-section">
-        <div className="shell">
-          <SectionHeading eyebrow="REGISTRY" title="Four systems. Explicit maturity." copy="The registry is the authority. Each row carries only the information needed to understand the system and decide whether to inspect it further." />
-          <div className="registry">
-            {systems.map(system => (
-              <article className="registry-row" key={system.id}>
-                <span className="system-id">{system.id}</span>
-                <div>
-                  <h3>{system.name}</h3>
-                  <p>{system.descriptor}</p>
+      <section className="mock-system-group" aria-labelledby="flagship-title">
+        <div className="mock-group-title-row">
+          <h2 id="flagship-title">Flagship Systems</h2>
+          <p>Active engineering, explicit maturity, evidence behind the claims.</p>
+        </div>
+        <div className="mock-flagship-grid">
+          {flagships.map(system => {
+            const detail = systemDetails[system.slug];
+            return (
+              <Link key={system.id} href={publicHref(system.slug)} className="mock-project-card flagship">
+                <div className="mock-project-copy">
+                  <div>
+                    <h3>{system.name}</h3>
+                    <p>{system.descriptor}</p>
+                  </div>
+                  <span className={`public-state-badge state-${detail.publicState.toLowerCase()}`}><i className="public-state-dot" />{detail.publicState}</span>
                 </div>
-                <div className="registry-hide-mobile">
-                  <span className="registry-label">Domain</span>
-                  <p>{system.domain}</p>
-                </div>
-                <StateTag state={system.state} />
-                <div className="registry-hide-tablet">
-                  <span className="registry-label">Current gate</span>
-                  <p>{system.currentGate}</p>
-                </div>
-                <Link className="text-link" href={`/systems/${system.slug}`}>View →</Link>
-              </article>
-            ))}
-          </div>
+                <div className="mock-project-media"><img src={systemCardImages[system.slug]} alt={`${system.name} system visual`} /></div>
+                <span className="mock-project-cta">Explore {system.name === "Aixion Control Tower" ? "Control Tower" : system.name} →</span>
+              </Link>
+            );
+          })}
         </div>
       </section>
-    </>
+
+      <section className="mock-system-group exploratory" aria-labelledby="experimental-title">
+        <div className="mock-group-title-row">
+          <h2 id="experimental-title">Exploratory Work</h2>
+          <p>Useful directions that stay experimental until the evidence supports a stronger claim.</p>
+        </div>
+        <div className="mock-experiment-grid">
+          {experiments.map(system => {
+            const detail = systemDetails[system.slug];
+            return (
+              <Link key={system.id} href={publicHref(system.slug)} className="mock-project-card experiment">
+                <div className="mock-project-copy">
+                  <div><h3>{system.name}</h3><p>{system.descriptor}</p></div>
+                  <span className={`public-state-badge state-${detail.publicState.toLowerCase()}`}><i className="public-state-dot" />{detail.publicState}</span>
+                </div>
+                <div className="mock-project-media"><img src={systemCardImages[system.slug]} alt={`${system.name} system visual`} /></div>
+                <span className="mock-project-cta">Explore →</span>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+    </main>
   );
 }

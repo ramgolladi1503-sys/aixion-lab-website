@@ -1,66 +1,57 @@
 import { test, expect } from "@playwright/test";
 
-test("Lab Career mode changes presentation state", async ({ page }, testInfo) => {
-  await page.goto("/", { waitUntil: "networkidle" });
-  const toggle = page.getByRole("button", { name: "Toggle Lab and Career view" });
-  await toggle.click();
-  await expect(page.locator("html")).toHaveAttribute("data-view", "career");
-  await expect(toggle).toContainText("Career");
-  if (testInfo.project.name === "mobile") {
-    await expect(page.locator("details.mobile-menu summary")).toBeVisible();
-  } else {
-    await expect(page.locator(".career-only").first()).toBeVisible();
-  }
-});
-
-test("Research status filters are functional", async ({ page }) => {
+test("research reveals one selected focus at a time", async ({ page }) => {
   await page.goto("/research", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Rejected" }).click();
-  await expect(page.getByText("Mean reversion candidate")).toBeVisible();
-  await expect(page.getByText("Opening-session market structure")).toBeHidden();
+  const topics = page.locator(".research-topic-trigger");
+  await expect(topics).toHaveCount(11);
+  await topics.nth(0).click();
+  await expect(page.locator(".mock-research-detail")).toHaveCount(1);
+  await page.locator(".mock-research-archive").evaluate((element: HTMLDetailsElement) => { element.open = true; });
+  await topics.nth(6).click();
+  await expect(page.locator(".mock-research-detail")).toHaveCount(1);
+  await expect(page.locator(".research-topic-trigger.selected")).toHaveCount(1);
 });
 
-test("Evidence Drawer is proof-first, explicit about summary-only records and closes", async ({ page }) => {
+test("system detail tabs reveal one compact panel", async ({ page }) => {
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  const trigger = page.getByRole("button", { name: /Inspect evidence/i }).first();
-  await trigger.click();
-  const dialog = page.getByRole("dialog", { name: /Evidence record/i });
-  await expect(dialog).toBeVisible();
-  await expect(dialog).toContainText(/public-safe evidence summary|public\/private boundary/i);
-  await page.getByRole("button", { name: "Close evidence" }).click();
-  await expect(dialog).toBeHidden();
+  const nav = page.getByRole("navigation", { name: "TradeBot sections" });
+  await nav.getByRole("button", { name: "Architecture" }).click();
+  await expect(page.locator(".showcase-architecture-list")).toBeVisible();
+  await nav.getByRole("button", { name: "Current State" }).click();
+  await expect(page.locator(".showcase-active-panel")).toContainText("Validation before expansion");
 });
 
-test("Command palette supports keyboard navigation on desktop", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Command palette is a desktop keyboard surface");
-  await page.goto("/", { waitUntil: "networkidle" });
-  await page.keyboard.press("Meta+k");
-  const dialog = page.getByRole("dialog", { name: "Search Aixion" });
-  await expect(dialog).toBeVisible();
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("Escape");
-  await expect(dialog).toBeHidden();
+test("desktop drawer preserves page context", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "Desktop-only drawer geometry");
+  await page.goto("/research", { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: /Toggle navigation drawer/i }).click();
+  const drawer = page.locator(".unseen-drawer-menu");
+  await expect(drawer).toBeVisible();
+  const box = await drawer.boundingBox();
+  const viewport = page.viewportSize();
+  expect(box).not.toBeNull();
+  expect(viewport).not.toBeNull();
+  expect(box!.width / viewport!.width).toBeLessThanOrEqual(.4);
+  await expect(drawer.getByRole("link", { name: "Work" })).toBeVisible();
+  await expect(drawer.locator("text=01")).toHaveCount(0);
 });
 
-test("Primary navigation exposes active route", async ({ page }) => {
+test("theme toggle persists explicit selection", async ({ page }) => {
+  await page.goto("/research", { waitUntil: "networkidle" });
+  const toggle = page.getByRole("button", { name: /Switch to .* mode/i });
+  await toggle.click();
+  const selected = await page.locator("html").getAttribute("data-theme");
+  expect(["light", "dark"]).toContain(selected);
+  const stored = await page.evaluate(() => localStorage.getItem("aixion-theme"));
+  expect(stored).toBe(selected);
+  await page.reload({ waitUntil: "networkidle" });
+  await expect(page.locator("html")).toHaveAttribute("data-theme", selected!);
+});
+
+test("systems keeps explicit flagship hierarchy", async ({ page }) => {
   await page.goto("/systems", { waitUntil: "networkidle" });
-  await expect(page.locator('.desktop-nav a[href="/systems"]')).toHaveAttribute("aria-current", "page");
-});
-
-test("System page exposes internal navigation", async ({ page }) => {
-  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  await expect(page.locator('.system-subnav a[href="#architecture"]')).toBeVisible();
-  await expect(page.locator('.system-subnav a[href="#evidence"]')).toBeVisible();
-});
-
-test("Mobile navigation exposes locked routes with usable targets", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/", { waitUntil: "networkidle" });
-  const menu = page.locator("details.mobile-menu");
-  await menu.locator("summary").click();
-  await expect(menu.getByRole("link", { name: "Systems" })).toBeVisible();
-  await expect(menu.getByRole("link", { name: "Research" })).toBeVisible();
-  await expect(menu.getByRole("link", { name: "Pulse" })).toBeVisible();
-  await expect(menu.getByRole("link", { name: "Journey" })).toBeVisible();
-  await expect(menu.getByRole("link", { name: "About" })).toBeVisible();
+  await expect(page.locator(".mock-project-card.flagship")).toHaveCount(2);
+  await expect(page.locator(".mock-project-card.experiment")).toHaveCount(2);
+  await expect(page.getByText("TradeBot", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Aixion Control Tower", { exact: true }).first()).toBeVisible();
 });

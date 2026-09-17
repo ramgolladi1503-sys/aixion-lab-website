@@ -1,0 +1,80 @@
+html[data-theme="dark"] {
+  --unseen-bg:#12100f;
+  --unseen-bg-alt:#1a1716;
+  --unseen-dark:#f0e7e2;
+  --unseen-stone:#f0e7e2;
+  --unseen-charcoal:#d3c8c2;
+  --unseen-muted:#9f948e;
+  --unseen-light-muted:#8e847f;
+  --unseen-border:rgba(240,231,226,.14);
+  --aixion-ink:#f0e7e2;
+  --aixion-body:#d3c8c2;
+  --aixion-muted:#9f948e;
+  --aixion-rule:rgba(240,231,226,.14);
+  color-scheme:dark;
+}
+
+html[data-theme="light"] { color-scheme:light; }
+
+html[data-theme="dark"] body.unseen-theme,
+html[data-theme="dark"] main,
+html[data-theme="dark"] .about-editorial-page,
+html[data-theme="dark"] .research-editorial-page,
+html[data-theme="dark"] .collaborate-editorial-page,
+html[data-theme="dark"] .profile-editorial-page {
+  background:#12100f;
+  color:#f0e7e2;
+}
+
+html[data-theme="dark"] .about-editorial-page p,
+html[data-theme="dark"] .about-editorial-page li,
+html[data-theme="dark"] .research-editorial-page p,
+html[data-theme="dark"] .collaborate-editorial-page p,
+html[data-theme="dark"] .profile-editorial-page p {
+  color:#d3c8c2;
+}
+
+html[data-theme="dark"] .unseen-drawer-menu {
+  background:#1a1716;
+  color:#f0e7e2;
+}
+
+html[data-theme="dark"] .unseen-nav.scrolled {
+  background: rgba(18, 16, 15, 0.96) !important;
+  border-bottom-color: rgba(240, 231, 226, 0.14) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme="dark"] .unseen-nav:not(.scrolled) .unseen-logo,
+html[data-theme="dark"] .unseen-nav:not(.scrolled) .unseen-link {
+  color: #f0e7e2;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="dark"] .unseen-menu-toggle {
+  background: #211c1a;
+  border-color: rgba(240, 231, 226, 0.16);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .unseen-menu-toggle span i {
+  background: #f0e7e2;
+}
+
+html[data-theme="dark"] .unseen-pill-button {
+  background: rgba(26, 23, 22, 0.92);
+  border-color: rgba(240, 231, 226, 0.16);
+  color: #f0e7e2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .unseen-pill-button:hover {
+  background: #25201e;
+}
+
+html[data-theme="dark"] .unseen-copyright {
+  color: #9f948e;
+}
+
+html[data-theme="dark"] ::selection { background:#b95e63; color:#fff; }
+html[data-theme="light"] ::selection { background:#7a2021; color:#fff; }

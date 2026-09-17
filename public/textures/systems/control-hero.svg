@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <defs>
+    <linearGradient id="ctlBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b1c1e" />
+      <stop offset="50%" stop-color="#232225" />
+      <stop offset="100%" stop-color="#291a1f" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#ctlBg)" />
+
+  <!-- Perspective Architectural Lines -->
+  <g stroke="rgba(255,255,255,0.06)" stroke-width="1">
+    <line x1="800" y1="200" x2="100" y2="900" />
+    <line x1="800" y1="200" x2="350" y2="900" />
+    <line x1="800" y1="200" x2="600" y2="900" />
+    <line x1="800" y1="200" x2="1000" y2="900" />
+    <line x1="800" y1="200" x2="1250" y2="900" />
+    <line x1="800" y1="200" x2="1500" y2="900" />
+    
+    <line x1="200" y1="600" x2="1400" y2="600" />
+    <line x1="300" y1="720" x2="1300" y2="720" />
+    <line x1="400" y1="820" x2="1200" y2="820" />
+  </g>
+
+  <!-- Central Orchestration Tower Core -->
+  <g transform="translate(360, 160)">
+    <!-- Semi-transparent floating glass slabs -->
+    <polygon points="250,20 480,100 250,180 20,100" fill="rgba(239, 222, 217, 0.08)" stroke="rgba(239, 222, 217, 0.4)" stroke-width="1.5" />
+    <polygon points="250,120 480,200 250,280 20,200" fill="rgba(122, 32, 33, 0.12)" stroke="#7A2021" stroke-width="1.5" />
+    <polygon points="250,220 480,300 250,380 20,300" fill="rgba(129, 153, 176, 0.1)" stroke="rgba(129, 153, 176, 0.4)" stroke-width="1.5" />
+    <polygon points="250,320 480,400 250,480 20,400" fill="rgba(120, 153, 139, 0.1)" stroke="rgba(120, 153, 139, 0.4)" stroke-width="1.5" />
+
+    <!-- Vertical Coordinate Axes connecting slabs -->
+    <line x1="250" y1="20" x2="250" y2="520" stroke="#e5ded9" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6" />
+    <line x1="20" y1="100" x2="20" y2="400" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+    <line x1="480" y1="100" x2="480" y2="400" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+  </g>
+
+  <!-- Central Orchestration Tower Core Labels -->
+  <g transform="translate(860, 240)">
+    <text x="0" y="25" fill="#e5ded9" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" letter-spacing="1">INTENT &amp; CONTEXT PLANE</text>
+    <text x="0" y="125" fill="#d49596" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" letter-spacing="1">POLICY &amp; BOUNDARY GATE</text>
+    <text x="0" y="225" fill="#8199b0" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" letter-spacing="1">ROUTER &amp; TOOL COORDINATION</text>
+    <text x="0" y="325" fill="#78998b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" letter-spacing="1">EVIDENCE &amp; AUDIT TRAIL</text>
+  </g>
+
+  <!-- Peripheral Command UI Elements -->
+  <g transform="translate(70, 180)">
+    <rect width="280" height="480" rx="6" fill="rgba(20,20,24,0.7)" stroke="rgba(255,255,255,0.06)" />
+    <text x="24" y="40" fill="#a19d99" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" letter-spacing="1">ACTIVE AGENT SWARM</text>
+    <g transform="translate(24, 70)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" fill="#e5ded9">
+      <circle cx="6" cy="10" r="4" fill="#78998b" />
+      <text x="20" y="14">Research Synthesizer</text>
+      
+      <circle cx="6" cy="50" r="4" fill="#78998b" />
+      <text x="20" y="54">Codebase Auditor</text>
+      
+      <circle cx="6" cy="90" r="4" fill="#c8a897" />
+      <text x="20" y="94">Schema Migration Agent</text>
+      
+      <circle cx="6" cy="130" r="4" fill="#7A2021" />
+      <text x="20" y="134">Deploy Tool (Escalated)</text>
+    </g>
+  </g>
+
+  <g transform="translate(1220, 180)">
+    <rect width="310" height="480" rx="6" fill="rgba(20,20,24,0.7)" stroke="rgba(255,255,255,0.06)" />
+    <text x="24" y="40" fill="#a19d99" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" letter-spacing="1">POLICY ENFORCEMENT</text>
+    <g transform="translate(24, 70)" font-family="monospace" font-size="11" fill="#a5a19e">
+      <text x="0" y="20">RULE-01: READ ONLY FS [OK]</text>
+      <text x="0" y="50">RULE-02: AUTH CHECK [PASS]</text>
+      <text x="0" y="80">RULE-03: TOOL WHITELIST [ACTIVE]</text>
+      <text x="0" y="110"><tspan fill="#d49596">RULE-04: LIVE MUTATION [HOLD]</tspan></text>
+      <text x="0" y="135" fill="#6c6865">Awaiting operator sign-off.</text>
+    </g>
+  </g>
+</svg>

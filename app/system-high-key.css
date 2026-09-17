@@ -1,0 +1,88 @@
+/* High-key system-detail authority. */
+.system-showcase::before {
+  opacity: 1 !important;
+  filter: brightness(1.02) contrast(1.01) saturate(.96) !important;
+}
+.system-showcase::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Light system-detail artwork — approved replacement backgrounds. */
+
+.system-showcase-tradebot::before {
+  background-image: url('/textures/systems/tradebot-light.png') !important;
+  background-position: center center !important;
+}
+
+.system-showcase-control-core::before {
+  background-image: url('/textures/systems/control-tower-light.png') !important;
+  background-position: center center !important;
+}
+
+.system-showcase-analytics::before {
+  background-image: url('/textures/systems/analytics-light.png') !important;
+  background-position: center center !important;
+}
+
+.system-showcase-automation::before {
+  background-image: url('/textures/systems/automation-light.png') !important;
+  background-position: center center !important;
+}
+
+/* Keep the artwork crisp while making the reading plane as clear as About. */
+.system-showcase,
+.system-showcase .showcase-hero,
+.system-showcase .showcase-hero-top,
+.system-showcase .showcase-editorial-context,
+.system-showcase .showcase-capability-strip,
+.system-showcase .showcase-active-panel {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Strong editorial reading contrast. */
+.system-showcase h1,
+.system-showcase h2,
+.system-showcase h3,
+.system-showcase p,
+.system-showcase li,
+.system-showcase a,
+.system-showcase button { color:#211c1a !important; }
+.system-showcase p,
+.system-showcase li {
+  font-size:clamp(1.12rem,1.25vw,1.27rem) !important;
+  line-height:1.7 !important;
+  font-weight:620 !important;
+  text-shadow:0 1px 0 rgba(255,255,255,.42);
+}
+.showcase-editorial-columns p {
+  font-size:clamp(1.14rem,1.3vw,1.3rem) !important;
+  line-height:1.74 !important;
+  font-weight:620 !important;
+}
+.showcase-context>p { font-size:clamp(1.12rem,1.3vw,1.28rem) !important; }
+.showcase-proposition { font-size:clamp(1.2rem,1.5vw,1.42rem) !important; font-weight:570 !important; }
+.showcase-capability-strip p,.showcase-panel-grid p,.showcase-architecture-list p { font-size:clamp(1.08rem,1.2vw,1.22rem) !important; }
+
+/* Work page reading size: retain its locked composition, improve legibility only. */
+.mock-systems-page p,.mock-systems-page li,.mock-project-copy p,.mock-group-title-row p {
+  font-size:clamp(1.09rem,1.2vw,1.22rem) !important;
+  line-height:1.68 !important;
+  font-weight:620 !important;
+  color:#211c1a !important;
+}
+.mock-systems-intro>p { font-size:clamp(1.18rem,1.45vw,1.38rem) !important; }
+
+html[data-theme='dark'] .system-showcase::before {
+  opacity:.46 !important;
+  filter:brightness(.68) contrast(1.04) saturate(.82) !important;
+}
+html[data-theme='dark'] .system-showcase h1,
+html[data-theme='dark'] .system-showcase h2,
+html[data-theme='dark'] .system-showcase h3,
+html[data-theme='dark'] .system-showcase p,
+html[data-theme='dark'] .system-showcase li,
+html[data-theme='dark'] .system-showcase a,
+html[data-theme='dark'] .system-showcase button { color:var(--mock-ink) !important; text-shadow:none; }

@@ -1,107 +1,66 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PrintResumeButton } from "@/components/print-resume-button";
 
 export const metadata: Metadata = {
-  title: "Career Snapshot",
+  title: "Professional Profile",
   description: "A recruiter-focused summary of the engineering work behind Aixion Lab.",
 };
 
+const competencies = [
+  ["Quality engineering", "Manual and automated QA, scenario design, regression thinking, failure analysis and release confidence."],
+  ["Automation", "Workflow automation, test automation, repeatable execution, traceability and recovery behaviour."],
+  ["Software systems", "Java, Python, APIs, service behaviour, integrations, state, observability and architecture."],
+  ["Data & applied AI", "Real-time data, ML experimentation, governed automation and evidence-aware decision systems."],
+] as const;
+
+const experience = [
+  ["IBM", "Quality engineering, automation and systems work"],
+  ["BMO project", "Banking-domain quality and automation experience"],
+  ["Earlier", "Manual QA, automation and engineering foundations"],
+] as const;
+
 export default function ResumePage() {
   return (
-    <>
-      <section className="page-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">AIXION LAB · CAREER SNAPSHOT</p>
-            <h1>Quality engineering evolved into systems engineering.</h1>
-            <p className="lede">A concise recruiter-facing translation of the work shown across Aixion Lab. The project evidence stays the same; this page makes the competencies easier to scan.</p>
-            <div className="button-row resume-actions">
-              <PrintResumeButton />
-              <a className="button-secondary" href="https://www.linkedin.com/in/ram-golladi" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-              <a className="button-secondary" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
-            </div>
-          </div>
-          <div className="panel meta-board">
-            <div><span>Current direction</span><strong>QA · Automation · Applied AI</strong></div>
-            <div><span>Flagship work</span><strong>TradeBot · Control Core</strong></div>
-            <div><span>Public case studies</span><strong>MCP Shield · Algotradify</strong></div>
-            <div><span>Public résumé</span><strong>Live web version</strong></div>
-            <div><span>Working style</span><strong>Evidence-led systems</strong></div>
-          </div>
+    <main className="mock-profile-page">
+      <section className="mock-profile-hero">
+        <div>
+          <p className="mock-kicker">PROFESSIONAL PROFILE</p>
+          <h1>Quality engineering evolved into systems engineering.</h1>
+          <p className="mock-profile-lede">A recruiter-facing view of the work across quality, automation, software systems, real-time data and applied AI — with evidence behind the claims.</p>
+        </div>
+        <dl className="mock-profile-meta">
+          <div><dt>Current direction</dt><dd>QA · Automation · Applied AI</dd></div>
+          <div><dt>Flagship work</dt><dd>TradeBot · Aixion Control Tower</dd></div>
+          <div><dt>Working style</dt><dd>Evidence-led systems</dd></div>
+        </dl>
+      </section>
+
+      <section className="mock-profile-competencies">
+        <div className="mock-section-title"><p className="mock-kicker">CORE COMPETENCIES</p><h2>What the work demonstrates.</h2></div>
+        <div className="mock-competency-grid">
+          {competencies.map(([title, body]) => <article key={title}><h3>{title}</h3><p>{body}</p></article>)}
         </div>
       </section>
 
-      <section className="section-tight">
-        <div className="shell detail-grid">
-          <article className="panel panel-pad">
-            <p className="eyebrow">PROFILE</p>
-            <h2>Engineering quality into the architecture.</h2>
-            <p className="lede">Experience across manual and automated quality engineering expanded into APIs, software systems, real-time data, ML experimentation and autonomous-system governance.</p>
-            <p>The common thread is reliability: explicit state, testable contracts, visible failure modes and evidence behind decisions.</p>
-          </article>
-          <article className="panel panel-pad">
-            <p className="eyebrow">CORE COMPETENCIES</p>
-            <div className="principles-grid">
-              <div className="principle"><strong>Quality engineering</strong><p>Manual/automation QA, scenario design, regression thinking, failure analysis.</p></div>
-              <div className="principle"><strong>Automation</strong><p>Test and workflow automation, policy-bound tool execution, failure-safe process design.</p></div>
-              <div className="principle"><strong>Software systems</strong><p>Java, Python, APIs, service behavior, integration and architecture.</p></div>
-              <div className="principle"><strong>Data & AI</strong><p>Real-time data, operational analytics, ML experimentation and evidence-bound autonomous systems.</p></div>
-            </div>
-          </article>
+      <section className="mock-profile-experience">
+        <div className="mock-section-title"><p className="mock-kicker">EXPERIENCE HIGHLIGHTS</p><h2>Engineering context behind the lab.</h2></div>
+        <div className="mock-experience-grid">
+          {experience.map(([title, body]) => <article key={title}><h3>{title}</h3><p>{body}</p></article>)}
         </div>
       </section>
 
-      <section className="section">
-        <div className="shell">
-          <p className="eyebrow">FLAGSHIP WORK</p>
-          <div className="detail-grid">
-            <article className="detail-card">
-              <h3>TradeBot</h3>
-              <p>Real-time market-data integration, evidence-bound research, risk/governance boundaries, live observation and failure recovery.</p>
-              <p><strong>Competencies:</strong> Python · WebSockets · APIs · testing · observability · ML research · system architecture.</p>
-              <Link className="text-link" href="/systems/tradebot">Review TradeBot →</Link>
-            </article>
-            <article className="detail-card">
-              <h3>Aixion Control Core</h3>
-              <p>Governed orchestration across intent, context, agents, tools, policy, evidence and explicit human/system authority.</p>
-              <p><strong>Competencies:</strong> agent orchestration · APIs · policy architecture · tool integration · state management · human-in-the-loop design.</p>
-              <Link className="text-link" href="/systems/control-core">Review Control Core →</Link>
-            </article>
-          </div>
+      <section className="mock-profile-work">
+        <div className="mock-section-title"><p className="mock-kicker">FLAGSHIP WORK</p><h2>Where the capabilities become visible.</h2></div>
+        <div className="mock-profile-work-grid">
+          <article><h3>TradeBot</h3><p>Real-time market-data integration, evidence-bound research, risk boundaries, live observation, failure recovery and human-controlled decision support.</p><Link href="/systems/tradebot">Review TradeBot →</Link></article>
+          <article><h3>Aixion Control Tower</h3><p>Governed orchestration across intent, context, agents, tools, policy, evidence and explicit human/system authority.</p><Link href="/systems/control-tower">Review Control Tower →</Link></article>
         </div>
       </section>
 
-      <section className="section-tight">
-        <div className="shell">
-          <p className="eyebrow">PUBLIC IMPLEMENTATION EVIDENCE</p>
-          <div className="detail-grid">
-            <article className="detail-card">
-              <h3>MCP Shield</h3>
-              <p>Local-first runtime security gateway for AI agents and MCP tools with deterministic policy decisions, interception, redacted audit trails, attack-corpus testing and rollback-safe configuration.</p>
-              <a className="text-link" href="https://github.com/ramgolladi1503-sys/MCP" target="_blank" rel="noreferrer">Review public repository ↗</a>
-            </article>
-            <article className="detail-card">
-              <h3>Algotradify</h3>
-              <p>FastAPI and React operator system for candidate truth, readiness, lifecycle evidence, replay drilldowns, outcome analytics and execution-safety visibility.</p>
-              <a className="text-link" href="https://github.com/ramgolladi1503-sys/algotradify" target="_blank" rel="noreferrer">Review public repository ↗</a>
-            </article>
-          </div>
-        </div>
+      <section className="mock-profile-next">
+        <div><p className="mock-kicker">NEXT STEP</p><h2>Follow the evidence.</h2></div>
+        <div><Link href="/systems/tradebot">TradeBot →</Link><Link href="/systems/control-tower">Control Tower →</Link><Link href="/research">Research →</Link><Link href="/collaborate">Discuss a role →</Link></div>
       </section>
-
-      <section className="section-tight">
-        <div className="shell panel panel-pad">
-          <p className="eyebrow">RECRUITER HANDOFF</p>
-          <h2>Review the evidence, then take a copy with you.</h2>
-          <p className="lede">This page is the current public career snapshot. Use Print / Save PDF to export it from any modern browser; the system pages and public repositories remain the deeper evidence source behind the summary.</p>
-          <div className="button-row resume-actions">
-            <PrintResumeButton />
-            <Link className="button" href="/systems">Review systems →</Link>
-            <a className="button-secondary" href="https://www.linkedin.com/in/ram-golladi" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-          </div>
-        </div>
-      </section>
-    </>
+    </main>
   );
 }

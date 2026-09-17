@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <linearGradient id="innerBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1c1e" />
+      <stop offset="100%" stop-color="#141517" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#innerBg)" />
+
+  <!-- Header -->
+  <text x="60" y="60" fill="#a19d99" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" letter-spacing="2">DECISION GOVERNANCE PIPELINE ARCHITECTURE</text>
+  <line x1="60" y1="80" x2="1140" y2="80" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+  <!-- 6 Stages Flow -->
+  <g transform="translate(60, 140)">
+    <!-- Node 1 -->
+    <rect x="0" y="0" width="150" height="200" rx="4" fill="#202226" stroke="rgba(255,255,255,0.1)" />
+    <text x="20" y="36" fill="#8199b0" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600">01 / INGEST</text>
+    <text x="20" y="64" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Market Data</text>
+    <text x="20" y="94" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Normalize &amp; validate tick stream across dual venues.</text>
+    
+    <!-- Connector 1 -->
+    <path d="M 150 100 L 190 100" stroke="#7A2021" stroke-width="2" stroke-dasharray="4 2" />
+
+    <!-- Node 2 -->
+    <rect x="190" y="0" width="150" height="200" rx="4" fill="#202226" stroke="rgba(255,255,255,0.1)" />
+    <text x="210" y="36" fill="#8199b0" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600">02 / CLASSIFY</text>
+    <text x="210" y="64" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Regime Model</text>
+    <text x="210" y="94" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Detect trend, mean-reversion, or structural shift.</text>
+
+    <!-- Connector 2 -->
+    <path d="M 340 100 L 380 100" stroke="#7A2021" stroke-width="2" stroke-dasharray="4 2" />
+
+    <!-- Node 3 -->
+    <rect x="380" y="0" width="150" height="200" rx="4" fill="#202226" stroke="rgba(255,255,255,0.1)" />
+    <text x="400" y="36" fill="#8199b0" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600">03 / EVALUATE</text>
+    <text x="400" y="64" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Research Layer</text>
+    <text x="400" y="94" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Frozen hypothesis testing against live conditions.</text>
+
+    <!-- Connector 3 -->
+    <path d="M 530 100 L 570 100" stroke="#7A2021" stroke-width="2" stroke-dasharray="4 2" />
+
+    <!-- Node 4 -->
+    <rect x="570" y="0" width="150" height="200" rx="4" fill="#202226" stroke="#7A2021" stroke-width="1.5" />
+    <text x="590" y="36" fill="#d49596" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600">04 / FILTER</text>
+    <text x="590" y="64" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Risk Gate</text>
+    <text x="590" y="94" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Automated veto on constraint or margin breach.</text>
+
+    <!-- Connector 4 -->
+    <path d="M 720 100 L 760 100" stroke="#7A2021" stroke-width="2" stroke-dasharray="4 2" />
+
+    <!-- Node 5 -->
+    <rect x="760" y="0" width="150" height="200" rx="4" fill="#202226" stroke="rgba(255,255,255,0.1)" />
+    <text x="780" y="36" fill="#8199b0" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600">05 / GOVERN</text>
+    <text x="780" y="64" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Advisory Synthesis</text>
+    <text x="780" y="94" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Structure context and uncertainty bounds.</text>
+
+    <!-- Connector 5 -->
+    <path d="M 910 100 L 950 100" stroke="#7A2021" stroke-width="2" stroke-dasharray="4 2" />
+
+    <!-- Node 6 -->
+    <rect x="950" y="0" width="130" height="200" rx="4" fill="#291a1d" stroke="#7A2021" stroke-width="2" />
+    <text x="970" y="36" fill="#e5ded9" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="700">06 / AUTHORITY</text>
+    <text x="970" y="64" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Human Operator</text>
+    <text x="970" y="94" fill="#cbb3ae" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Discretionary approval. The system cannot fire.</text>
+  </g>
+
+  <!-- Telemetry and validation evidence trace below -->
+  <g transform="translate(60, 420)">
+    <rect width="1080" height="200" rx="6" fill="#181a1d" stroke="rgba(255,255,255,0.06)" />
+    <text x="30" y="36" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" letter-spacing="1">EVIDENCE LOG — READ-ONLY VERIFICATION TRACE</text>
+    
+    <g transform="translate(30, 60)" font-family="monospace" font-size="12" fill="#a5a19e">
+      <text x="0" y="20"><tspan fill="#78998b">09:14:02.102</tspan> [FEED_HEALTH] WebSocket stream synched. 0 dropped packets across 14,200 events.</text>
+      <text x="0" y="44"><tspan fill="#8199b0">09:14:02.148</tspan> [REGIME_EVAL] Estimated regime: Low-dispersion compression. Confidence: 0.88.</text>
+      <text x="0" y="68"><tspan fill="#d49596">09:14:02.180</tspan> [RISK_CHECK] Exposure boundary check PASSED. Max drawdown envelope compliant.</text>
+      <text x="0" y="92"><tspan fill="#c8a897">09:14:02.204</tspan> [GOVERNANCE] Decision advisory surfaced to operator terminal. Execution locked.</text>
+    </g>
+  </g>
+</svg>

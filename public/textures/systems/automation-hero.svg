@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <defs>
+    <linearGradient id="auBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18191c" />
+      <stop offset="50%" stop-color="#1f2220" />
+      <stop offset="100%" stop-color="#241618" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#auBg)" />
+
+  <!-- Process Pipelines & Automation Rails -->
+  <g stroke="rgba(255,255,255,0.06)" stroke-width="1">
+    <line x1="100" y1="300" x2="1500" y2="300" />
+    <line x1="100" y1="450" x2="1500" y2="450" />
+    <line x1="100" y1="600" x2="1500" y2="600" />
+  </g>
+
+  <!-- Central Orchestrated Workflow Rig -->
+  <g transform="translate(180, 160)">
+    <rect width="1240" height="580" rx="8" fill="rgba(25,27,29,0.85)" stroke="rgba(255,255,255,0.08)" />
+
+    <!-- Terminal Bar -->
+    <text x="40" y="44" fill="#a19d99" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" letter-spacing="1.5">REVERSIBLE AUTOMATION ENGINE &amp; QA HARNESS</text>
+    <line x1="40" y1="64" x2="1200" y2="64" stroke="rgba(255,255,255,0.06)" />
+
+    <!-- Process Flow Sequence (Visible Failure & Recovery) -->
+    <g transform="translate(40, 110)">
+      <!-- Step A -->
+      <rect x="0" y="0" width="240" height="150" rx="4" fill="#1f2221" stroke="#78998b" stroke-width="1.5" />
+      <circle cx="24" cy="28" r="5" fill="#78998b" />
+      <text x="40" y="32" fill="#78998b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600">STEP 01: TRIGGER</text>
+      <text x="24" y="68" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Scheduled Ingestion</text>
+      <text x="24" y="96" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Webhook event verified with HMAC token.</text>
+
+      <!-- Connection Arrow A->B -->
+      <path d="M 240 75 L 290 75" stroke="#78998b" stroke-width="1.5" />
+
+      <!-- Step B -->
+      <rect x="290" y="0" width="240" height="150" rx="4" fill="#1f2221" stroke="#78998b" stroke-width="1.5" />
+      <circle cx="314" cy="28" r="5" fill="#78998b" />
+      <text x="330" y="32" fill="#78998b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600">STEP 02: EXECUTE</text>
+      <text x="314" y="68" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Headless Pipeline</text>
+      <text x="314" y="96" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Extract DOM elements &amp; reconcile states.</text>
+
+      <!-- Connection Arrow B->C (Failure Branch) -->
+      <path d="M 530 75 L 580 75" stroke="#7A2021" stroke-width="1.5" />
+
+      <!-- Step C (Validation Failure Edge) -->
+      <rect x="580" y="0" width="260" height="150" rx="4" fill="#291a1d" stroke="#7A2021" stroke-width="1.5" />
+      <circle cx="604" cy="28" r="5" fill="#d49596" />
+      <text x="620" y="32" fill="#d49596" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600">STEP 03: EDGE FAILURE</text>
+      <text x="604" y="68" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Schema Mismatch</text>
+      <text x="604" y="96" fill="#cbb3ae" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Upstream vendor altered selector. Trapped gracefully.</text>
+
+      <!-- Connection Arrow C->D (Recovery Path) -->
+      <path d="M 840 75 L 890 75" stroke="#e5b467" stroke-width="1.5" />
+
+      <!-- Step D (Recovery / Escalate) -->
+      <rect x="890" y="0" width="250" height="150" rx="4" fill="#221e1a" stroke="#e5b467" stroke-width="1.5" />
+      <circle cx="914" cy="28" r="5" fill="#e5b467" />
+      <text x="930" y="32" fill="#e5b467" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600">STEP 04: CONTROLLED RECOVERY</text>
+      <text x="914" y="68" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Heuristic Fallback</text>
+      <text x="914" y="96" fill="#c8a897" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Snapshot DOM evidence &amp; escalate to operator.</text>
+    </g>
+
+    <!-- Lower Diagnostic Window -->
+    <g transform="translate(40, 310)">
+      <rect width="1160" height="220" rx="4" fill="#141517" stroke="rgba(255,255,255,0.05)" />
+      <text x="24" y="30" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" letter-spacing="1">TRACEABILITY &amp; RECOVERY LOG</text>
+      
+      <g transform="translate(24, 55)" font-family="monospace" font-size="12" fill="#a5a19e">
+        <text x="0" y="20"><tspan fill="#78998b">[PASS]</tspan> Worker instance #04 spawned in memory-bounded cgroup (256MB limit).</text>
+        <text x="0" y="46"><tspan fill="#78998b">[PASS]</tspan> Idempotency lock acquired for job uuid 'b98d-4f21-aa02'.</text>
+        <text x="0" y="72"><tspan fill="#d49596">[TRAP]</tspan> Target selector 'div.checkout-btn' timed out after 3000ms. No blind retry executed.</text>
+        <text x="0" y="98"><tspan fill="#e5b467">[RECOVERY]</tspan> Stored failure artifact '/var/evidence/b98d-snapshot.png'. State preserved for human intervention.</text>
+      </g>
+    </g>
+  </g>
+</svg>

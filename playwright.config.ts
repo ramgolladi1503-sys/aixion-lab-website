@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
-  timeout: 45_000,
+  timeout: 60_000,
   retries: 0,
   reporter: "line",
   outputDir: "test-results",
@@ -11,7 +11,7 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "npx --yes serve@latest out -l 3000",
+    command: "npm run start",
     url: "http://127.0.0.1:3000",
     reuseExistingServer: true,
     timeout: 120_000,

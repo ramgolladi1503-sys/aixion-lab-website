@@ -1,0 +1,217 @@
+/* Final wallpaper continuity refinement
+   Keeps the approved bright architectural assets visible across the full page
+   without competing with content. Loaded after page-backgrounds.css. */
+
+:root {
+  --wallpaper-visible-light: .18;
+  --wallpaper-visible-dark: .20;
+}
+
+/* Keep the page artwork present throughout scrolling instead of stretching one image
+   over the entire document height. */
+.mock-systems-page::before,
+.mock-research-page::before,
+.about-editorial-page::before,
+.mock-collaborate-page::before,
+.mock-profile-page::before {
+  position: fixed !important;
+  inset: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  transform: none !important;
+  background-size: cover !important;
+  background-position: var(--page-wallpaper-position, center center) !important;
+  background-repeat: no-repeat !important;
+  opacity: var(--wallpaper-visible-light) !important;
+  filter: saturate(.86) contrast(.97) brightness(1.03) !important;
+}
+
+html[data-theme='dark'] .mock-systems-page::before,
+html[data-theme='dark'] .mock-research-page::before,
+html[data-theme='dark'] .about-editorial-page::before,
+html[data-theme='dark'] .mock-collaborate-page::before,
+html[data-theme='dark'] .mock-profile-page::before {
+  opacity: var(--wallpaper-visible-dark) !important;
+  filter: saturate(.74) brightness(.58) contrast(.94) !important;
+}
+
+/* The veil remains soft enough that the artwork can actually register below the hero. */
+.mock-systems-page::after,
+.mock-research-page::after,
+.about-editorial-page::after,
+.mock-collaborate-page::after,
+.mock-profile-page::after {
+  position: fixed !important;
+  inset: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  transform: none !important;
+  background:
+    linear-gradient(180deg,
+      rgba(var(--premium-bg-ivory), .42) 0%,
+      rgba(var(--premium-bg-ivory), .50) 24%,
+      rgba(var(--premium-bg-ivory), .57) 58%,
+      rgba(var(--premium-bg-ivory), .64) 100%) !important;
+}
+
+html[data-theme='dark'] .mock-systems-page::after,
+html[data-theme='dark'] .mock-research-page::after,
+html[data-theme='dark'] .about-editorial-page::after,
+html[data-theme='dark'] .mock-collaborate-page::after,
+html[data-theme='dark'] .mock-profile-page::after {
+  background:
+    linear-gradient(180deg,
+      rgba(var(--premium-bg-dark), .50) 0%,
+      rgba(var(--premium-bg-dark), .57) 26%,
+      rgba(var(--premium-bg-dark), .64) 60%,
+      rgba(var(--premium-bg-dark), .71) 100%) !important;
+}
+
+/* Hero: show more of the actual artwork and remove the remaining framed-poster feel. */
+.mock-systems-intro,
+.mock-research-intro,
+.about-hero,
+.mock-collaborate-hero,
+.mock-profile-hero {
+  border: 0 !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--mock-rule) 42%, transparent) !important;
+  background-image:
+    linear-gradient(90deg,
+      rgba(var(--premium-bg-ivory), .90) 0%,
+      rgba(var(--premium-bg-ivory), .82) 22%,
+      rgba(var(--premium-bg-ivory), .60) 45%,
+      rgba(var(--premium-bg-ivory), .28) 68%,
+      rgba(var(--premium-bg-ivory), .08) 88%,
+      rgba(var(--premium-bg-ivory), .02) 100%),
+    linear-gradient(180deg,
+      rgba(var(--premium-bg-ivory), .06) 0%,
+      rgba(var(--premium-bg-ivory), 0) 58%,
+      rgba(var(--premium-bg-ivory), .12) 100%),
+    var(--premium-hero-image) !important;
+}
+
+.mock-systems-intro::after,
+.mock-research-intro::after,
+.about-hero::after,
+.mock-collaborate-hero::after,
+.mock-profile-hero::after {
+  box-shadow: inset 0 -5rem 9rem rgba(var(--premium-bg-ivory), .08) !important;
+}
+
+html[data-theme='dark'] .mock-systems-intro,
+html[data-theme='dark'] .mock-research-intro,
+html[data-theme='dark'] .about-hero,
+html[data-theme='dark'] .mock-collaborate-hero,
+html[data-theme='dark'] .mock-profile-hero {
+  background-image:
+    linear-gradient(90deg,
+      rgba(var(--premium-bg-dark), .82) 0%,
+      rgba(var(--premium-bg-dark), .74) 23%,
+      rgba(var(--premium-bg-dark), .54) 46%,
+      rgba(var(--premium-bg-dark), .30) 70%,
+      rgba(var(--premium-bg-dark), .11) 89%,
+      rgba(var(--premium-bg-dark), .04) 100%),
+    linear-gradient(180deg,
+      rgba(var(--premium-bg-dark), .04) 0%,
+      rgba(var(--premium-bg-dark), 0) 58%,
+      rgba(var(--premium-bg-dark), .12) 100%),
+    var(--premium-hero-image) !important;
+}
+
+html[data-theme='dark'] .mock-systems-intro::after,
+html[data-theme='dark'] .mock-research-intro::after,
+html[data-theme='dark'] .about-hero::after,
+html[data-theme='dark'] .mock-collaborate-hero::after,
+html[data-theme='dark'] .mock-profile-hero::after {
+  box-shadow: inset 0 -5rem 9rem rgba(var(--premium-bg-dark), .06) !important;
+}
+
+/* Lower content surfaces are intentionally translucent: enough structure for reading,
+   but the page wallpaper remains visible between and through sections. */
+.mock-system-group,
+.mock-research-grid,
+.mock-research-detail,
+.about-two-up,
+.about-principles,
+.about-closing,
+.mock-collab-paths,
+.mock-fit-section,
+.mock-collab-cta,
+.mock-profile-competencies,
+.mock-profile-experience,
+.mock-profile-work,
+.mock-profile-next {
+  background: color-mix(in srgb, var(--mock-surface) 56%, transparent) !important;
+  backdrop-filter: blur(5px) saturate(.96) !important;
+  -webkit-backdrop-filter: blur(5px) saturate(.96) !important;
+}
+
+html[data-theme='dark'] .mock-system-group,
+html[data-theme='dark'] .mock-research-grid,
+html[data-theme='dark'] .mock-research-detail,
+html[data-theme='dark'] .about-two-up,
+html[data-theme='dark'] .about-principles,
+html[data-theme='dark'] .about-closing,
+html[data-theme='dark'] .mock-collab-paths,
+html[data-theme='dark'] .mock-fit-section,
+html[data-theme='dark'] .mock-collab-cta,
+html[data-theme='dark'] .mock-profile-competencies,
+html[data-theme='dark'] .mock-profile-experience,
+html[data-theme='dark'] .mock-profile-work,
+html[data-theme='dark'] .mock-profile-next {
+  background: color-mix(in srgb, var(--mock-surface) 52%, transparent) !important;
+}
+
+/* Cards remain readable but no longer form a flat opaque sheet over the wallpaper. */
+.mock-project-card,
+.mock-research-card {
+  background: color-mix(in srgb, var(--mock-surface) 74%, transparent) !important;
+}
+
+.mock-project-card:hover,
+.mock-research-card:hover {
+  background: color-mix(in srgb, var(--mock-surface) 90%, transparent) !important;
+}
+
+.mock-research-card.selected {
+  background: var(--mock-accent) !important;
+}
+
+/* Per-page focal adjustments based on the uploaded assets. */
+.mock-systems-page { --page-wallpaper-position: 60% center; --premium-hero-position: 61% 48%; }
+.mock-research-page { --page-wallpaper-position: 58% center; --premium-hero-position: 60% 49%; }
+.about-editorial-page { --page-wallpaper-position: 60% center; --premium-hero-position: 61% 50%; }
+.mock-collaborate-page { --page-wallpaper-position: 56% center; --premium-hero-position: 58% 48%; }
+.mock-profile-page { --page-wallpaper-position: 59% center; --premium-hero-position: 60% 49%; }
+
+@media (max-width: 960px) {
+  :root {
+    --wallpaper-visible-light: .13;
+    --wallpaper-visible-dark: .15;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --wallpaper-visible-light: .09;
+    --wallpaper-visible-dark: .11;
+  }
+
+  .mock-systems-page::after,
+  .mock-research-page::after,
+  .about-editorial-page::after,
+  .mock-collaborate-page::after,
+  .mock-profile-page::after {
+    background: rgba(var(--premium-bg-ivory), .68) !important;
+  }
+
+  html[data-theme='dark'] .mock-systems-page::after,
+  html[data-theme='dark'] .mock-research-page::after,
+  html[data-theme='dark'] .about-editorial-page::after,
+  html[data-theme='dark'] .mock-collaborate-page::after,
+  html[data-theme='dark'] .mock-profile-page::after {
+    background: rgba(var(--premium-bg-dark), .72) !important;
+  }
+}

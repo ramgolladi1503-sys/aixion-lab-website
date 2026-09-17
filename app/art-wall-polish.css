@@ -1,0 +1,222 @@
+/* Art-wall clarity pass
+   Keep the fixed-wall concept, but render the artwork as a crisp wall rather than
+   a fogged/meshed photograph. Loaded after art-wall-final.css. */
+
+:root {
+  --art-wall-light-strength: .58;
+  --art-wall-dark-strength: .32;
+}
+
+/* Preserve each artwork's detail. Light mode is intentionally brighter and cleaner
+   to match the approved reference without changing layout or content. */
+.mock-systems-page::before,
+.mock-research-page::before,
+.about-editorial-page::before,
+.mock-collaborate-page::before,
+.mock-profile-page::before {
+  filter: saturate(1.02) contrast(1.06) brightness(1.10) !important;
+}
+
+html[data-theme='dark'] .mock-systems-page::before,
+html[data-theme='dark'] .mock-research-page::before,
+html[data-theme='dark'] .about-editorial-page::before,
+html[data-theme='dark'] .mock-collaborate-page::before,
+html[data-theme='dark'] .mock-profile-page::before {
+  filter: saturate(.88) contrast(1.04) brightness(.74) !important;
+}
+
+/* The page tint is now only a minimal atmospheric colour correction in light mode.
+   Readability is handled locally around text instead of washing out the artwork. */
+.mock-systems-page::after,
+.mock-research-page::after,
+.about-editorial-page::after,
+.mock-collaborate-page::after,
+.mock-profile-page::after {
+  background: rgba(246,239,234,.03) !important;
+}
+
+html[data-theme='dark'] .mock-systems-page::after,
+html[data-theme='dark'] .mock-research-page::after,
+html[data-theme='dark'] .about-editorial-page::after,
+html[data-theme='dark'] .mock-collaborate-page::after,
+html[data-theme='dark'] .mock-profile-page::after {
+  background: rgba(18,16,15,.30) !important;
+}
+
+/* Refined focal points after rendered QA. */
+.mock-research-page { --art-wall-position: 57% center; }
+.mock-systems-page { --art-wall-position: 59% center; }
+.about-editorial-page { --art-wall-position: 57% center; }
+.mock-collaborate-page { --art-wall-position: 55% center; }
+.mock-profile-page { --art-wall-position: 58% center; }
+
+/* Sections stay transparent: there must be no paper sheet over the wall. */
+.mock-system-group,
+.mock-research-grid,
+.mock-research-detail,
+.about-two-up,
+.about-principles,
+.about-closing,
+.mock-collab-paths,
+.mock-fit-section,
+.mock-collab-cta,
+.mock-profile-competencies,
+.mock-profile-experience,
+.mock-profile-work,
+.mock-profile-next {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Content modules are translucent panes, but do NOT blur the wall underneath.
+   Backdrop blur was the second source of the meshed/frosted appearance. */
+.mock-project-card,
+.mock-research-card {
+  background: rgba(247,239,235,.19) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-color: rgba(52,43,39,.16) !important;
+}
+
+.mock-project-card:hover,
+.mock-research-card:hover {
+  background: rgba(247,239,235,.30) !important;
+}
+
+html[data-theme='dark'] .mock-project-card,
+html[data-theme='dark'] .mock-research-card {
+  background: rgba(20,18,17,.20) !important;
+  border-color: rgba(240,231,226,.14) !important;
+}
+
+html[data-theme='dark'] .mock-project-card:hover,
+html[data-theme='dark'] .mock-research-card:hover {
+  background: rgba(20,18,17,.32) !important;
+}
+
+.mock-research-card.selected {
+  background: color-mix(in srgb, var(--mock-accent) 90%, transparent) !important;
+}
+
+/* Keep local reading support subtle and bounded. It must never read as haze across
+   the whole page. */
+.mock-systems-intro > div:first-child::before,
+.mock-research-intro > div:first-child::before,
+.about-hero-grid::before,
+.mock-collaborate-hero > div:first-child::before,
+.mock-profile-hero > div:first-child::before {
+  inset: -1.2rem -1.8rem !important;
+  background: radial-gradient(ellipse at 28% 48%,
+    rgba(247,241,236,.18) 0%,
+    rgba(247,241,236,.06) 50%,
+    rgba(247,241,236,0) 74%) !important;
+  filter: blur(4px) !important;
+}
+
+html[data-theme='dark'] .mock-systems-intro > div:first-child::before,
+html[data-theme='dark'] .mock-research-intro > div:first-child::before,
+html[data-theme='dark'] .about-hero-grid::before,
+html[data-theme='dark'] .mock-collaborate-hero > div:first-child::before,
+html[data-theme='dark'] .mock-profile-hero > div:first-child::before {
+  background: radial-gradient(ellipse at 28% 48%,
+    rgba(18,16,15,.34) 0%,
+    rgba(18,16,15,.12) 54%,
+    rgba(18,16,15,0) 78%) !important;
+}
+
+/* Copy contrast now comes from the type itself rather than whitening the entire wall. */
+.mock-systems-page p,
+.mock-research-page p,
+.about-editorial-page p,
+.mock-collaborate-page p,
+.mock-profile-page p {
+  text-shadow: 0 1px 1px rgba(255,255,255,.10);
+}
+
+html[data-theme='dark'] .mock-systems-page p,
+html[data-theme='dark'] .mock-research-page p,
+html[data-theme='dark'] .about-editorial-page p,
+html[data-theme='dark'] .mock-collaborate-page p,
+html[data-theme='dark'] .mock-profile-page p {
+  text-shadow: 0 1px 2px rgba(0,0,0,.34);
+}
+
+/* Page signatures stay quiet and crisp. */
+.mock-systems-intro::before,
+.mock-research-intro::before,
+.about-hero::before,
+.mock-collaborate-hero::before,
+.mock-profile-hero::before {
+  opacity: .76;
+  font-size: .68rem;
+  letter-spacing: .19em;
+}
+
+/* Locked-baseline micro-fixes only:
+   1. Make the current primary route read like the approved mockup.
+   2. Keep the collaborate closing CTA readable over the bright lower artwork. */
+.desktop-nav a.active,
+.desktop-nav a[aria-current='page'] {
+  color: #7d2929 !important;
+  font-weight: 650;
+}
+
+.desktop-nav a.active::after,
+.desktop-nav a[aria-current='page']::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  height: 1px;
+  border-radius: 999px;
+  background: #7d2929 !important;
+}
+
+.mock-collab-cta,
+.mock-collab-cta strong,
+.mock-collab-cta a,
+.mock-collab-cta span {
+  color: var(--mock-ink) !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 2px rgba(255,255,255,.78) !important;
+}
+
+.mock-collab-cta strong,
+.mock-collab-cta a {
+  font-weight: 650 !important;
+}
+
+html[data-theme='dark'] .mock-collab-cta,
+html[data-theme='dark'] .mock-collab-cta strong,
+html[data-theme='dark'] .mock-collab-cta a,
+html[data-theme='dark'] .mock-collab-cta span {
+  color: var(--mock-ink) !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.72) !important;
+}
+
+@media (max-width: 960px) {
+  :root {
+    --art-wall-light-strength: .50;
+    --art-wall-dark-strength: .28;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --art-wall-light-strength: .42;
+    --art-wall-dark-strength: .24;
+  }
+
+  .mock-project-card,
+  .mock-research-card {
+    background: rgba(247,239,235,.28) !important;
+  }
+
+  html[data-theme='dark'] .mock-project-card,
+  html[data-theme='dark'] .mock-research-card {
+    background: rgba(20,18,17,.28) !important;
+  }
+}
