@@ -9,6 +9,21 @@
 :root {
   --line-wallpaper-light: url('/textures/lines/contour-light.webp');
   --line-wallpaper-dark: url('/textures/lines/contour-dark.webp');
+  --aixion-canvas: #faf8f5;
+  --aixion-surface: rgba(255, 255, 255, 0.82);
+  --aixion-ink: #211c1a;
+  --aixion-body: #3b3330;
+  --aixion-border: rgba(33, 28, 26, 0.14);
+  --aixion-focus: #7b211d;
+}
+
+html[data-theme='dark'] {
+  --aixion-canvas: #131110;
+  --aixion-surface: rgba(28, 25, 23, 0.88);
+  --aixion-ink: #f0e7e2;
+  --aixion-body: #d8cec8;
+  --aixion-border: rgba(240, 231, 226, 0.18);
+  --aixion-focus: #f0b2aa;
 }
 
 /* Base canvas setup for main pages and system showcase subpages */
@@ -36,7 +51,7 @@
   max-width: min(1360px, 100%) !important;
   position: relative !important;
   isolation: isolate !important;
-  background-color: #faf8f5 !important;
+  background-color: var(--aixion-canvas) !important;
 }
 
 html[data-theme='dark'] .mock-systems-page,
@@ -45,7 +60,7 @@ html[data-theme='dark'] .about-editorial-page,
 html[data-theme='dark'] .mock-collaborate-page,
 html[data-theme='dark'] .mock-profile-page,
 html[data-theme='dark'] .system-showcase {
-  background-color: #131110 !important;
+  background-color: var(--aixion-canvas) !important;
 }
 
 /* 2. Topographic Line Layer (Fixed Viewport Background for ALL interior pages) */
@@ -125,7 +140,7 @@ html[data-theme='dark'] .system-showcase-automation::before {
 .system-showcase li,
 .system-showcase a,
 .system-showcase button {
-  color: #211c1a !important;
+  color: var(--aixion-ink) !important;
   text-shadow: none !important;
 }
 
@@ -151,7 +166,7 @@ html[data-theme='dark'] .system-showcase-automation::before {
   font-size: clamp(1.18rem, 1.45vw, 1.4rem) !important;
   line-height: 1.5 !important;
   font-weight: 480 !important;
-  color: #3b3330 !important;
+  color: var(--aixion-body) !important;
 }
 
 .showcase-context > p {
@@ -226,24 +241,24 @@ html[data-theme='dark'] .public-state-badge {
 }
 
 .premium-context-rail:focus-visible {
-  outline: 2px solid currentColor;
+  outline: 2px solid var(--aixion-focus);
   outline-offset: 4px;
 }
 
 /* Pulse cards must follow the selected canvas instead of retaining a hardcoded
    light surface under the dark token palette. */
 .pulse-system-card {
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(33, 33, 33, 0.12);
+  background: var(--aixion-surface);
+  border: 1px solid var(--aixion-border);
   box-shadow: 0 4px 20px rgba(32, 26, 22, 0.05);
-  color: #211d1a;
+  color: var(--aixion-ink);
 }
 
 [data-theme="dark"] .pulse-system-card {
-  background: rgba(28, 25, 23, 0.88);
-  border-color: rgba(240, 231, 226, 0.18);
+  background: var(--aixion-surface);
+  border-color: var(--aixion-border);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
-  color: #f0e7e2;
+  color: var(--aixion-ink);
 }
 
 /* 8. Fixed Pill Clearance: prevent status bar from occluding bottom paragraphs */
@@ -267,4 +282,20 @@ html[data-theme='dark'] .public-state-badge {
 
 html[data-theme='dark'] .system-showcase .showcase-subnav {
   background: color-mix(in srgb, #131110 94%, transparent) !important;
+}
+
+@media (max-width: 760px) {
+  .mock-systems-intro .premium-context-rail,
+  .mock-research-intro .premium-context-rail,
+  .about-hero .premium-context-rail,
+  .mock-collaborate-hero .premium-context-rail {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    overflow: visible !important;
+  }
+
+  .premium-context-rail span {
+    white-space: normal !important;
+    min-width: 0 !important;
+  }
 }

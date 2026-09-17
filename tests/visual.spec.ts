@@ -103,3 +103,20 @@ test("status controls stay off editorial pages", async ({ page }) => {
     await expect(page.locator(".unseen-status-bar")).toHaveCount(0);
   }
 });
+
+test("interior pages use a veil-free readable canvas", async ({ page }) => {
+  for (const [route, root] of [["/systems", ".mock-systems-page"], ["/research", ".mock-research-page"], ["/about", ".about-editorial-page"], ["/collaborate", ".mock-collaborate-page"], ["/resume", ".mock-profile-page"]] as const) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    const styles = await page.locator(root).evaluate(element => {
+      const computed = getComputedStyle(element);
+      const after = getComputedStyle(element, "::after");
+      return {
+        backdropFilter: computed.backdropFilter,
+        afterDisplay: after.display,
+        afterContent: after.content,
+      };
+    });
+    expect(styles.backdropFilter).toBe("none");
+    expect(styles.afterDisplay === "none" || styles.afterContent === "none").toBe(true);
+  }
+});
