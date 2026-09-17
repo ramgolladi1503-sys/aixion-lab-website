@@ -3,44 +3,89 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-const TARGETS = [
-  "main section > h1",
-  "main section > h2",
-  "main section > h3",
-  "main section > p",
-  "main section > ul",
-  "main section > ol",
-  "main section article",
-  "main section figure",
-  "main section > img",
-  "main section > a",
-].join(",");
+type MotionSpec = { selector: string; variant: string; stagger?: number };
+
+const PAGE_SPECS: Array<{ match: (path: string) => boolean; specs: MotionSpec[] }> = [
+  {
+    match: p => p === "/systems",
+    specs: [
+      { selector: ".mock-systems-intro > div:first-child", variant: "headline" },
+      { selector: ".mock-systems-intro > p", variant: "copy", stagger: 110 },
+      { selector: ".mock-systems-intro .premium-context-rail", variant: "rail" },
+      { selector: ".mock-group-title-row", variant: "section" },
+      { selector: ".mock-project-card", variant: "card", stagger: 110 },
+    ],
+  },
+  {
+    match: p => p === "/about",
+    specs: [
+      { selector: ".about-hero > .editorial-kicker", variant: "kicker" },
+      { selector: ".about-hero-grid > h1", variant: "headline" },
+      { selector: ".about-lede", variant: "copy" },
+      { selector: ".about-hero .premium-context-rail", variant: "rail" },
+      { selector: ".about-two-up > article", variant: "card", stagger: 120 },
+      { selector: ".about-principles-heading", variant: "section" },
+      { selector: ".about-principle-grid > article", variant: "card", stagger: 95 },
+      { selector: ".about-closing > *", variant: "copy", stagger: 100 },
+    ],
+  },
+  {
+    match: p => p === "/collaborate",
+    specs: [
+      { selector: ".mock-collaborate-hero > div:first-child", variant: "headline" },
+      { selector: ".mock-collaborate-hero > p", variant: "copy" },
+      { selector: ".mock-collaborate-hero .premium-context-rail", variant: "rail" },
+      { selector: ".mock-collab-paths > article", variant: "card", stagger: 105 },
+      { selector: ".mock-fit-intro", variant: "section" },
+      { selector: ".mock-fit-grid > article", variant: "card", stagger: 120 },
+      { selector: ".mock-collab-cta > *", variant: "copy", stagger: 110 },
+    ],
+  },
+  {
+    match: p => p === "/resume",
+    specs: [
+      { selector: ".mock-profile-hero > div:first-child", variant: "headline" },
+      { selector: ".mock-profile-meta", variant: "rail" },
+      { selector: ".mock-section-title", variant: "section" },
+      { selector: ".mock-competency-grid > article", variant: "card", stagger: 90 },
+      { selector: ".mock-experience-grid > article", variant: "card", stagger: 100 },
+      { selector: ".mock-profile-work-grid > article", variant: "card", stagger: 120 },
+      { selector: ".mock-profile-next > *", variant: "copy", stagger: 110 },
+    ],
+  },
+  {
+    match: p => p.startsWith("/systems/") && p !== "/systems",
+    specs: [
+      { selector: ".showcase-identity", variant: "headline" },
+      { selector: ".showcase-context", variant: "copy" },
+      { selector: ".showcase-hero-media", variant: "image" },
+      { selector: ".showcase-capability-strip > article", variant: "card", stagger: 90 },
+      { selector: ".showcase-subnav", variant: "rail" },
+      { selector: ".showcase-active-panel", variant: "section" },
+    ],
+  },
+];
 
 export function GlobalMotion() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Research owns its richer, page-specific choreography.
-    if (pathname === "/research") return;
+    if (pathname === "/research" || pathname === "/" || pathname === "/home") return;
 
-    const main = document.querySelector<HTMLElement>("body > main");
-    if (!main) return;
+    const config = PAGE_SPECS.find(item => item.match(pathname));
+    if (!config) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const candidates = Array.from(main.querySelectorAll<HTMLElement>(TARGETS)).filter(el =>
-      !el.closest("[data-global-motion='off']") && !el.closest("header, nav, footer")
-    );
+    const targets: HTMLElement[] = [];
 
-    // Do not animate nested candidates twice. Preserve each page's locked geometry.
-    const targets = candidates.filter(el => !candidates.some(other => other !== el && other.contains(el)));
-
-    targets.forEach((target, index) => {
-      target.dataset.globalMotion = "true";
-      const section = target.closest("section");
-      const siblings = section ? targets.filter(item => item.closest("section") === section) : targets;
-      const localOrder = Math.max(0, siblings.indexOf(target));
-      target.style.setProperty("--global-motion-delay", `${Math.min(localOrder * 85, 340)}ms`);
-      if (reduced) target.classList.add("global-motion-visible");
+    config.specs.forEach(spec => {
+      const elements = Array.from(document.querySelectorAll<HTMLElement>(spec.selector));
+      elements.forEach((target, index) => {
+        target.dataset.globalMotion = spec.variant;
+        target.style.setProperty("--global-motion-delay", `${Math.min(index * (spec.stagger ?? 85), 340)}ms`);
+        targets.push(target);
+        if (reduced) target.classList.add("global-motion-visible");
+      });
     });
 
     if (reduced) return;
@@ -48,13 +93,24 @@ export function GlobalMotion() {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         const target = entry.target as HTMLElement;
-        if (entry.isIntersecting) target.classList.add("global-motion-visible");
-        else if (entry.boundingClientRect.top > 0 || entry.boundingClientRect.bottom < 0) target.classList.remove("global-motion-visible");
+        if (entry.isIntersecting) {
+          target.classList.add("global-motion-visible");
+        } else {
+          // Reset after leaving either side of the viewport so reverse scrolling replays it.
+          target.classList.remove("global-motion-visible");
+        }
       });
-    }, { threshold: 0.14, rootMargin: "-3% 0px -9% 0px" });
+    }, { threshold: 0.15, rootMargin: "-3% 0px -10% 0px" });
 
     targets.forEach(target => observer.observe(target));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      targets.forEach(target => {
+        target.classList.remove("global-motion-visible");
+        delete target.dataset.globalMotion;
+        target.style.removeProperty("--global-motion-delay");
+      });
+    };
   }, [pathname]);
 
   return null;
