@@ -17,7 +17,9 @@ import "./art-wall-polish.css";
 import "./editorial-flow.css";
 import "./editorial-flow-correction.css";
 import "./research-motion.css";
+import "./global-motion.css";
 import { UnseenHeader, UnseenStatusBar } from "@/components/unseen-chrome";
+import { GlobalMotion } from "@/components/global-motion";
 
 const aixionDisplay = Instrument_Serif({
   subsets: ["latin"],
@@ -66,6 +68,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`unseen-theme ${aixionDisplay.variable} ${aixionSans.variable}`}>
         <UnseenHeader />
         <main>{children}</main>
+        <GlobalMotion />
         <UnseenStatusBar />
       </body>
     </html>
