@@ -56,16 +56,16 @@ const themeBoot = `
 (function(){
   try {
     var stored = localStorage.getItem('aixion-theme');
-    var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var theme = stored || 'dark';
     document.documentElement.dataset.theme = theme;
   } catch (_) {
-    document.documentElement.dataset.theme = 'light';
+    document.documentElement.dataset.theme = 'dark';
   }
 })();`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: themeBoot }} /></head>
       <body className={`unseen-theme ${aixionDisplay.variable} ${aixionSans.variable}`}>
         <UnseenHeader />

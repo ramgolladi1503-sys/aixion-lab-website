@@ -96,40 +96,9 @@ html[data-theme='dark'] .system-showcase-automation::before {
   -webkit-backdrop-filter: none !important;
 }
 
-/* 5. Framed Media Specimen: Displays the 3D System Render cleanly inside an architectural glass plinth */
-.showcase-hero-media {
-  display: block !important;
-  opacity: 1 !important;
-  transform: none !important;
-  clip-path: none !important;
-  filter: none !important;
-  margin-top: clamp(2.4rem, 3.8vw, 4rem) !important;
-  margin-bottom: clamp(2.4rem, 3.8vw, 4rem) !important;
-  border-radius: 16px !important;
-  overflow: hidden !important;
-  background: #f4efe9 !important;
-  border: 1px solid rgba(122, 32, 33, 0.12) !important;
-  box-shadow: 0 24px 48px -12px rgba(26, 20, 18, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03) !important;
-  aspect-ratio: 16 / 9 !important;
-  position: relative !important;
-}
-
-html[data-theme='dark'] .showcase-hero-media {
-  background: #181514 !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5) !important;
-}
-
-.showcase-hero-media img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block !important;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-.showcase-hero-media:hover img {
-  transform: scale(1.02) !important;
+/* 5. Clean Editorial Transition between Context and Capabilities */
+.showcase-capability-strip {
+  margin-top: clamp(1.5rem, 2.5vw, 2.5rem) !important;
 }
 
 /* 6. Pristine Editorial Typography & Readability */
