@@ -55,19 +55,21 @@ test("body typography remains readable", async ({ page }, testInfo) => {
 
 test("research is dense and reveals only one detail", async ({ page }) => {
   await page.goto("/research", { waitUntil: "networkidle" });
-  await expect(page.locator(".mock-research-card")).toHaveCount(11);
+  await expect(page.locator(".mock-research-card")).toHaveCount(4);
+  await expect(page.locator(".research-topic-trigger")).toHaveCount(11);
   await page.locator(".mock-research-card").first().click();
   await expect(page.locator(".mock-research-detail")).toHaveCount(1);
-  await page.locator(".mock-research-card").nth(4).click();
+  await page.locator(".mock-research-archive").evaluate((element: HTMLDetailsElement) => { element.open = true; });
+  await page.locator(".mock-research-archive-grid button").first().click();
   await expect(page.locator(".mock-research-detail")).toHaveCount(1);
-  await expect(page.locator(".mock-research-card.selected")).toHaveCount(1);
+  await expect(page.locator(".research-topic-trigger.selected")).toHaveCount(1);
 });
 
 test("research content remains visible throughout scrolling", async ({ page }) => {
   await page.goto("/research", { waitUntil: "networkidle" });
   const cards = page.locator(".mock-research-card");
-  await expect(cards).toHaveCount(11);
-  for (let index = 0; index < 11; index += 1) {
+  await expect(cards).toHaveCount(4);
+  for (let index = 0; index < 4; index += 1) {
     const card = cards.nth(index);
     await card.scrollIntoViewIfNeeded();
     await expect(card).toBeVisible();
@@ -118,5 +120,20 @@ test("interior pages use a veil-free readable canvas", async ({ page }) => {
     });
     expect(styles.backdropFilter).toBe("none");
     expect(styles.afterDisplay === "none" || styles.afterContent === "none").toBe(true);
+  }
+});
+
+test("mobile context rails wrap without hidden labels", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile", "Mobile wrapping gate");
+  for (const route of ["/systems", "/research", "/about", "/collaborate"]) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    const rail = page.locator(".premium-context-rail");
+    const labels = rail.locator("span");
+    await expect(rail).toBeVisible();
+    expect(await labels.count()).toBeGreaterThanOrEqual(4);
+    const boxes = await labels.evaluateAll(elements => elements.map(element => element.getBoundingClientRect().toJSON()));
+    expect(new Set(boxes.map(box => Math.round(box.y))).size).toBeGreaterThan(1);
+    const viewportWidth = page.viewportSize()?.width ?? 0;
+    expect(boxes.every(box => box.width > 0 && box.right <= viewportWidth + 1)).toBe(true);
   }
 });

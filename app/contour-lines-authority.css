@@ -291,6 +291,8 @@ html[data-theme='dark'] .system-showcase .showcase-subnav {
   .mock-collaborate-hero .premium-context-rail {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-flow: row !important;
+    grid-auto-columns: auto !important;
     overflow: visible !important;
   }
 
@@ -298,4 +300,77 @@ html[data-theme='dark'] .system-showcase .showcase-subnav {
     white-space: normal !important;
     min-width: 0 !important;
   }
+}
+
+/* Research uses an editorial lead set followed by a quieter archive. This
+   preserves the full body of work without presenting eleven identical cards. */
+.mock-research-archive {
+  margin: clamp(3rem, 7vw, 6.5rem) auto 0;
+  width: min(1120px, calc(100% - 2rem));
+  border-block: 1px solid var(--aixion-border);
+}
+
+.mock-research-archive summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.2rem 0;
+  color: var(--aixion-ink);
+  cursor: pointer;
+}
+
+.mock-research-archive summary::marker { color: var(--aixion-focus); }
+.mock-research-archive summary span { font-family: var(--font-aixion-display); font-size: clamp(1.7rem, 3vw, 2.8rem); }
+.mock-research-archive summary strong { font-size: .78rem; letter-spacing: .09em; text-transform: uppercase; }
+
+.mock-research-archive-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--aixion-border);
+}
+
+.mock-research-archive-grid button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .5rem 1rem;
+  padding: 1.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--aixion-border);
+  background: transparent;
+  color: var(--aixion-ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mock-research-archive-grid button:nth-child(odd) { border-right: 1px solid var(--aixion-border); }
+.mock-research-archive-grid button:hover,
+.mock-research-archive-grid button:focus-visible { background: color-mix(in srgb, var(--aixion-surface) 78%, transparent); }
+.mock-research-archive-grid button:focus-visible { outline: 2px solid var(--aixion-focus); outline-offset: -2px; }
+.mock-research-archive-grid span { font-size: 1.02rem; font-weight: 650; }
+.mock-research-archive-grid small { grid-column: 1; color: var(--aixion-body); font-size: .9rem; line-height: 1.45; }
+.mock-research-archive-grid i { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: .78rem; font-style: normal; }
+
+.mock-collab-primary {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 44px;
+  align-items: center;
+  margin-top: 1.25rem;
+  padding: .72rem 1.05rem;
+  border: 1px solid currentColor;
+  color: var(--aixion-ink);
+  font-size: .9rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.mock-collab-primary:hover,
+.mock-collab-primary:focus-visible { background: var(--aixion-ink); color: var(--aixion-canvas); }
+.mock-collab-primary:focus-visible { outline: 2px solid var(--aixion-focus); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .mock-research-archive-grid { grid-template-columns: 1fr; }
+  .mock-research-archive-grid button:nth-child(odd) { border-right: 0; }
+  .mock-research-archive summary { align-items: flex-start; flex-direction: column; gap: .25rem; }
 }

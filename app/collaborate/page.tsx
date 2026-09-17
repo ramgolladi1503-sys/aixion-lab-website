@@ -12,6 +12,7 @@ export default function CollaboratePage() {
       <section className="mock-collaborate-hero">
         <div><p className="mock-kicker">COLLABORATE</p><h1>Bring us the problem. Not an AI requirement.</h1></div>
         <p>The better starting point is usually the problem itself: what is slow, unreliable, difficult to validate, dependent on too much manual judgment, or impossible to trust with the evidence you have today?</p>
+        <a className="mock-collab-primary" href="mailto:ram@aixionlab.com?subject=Start%20a%20conversation%20with%20Aixion%20Lab">Describe the problem ↗</a>
         <div className="premium-context-rail" role="region" tabIndex={0} aria-label="Collaboration focus areas">
           <span>Applied AI</span><span>Automation</span><span>Decision Systems</span><span>Validation &amp; Reliability</span>
         </div>

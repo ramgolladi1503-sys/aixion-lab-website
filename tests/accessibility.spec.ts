@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const routes = ["/", "/systems", "/systems/tradebot", "/systems/control-core", "/systems/automation", "/systems/analytics", "/research", "/pulse", "/journey", "/about", "/resume"];
+const routes = ["/", "/systems", "/systems/tradebot", "/systems/control-core", "/systems/automation", "/systems/analytics", "/research", "/pulse", "/journey", "/about", "/collaborate", "/resume"];
 const themes = ["light", "dark"] as const;
 
 for (const theme of themes) {

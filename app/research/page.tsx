@@ -27,6 +27,9 @@ const researchCards: ResearchCard[] = [
   { id: "reproducibility", title: "Reproducible research", summary: "A result should be reconstructable before it is persuasive.", detailTitle: "A result should be repeatable before it is persuasive.", detailBody: "Aixion preserves assumptions, data boundaries, decision points, and validation stages so that a result can be reconstructed and challenged later. The research process is treated as part of the engineering system, not as disposable notebook work.", practices: ["frozen assumptions", "traceable inputs", "repeatable evaluation", "preserved decisions"], outcome: "Reproducibility turns research from a story into evidence that can be inspected.", image: "/textures/reproducible-research.webp" },
 ];
 
+const featuredResearch = researchCards.slice(0, 4);
+const researchArchive = researchCards.slice(4);
+
 export default function ResearchPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const detailRef = useRef<HTMLElement | null>(null);
@@ -85,14 +88,27 @@ export default function ResearchPage() {
       </section>
 
       <section className="mock-research-grid" aria-label="Research themes">
-        {researchCards.map((item, index) => (
-          <button data-motion="card" data-motion-group="cards" data-motion-order={index % 3} type="button" key={item.id} className={`mock-research-card ${selectedId === item.id ? "selected" : ""}`} onClick={() => reveal(item.id)} aria-pressed={selectedId === item.id}>
+        {featuredResearch.map((item, index) => (
+          <button data-motion="card" data-motion-group="cards" data-motion-order={index % 3} type="button" key={item.id} className={`mock-research-card research-topic-trigger ${selectedId === item.id ? "selected" : ""}`} onClick={() => reveal(item.id)} aria-pressed={selectedId === item.id}>
             <strong>{item.title}</strong>
             <div className="mock-research-thumb"><img src={item.image} alt="" /></div>
             <span>{item.summary}</span>
           </button>
         ))}
       </section>
+
+      <details className="mock-research-archive">
+        <summary><span>Research archive</span><strong>{researchArchive.length} additional questions</strong></summary>
+        <div className="mock-research-archive-grid">
+          {researchArchive.map(item => (
+            <button type="button" key={item.id} className={`research-topic-trigger ${selectedId === item.id ? "selected" : ""}`} onClick={() => reveal(item.id)} aria-pressed={selectedId === item.id}>
+              <span>{item.title}</span>
+              <small>{item.summary}</small>
+              <i aria-hidden="true">View →</i>
+            </button>
+          ))}
+        </div>
+      </details>
 
       {selected && (
         <section ref={detailRef} className="mock-research-detail">
