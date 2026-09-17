@@ -1,85 +1,55 @@
-/* Aixion motion language — motion only. Locked layout, typography, palette and wallpaper stay untouched. */
+/* Aixion motion language — approved motion baseline plus visual-readability corrections. */
 
-[data-global-motion] {
-  --global-motion-delay: 0ms;
-  will-change: opacity, transform, filter, clip-path;
+[data-global-motion] { --global-motion-delay:0ms; will-change:opacity,transform,filter,clip-path; }
+[data-global-motion="kicker"],[data-global-motion="copy"],[data-global-motion="section"] { opacity:0;transform:translate3d(0,24px,0);transition:opacity 540ms ease var(--global-motion-delay),transform 680ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay); }
+[data-global-motion="headline"] { opacity:0;transform:translate3d(0,34px,0) scale(.985);filter:blur(4px);transition:opacity 620ms cubic-bezier(.22,1,.36,1) var(--global-motion-delay),transform 780ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay),filter 560ms ease var(--global-motion-delay); }
+[data-global-motion="rail"] { opacity:0;transform:translate3d(-14px,0,0);clip-path:inset(0 100% 0 0);transition:opacity 500ms ease var(--global-motion-delay),transform 680ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay),clip-path 800ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay); }
+[data-global-motion="card"] { opacity:0;transform:translate3d(0,38px,0) scale(.978);transition:opacity 560ms ease var(--global-motion-delay),transform 780ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay); }
+[data-global-motion="image"] { opacity:0;transform:translate3d(0,22px,0) scale(.985);clip-path:inset(0 0 100% 0 round 2px);transition:opacity 540ms ease var(--global-motion-delay),transform 900ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay),clip-path 920ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay); }
+[data-global-motion="card"] img,[data-global-motion="image"] img { transform:scale(1.055);transition:transform 1050ms cubic-bezier(.16,1,.3,1) calc(var(--global-motion-delay) + 70ms); }
+[data-global-motion].global-motion-visible { opacity:1;transform:none;filter:none;clip-path:inset(0 0 0 0); }
+[data-global-motion].global-motion-visible img { transform:scale(1); }
+[data-global-motion="card"].global-motion-visible:hover { transform:translate3d(0,-4px,0);transition-duration:260ms; }
+[data-global-motion="card"].global-motion-visible:hover img { transform:scale(1.022);transition-duration:420ms; }
+main a:not([data-global-motion="off"]) { transition:transform 240ms cubic-bezier(.22,1,.36,1),opacity 220ms ease,text-decoration-color 220ms ease; }
+main a:not([data-global-motion="off"]):hover { transform:translate3d(0,-1px,0); }
+
+/* ---------- System detail art canvases ----------
+   Reuse each system's approved imagery as an atmospheric page wall. The existing
+   hero image remains intact, so this adds depth without changing information architecture. */
+.system-showcase { position:relative;isolation:isolate;min-height:100vh; }
+.system-showcase::before { content:"";position:fixed;inset:0;z-index:-2;background-repeat:no-repeat;background-size:cover;background-position:center;opacity:.30;filter:saturate(.82) contrast(.98) brightness(1.08);pointer-events:none; }
+.system-showcase::after { content:"";position:fixed;inset:0;z-index:-1;background:rgba(246,239,234,.46);pointer-events:none; }
+.system-showcase-tradebot::before { background-image:url('/textures/systems/tradebot-detail-premium.png');background-position:center 42%; }
+.system-showcase-control-core::before { background-image:url('/textures/systems/control-tower-detail-premium.png');background-position:center 40%; }
+.system-showcase-automation::before { background-image:url('/textures/systems/automation-detail-premium.png');background-position:center 42%; }
+.system-showcase-analytics::before { background-image:url('/textures/systems/analytics-detail-premium.png');background-position:center 42%; }
+.system-showcase > * { position:relative;z-index:1; }
+
+html[data-theme='dark'] .system-showcase::before { opacity:.22;filter:saturate(.78) contrast(1.02) brightness(.68); }
+html[data-theme='dark'] .system-showcase::after { background:rgba(18,16,15,.56); }
+
+/* ---------- Site-wide body readability ----------
+   Headline hierarchy is unchanged; body copy receives stronger weight/contrast. */
+.mock-systems-page p,.mock-research-page p,.about-editorial-page p,.mock-collaborate-page p,.mock-profile-page p,
+.system-showcase p,.system-showcase li,.mock-project-copy p,.mock-research-card > span,.mock-fit-section li {
+  font-weight:550 !important;color:color-mix(in srgb,var(--mock-ink) 91%,var(--mock-body)) !important;
+}
+.showcase-proposition,.showcase-context>p,.showcase-capability-strip p,.showcase-panel-grid p,.showcase-architecture-list p {
+  font-weight:550 !important;color:color-mix(in srgb,var(--mock-ink) 91%,var(--mock-body)) !important;
+}
+html[data-theme='dark'] .mock-systems-page p,html[data-theme='dark'] .mock-research-page p,html[data-theme='dark'] .about-editorial-page p,
+html[data-theme='dark'] .mock-collaborate-page p,html[data-theme='dark'] .mock-profile-page p,html[data-theme='dark'] .system-showcase p {
+  color:color-mix(in srgb,var(--mock-ink) 94%,var(--mock-body)) !important;
 }
 
-[data-global-motion="kicker"],
-[data-global-motion="copy"],
-[data-global-motion="section"] {
-  opacity: 0;
-  transform: translate3d(0, 24px, 0);
-  transition: opacity 540ms ease var(--global-motion-delay), transform 680ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay);
-}
+/* ---------- Active primary navigation ---------- */
+.unseen-nav .unseen-link { position:relative; }
+.unseen-nav .unseen-link.active { color:#7a2021 !important;font-weight:650 !important; }
+.unseen-nav .unseen-link.active::after { content:"";position:absolute;left:0;right:0;bottom:-.42rem;height:2px;border-radius:999px;background:#7a2021;transform:scaleX(1);transform-origin:left center; }
+html[data-theme='dark'] .unseen-nav .unseen-link.active { color:#c87579 !important; }
+html[data-theme='dark'] .unseen-nav .unseen-link.active::after { background:#c87579; }
 
-[data-global-motion="headline"] {
-  opacity: 0;
-  transform: translate3d(0, 34px, 0) scale(.985);
-  filter: blur(4px);
-  transition: opacity 620ms cubic-bezier(.22,1,.36,1) var(--global-motion-delay), transform 780ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay), filter 560ms ease var(--global-motion-delay);
-}
-
-[data-global-motion="rail"] {
-  opacity: 0;
-  transform: translate3d(-14px,0,0);
-  clip-path: inset(0 100% 0 0);
-  transition: opacity 500ms ease var(--global-motion-delay), transform 680ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay), clip-path 800ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay);
-}
-
-[data-global-motion="card"] {
-  opacity: 0;
-  transform: translate3d(0, 38px, 0) scale(.978);
-  transition: opacity 560ms ease var(--global-motion-delay), transform 780ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay);
-}
-
-[data-global-motion="image"] {
-  opacity: 0;
-  transform: translate3d(0, 22px, 0) scale(.985);
-  clip-path: inset(0 0 100% 0 round 2px);
-  transition: opacity 540ms ease var(--global-motion-delay), transform 900ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay), clip-path 920ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay);
-}
-
-[data-global-motion="card"] img,
-[data-global-motion="image"] img {
-  transform: scale(1.055);
-  transition: transform 1050ms cubic-bezier(.16,1,.3,1) calc(var(--global-motion-delay) + 70ms);
-}
-
-[data-global-motion].global-motion-visible {
-  opacity: 1;
-  transform: none;
-  filter: none;
-  clip-path: inset(0 0 0 0);
-}
-
-[data-global-motion].global-motion-visible img {
-  transform: scale(1);
-}
-
-/* Interaction layer: restrained depth, never a redesign. */
-[data-global-motion="card"].global-motion-visible:hover {
-  transform: translate3d(0,-4px,0);
-  transition-duration: 260ms;
-}
-[data-global-motion="card"].global-motion-visible:hover img {
-  transform: scale(1.022);
-  transition-duration: 420ms;
-}
-
-main a:not([data-global-motion="off"]) {
-  transition: transform 240ms cubic-bezier(.22,1,.36,1), opacity 220ms ease, text-decoration-color 220ms ease;
-}
-main a:not([data-global-motion="off"]):hover { transform: translate3d(0,-1px,0); }
-
-@media (prefers-reduced-motion: reduce) {
-  [data-global-motion],
-  [data-global-motion] img,
-  main a:not([data-global-motion="off"]) {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-    clip-path: none !important;
-    transition: none !important;
-  }
+@media (prefers-reduced-motion:reduce) {
+  [data-global-motion],[data-global-motion] img,main a:not([data-global-motion="off"]) { opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;transition:none!important; }
 }
