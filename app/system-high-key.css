@@ -1,11 +1,34 @@
-/* High-key system-detail authority.
-   The system source artwork is materially darker than the architectural page walls.
-   Brighten the artwork itself instead of placing a pale veil above it. */
+/* High-key system-detail authority. */
 .system-showcase::before {
   opacity: 1 !important;
-  filter: brightness(1.62) contrast(.88) saturate(.78) !important;
+  filter: brightness(1.02) contrast(1.01) saturate(.96) !important;
 }
-.system-showcase::after { content:none !important; display:none !important; }
+.system-showcase::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Light system-detail artwork — approved replacement backgrounds. */
+
+.system-showcase-tradebot::before {
+  background-image: url('/textures/systems/tradebot-light.png') !important;
+  background-position: center center !important;
+}
+
+.system-showcase-control-core::before {
+  background-image: url('/textures/systems/control-tower-light.png') !important;
+  background-position: center center !important;
+}
+
+.system-showcase-analytics::before {
+  background-image: url('/textures/systems/analytics-light.png') !important;
+  background-position: center center !important;
+}
+
+.system-showcase-automation::before {
+  background-image: url('/textures/systems/automation-light.png') !important;
+  background-position: center center !important;
+}
 
 /* Keep the artwork crisp while making the reading plane as clear as About. */
 .system-showcase,

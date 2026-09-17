@@ -5,10 +5,10 @@ import { useMemo, useState } from "react";
 import type { SystemDetailData } from "@/lib/system-detail-data";
 
 const premiumHeroImages: Record<string, string> = {
-  tradebot: "/textures/systems/tradebot-detail-premium.png",
-  "control-core": "/textures/systems/control-tower-detail-premium.png",
-  analytics: "/textures/systems/analytics-detail-premium.png",
-  automation: "/textures/systems/automation-detail-premium.png",
+  tradebot: "/textures/systems/tradebot-light.png",
+  "control-core": "/textures/systems/control-tower-light.png",
+  analytics: "/textures/systems/analytics-light.png",
+  automation: "/textures/systems/automation-light.png",
 };
 
 const editorialContext: Record<string, { label: string; paragraphs: string[] }> = {
