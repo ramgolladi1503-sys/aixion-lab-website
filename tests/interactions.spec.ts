@@ -2,13 +2,14 @@ import { test, expect } from "@playwright/test";
 
 test("research reveals one selected focus at a time", async ({ page }) => {
   await page.goto("/research", { waitUntil: "networkidle" });
-  const cards = page.locator(".mock-research-card");
-  await expect(cards).toHaveCount(11);
-  await cards.nth(0).click();
+  const topics = page.locator(".research-topic-trigger");
+  await expect(topics).toHaveCount(11);
+  await topics.nth(0).click();
   await expect(page.locator(".mock-research-detail")).toHaveCount(1);
-  await cards.nth(2).click();
+  await page.locator(".mock-research-archive").evaluate((element: HTMLDetailsElement) => { element.open = true; });
+  await topics.nth(6).click();
   await expect(page.locator(".mock-research-detail")).toHaveCount(1);
-  await expect(page.locator(".mock-research-card.selected")).toHaveCount(1);
+  await expect(page.locator(".research-topic-trigger.selected")).toHaveCount(1);
 });
 
 test("system detail tabs reveal one compact panel", async ({ page }) => {
