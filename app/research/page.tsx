@@ -54,14 +54,12 @@ export default function ResearchPage() {
       entries => {
         entries.forEach(entry => {
           const target = entry.target as HTMLElement;
-          if (entry.isIntersecting) {
-            target.classList.add("is-revealed");
-          } else if (entry.boundingClientRect.top > 0 || entry.boundingClientRect.bottom < 0) {
-            target.classList.remove("is-revealed");
-          }
+          if (!entry.isIntersecting) return;
+          target.classList.add("is-revealed");
+          observer.unobserve(target);
         });
       },
-      { threshold: 0.16, rootMargin: "-4% 0px -10% 0px" },
+      { threshold: 0.08, rootMargin: "0px 0px -4% 0px" },
     );
 
     targets.forEach(target => observer.observe(target));
@@ -81,7 +79,7 @@ export default function ResearchPage() {
           <p>These are recurring questions that have shaped what Aixion builds, rejects, validates and changes.</p>
           <p>The work is not a catalogue of strategies. It is the discipline used to make systems more reliable, more honest about uncertainty and more useful in the real world.</p>
         </div>
-        <div data-motion="rail" data-motion-group="intro" data-motion-order="2" className="premium-context-rail" aria-label="Research focus areas">
+        <div data-motion="rail" data-motion-group="intro" data-motion-order="2" className="premium-context-rail" role="region" tabIndex={0} aria-label="Research focus areas">
           <span>Data Integrity</span><span>Validation</span><span>Execution Reality</span><span>Human Authority</span><span>Reproducibility</span>
         </div>
       </section>
@@ -112,34 +110,30 @@ export default function ResearchPage() {
       <style jsx global>{`
         .mock-research-page [data-motion] {
           --reveal-delay: 0ms;
-          will-change: transform, opacity, clip-path;
+          will-change: transform;
         }
         .mock-research-page [data-motion="headline"] {
-          opacity: 0;
+          opacity: 1;
           transform: translate3d(0, 34px, 0) scale(.985);
-          filter: blur(5px);
-          transition: opacity 620ms cubic-bezier(.22,1,.36,1) var(--reveal-delay), transform 720ms cubic-bezier(.16,1,.3,1) var(--reveal-delay), filter 560ms ease var(--reveal-delay);
+          transition: transform 720ms cubic-bezier(.16,1,.3,1) var(--reveal-delay);
         }
         .mock-research-page [data-motion="copy"] {
-          opacity: 0;
+          opacity: 1;
           transform: translate3d(0, 24px, 0);
-          transition: opacity 540ms ease var(--reveal-delay), transform 650ms cubic-bezier(.16,1,.3,1) var(--reveal-delay);
+          transition: transform 650ms cubic-bezier(.16,1,.3,1) var(--reveal-delay);
         }
         .mock-research-page [data-motion="rail"] {
-          opacity: 0;
-          clip-path: inset(0 100% 0 0);
+          opacity: 1;
           transform: translate3d(-12px,0,0);
-          transition: opacity 480ms ease var(--reveal-delay), clip-path 760ms cubic-bezier(.16,1,.3,1) var(--reveal-delay), transform 650ms cubic-bezier(.16,1,.3,1) var(--reveal-delay);
+          transition: transform 650ms cubic-bezier(.16,1,.3,1) var(--reveal-delay);
         }
         .mock-research-page [data-motion="card"] {
-          opacity: 0;
+          opacity: 1;
           transform: translate3d(0, 42px, 0) scale(.975);
-          transition: opacity 560ms ease var(--reveal-delay), transform 760ms cubic-bezier(.16,1,.3,1) var(--reveal-delay);
+          transition: transform 760ms cubic-bezier(.16,1,.3,1) var(--reveal-delay);
         }
         .mock-research-page [data-motion="card"] .mock-research-thumb {
           overflow: hidden;
-          clip-path: inset(0 0 100% 0);
-          transition: clip-path 820ms cubic-bezier(.16,1,.3,1) calc(var(--reveal-delay) + 80ms);
         }
         .mock-research-page [data-motion="card"] .mock-research-thumb img {
           transform: scale(1.055);

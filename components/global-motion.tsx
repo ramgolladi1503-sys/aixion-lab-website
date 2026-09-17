@@ -41,9 +41,11 @@ export function GlobalMotion(){
     });
     if(reduced)return;
     const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(!entry.isIntersecting)return;
       const target=entry.target as HTMLElement;
-      if(entry.isIntersecting)target.classList.add("global-motion-visible");else target.classList.remove("global-motion-visible");
-    }),{threshold:.15,rootMargin:"-3% 0px -10% 0px"});
+      target.classList.add("global-motion-visible");
+      observer.unobserve(target);
+    }),{threshold:.08,rootMargin:"0px 0px -4% 0px"});
     targets.forEach(target=>observer.observe(target));
     return()=>{observer.disconnect();targets.forEach(target=>{target.classList.remove("global-motion-visible");delete target.dataset.globalMotion;target.style.removeProperty("--global-motion-delay");});};
   },[pathname]);

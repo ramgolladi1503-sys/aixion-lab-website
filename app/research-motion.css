@@ -13,8 +13,8 @@
 }
 
 /*
- * page.tsx owns viewport entry/reset through [data-motion].
- * This sheet only choreographs the children, so every leave/re-entry can replay.
+ * page.tsx owns viewport entry through [data-motion]. Reveals run once and
+ * content remains visible so scrolling can never strand an empty canvas.
  */
 .mock-research-intro [data-motion="headline"] .mock-kicker,
 .mock-research-intro [data-motion="headline"] h1,
@@ -22,8 +22,8 @@
 .mock-research-intro [data-motion="rail"] span,
 .mock-research-card[data-motion="card"] > strong,
 .mock-research-card[data-motion="card"] > span {
-  opacity: 0;
-  will-change: opacity, transform;
+  opacity: 1;
+  will-change: transform;
 }
 
 /* Kicker arrives first, then the display line rises from behind an imaginary mask. */
@@ -106,11 +106,9 @@
   transform: none;
 }
 
-/* Image reveals as an aperture, with a small directional settle inside the frame. */
+/* Image settles into place without using visibility as a motion dependency. */
 .mock-research-card[data-motion="card"] .mock-research-thumb {
-  clip-path: inset(0 0 100% 0);
   transform-origin: center bottom;
-  transition: clip-path 760ms cubic-bezier(.16,1,.3,1) calc(var(--reveal-delay) + 95ms);
 }
 
 .mock-research-card[data-motion="card"] .mock-research-thumb img {

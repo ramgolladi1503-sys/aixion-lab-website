@@ -196,6 +196,56 @@ html[data-theme='dark'] .showcase-editorial-columns p {
   color: #ded6cf !important;
 }
 
+/* Dark theme is a complete palette, not a background-only override. */
+html[data-theme='dark'] :is(
+  .mock-systems-page,
+  .mock-research-page,
+  .about-editorial-page,
+  .mock-collaborate-page,
+  .mock-profile-page,
+  .system-showcase
+) :is(h1, h2, h3, h4, strong, a, button, li, dt, dd, span) {
+  color: #f0e7e2 !important;
+}
+
+html[data-theme='dark'] :is(
+  .mock-systems-page,
+  .mock-research-page,
+  .about-editorial-page,
+  .mock-collaborate-page,
+  .mock-profile-page,
+  .system-showcase
+) :is(p, li, dd) {
+  color: #d8cec8 !important;
+}
+
+html[data-theme='dark'] .public-state-badge {
+  background: #2b2624 !important;
+  border-color: rgba(240, 231, 226, .34) !important;
+  color: #f3ece7 !important;
+}
+
+.premium-context-rail:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* Pulse cards must follow the selected canvas instead of retaining a hardcoded
+   light surface under the dark token palette. */
+.pulse-system-card {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(33, 33, 33, 0.12);
+  box-shadow: 0 4px 20px rgba(32, 26, 22, 0.05);
+  color: #211d1a;
+}
+
+[data-theme="dark"] .pulse-system-card {
+  background: rgba(28, 25, 23, 0.88);
+  border-color: rgba(240, 231, 226, 0.18);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+  color: #f0e7e2;
+}
+
 /* 8. Fixed Pill Clearance: prevent status bar from occluding bottom paragraphs */
 .system-showcase {
   padding-bottom: 7.5rem !important;

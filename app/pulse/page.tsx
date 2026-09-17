@@ -15,14 +15,12 @@ export default function PulsePage() {
 
       <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gap: "2rem" }}>
         {systems.map((system) => (
-          <div 
+          <article
             key={system.id} 
+            className="pulse-system-card"
             style={{ 
-              background: "#ffffff", 
               padding: "2.5rem", 
               borderRadius: "16px",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.03)",
-              border: "1px solid rgba(33, 33, 33, 0.08)"
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem" }}>
@@ -90,7 +88,7 @@ export default function PulsePage() {
                 Inspect System Architecture ↘
               </Link>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </div>

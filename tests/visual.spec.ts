@@ -63,6 +63,20 @@ test("research is dense and reveals only one detail", async ({ page }) => {
   await expect(page.locator(".mock-research-card.selected")).toHaveCount(1);
 });
 
+test("research content remains visible throughout scrolling", async ({ page }) => {
+  await page.goto("/research", { waitUntil: "networkidle" });
+  const cards = page.locator(".mock-research-card");
+  await expect(cards).toHaveCount(11);
+  for (let index = 0; index < 11; index += 1) {
+    const card = cards.nth(index);
+    await card.scrollIntoViewIfNeeded();
+    await expect(card).toBeVisible();
+    await expect(card).toHaveCSS("opacity", "1");
+    await expect(card.locator("strong")).toHaveCSS("opacity", "1");
+    await expect(card.locator(".mock-research-thumb")).not.toHaveCSS("clip-path", /inset\([^)]*100%/);
+  }
+});
+
 test("decorative serial numbers are absent from rebuilt pages and drawer", async ({ page }) => {
   await page.goto("/research", { waitUntil: "networkidle" });
   await expect(page.locator(".research-topic-number")).toHaveCount(0);
