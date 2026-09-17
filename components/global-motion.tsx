@@ -21,7 +21,7 @@ const PAGE_SPECS: Array<{ match: (path: string) => boolean; specs: MotionSpec[] 
     {selector:".mock-profile-hero > div:first-child",variant:"headline"},{selector:".mock-profile-meta",variant:"rail"},{selector:".mock-section-title",variant:"section"},{selector:".mock-competency-grid > article",variant:"card",stagger:90},{selector:".mock-experience-grid > article",variant:"card",stagger:100},{selector:".mock-profile-work-grid > article",variant:"card",stagger:120},{selector:".mock-profile-next > *",variant:"copy",stagger:110},
   ]},
   { match:p=>p.startsWith("/systems/")&&p!=="/systems", specs:[
-    {selector:".showcase-identity",variant:"headline"},{selector:".showcase-context",variant:"copy"},{selector:".showcase-capability-strip > article",variant:"card",stagger:90},{selector:".showcase-subnav",variant:"rail"},{selector:".showcase-active-panel",variant:"section"},
+    {selector:".showcase-identity",variant:"headline"},{selector:".showcase-context",variant:"copy"},{selector:".showcase-capability-strip > article",variant:"card",stagger:90},{selector:".showcase-active-panel",variant:"section"},
   ]},
 ];
 

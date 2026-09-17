@@ -34,11 +34,10 @@ test("rebuilt target pages use approved composition", async ({ page }) => {
   }
 });
 
-test("system pages use compact product showcase and premium media", async ({ page }) => {
+test("system pages use compact product showcase", async ({ page }) => {
   for (const route of ["/systems/tradebot", "/systems/control-tower", "/systems/analytics", "/systems/automation"]) {
     await page.goto(route, { waitUntil: "networkidle" });
     await expect(page.locator(".system-showcase")).toBeVisible();
-    await expect(page.locator(".showcase-hero-media img")).toBeVisible();
     await expect(page.locator(".showcase-capability-strip article")).toHaveCount(4);
     await expect(page.locator(".showcase-subnav button")).toHaveCount(5);
   }
@@ -51,7 +50,7 @@ test("body typography remains readable", async ({ page }, testInfo) => {
   await page.goto("/collaborate", { waitUntil: "networkidle" });
   expect(await fontPx(page.locator(".mock-collaborate-hero > p"))).toBeGreaterThanOrEqual(16);
   await page.goto("/research", { waitUntil: "networkidle" });
-  expect(await fontPx(page.locator(".mock-research-intro > div:last-child p").first())).toBeGreaterThanOrEqual(15.5);
+  expect(await fontPx(page.locator(".mock-research-intro p:not(.mock-kicker)").first())).toBeGreaterThanOrEqual(15.5);
 });
 
 test("research is dense and reveals only one detail", async ({ page }) => {

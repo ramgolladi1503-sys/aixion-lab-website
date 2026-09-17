@@ -17,7 +17,23 @@
 .about-editorial-page,
 .mock-collaborate-page,
 .mock-profile-page,
+.system-showcase,
+.mock-systems-intro,
+.mock-research-intro,
+.about-hero,
+.mock-collaborate-hero,
+.mock-profile-hero {
+  box-sizing: border-box !important;
+}
+
+.mock-systems-page,
+.mock-research-page,
+.about-editorial-page,
+.mock-collaborate-page,
+.mock-profile-page,
 .system-showcase {
+  width: 100% !important;
+  max-width: min(1360px, 100%) !important;
   position: relative !important;
   isolation: isolate !important;
   background-color: #faf8f5 !important;
@@ -183,4 +199,22 @@ html[data-theme='dark'] .showcase-editorial-columns p {
 /* 8. Fixed Pill Clearance: prevent status bar from occluding bottom paragraphs */
 .system-showcase {
   padding-bottom: 7.5rem !important;
+}
+
+/* 9. Showcase Subnav Stacking & Sticky Authority */
+.showcase-capability-strip {
+  overflow: hidden !important;
+}
+
+.system-showcase .showcase-subnav {
+  position: sticky !important;
+  top: 4.25rem !important;
+  z-index: 30 !important;
+  background: color-mix(in srgb, #faf8f5 94%, transparent) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+html[data-theme='dark'] .system-showcase .showcase-subnav {
+  background: color-mix(in srgb, #131110 94%, transparent) !important;
 }
