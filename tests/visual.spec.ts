@@ -137,3 +137,28 @@ test("mobile context rails wrap without hidden labels", async ({ page }, testInf
     expect(boxes.every(box => box.width > 0 && box.right <= viewportWidth + 1)).toBe(true);
   }
 });
+
+test("motion never makes page content a visibility dependency", async ({ page }) => {
+  for (const route of ["/systems", "/research", "/about", "/collaborate", "/resume", "/systems/tradebot"]) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await page.waitForTimeout(100);
+    const hidden = await page.locator("[data-global-motion], [data-motion]").evaluateAll(elements => elements.filter(element => {
+      const style = getComputedStyle(element);
+      return style.opacity === "0" || style.visibility === "hidden" || style.display === "none" || /100%/.test(style.clipPath);
+    }).length);
+    expect(hidden, `${route} retains hidden motion content`).toBe(0);
+  }
+});
+
+test("reduced motion disables transitions and animations", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const route of ["/research", "/about", "/systems/tradebot"]) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    const moving = await page.locator("[data-global-motion], [data-motion]").evaluateAll(elements => elements.filter(element => {
+      const style = getComputedStyle(element);
+      return style.transitionDuration !== "0s" || style.animationDuration !== "0s" || style.transform !== "none";
+    }).length);
+    expect(moving, `${route} ignores reduced-motion`).toBe(0);
+  }
+});

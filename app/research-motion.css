@@ -1,15 +1,8 @@
 /* Research motion pass 2 — motion only. Locked visual/layout values stay untouched. */
 
-@keyframes aixionWallBreathe {
-  from { transform: scale(1.008) translate3d(-.14%, 0, 0); }
-  to { transform: scale(1.014) translate3d(.14%, -.08%, 0); }
-}
-
-/* Keep the fixed art wall alive without turning scroll into parallax. */
+/* The canvas remains stable; motion is reserved for user-directed content. */
 .mock-research-page::before {
   transform-origin: 55% 50%;
-  animation: aixionWallBreathe 28s cubic-bezier(.22,.61,.36,1) alternate infinite;
-  will-change: transform;
 }
 
 /*

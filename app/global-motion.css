@@ -1,10 +1,10 @@
 /* Aixion motion language — approved motion baseline plus visual-readability corrections. */
-[data-global-motion]{--global-motion-delay:0ms;will-change:opacity,transform,filter,clip-path}
+[data-global-motion]{--global-motion-delay:0ms;will-change:transform}
 [data-global-motion="kicker"],[data-global-motion="copy"],[data-global-motion="section"]{opacity:1;transform:translate3d(0,18px,0);transition:transform 520ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
 [data-global-motion="headline"]{opacity:1;transform:translate3d(0,24px,0) scale(.99);filter:none;transition:transform 620ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
-[data-global-motion="rail"]{opacity:1;transform:translate3d(-10px,0,0);clip-path:inset(0 100% 0 0);transition:transform 520ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay),clip-path 620ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
+[data-global-motion="rail"]{opacity:1;transform:translate3d(-10px,0,0);transition:transform 520ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
 [data-global-motion="card"]{opacity:1;transform:translate3d(0,24px,0) scale(.988);transition:transform 620ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
-[data-global-motion="image"]{opacity:1;transform:translate3d(0,18px,0) scale(.99);clip-path:inset(0 0 100% 0 round 2px);transition:transform 700ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay),clip-path 720ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
+[data-global-motion="image"]{opacity:1;transform:translate3d(0,18px,0) scale(.99);transition:transform 700ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
 [data-global-motion="card"] img,[data-global-motion="image"] img{transform:scale(1.055);transition:transform 1050ms cubic-bezier(.16,1,.3,1) calc(var(--global-motion-delay) + 70ms)}
 [data-global-motion].global-motion-visible{opacity:1;transform:none;filter:none;clip-path:inset(0)}
 [data-global-motion].global-motion-visible img{transform:scale(1)}
