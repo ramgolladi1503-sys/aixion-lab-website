@@ -18,6 +18,7 @@ import "./editorial-flow.css";
 import "./editorial-flow-correction.css";
 import "./research-motion.css";
 import "./global-motion.css";
+import "./system-high-key.css";
 import { UnseenHeader, UnseenStatusBar } from "@/components/unseen-chrome";
 import { GlobalMotion } from "@/components/global-motion";
 
