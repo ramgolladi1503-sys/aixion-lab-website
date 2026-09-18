@@ -34,6 +34,42 @@ html[data-theme="dark"] .profile-editorial-page p {
   color:#d3c8c2;
 }
 
+/* Mockup-era editorial surfaces need explicit dark-theme ink. The light
+   palette is intentionally authored in CSS, so inherited dark variables are
+   not enough for headings and body copy. */
+html[data-theme="dark"] .editorial-home,
+html[data-theme="dark"] .mock-systems-page,
+html[data-theme="dark"] .mock-research-page,
+html[data-theme="dark"] .mock-collaborate-page,
+html[data-theme="dark"] .mock-profile-page { background:#12100f !important; color:#f0e7e2 !important; }
+html[data-theme="dark"] .editorial-home h1,
+html[data-theme="dark"] .editorial-home h2,
+html[data-theme="dark"] .editorial-home h3,
+html[data-theme="dark"] .mock-systems-page h1,
+html[data-theme="dark"] .mock-systems-page h2,
+html[data-theme="dark"] .mock-systems-page h3,
+html[data-theme="dark"] .mock-research-page h1,
+html[data-theme="dark"] .mock-research-page h2,
+html[data-theme="dark"] .mock-research-page h3,
+html[data-theme="dark"] .mock-collaborate-page h1,
+html[data-theme="dark"] .mock-collaborate-page h2,
+html[data-theme="dark"] .mock-collaborate-page h3,
+html[data-theme="dark"] .mock-profile-page h1,
+html[data-theme="dark"] .mock-profile-page h2,
+html[data-theme="dark"] .mock-profile-page h3 { color:#f0e7e2 !important; }
+html[data-theme="dark"] .editorial-home p,
+html[data-theme="dark"] .mock-systems-page p,
+html[data-theme="dark"] .mock-research-page p,
+html[data-theme="dark"] .mock-collaborate-page p,
+html[data-theme="dark"] .mock-profile-page p,
+html[data-theme="dark"] .editorial-home dt,
+html[data-theme="dark"] .mock-profile-page dt { color:#d3c8c2 !important; }
+html[data-theme="dark"] .unseen-projects-section { background:#12100f !important; color:#f0e7e2; }
+html[data-theme="dark"] .unseen-projects-section h1,
+html[data-theme="dark"] .unseen-projects-section h2 { color:#f0e7e2 !important; }
+html[data-theme="dark"] .unseen-projects-section p { color:#d3c8c2 !important; }
+html[data-theme="dark"] .pulse-system-card { background:#1a1716 !important; color:#f0e7e2 !important; border-color:rgba(240,231,226,.14) !important; }
+
 html[data-theme="dark"] .unseen-drawer-menu {
   background:#1a1716;
   color:#f0e7e2;
