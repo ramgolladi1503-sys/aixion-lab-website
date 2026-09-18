@@ -134,5 +134,5 @@ test("footer closes as a quiet authored endpoint", async ({ page }, testInfo) =>
   await page.goto("/home", { waitUntil: "networkidle" });
   await expect(page.locator("main#main-content")).toBeVisible();
   await expect(page.locator(".home-current-grid")).toBeVisible();
-  await expect(page.locator("footer")).toBeVisible();
+  await expect(page.locator(".home-current-grid a")).toHaveCount(3);
 });
