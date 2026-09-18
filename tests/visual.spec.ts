@@ -13,7 +13,7 @@ for (const [name, route] of routes) {
     await expect(page.locator("body")).toBeVisible();
     await expect(page.locator("header")).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)).toBe(false);
-    await page.screenshot({ path: path.join("test-results", "screenshots", testInfo.project.name, `${name}.png`), fullPage: true });
+    await page.screenshot({ path: path.join("test-results", "screenshots", testInfo.project.name, `${name}.png`), fullPage: name !== "entry" });
   });
 }
 
