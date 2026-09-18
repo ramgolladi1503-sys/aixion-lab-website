@@ -37,7 +37,7 @@ export function UnseenHeader() {
 
       {menuOpen && (
         <div className="unseen-drawer-backdrop" role="presentation" onClick={() => setMenuOpen(false)}>
-          <aside className="unseen-drawer-menu" role="dialog" aria-modal="true" aria-label="Site navigation" onClick={(event) => event.stopPropagation()}>
+          <aside className="unseen-drawer-menu mockup-drawer-menu" role="dialog" aria-modal="true" aria-label="Site navigation" onClick={(event) => event.stopPropagation()}>
             <div className="unseen-drawer-top"><span>Aixion Lab</span><button type="button" aria-label="Close navigation" onClick={() => setMenuOpen(false)}>×</button></div>
             <nav className="unseen-drawer-nav">
               {[["Work", "/systems"], ["Research", "/research"], ["About", "/about"], ["Collaborate", "/collaborate"]].map(([label, href]) => (

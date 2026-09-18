@@ -23,6 +23,7 @@ test("system detail tabs reveal one compact panel", async ({ page }) => {
 
 test("desktop drawer preserves page context", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "Desktop-only drawer geometry");
+  test.skip((page.viewportSize()?.width ?? 0) < 1000, "Desktop browser profile did not provide a desktop viewport");
   await page.goto("/research", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: /Toggle navigation drawer/i }).click();
   const drawer = page.locator(".unseen-drawer-menu");
