@@ -1,0 +1,272 @@
+/* Pattern A — premium stacked narrative remediation
+   Purpose: remove recurring left/void/right geometry while preserving locked imagery.
+   This file intentionally loads last and only adjusts content geometry, type rhythm,
+   brand presence, and development-preview chrome. */
+
+:root {
+  --premium-reading: 72ch;
+  --premium-wide-reading: 88ch;
+  --premium-stack-gap: clamp(.85rem, 1.4vw, 1.25rem);
+  --premium-section-gap: clamp(2.6rem, 4.5vw, 4rem);
+}
+
+/* ---------- Brand ---------- */
+.unseen-logo {
+  font-family: var(--font-sans) !important;
+  font-size: clamp(1rem, 1.05vw, 1.12rem) !important;
+  font-weight: 650 !important;
+  letter-spacing: -.025em !important;
+  line-height: 1 !important;
+}
+.unseen-logo .sup { font-size: .5em !important; top: -.55em !important; }
+
+/* Next.js local development indicator. Never part of the public experience. */
+nextjs-portal { display: none !important; }
+
+/* ---------- Pattern A: page introductions ---------- */
+.mock-systems-intro,
+.mock-research-intro,
+.mock-collaborate-hero {
+  display: block !important;
+  width: 100% !important;
+  padding-bottom: clamp(1.6rem, 2.4vw, 2.2rem) !important;
+}
+
+.mock-systems-intro > div,
+.mock-research-intro > div:first-child,
+.mock-collaborate-hero > div {
+  max-width: var(--premium-wide-reading) !important;
+}
+
+.mock-systems-intro h1,
+.mock-research-intro h1,
+.mock-collaborate-hero h1 {
+  max-width: 18ch !important;
+  margin-bottom: 1rem !important;
+  text-wrap: balance;
+}
+
+.mock-systems-intro > p,
+.mock-research-intro > div:last-child,
+.mock-collaborate-hero > p {
+  margin-top: 1rem !important;
+  max-width: var(--premium-reading) !important;
+}
+
+.mock-research-intro > div:last-child p { max-width: var(--premium-reading) !important; }
+
+/* Full-width context rail: fills the canvas with useful structure, not filler. */
+.premium-context-rail {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)) !important;
+  margin-top: clamp(1.7rem, 2.5vw, 2.35rem) !important;
+  border-top: 1px solid var(--mock-rule) !important;
+  border-bottom: 1px solid var(--mock-rule) !important;
+  padding: .9rem 0 !important;
+  gap: 0 !important;
+}
+
+.premium-context-rail span {
+  min-width: 0 !important;
+  padding: .1rem clamp(.8rem, 1.5vw, 1.35rem) !important;
+  border-right: 1px solid var(--mock-rule) !important;
+  color: var(--mock-body) !important;
+  font-family: var(--font-sans) !important;
+  font-size: clamp(.82rem, .84vw, .94rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+  letter-spacing: .015em !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+.premium-context-rail span:last-child { border-right: 0 !important; }
+
+/* Systems section headings: label + explanation belong to one narrative block. */
+.mock-group-title-row {
+  display: block !important;
+  margin-bottom: 1.25rem !important;
+}
+.mock-group-title-row h2 {
+  margin: 0 0 .45rem !important;
+  font-size: clamp(1.35rem, 1.7vw, 1.6rem) !important;
+}
+.mock-group-title-row p {
+  max-width: 68ch !important;
+  margin: 0 !important;
+}
+
+/* ---------- System detail: stacked narrative, not opposing columns ---------- */
+.showcase-hero-top {
+  display: block !important;
+  padding-bottom: clamp(1.6rem, 2.5vw, 2.2rem) !important;
+}
+.showcase-identity {
+  max-width: 76rem !important;
+}
+.showcase-identity h1 {
+  max-width: 17ch !important;
+  text-wrap: balance;
+}
+.showcase-proposition {
+  max-width: 58ch !important;
+}
+.showcase-context {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1rem 1.25rem !important;
+  flex-wrap: wrap !important;
+  margin-top: 1.25rem !important;
+  max-width: var(--premium-wide-reading) !important;
+}
+.showcase-context > p {
+  max-width: var(--premium-reading) !important;
+  margin: 0 !important;
+}
+
+.showcase-panel-grid {
+  display: block !important;
+  max-width: 80rem !important;
+}
+.showcase-panel-grid > div:first-child {
+  max-width: 68rem !important;
+  margin-bottom: 1.35rem !important;
+}
+.showcase-panel-grid h2 {
+  max-width: 26ch !important;
+  text-wrap: balance;
+}
+.showcase-panel-grid > div:last-child {
+  max-width: var(--premium-wide-reading) !important;
+}
+.showcase-panel-grid > div:last-child > p,
+.showcase-next-actions p {
+  max-width: var(--premium-reading) !important;
+}
+.showcase-architecture-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 0 1.4rem !important;
+  max-width: 80rem !important;
+}
+.showcase-active-panel {
+  min-height: 0 !important;
+  padding-bottom: 1.4rem !important;
+}
+
+/* ---------- About: narrative stacks ---------- */
+.about-hero-grid {
+  display: block !important;
+}
+.about-hero-grid h1 {
+  max-width: 19ch !important;
+  margin-bottom: 1.3rem !important;
+  text-wrap: balance;
+}
+.about-lede {
+  max-width: var(--premium-reading) !important;
+}
+.about-hero .premium-context-rail {
+  margin-top: clamp(1.7rem, 2.5vw, 2.35rem) !important;
+}
+
+.about-principles-stacked .about-principles-heading {
+  display: block !important;
+  max-width: 70rem !important;
+  margin: 0 0 1.5rem !important;
+  text-align: left !important;
+}
+.about-principles-stacked .about-principles-heading .editorial-kicker {
+  margin: 0 0 .55rem !important;
+}
+.about-principles-stacked .about-principles-heading h2 {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+/* ---------- Professional profile ---------- */
+.mock-section-title {
+  display: block !important;
+  margin-bottom: 1.55rem !important;
+}
+.mock-section-title .mock-kicker { margin-bottom: .5rem !important; }
+.mock-section-title h2 {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  text-wrap: balance;
+}
+@media (min-width: 980px) {
+  .mock-profile-experience .mock-section-title h2,
+  .mock-profile-work .mock-section-title h2 {
+    white-space: nowrap !important;
+    font-size: clamp(2rem, 2.55vw, 2.85rem) !important;
+  }
+}
+
+/* ---------- Typography: premium restraint ---------- */
+.mock-systems-page h1,
+.mock-research-page h1,
+.mock-collaborate-page h1,
+.mock-profile-page h1,
+.system-showcase h1,
+.about-editorial-page h1,
+.mock-section-title h2,
+.showcase-panel-grid h2,
+.about-principles-heading h2 {
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: -.035em !important;
+}
+
+.mock-systems-page p,
+.mock-research-page p,
+.mock-collaborate-page p,
+.mock-profile-page p,
+.system-showcase p,
+.about-editorial-page p,
+.about-editorial-page li {
+  font-family: var(--font-sans) !important;
+}
+
+/* Keep meaningful prose comfortably premium/readable. */
+.mock-project-copy p,
+.mock-research-card > span,
+.mock-collab-paths p,
+.mock-fit-grid li,
+.mock-competency-grid p,
+.mock-experience-grid p,
+.mock-profile-work-grid p,
+.about-principle-grid p,
+.showcase-capability-strip p,
+.showcase-architecture-list p {
+  line-height: 1.58 !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .showcase-architecture-list { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .mock-profile-experience .mock-section-title h2,
+  .mock-profile-work .mock-section-title h2 { white-space: normal !important; }
+  .premium-context-rail { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .premium-context-rail span { border-right: 0 !important; text-align: left !important; padding: .45rem .7rem !important; }
+}
+
+@media (max-width: 640px) {
+  .mock-systems-intro h1,
+  .mock-research-intro h1,
+  .mock-collaborate-hero h1,
+  .about-hero-grid h1,
+  .showcase-panel-grid h2 {
+    max-width: none !important;
+  }
+  .showcase-context { display: block !important; }
+  .showcase-context .public-state-badge { display: inline-flex !important; margin-top: .85rem !important; }
+  .showcase-architecture-list { grid-template-columns: 1fr !important; }
+  .mock-section-title h2 { white-space: normal !important; }
+  .premium-context-rail { grid-template-columns: 1fr 1fr !important; padding: .65rem 0 !important; }
+  .premium-context-rail span { white-space: normal !important; font-size: .82rem !important; }
+}

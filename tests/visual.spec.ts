@@ -1,107 +1,164 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Locator } from "@playwright/test";
 import path from "node:path";
 
-const routes = [["home", "/"], ["systems", "/systems"], ["tradebot", "/systems/tradebot"], ["control-core", "/systems/control-core"], ["automation", "/systems/automation"], ["analytics", "/systems/analytics"], ["research", "/research"], ["pulse", "/pulse"], ["journey", "/journey"], ["about", "/about"], ["resume", "/resume"]] as const;
+const routes = [
+  ["entry", "/"], ["home", "/home"], ["systems", "/systems"], ["tradebot", "/systems/tradebot"],
+  ["control-tower", "/systems/control-tower"], ["automation", "/systems/automation"], ["analytics", "/systems/analytics"],
+  ["research", "/research"], ["about", "/about"], ["collaborate", "/collaborate"], ["resume", "/resume"],
+] as const;
 
 for (const [name, route] of routes) {
-  test(`${name} renders and captures`, async ({ page }, testInfo) => {
+  test(`${name} renders without horizontal overflow`, async ({ page }, testInfo) => {
     await page.goto(route, { waitUntil: "networkidle" });
     await expect(page.locator("body")).toBeVisible();
     await expect(page.locator("header")).toBeVisible();
-    await expect(page.locator("footer")).toBeVisible();
-    const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
-    expect(hasHorizontalOverflow, `${route} must not overflow horizontally`).toBe(false);
-    await expect(page.locator(".abstract-scene")).toHaveCount(0);
-    await page.waitForTimeout(1100);
-    const destination = path.join("test-results", "screenshots", testInfo.project.name, `${name}.png`);
-    await page.screenshot({ path: destination, fullPage: true });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)).toBe(false);
+    if (name !== "entry") await page.screenshot({ path: path.join("test-results", "screenshots", testInfo.project.name, `${name}.png`), fullPage: true });
   });
 }
 
-test("home primary action is visible without scrolling", async ({ page }) => {
+const fontPx = async (locator: Locator) => locator.evaluate(el => Number.parseFloat(getComputedStyle(el).fontSize));
+
+test("entry remains isolated from scroll navigation", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  const action = page.getByRole("link", { name: /Explore systems/i }).first();
-  await expect(action).toBeVisible();
-  const box = await action.boundingBox();
-  const viewport = page.viewportSize();
-  expect(box).not.toBeNull();
-  expect(viewport).not.toBeNull();
-  expect((box?.y ?? 99999) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0);
+  const before = page.url();
+  await page.mouse.wheel(0, 1600);
+  await page.waitForTimeout(120);
+  expect(page.url()).toBe(before);
 });
 
-test("desktop approved hero begins near the sticky header", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
-  await page.goto("/", { waitUntil: "networkidle" });
-  const copy = await page.locator(".observable-copy").boundingBox();
-  expect(copy).not.toBeNull();
-  expect(copy?.y ?? 99999).toBeLessThan(230);
-});
-
-test("desktop About Lab contact does not reserve a hidden second column", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Desktop grid assertion");
-  await page.goto("/about", { waitUntil: "networkidle" });
-  const panel = page.locator(".about-contact-panel");
-  const visibleCard = panel.locator(".contact-copy").first();
-  const panelBox = await panel.boundingBox();
-  const cardBox = await visibleCard.boundingBox();
-  expect(panelBox).not.toBeNull();
-  expect(cardBox).not.toBeNull();
-  expect((cardBox?.width ?? 0) / (panelBox?.width ?? 1)).toBeGreaterThan(0.95);
-});
-
-test("flagship pages use distinct visual grammars", async ({ page }) => {
-  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  await expect(page.locator(".visual-tradebot").first()).toBeVisible();
-  await page.goto("/systems/control-core", { waitUntil: "networkidle" });
-  await expect(page.locator(".visual-core").first()).toBeVisible();
-});
-
-test("system hero snapshot and subnavigation stay inside the dark visual system", async ({ page }) => {
-  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  const snapshot = page.locator(".system-hero-summary");
-  const subnav = page.locator(".system-subnav-wrap");
-  await expect(snapshot).toBeVisible();
-  await expect(subnav).toBeVisible();
-  const snapshotBg = await snapshot.evaluate(node => getComputedStyle(node).backgroundColor);
-  const subnavBg = await subnav.evaluate(node => getComputedStyle(node).backgroundColor);
-  expect(snapshotBg).not.toBe("rgb(242, 244, 239)");
-  expect(subnavBg).not.toBe("rgb(233, 237, 231)");
-});
-
-test("Career mode has one visible state indicator", async ({ page }) => {
-  await page.goto("/", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Toggle Lab and Career view" }).click();
-  await expect(page.locator("html")).toHaveAttribute("data-view", "career");
-  const afterContent = await page.evaluate(() => getComputedStyle(document.body, "::after").content);
-  expect(afterContent === "none" || afterContent === "normal" || afterContent === '""').toBe(true);
-});
-
-test("Research method is compact and does not repeat the lifecycle as a giant title", async ({ page }, testInfo) => {
-  await page.goto("/research", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "How a claim earns authority." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: /Question.*Observation.*Hypothesis.*Freeze.*Test.*Validation.*Decision/ })).toHaveCount(0);
-  await expect(page.locator(".research-method-flow .architecture-step")).toHaveCount(7);
-
-  if (testInfo.project.name !== "mobile") {
-    const method = await page.locator(".research-method-section").boundingBox();
-    const footer = await page.locator("footer").boundingBox();
-    expect(method).not.toBeNull();
-    expect(footer).not.toBeNull();
-    const gap = (footer?.y ?? 0) - ((method?.y ?? 0) + (method?.height ?? 0));
-    expect(gap).toBeLessThan(120);
+test("rebuilt target pages use approved composition", async ({ page }) => {
+  for (const [route, selector] of [["/systems", ".mock-systems-page"], ["/research", ".mock-research-page"], ["/collaborate", ".mock-collaborate-page"], ["/resume", ".mock-profile-page"]] as const) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    await expect(page.locator(selector)).toBeVisible();
   }
 });
 
-test("Systems registry reaches the first system quickly on desktop", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
-  await page.goto("/systems", { waitUntil: "networkidle" });
-  const firstRow = await page.locator(".registry-row").first().boundingBox();
-  expect(firstRow).not.toBeNull();
-  expect(firstRow?.y ?? 99999).toBeLessThan(720);
+test("system pages use compact product showcase", async ({ page }) => {
+  for (const route of ["/systems/tradebot", "/systems/control-tower", "/systems/analytics", "/systems/automation"]) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    await expect(page.locator(".system-showcase")).toBeVisible();
+    await expect(page.locator(".showcase-capability-strip article")).toHaveCount(4);
+    await expect(page.locator(".showcase-subnav button")).toHaveCount(5);
+  }
 });
 
-test("Journey evolution labels remain readable rather than vertical", async ({ page }) => {
-  await page.goto("/journey", { waitUntil: "networkidle" });
-  const writingMode = await page.locator(".journey-visual-stage span").first().evaluate(node => getComputedStyle(node).writingMode);
-  expect(writingMode).toBe("horizontal-tb");
+test("body typography remains readable", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "Desktop readability gate");
+  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
+  expect(await fontPx(page.locator(".showcase-context > p"))).toBeGreaterThanOrEqual(16);
+  await page.goto("/collaborate", { waitUntil: "networkidle" });
+  expect(await fontPx(page.locator(".mock-collaborate-hero > p"))).toBeGreaterThanOrEqual(16);
+  await page.goto("/research", { waitUntil: "networkidle" });
+  expect(await fontPx(page.locator(".mock-research-intro p:not(.mock-kicker)").first())).toBeGreaterThanOrEqual(15.5);
+});
+
+test("research is dense and reveals only one detail", async ({ page }) => {
+  await page.goto("/research", { waitUntil: "networkidle" });
+  await expect(page.locator(".mock-research-card")).toHaveCount(4);
+  await expect(page.locator(".research-topic-trigger")).toHaveCount(11);
+  await page.locator(".mock-research-card").first().click();
+  await expect(page.locator(".mock-research-detail")).toHaveCount(1);
+  await page.locator(".mock-research-archive").evaluate((element: HTMLDetailsElement) => { element.open = true; });
+  await page.locator(".mock-research-archive-grid button").first().click();
+  await expect(page.locator(".mock-research-detail")).toHaveCount(1);
+  await expect(page.locator(".research-topic-trigger.selected")).toHaveCount(1);
+});
+
+test("research content remains visible throughout scrolling", async ({ page }) => {
+  await page.goto("/research", { waitUntil: "networkidle" });
+  const cards = page.locator(".mock-research-card");
+  await expect(cards).toHaveCount(4);
+  for (let index = 0; index < 4; index += 1) {
+    const card = cards.nth(index);
+    await card.scrollIntoViewIfNeeded();
+    await expect(card).toBeVisible();
+    await expect(card).toHaveCSS("opacity", "1");
+    await expect(card.locator("strong")).toHaveCSS("opacity", "1");
+    await expect(card.locator(".mock-research-thumb")).not.toHaveCSS("clip-path", /inset\([^)]*100%/);
+  }
+});
+
+test("decorative serial numbers are absent from rebuilt pages and drawer", async ({ page }) => {
+  await page.goto("/research", { waitUntil: "networkidle" });
+  await expect(page.locator(".research-topic-number")).toHaveCount(0);
+  await page.goto("/collaborate", { waitUntil: "networkidle" });
+  await expect(page.getByText(/^0[1-9]$/)).toHaveCount(0);
+  await page.getByRole("button", { name: /Toggle navigation drawer/i }).click();
+  await expect(page.locator(".unseen-drawer-nav").getByText(/^0[1-9]$/)).toHaveCount(0);
+});
+
+test("theme can switch and persist", async ({ page }) => {
+  await page.goto("/research", { waitUntil: "networkidle" });
+  const toggle = page.getByRole("button", { name: /Switch to .* mode/i });
+  await toggle.click();
+  const theme = await page.locator("html").getAttribute("data-theme");
+  expect(["light", "dark"]).toContain(theme);
+  expect(await page.evaluate(() => localStorage.getItem("aixion-theme"))).toBe(theme);
+  await page.reload({ waitUntil: "networkidle" });
+  await expect(page.locator("html")).toHaveAttribute("data-theme", theme!);
+});
+
+test("status controls stay off editorial pages", async ({ page }) => {
+  for (const route of ["/systems", "/systems/tradebot", "/research", "/about", "/collaborate", "/resume", "/systems/control-tower", "/systems/analytics", "/systems/automation"]) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    await expect(page.locator(".unseen-status-bar")).toHaveCount(0);
+  }
+});
+
+test("interior pages use a veil-free readable canvas", async ({ page }) => {
+  for (const [route, root] of [["/systems", ".mock-systems-page"], ["/research", ".mock-research-page"], ["/about", ".about-editorial-page"], ["/collaborate", ".mock-collaborate-page"], ["/resume", ".mock-profile-page"]] as const) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    const styles = await page.locator(root).evaluate(element => {
+      const computed = getComputedStyle(element);
+      const after = getComputedStyle(element, "::after");
+      return {
+        backdropFilter: computed.backdropFilter,
+        afterDisplay: after.display,
+        afterContent: after.content,
+      };
+    });
+    expect(styles.backdropFilter).toBe("none");
+    expect(styles.afterDisplay === "none" || styles.afterContent === "none").toBe(true);
+  }
+});
+
+test("mobile context rails wrap without hidden labels", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile", "Mobile wrapping gate");
+  for (const route of ["/systems", "/research", "/about", "/collaborate"]) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    const rail = page.locator(".premium-context-rail");
+    const labels = rail.locator("span");
+    await expect(rail).toBeVisible();
+    expect(await labels.count()).toBeGreaterThanOrEqual(4);
+    const boxes = await labels.evaluateAll(elements => elements.map(element => element.getBoundingClientRect().toJSON()));
+    expect(new Set(boxes.map(box => Math.round(box.y))).size).toBeGreaterThan(1);
+    const viewportWidth = page.viewportSize()?.width ?? 0;
+    expect(boxes.every(box => box.width > 0 && box.right <= viewportWidth + 1)).toBe(true);
+  }
+});
+
+test("motion never makes page content a visibility dependency", async ({ page }) => {
+  for (const route of ["/systems", "/research", "/about", "/collaborate", "/resume", "/systems/tradebot"]) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await page.waitForTimeout(100);
+    const hidden = await page.locator("[data-global-motion], [data-motion]").evaluateAll(elements => elements.filter(element => {
+      const style = getComputedStyle(element);
+      return style.opacity === "0" || style.visibility === "hidden" || style.display === "none" || /100%/.test(style.clipPath);
+    }).length);
+    expect(hidden, `${route} retains hidden motion content`).toBe(0);
+  }
+});
+
+test("reduced motion disables transitions and animations", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const route of ["/research", "/about", "/systems/tradebot"]) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    const moving = await page.locator("[data-global-motion], [data-motion]").evaluateAll(elements => elements.filter(element => {
+      const style = getComputedStyle(element);
+      return style.transitionDuration !== "0s" || style.animationDuration !== "0s" || style.transform !== "none";
+    }).length);
+    expect(moving, `${route} ignores reduced-motion`).toBe(0);
+  }
 });

@@ -1,0 +1,153 @@
+/* Aixion typography refresh
+   Premium Applied Engineering Lab
+   Replaces the previous Unseen-inspired type personality while preserving layout and imagery. */
+
+body.unseen-theme {
+  --font-display: var(--font-aixion-display), Georgia, serif;
+  --font-sans: var(--font-aixion-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
+  letter-spacing: -0.012em;
+}
+
+/* Display language: less fashion-editorial, more precise applied-engineering. */
+.mock-systems-intro h1,
+.mock-project-copy h3,
+.showcase-identity h1,
+.showcase-panel-grid h2,
+.mock-research-intro h1,
+.mock-research-detail h2,
+.mock-collaborate-hero h1,
+.mock-collab-paths h2,
+.mock-fit-intro h2,
+.mock-profile-hero h1,
+.mock-section-title h2,
+.mock-profile-work-grid h3,
+.mock-profile-next h2,
+.about-hero-grid h1,
+.about-two-up h2,
+.about-principles-heading h2,
+.about-closing-wide h2,
+.unseen-drawer-nav a strong {
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.028em !important;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+
+/* Largest page titles should feel architectural, not ornamental. */
+.mock-systems-intro h1,
+.showcase-identity h1,
+.mock-research-intro h1,
+.mock-collaborate-hero h1,
+.mock-profile-hero h1,
+.about-hero-grid h1 {
+  letter-spacing: -0.035em !important;
+}
+
+/* Product/research headings retain serif authority but with calmer sizing behavior. */
+.showcase-panel-grid h2,
+.mock-research-detail h2,
+.mock-section-title h2,
+.mock-profile-work-grid h3,
+.mock-fit-intro h2,
+.about-two-up h2 {
+  letter-spacing: -0.022em !important;
+}
+
+/* Sans system: UI, navigation, evidence, metadata and body copy. */
+body.unseen-theme p,
+body.unseen-theme li,
+body.unseen-theme a,
+body.unseen-theme button,
+body.unseen-theme label,
+body.unseen-theme input,
+body.unseen-theme textarea,
+body.unseen-theme select,
+body.unseen-theme dt,
+body.unseen-theme dd,
+body.unseen-theme strong,
+body.unseen-theme span {
+  font-family: var(--font-sans);
+}
+
+.mock-kicker,
+.editorial-kicker,
+.showcase-kicker,
+.showcase-back,
+.showcase-subnav button,
+.public-state-badge,
+.mock-project-cta,
+.mock-detail-head button,
+.mock-practice-row span,
+.mock-outcome > span,
+.unseen-link,
+.unseen-nav,
+.unseen-logo {
+  font-family: var(--font-sans) !important;
+}
+
+/* Inter can carry slightly tighter tracking at UI sizes without looking cramped. */
+.mock-kicker,
+.editorial-kicker,
+.showcase-kicker {
+  letter-spacing: .12em !important;
+}
+
+.showcase-subnav button,
+.mock-project-cta,
+.public-state-badge,
+.mock-detail-head button,
+.mock-profile-meta dt,
+.mock-profile-meta dd {
+  letter-spacing: -0.008em !important;
+}
+
+/* Body rhythm tuned for Inter. */
+.mock-project-copy p,
+.showcase-context > p,
+.showcase-capability-strip p,
+.showcase-panel-grid > div:last-child > p,
+.showcase-architecture-list p,
+.showcase-next-actions p,
+.mock-research-intro > div:last-child p,
+.mock-research-card > span,
+.mock-research-detail-copy > p,
+.mock-outcome p,
+.mock-collaborate-hero > p,
+.mock-collab-paths p,
+.mock-fit-grid li,
+.mock-profile-lede,
+.mock-competency-grid p,
+.mock-experience-grid p,
+.mock-profile-work-grid p,
+.about-hero-grid p,
+.about-two-up p,
+.about-principle-grid p {
+  letter-spacing: -0.014em !important;
+}
+
+/* Preserve clean wrapping with the new metrics. */
+.mock-systems-intro h1,
+.showcase-identity h1,
+.showcase-panel-grid h2,
+.mock-research-intro h1,
+.mock-research-detail h2,
+.mock-collaborate-hero h1,
+.mock-profile-hero h1,
+.about-hero-grid h1,
+.about-two-up h2,
+.about-closing-wide h2 {
+  text-wrap: balance;
+}
+
+@media (max-width: 640px) {
+  .mock-systems-intro h1,
+  .showcase-identity h1,
+  .mock-research-intro h1,
+  .mock-collaborate-hero h1,
+  .mock-profile-hero h1,
+  .about-hero-grid h1 {
+    letter-spacing: -0.027em !important;
+  }
+}

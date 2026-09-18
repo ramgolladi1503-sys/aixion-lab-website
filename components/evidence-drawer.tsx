@@ -2,21 +2,20 @@
 
 import { useRef } from "react";
 
-export function EvidenceDrawer({ title, type, result, scope, authority, proofLabel = "Summary-only public record", proofHref }: {
+export function EvidenceDrawer({ title, type, result, scope, authority, proofLabel = "Sanitized public summary" }: {
   title: string;
   type: string;
   result: string;
   scope: string;
   authority: string;
   proofLabel?: string;
-  proofHref?: string;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   function close() { ref.current?.close(); }
 
   return (
     <>
-      <button className="evidence-trigger" onClick={() => ref.current?.showModal()}>Inspect evidence</button>
+      <button className="evidence-trigger" onClick={() => ref.current?.showModal()}>View record ↗</button>
       <dialog className="evidence-dialog" ref={ref} aria-label={`${title} evidence record`} onClick={(event) => { if (event.target === ref.current) close(); }}>
         <aside className="evidence-drawer">
           <div className="evidence-drawer-head">
@@ -32,15 +31,7 @@ export function EvidenceDrawer({ title, type, result, scope, authority, proofLab
             <div><dt>Proof surface</dt><dd>{proofLabel}</dd></div>
           </dl>
           <div className="evidence-proof-placeholder">
-            <span>PUBLIC PROOF STATUS</span>
-            {proofHref ? (
-              <a className="text-link" href={proofHref} target="_blank" rel="noreferrer">Open public artifact ↗</a>
-            ) : (
-              <>
-                <strong>Summary only.</strong>
-                <p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p>
-              </>
-            )}
+            <span>PUBLIC PROOF</span><strong>Proof link intentionally gated until a sanitized public artifact is approved.</strong>
           </div>
           <div className="evidence-boundary-note">
             <strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p>

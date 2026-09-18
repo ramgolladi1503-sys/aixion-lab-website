@@ -1,136 +1,78 @@
-import type { Metadata, Viewport } from "next";
-import "./globals.css";
-import "./mobile.css";
-import "./interactions.css";
-import "./convergence.css";
-import "./accessibility.css";
-import "./final-polish.css";
-import "./uat-polish.css";
-import "./launch.css";
-import "./award-motion.css";
-import "./award-fixes.css";
-import "./live-polish.css";
-import "./observable-system.css";
-import "./observable-shell.css";
-import "./observable-release.css";
-import "./system-grammar.css";
-import "./accessibility-contrast.css";
-import "./approved-dark.css";
-import "./approved-dark-fixes.css";
-import "./designer-audit-fixes.css";
-import "./dark-surface-guard.css";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { MotionOrchestrator } from "@/components/motion-orchestrator";
+import type { Metadata } from "next";
+import { Instrument_Serif, Inter } from "next/font/google";
+import "./unseen.css";
+import "./structural-remediation.css";
+import "./system-variants.css";
+import "./mockup-rebuild.css";
+import "./theme-global.css";
+import "./applied-lab-refinement.css";
+import "./visual-audit-fixes.css";
+import "./typography-refresh.css";
+import "./pattern-a-premium.css";
+import "./page-backgrounds.css";
+import "./wallpaper-continuity-fix.css";
+import "./art-wall-final.css";
+import "./art-wall-polish.css";
+import "./editorial-flow.css";
+import "./editorial-flow-correction.css";
+import "./research-motion.css";
+import "./global-motion.css";
+import "./system-high-key.css";
+import "./contour-lines-authority.css";
+import "./editorial-light.css";
+import "./mockup-home.css";
+import { UnseenHeader, UnseenStatusBar } from "@/components/unseen-chrome";
+import { GlobalMotion } from "@/components/global-motion";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aixionlab.com";
-const siteDescription = "An independent engineering lab where ideas move through research, implementation, validation and real-world observation.";
-const socialDescription = "Applied intelligence, automation and decision systems built with explicit state, evidence and authority boundaries.";
+const aixionDisplay = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-aixion-display",
+  display: "swap",
+});
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#061113",
-  colorScheme: "dark",
-};
+const aixionSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-aixion-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
-    default: "Aixion Lab by Ram — Evidence-led Systems Engineering",
+    default: "Aixion Lab — Applied Intelligence, Automation & Decision Systems",
     template: "%s | Aixion Lab",
   },
-  description: siteDescription,
-  metadataBase: new URL(siteUrl),
-  applicationName: "Aixion Lab",
-  authors: [{ name: "Ram", url: "https://github.com/ramgolladi1503-sys" }],
-  creator: "Ram",
-  publisher: "Aixion Lab",
-  category: "technology",
-  keywords: [
-    "Aixion Lab",
-    "Aixion Lab by Ram",
-    "evidence-led systems engineering",
-    "quality engineering",
-    "automation",
-    "software engineering",
-    "applied AI",
-    "agent governance",
-    "real-time systems",
-    "evidence-led engineering",
-  ],
-  manifest: "/manifest.webmanifest",
-  icons: { icon: "/icon.svg" },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
-  },
+  description: "An independent engineering lab where ideas move through research, implementation, validation and real-world observation. Built by Ram.",
+  metadataBase: new URL("https://aixionlab.com"),
   openGraph: {
-    title: "Aixion Lab by Ram — Evidence-led Systems Engineering",
-    description: socialDescription,
+    title: "Aixion Lab",
+    description: "Applied intelligence, automation and decision systems.",
     type: "website",
-    url: siteUrl,
-    siteName: "Aixion Lab",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Aixion Lab by Ram — Evidence-led Systems Engineering",
-    description: socialDescription,
+    url: "https://aixionlab.com",
   },
 };
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": `${siteUrl}/#website`,
-      name: "Aixion Lab",
-      alternateName: ["Aixion Lab by Ram", "AixionLab"],
-      url: siteUrl,
-      description: siteDescription,
-      inLanguage: "en",
-      creator: { "@id": `${siteUrl}/#ram` },
-    },
-    {
-      "@type": "Person",
-      "@id": `${siteUrl}/#ram`,
-      name: "Ram",
-      url: `${siteUrl}/about`,
-      sameAs: ["https://github.com/ramgolladi1503-sys", "https://www.linkedin.com/in/ram-golladi"],
-      knowsAbout: [
-        "Quality engineering",
-        "Automation",
-        "Software engineering",
-        "Data systems",
-        "Applied artificial intelligence",
-        "Agent governance",
-      ],
-    },
-    {
-      "@type": "ProfilePage",
-      "@id": `${siteUrl}/about/#profile`,
-      url: `${siteUrl}/about`,
-      name: "About Ram — Aixion Lab",
-      isPartOf: { "@id": `${siteUrl}/#website` },
-      mainEntity: { "@id": `${siteUrl}/#ram` },
-    },
-  ],
-};
+const themeBoot = `
+(function(){
+  try {
+    var stored = localStorage.getItem('aixion-theme');
+    var theme = stored || 'light';
+    document.documentElement.dataset.theme = theme;
+  } catch (_) {
+    document.documentElement.dataset.theme = 'light';
+  }
+})();`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-view="lab" suppressHydrationWarning>
-      <body>
-        <a className="skip-link" href="#main-content">Skip to content</a>
-        <SiteHeader />
-        <main id="main-content"><MotionOrchestrator>{children}</MotionOrchestrator></main>
-        <SiteFooter />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
+    <html lang="en" data-theme="light" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: themeBoot }} /></head>
+      <body className={`unseen-theme ${aixionDisplay.variable} ${aixionSans.variable}`}>
+        <UnseenHeader />
+        <main id="main-content">{children}</main>
+        <GlobalMotion />
+        <UnseenStatusBar />
       </body>
     </html>
   );

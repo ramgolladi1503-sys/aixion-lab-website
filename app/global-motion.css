@@ -1,0 +1,48 @@
+/* Aixion motion language — approved motion baseline plus visual-readability corrections. */
+[data-global-motion]{--global-motion-delay:0ms;will-change:transform}
+[data-global-motion="kicker"],[data-global-motion="copy"],[data-global-motion="section"]{opacity:1;transform:translate3d(0,18px,0);transition:transform 520ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
+[data-global-motion="headline"]{opacity:1;transform:translate3d(0,24px,0) scale(.99);filter:none;transition:transform 620ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
+[data-global-motion="rail"]{opacity:1;transform:translate3d(-10px,0,0);transition:transform 520ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
+[data-global-motion="card"]{opacity:1;transform:translate3d(0,24px,0) scale(.988);transition:transform 620ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
+[data-global-motion="image"]{opacity:1;transform:translate3d(0,18px,0) scale(.99);transition:transform 700ms cubic-bezier(.16,1,.3,1) var(--global-motion-delay)}
+[data-global-motion="card"] img,[data-global-motion="image"] img{transform:scale(1.055);transition:transform 1050ms cubic-bezier(.16,1,.3,1) calc(var(--global-motion-delay) + 70ms)}
+[data-global-motion].global-motion-visible{opacity:1;transform:none;filter:none;clip-path:inset(0)}
+[data-global-motion].global-motion-visible img{transform:scale(1)}
+[data-global-motion="card"].global-motion-visible:hover{transform:translate3d(0,-4px,0);transition-duration:260ms}
+[data-global-motion="card"].global-motion-visible:hover img{transform:scale(1.022);transition-duration:420ms}
+main a:not([data-global-motion="off"]){transition:transform 240ms cubic-bezier(.22,1,.36,1),opacity 220ms ease,text-decoration-color 220ms ease}
+main a:not([data-global-motion="off"]):hover{transform:translate3d(0,-1px,0)}
+
+/* System-detail canvas — no cream/white veil. Keep the approved artwork crisp and present. */
+.system-showcase{position:relative;isolation:isolate;min-height:100vh}
+.system-showcase::before{content:"";position:fixed;inset:0;z-index:-2;background-repeat:no-repeat;background-size:cover;background-position:center;opacity:.78;filter:saturate(1.08) contrast(1.12) brightness(1.08);pointer-events:none}
+.system-showcase::after{content:none!important;display:none!important}
+.system-showcase-tradebot::before{background-image:url('/textures/systems/tradebot-detail-premium.png');background-position:center 42%}
+.system-showcase-control-core::before{background-image:url('/textures/systems/control-tower-detail-premium.png');background-position:center 40%}
+.system-showcase-automation::before{background-image:url('/textures/systems/automation-detail-premium.png');background-position:center 42%}
+.system-showcase-analytics::before{background-image:url('/textures/systems/analytics-detail-premium.png');background-position:center 42%}
+.system-showcase>*{position:relative;z-index:1}
+html[data-theme='dark'] .system-showcase::before{opacity:.5;filter:saturate(.92) contrast(1.08) brightness(.68)}
+
+/* Editorial context deliberately occupies the hero interval with readable project substance. */
+.showcase-editorial-context{display:grid;grid-template-columns:minmax(130px,1.2fr) minmax(0,10.8fr);gap:clamp(1.5rem,3vw,3rem);padding:clamp(2rem,3.4vw,3.4rem) 0;border-top:1px solid var(--mock-rule);border-bottom:1px solid var(--mock-rule)}
+.showcase-editorial-context>.showcase-kicker{margin:.12rem 0 0;color:var(--mock-accent)!important;font-weight:700!important}
+.showcase-editorial-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1.25rem,2vw,2.1rem) clamp(2rem,3.2vw,3.6rem)}
+.showcase-editorial-columns p{margin:0;max-width:58ch;font-size:clamp(1.08rem,1.22vw,1.22rem)!important;line-height:1.72!important;font-weight:600!important;color:var(--mock-ink)!important;text-shadow:0 1px 0 rgba(255,255,255,.24)}
+.showcase-hero-media{margin-top:clamp(1.8rem,3vw,3rem)}
+
+/* Body readability across Work + all four system pages. */
+.system-showcase p,.system-showcase li{font-size:clamp(1.04rem,1.15vw,1.18rem);line-height:1.68;font-weight:600!important;color:var(--mock-ink)!important}
+.showcase-proposition{font-size:clamp(1.15rem,1.4vw,1.34rem)!important;line-height:1.55!important}
+.showcase-context>p{font-size:clamp(1.06rem,1.2vw,1.2rem)!important;line-height:1.68!important}
+.showcase-capability-strip p,.showcase-panel-grid p,.showcase-architecture-list p{font-size:clamp(1.02rem,1.1vw,1.14rem)!important;line-height:1.66!important}
+.mock-systems-page p,.mock-project-copy p,.mock-group-title-row p{font-size:clamp(1.03rem,1.12vw,1.16rem)!important;line-height:1.62!important;font-weight:600!important;color:var(--mock-ink)!important}
+.mock-systems-intro>p{font-size:clamp(1.12rem,1.35vw,1.3rem)!important;line-height:1.62!important}
+.mock-project-copy p{max-width:46ch}
+.mock-research-page p,.about-editorial-page p,.mock-collaborate-page p,.mock-profile-page p,.mock-research-card>span,.mock-fit-section li{font-weight:550!important;color:color-mix(in srgb,var(--mock-ink) 91%,var(--mock-body))!important}
+html[data-theme='dark'] .system-showcase p,html[data-theme='dark'] .mock-systems-page p{color:var(--mock-ink)!important;text-shadow:none}
+
+.unseen-nav .unseen-link{position:relative}.unseen-nav .unseen-link.active{color:#7a2021!important;font-weight:650!important}.unseen-nav .unseen-link.active::after{content:"";position:absolute;left:0;right:0;bottom:-.42rem;height:2px;border-radius:999px;background:#7a2021;transform:scaleX(1);transform-origin:left center}html[data-theme='dark'] .unseen-nav .unseen-link.active{color:#c87579!important}html[data-theme='dark'] .unseen-nav .unseen-link.active::after{background:#c87579}
+
+@media(max-width:900px){.showcase-editorial-context{grid-template-columns:1fr}.showcase-editorial-columns{grid-template-columns:1fr}.showcase-editorial-columns p{max-width:68ch}}
+@media(prefers-reduced-motion:reduce){[data-global-motion],[data-global-motion] img,main a:not([data-global-motion="off"]){opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;transition:none!important}}

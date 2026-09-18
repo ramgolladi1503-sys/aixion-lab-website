@@ -1,0 +1,174 @@
+/* Research motion pass 2 — motion only. Locked visual/layout values stay untouched. */
+
+/* The canvas remains stable; motion is reserved for user-directed content. */
+.mock-research-page::before {
+  transform-origin: 55% 50%;
+}
+
+/*
+ * page.tsx owns viewport entry through [data-motion]. Reveals run once and
+ * content remains visible so scrolling can never strand an empty canvas.
+ */
+.mock-research-intro [data-motion="headline"] .mock-kicker,
+.mock-research-intro [data-motion="headline"] h1,
+.mock-research-intro [data-motion="copy"] p,
+.mock-research-intro [data-motion="rail"] span,
+.mock-research-card[data-motion="card"] > strong,
+.mock-research-card[data-motion="card"] > span {
+  opacity: 1;
+  will-change: transform;
+}
+
+/* Kicker arrives first, then the display line rises from behind an imaginary mask. */
+.mock-research-intro [data-motion="headline"] .mock-kicker {
+  transform: translate3d(-16px, 0, 0);
+  transition: opacity 420ms ease calc(var(--reveal-delay) + 40ms), transform 560ms cubic-bezier(.16,1,.3,1) calc(var(--reveal-delay) + 40ms);
+}
+
+.mock-research-intro [data-motion="headline"] h1 {
+  transform: translate3d(0, 30px, 0) scale(.992);
+  transform-origin: left bottom;
+  transition: opacity 560ms ease calc(var(--reveal-delay) + 100ms), transform 820ms cubic-bezier(.16,1,.3,1) calc(var(--reveal-delay) + 100ms);
+}
+
+.mock-research-intro [data-motion="headline"].is-revealed .mock-kicker,
+.mock-research-intro [data-motion="headline"].is-revealed h1 {
+  opacity: 1;
+  transform: none;
+}
+
+/* Body copy is intentionally staggered instead of appearing as one block. */
+.mock-research-intro [data-motion="copy"] p {
+  transform: translate3d(0, 16px, 0);
+  transition: opacity 470ms ease calc(var(--reveal-delay) + 70ms), transform 620ms cubic-bezier(.16,1,.3,1) calc(var(--reveal-delay) + 70ms);
+}
+
+.mock-research-intro [data-motion="copy"] p:nth-child(2) {
+  transition-delay: calc(var(--reveal-delay) + 155ms);
+}
+
+.mock-research-intro [data-motion="copy"].is-revealed p {
+  opacity: 1;
+  transform: none;
+}
+
+/* The research rail resolves left-to-right, item by item. */
+.mock-research-intro [data-motion="rail"] span {
+  transform: translate3d(-10px, 0, 0);
+  transition: opacity 360ms ease, transform 520ms cubic-bezier(.16,1,.3,1);
+}
+
+.mock-research-intro [data-motion="rail"] span:nth-child(1) { transition-delay: calc(var(--reveal-delay) + 80ms); }
+.mock-research-intro [data-motion="rail"] span:nth-child(2) { transition-delay: calc(var(--reveal-delay) + 135ms); }
+.mock-research-intro [data-motion="rail"] span:nth-child(3) { transition-delay: calc(var(--reveal-delay) + 190ms); }
+.mock-research-intro [data-motion="rail"] span:nth-child(4) { transition-delay: calc(var(--reveal-delay) + 245ms); }
+.mock-research-intro [data-motion="rail"] span:nth-child(5) { transition-delay: calc(var(--reveal-delay) + 300ms); }
+
+.mock-research-intro [data-motion="rail"].is-revealed span {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+ * Editorial grid choreography. The grid itself is not a moving card deck:
+ * title -> image aperture -> caption. Alternating lateral bias prevents a generic fade-up wall.
+ */
+.mock-research-card[data-motion="card"] {
+  transform-origin: 50% 70%;
+}
+
+.mock-research-card[data-motion="card"]:nth-child(3n + 1) { transform: translate3d(-34px, 34px, 0) scale(.982); }
+.mock-research-card[data-motion="card"]:nth-child(3n + 2) { transform: translate3d(0, 46px, 0) scale(.978); }
+.mock-research-card[data-motion="card"]:nth-child(3n) { transform: translate3d(34px, 34px, 0) scale(.982); }
+.mock-research-card[data-motion="card"].is-revealed { transform: none; }
+
+.mock-research-card[data-motion="card"] > strong {
+  display: block;
+  transform: translate3d(0, 15px, 0);
+  transition: opacity 420ms ease calc(var(--reveal-delay) + 20ms), transform 560ms cubic-bezier(.16,1,.3,1) calc(var(--reveal-delay) + 20ms);
+}
+
+.mock-research-card[data-motion="card"] > span {
+  transform: translate3d(0, 12px, 0);
+  transition: opacity 420ms ease calc(var(--reveal-delay) + 270ms), transform 560ms cubic-bezier(.16,1,.3,1) calc(var(--reveal-delay) + 270ms);
+}
+
+.mock-research-card[data-motion="card"].is-revealed > strong,
+.mock-research-card[data-motion="card"].is-revealed > span {
+  opacity: 1;
+  transform: none;
+}
+
+/* Image settles into place without using visibility as a motion dependency. */
+.mock-research-card[data-motion="card"] .mock-research-thumb {
+  transform-origin: center bottom;
+}
+
+.mock-research-card[data-motion="card"] .mock-research-thumb img {
+  transform: scale(1.065) translate3d(0, 10px, 0);
+  transition: transform 980ms cubic-bezier(.16,1,.3,1) calc(var(--reveal-delay) + 95ms);
+}
+
+.mock-research-card[data-motion="card"].is-revealed .mock-research-thumb {
+  clip-path: inset(0 0 0 0);
+}
+
+.mock-research-card[data-motion="card"].is-revealed .mock-research-thumb img {
+  transform: scale(1) translate3d(0,0,0);
+}
+
+/* Premium hover: image has depth; the locked geometry does not jump. */
+.mock-research-card[data-motion="card"].is-revealed:hover {
+  transform: translate3d(0,-3px,0);
+  transition-duration: 260ms;
+}
+
+.mock-research-card[data-motion="card"].is-revealed:hover .mock-research-thumb img {
+  transform: scale(1.022) translate3d(0,-2px,0);
+  transition-duration: 460ms;
+}
+
+/* Selected research detail continues the same editorial language. */
+@keyframes aixionDetailMedia {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translate3d(-18px,22px,0) scale(1.018); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); transform: none; }
+}
+
+@keyframes aixionDetailCopy {
+  from { opacity: 0; transform: translate3d(24px,26px,0); }
+  to { opacity: 1; transform: none; }
+}
+
+.mock-research-detail-media {
+  animation: aixionDetailMedia 820ms cubic-bezier(.16,1,.3,1) both;
+}
+
+.mock-research-detail-copy {
+  animation: aixionDetailCopy 680ms cubic-bezier(.16,1,.3,1) 110ms both;
+}
+
+/* Preserve native scrolling; no scroll hijack, no forced smooth-scroll globally. */
+html { scroll-behavior: auto; }
+
+@media (max-width: 900px) {
+  .mock-research-card[data-motion="card"]:nth-child(n) {
+    transform: translate3d(0, 34px, 0) scale(.985);
+  }
+  .mock-research-card[data-motion="card"].is-revealed { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mock-research-page::before { animation: none !important; }
+
+  .mock-research-page [data-motion],
+  .mock-research-page [data-motion] *,
+  .mock-research-detail-media,
+  .mock-research-detail-copy {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}

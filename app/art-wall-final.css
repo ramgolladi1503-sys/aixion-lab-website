@@ -1,0 +1,343 @@
+/* Final art-wall model
+   One fixed wallpaper per page. Content scrolls directly over the wall.
+   No pasted-paper hero or section slabs. Local readability support stays optical,
+   not card-like. Loaded last on purpose. */
+
+:root {
+  --art-wall-light-veil: rgba(246, 239, 234, .42);
+  --art-wall-dark-veil: rgba(18, 16, 15, .54);
+  --art-wall-light-strength: .30;
+  --art-wall-dark-strength: .22;
+}
+
+/* Per-page art + right-side signature */
+.mock-systems-page {
+  --art-wall-image: url('/textures/page-backgrounds/work-premium.webp');
+  --art-wall-position: 58% center;
+  --art-signature: "APPLIED ENGINEERING\A SYSTEMS\A RELIABILITY";
+}
+.mock-research-page {
+  --art-wall-image: url('/textures/page-backgrounds/research-premium.webp');
+  --art-wall-position: 58% center;
+  --art-signature: "APPLIED RESEARCH\A VALIDATION\A LIVE SYSTEMS";
+}
+.about-editorial-page {
+  --art-wall-image: url('/textures/page-backgrounds/about-premium.webp');
+  --art-wall-position: 57% center;
+  --art-signature: "INDEPENDENT LAB\A EVIDENCE FIRST\A HUMAN JUDGMENT";
+}
+.mock-collaborate-page {
+  --art-wall-image: url('/textures/page-backgrounds/collaborate-premium.webp');
+  --art-wall-position: 56% center;
+  --art-signature: "BUILD\A VALIDATE\A DELIVER";
+}
+.mock-profile-page {
+  --art-wall-image: url('/textures/page-backgrounds/profile-premium.webp');
+  --art-wall-position: 58% center;
+  --art-signature: "QUALITY\A AUTOMATION\A APPLIED AI";
+}
+
+/* True wall: fixed to the viewport, not stretched with the document. */
+.mock-systems-page,
+.mock-research-page,
+.about-editorial-page,
+.mock-collaborate-page,
+.mock-profile-page {
+  position: relative !important;
+  isolation: isolate !important;
+  background: transparent !important;
+}
+
+.mock-systems-page::before,
+.mock-research-page::before,
+.about-editorial-page::before,
+.mock-collaborate-page::before,
+.mock-profile-page::before {
+  content: "";
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -2 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  transform: none !important;
+  pointer-events: none !important;
+  background-image: var(--art-wall-image) !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: var(--art-wall-position) !important;
+  opacity: var(--art-wall-light-strength) !important;
+  filter: saturate(.86) contrast(.97) !important;
+}
+
+/* One global atmospheric veil. It is not a content surface. */
+.mock-systems-page::after,
+.mock-research-page::after,
+.about-editorial-page::after,
+.mock-collaborate-page::after,
+.mock-profile-page::after {
+  content: "";
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  transform: none !important;
+  pointer-events: none !important;
+  background: var(--art-wall-light-veil) !important;
+}
+
+html[data-theme='dark'] .mock-systems-page::before,
+html[data-theme='dark'] .mock-research-page::before,
+html[data-theme='dark'] .about-editorial-page::before,
+html[data-theme='dark'] .mock-collaborate-page::before,
+html[data-theme='dark'] .mock-profile-page::before {
+  opacity: var(--art-wall-dark-strength) !important;
+  filter: saturate(.78) brightness(.70) contrast(.96) !important;
+}
+
+html[data-theme='dark'] .mock-systems-page::after,
+html[data-theme='dark'] .mock-research-page::after,
+html[data-theme='dark'] .about-editorial-page::after,
+html[data-theme='dark'] .mock-collaborate-page::after,
+html[data-theme='dark'] .mock-profile-page::after {
+  background: var(--art-wall-dark-veil) !important;
+}
+
+/* Hero is now only a spacing/composition container. No background image, slab, border, blur or card. */
+.mock-systems-intro,
+.mock-research-intro,
+.about-hero,
+.mock-collaborate-hero,
+.mock-profile-hero {
+  position: relative !important;
+  overflow: visible !important;
+  min-height: clamp(31rem, 58vh, 40rem) !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.mock-systems-intro::after,
+.mock-research-intro::after,
+.about-hero::after,
+.mock-collaborate-hero::after,
+.mock-profile-hero::after {
+  content: none !important;
+}
+
+/* Quiet page signature in the previously unused upper-right field. It scrolls with content. */
+.mock-systems-intro::before,
+.mock-research-intro::before,
+.about-hero::before,
+.mock-collaborate-hero::before,
+.mock-profile-hero::before {
+  content: var(--art-signature);
+  position: absolute;
+  top: clamp(2.5rem, 5vw, 4.5rem);
+  right: clamp(1.4rem, 4.2vw, 4.6rem);
+  z-index: 2;
+  width: max-content;
+  max-width: 16rem;
+  white-space: pre-line;
+  text-align: right;
+  font-family: var(--font-sans);
+  font-size: .7rem;
+  font-weight: 650;
+  line-height: 1.75;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--mock-ink) 68%, transparent);
+  pointer-events: none;
+}
+
+/* The text is visually on the wall. A soft halo is allowed only around the reading zone. */
+.mock-systems-intro > div:first-child,
+.mock-research-intro > div:first-child,
+.about-hero-grid,
+.mock-collaborate-hero > div:first-child,
+.mock-profile-hero > div:first-child {
+  position: relative;
+  z-index: 1;
+}
+
+.mock-systems-intro > div:first-child::before,
+.mock-research-intro > div:first-child::before,
+.about-hero-grid::before,
+.mock-collaborate-hero > div:first-child::before,
+.mock-profile-hero > div:first-child::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -2.2rem -3rem;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 32% 48%,
+    rgba(247,241,236,.48) 0%,
+    rgba(247,241,236,.22) 52%,
+    rgba(247,241,236,0) 78%);
+  filter: blur(16px);
+}
+
+html[data-theme='dark'] .mock-systems-intro > div:first-child::before,
+html[data-theme='dark'] .mock-research-intro > div:first-child::before,
+html[data-theme='dark'] .about-hero-grid::before,
+html[data-theme='dark'] .mock-collaborate-hero > div:first-child::before,
+html[data-theme='dark'] .mock-profile-hero > div:first-child::before {
+  background: radial-gradient(ellipse at 32% 48%,
+    rgba(18,16,15,.50) 0%,
+    rgba(18,16,15,.24) 52%,
+    rgba(18,16,15,0) 78%);
+}
+
+/* Supporting prose also remains directly on the wall. */
+.mock-systems-intro > p,
+.mock-research-intro > div:last-child,
+.mock-collaborate-hero > p,
+.about-lede,
+.mock-profile-lede {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 12px rgba(247,241,236,.36);
+}
+html[data-theme='dark'] .mock-systems-intro > p,
+html[data-theme='dark'] .mock-research-intro > div:last-child,
+html[data-theme='dark'] .mock-collaborate-hero > p,
+html[data-theme='dark'] .about-lede,
+html[data-theme='dark'] .mock-profile-lede {
+  text-shadow: 0 1px 14px rgba(0,0,0,.34);
+}
+
+/* Remove section 'paper sheets'. Sections themselves are transparent. */
+.mock-system-group,
+.mock-research-grid,
+.mock-research-detail,
+.about-two-up,
+.about-principles,
+.about-closing,
+.mock-collab-paths,
+.mock-fit-section,
+.mock-collab-cta,
+.mock-profile-competencies,
+.mock-profile-experience,
+.mock-profile-work,
+.mock-profile-next {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Preserve editorial boundaries with lines, not slabs. */
+.mock-system-group,
+.mock-research-grid,
+.mock-research-detail,
+.about-two-up,
+.about-principles,
+.about-closing,
+.mock-collab-paths,
+.mock-fit-section,
+.mock-profile-competencies,
+.mock-profile-experience,
+.mock-profile-work,
+.mock-profile-next {
+  border-color: color-mix(in srgb, var(--mock-rule) 72%, transparent) !important;
+}
+
+/* Actual content modules may retain a very light transparent glass for legibility. */
+.mock-project-card,
+.mock-research-card {
+  background: color-mix(in srgb, var(--mock-surface) 20%, transparent) !important;
+  backdrop-filter: blur(4px) saturate(.96) !important;
+  -webkit-backdrop-filter: blur(4px) saturate(.96) !important;
+  border-color: color-mix(in srgb, var(--mock-rule) 76%, transparent) !important;
+}
+.mock-project-card:hover,
+.mock-research-card:hover {
+  background: color-mix(in srgb, var(--mock-surface) 34%, transparent) !important;
+}
+.mock-research-card.selected {
+  background: color-mix(in srgb, var(--mock-accent) 88%, transparent) !important;
+}
+
+/* Profile metadata should read like annotations on the wall, not a floating card. */
+.mock-profile-meta {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 0 !important;
+  border-left: 1px solid color-mix(in srgb, var(--mock-rule) 82%, transparent) !important;
+  box-shadow: none !important;
+  padding-left: 1.35rem !important;
+}
+
+/* Context rails are etched lines on the wall. */
+.premium-context-rail {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-top-color: color-mix(in srgb, var(--mock-ink) 18%, transparent) !important;
+  border-bottom-color: color-mix(in srgb, var(--mock-ink) 12%, transparent) !important;
+}
+
+/* Ensure body copy stays premium and readable over art. */
+.mock-systems-page p,
+.mock-research-page p,
+.about-editorial-page p,
+.mock-collaborate-page p,
+.mock-profile-page p {
+  text-wrap: pretty;
+}
+
+@media (max-width: 960px) {
+  :root {
+    --art-wall-light-strength: .24;
+    --art-wall-dark-strength: .19;
+  }
+  .mock-systems-intro::before,
+  .mock-research-intro::before,
+  .about-hero::before,
+  .mock-collaborate-hero::before,
+  .mock-profile-hero::before {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --art-wall-light-strength: .19;
+    --art-wall-dark-strength: .16;
+  }
+  .mock-systems-page::before,
+  .mock-research-page::before,
+  .about-editorial-page::before,
+  .mock-collaborate-page::before,
+  .mock-profile-page::before {
+    background-position: 60% center !important;
+  }
+  .mock-systems-intro,
+  .mock-research-intro,
+  .about-hero,
+  .mock-collaborate-hero,
+  .mock-profile-hero {
+    min-height: 30rem !important;
+  }
+  .mock-systems-intro > div:first-child::before,
+  .mock-research-intro > div:first-child::before,
+  .about-hero-grid::before,
+  .mock-collaborate-hero > div:first-child::before,
+  .mock-profile-hero > div:first-child::before {
+    inset: -1.4rem -1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mock-systems-page::before,
+  .mock-research-page::before,
+  .about-editorial-page::before,
+  .mock-collaborate-page::before,
+  .mock-profile-page::before {
+    background-attachment: scroll !important;
+  }
+}

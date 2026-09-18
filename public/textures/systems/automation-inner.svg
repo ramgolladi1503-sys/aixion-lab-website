@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <rect width="1200" height="700" fill="#151719" />
+  <text x="60" y="60" fill="#a19d99" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" letter-spacing="2">AUTOMATION SYSTEMS — OBSERVABLE WORKFLOW &amp; RECOVERY ARCHITECTURE</text>
+  <line x1="60" y1="80" x2="1140" y2="80" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+  <!-- 6 Step Progression Flow -->
+  <g transform="translate(60, 140)">
+    <g transform="translate(0,0)">
+      <rect width="155" height="180" rx="4" fill="#1c1f1e" stroke="rgba(255,255,255,0.08)" />
+      <text x="18" y="32" fill="#78998b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600">01 / TRIGGER</text>
+      <text x="18" y="60" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Event Intake</text>
+      <text x="18" y="88" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Start work from defined event, request, or cron.</text>
+    </g>
+
+    <g transform="translate(185,0)">
+      <rect width="155" height="180" rx="4" fill="#1c1f1e" stroke="rgba(255,255,255,0.08)" />
+      <text x="18" y="32" fill="#78998b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600">02 / EXECUTE</text>
+      <text x="18" y="60" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Run Action</text>
+      <text x="18" y="88" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Perform repeatable tasks consistently in sandbox.</text>
+    </g>
+
+    <g transform="translate(370,0)">
+      <rect width="155" height="180" rx="4" fill="#1c1f1e" stroke="rgba(255,255,255,0.08)" />
+      <text x="18" y="32" fill="#78998b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600">03 / CHECK</text>
+      <text x="18" y="60" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Validate</text>
+      <text x="18" y="88" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Verify expected post-condition was achieved.</text>
+    </g>
+
+    <g transform="translate(555,0)">
+      <rect width="155" height="180" rx="4" fill="#1c1f1e" stroke="rgba(255,255,255,0.08)" />
+      <text x="18" y="32" fill="#78998b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600">04 / RECORD</text>
+      <text x="18" y="60" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Preserve</text>
+      <text x="18" y="88" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Log execution details, payloads &amp; snapshots.</text>
+    </g>
+
+    <g transform="translate(740,0)">
+      <rect width="155" height="180" rx="4" fill="#241b1d" stroke="#7A2021" stroke-width="1.5" />
+      <text x="18" y="32" fill="#d49596" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600">05 / RECOVER</text>
+      <text x="18" y="60" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500">Adapt Safely</text>
+      <text x="18" y="88" fill="#cbb3ae" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Retry with jitter or switch to alternative path.</text>
+    </g>
+
+    <g transform="translate(925,0)">
+      <rect width="155" height="180" rx="4" fill="#281c1c" stroke="#7A2021" stroke-width="2" />
+      <text x="18" y="32" fill="#e5ded9" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="700">06 / ESCALATE</text>
+      <text x="18" y="60" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="600">Operator Handoff</text>
+      <text x="18" y="88" fill="#cbb3ae" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Hand off unresolved cases instead of failing silently.</text>
+    </g>
+  </g>
+
+  <!-- Evidence Box -->
+  <g transform="translate(60, 400)">
+    <rect width="1080" height="220" rx="6" fill="#181a1d" stroke="rgba(255,255,255,0.06)" />
+    <text x="30" y="36" fill="#888481" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" letter-spacing="1">OBSERVABILITY PROTOCOL</text>
+
+    <g transform="translate(30, 65)" font-family="monospace" font-size="12" fill="#a5a19e">
+      <text x="0" y="24">1. WORKFLOW STATE: Fully deterministic finite state machine (FSM).</text>
+      <text x="0" y="54">2. RETRY BOUNDARY: Exponential backoff with maximum 3 attempts and circuit-breaker tripping.</text>
+      <text x="0" y="84">3. AUDIT REPOSITORY: Full cryptographic replay hashes persisted per execution.</text>
+      <text x="0" y="114">4. ZERO SILENT FAILS: All unhandled exceptions trigger immediate human operator escalation.</text>
+    </g>
+  </g>
+</svg>
