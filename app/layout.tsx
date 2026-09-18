@@ -70,7 +70,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head><script dangerouslySetInnerHTML={{ __html: themeBoot }} /></head>
       <body className={`unseen-theme ${aixionDisplay.variable} ${aixionSans.variable}`}>
         <UnseenHeader />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <GlobalMotion />
         <UnseenStatusBar />
       </body>
