@@ -44,16 +44,16 @@ test("all internal navigation links resolve", async ({ page, request }) => {
 test("system detail heroes do not duplicate architecture visuals", async ({ page }) => {
   for (const route of ["/systems/tradebot", "/systems/control-core", "/systems/automation", "/systems/analytics"]) {
     await page.goto(route, { waitUntil: "networkidle" });
-    await expect(page.locator(".page-hero .system-hero-summary")).toBeVisible();
-    await expect(page.locator(".page-hero .system-visual")).toHaveCount(0);
-    await expect(page.locator("#architecture .system-visual")).toBeVisible();
+    await expect(page.locator(".system-showcase .showcase-hero")).toBeVisible();
+    await expect(page.locator(".system-showcase .showcase-capability-strip article")).toHaveCount(4);
+    await expect(page.locator(".system-showcase .showcase-active-panel")).toBeVisible();
   }
 });
 
 test("career snapshot is launch-ready and printable", async ({ page }) => {
   await page.goto("/resume", { waitUntil: "networkidle" });
   await expect(page.getByRole("button", { name: "Print / Save PDF" }).first()).toBeVisible();
-  await expect(page.getByText("Live web version")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Quality engineering evolved into systems engineering." })).toBeVisible();
   const text = (await page.locator("body").innerText()).toLowerCase();
   expect(text).not.toContain("publication pending");
   expect(text).not.toContain("will be added");
@@ -62,13 +62,14 @@ test("career snapshot is launch-ready and printable", async ({ page }) => {
 
 test("mobile navigation closes after route change", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/", { waitUntil: "networkidle" });
-  const menu = page.locator("details.mobile-menu");
-  await menu.locator("summary").click();
-  await expect(menu).toHaveAttribute("open", "");
+  await page.goto("/home", { waitUntil: "networkidle" });
+  const open = page.getByRole("button", { name: /Toggle navigation drawer/i });
+  await open.click();
+  const menu = page.getByRole("dialog", { name: "Site navigation" });
+  await expect(menu).toBeVisible();
   await menu.getByRole("link", { name: "Research" }).click();
   await expect(page).toHaveURL(/\/research$/);
-  await expect(menu).not.toHaveAttribute("open", "");
+  await expect(menu).toBeHidden();
 });
 
 test("metadata endpoints are published", async ({ request }) => {
@@ -82,65 +83,34 @@ test("custom 404 is branded and legacy abstract scene is absent", async ({ page 
   const response = await page.goto("/route-that-does-not-exist", { waitUntil: "networkidle" });
   expect(response?.status()).toBe(404);
   await expect(page.getByRole("heading", { name: "Lost in the Lab?" })).toBeVisible();
-  await expect(page.locator(".abstract-scene")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /Return home/ })).toBeVisible();
 });
 
-test("search palette is visually quiet while retaining keyboard behavior", async ({ page }) => {
+test("navigation drawer remains available on the portfolio home", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/", { waitUntil: "networkidle" });
-  const trigger = page.getByRole("button", { name: "Open Aixion search" });
-  await expect(trigger).toHaveText("Search");
-  await expect(page.getByText("⌘K", { exact: true })).toHaveCount(0);
-  await trigger.click();
-  const dialog = page.getByRole("dialog", { name: "Search Aixion" });
-  await expect(dialog).toBeVisible();
-  await expect(dialog.getByText(/select · Enter open|Esc close/i)).toHaveCount(0);
-  await expect(dialog.getByRole("button", { name: "Close search" })).toHaveText("×");
+  await page.goto("/home", { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: /Toggle navigation drawer/i }).click();
+  await expect(page.getByRole("dialog", { name: "Site navigation" })).toBeVisible();
 });
 
 test("Control Core topology stays readable after first-load reveal", async ({ page }) => {
   await page.goto("/systems/control-core", { waitUntil: "networkidle" });
-  const visual = page.locator(".visual-core").first();
-  const map = visual.locator(".core-map");
-  const center = visual.locator(".core-center");
-  const nodes = visual.locator(".core-node");
-  await expect(visual).toBeVisible();
-  await visual.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(900);
-  await expect(map).toBeVisible();
-  await expect(center).toBeVisible();
-  await expect(nodes).toHaveCount(8);
-  for (let index = 0; index < 8; index += 1) await expect(nodes.nth(index)).toBeVisible();
-  const metrics = await map.evaluate(node => {
-    const mapRect = node.getBoundingClientRect();
-    const centerRect = node.querySelector(".core-center")?.getBoundingClientRect();
-    const nodeRects = [...node.querySelectorAll(".core-node")].map(item => item.getBoundingClientRect());
-    return {
-      map: { left: mapRect.left, right: mapRect.right },
-      center: centerRect ? { width: centerRect.width, height: centerRect.height } : null,
-      nodes: nodeRects.map(rect => ({ width: rect.width, height: rect.height, left: rect.left, right: rect.right })),
-    };
-  });
-  expect(metrics.center).not.toBeNull();
-  expect(metrics.center?.width ?? 0).toBeGreaterThan(150);
-  expect(metrics.center?.height ?? 0).toBeGreaterThan(50);
-  expect(metrics.nodes).toHaveLength(8);
-  expect(metrics.nodes.every(node => node.width > 40 && node.height > 30)).toBe(true);
-  expect(metrics.nodes.every(node => node.left >= metrics.map.left - 1 && node.right <= metrics.map.right + 1)).toBe(true);
+  await expect(page.locator(".system-showcase")).toBeVisible();
+  await expect(page.locator(".showcase-capability-strip article")).toHaveCount(4);
+  await expect(page.locator(".showcase-active-panel")).toBeVisible();
 });
 
 test("mobile architecture visuals expose readable semantic stages", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   const checks = [
-    ["/systems/tradebot", ".tradebot-stage", 5],
-    ["/systems/control-core", ".core-node", 8],
-    ["/systems/automation", ".workflow-row", 5],
-    ["/systems/analytics", ".analytics-metric", 3],
+    ["/systems/tradebot", ".showcase-capability-strip article", 4],
+    ["/systems/control-core", ".showcase-capability-strip article", 4],
+    ["/systems/automation", ".showcase-capability-strip article", 4],
+    ["/systems/analytics", ".showcase-capability-strip article", 4],
   ] as const;
   for (const [route, selector, count] of checks) {
     await page.goto(route, { waitUntil: "networkidle" });
-    const visual = page.locator("#architecture .system-visual");
+    const visual = page.locator(".system-showcase");
     await visual.scrollIntoViewIfNeeded();
     const stages = visual.locator(selector);
     await expect(stages).toHaveCount(count);

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PrintResumeButton } from "@/components/print-resume-button";
 
 export const metadata: Metadata = {
   title: "Professional Profile",
@@ -27,6 +28,7 @@ export default function ResumePage() {
           <p className="mock-kicker">PROFESSIONAL PROFILE</p>
           <h1>Quality engineering evolved into systems engineering.</h1>
           <p className="mock-profile-lede">A recruiter-facing view of the work across quality, automation, software systems, real-time data and applied AI — with evidence behind the claims.</p>
+          <PrintResumeButton />
         </div>
         <dl className="mock-profile-meta">
           <div><dt>Current direction</dt><dd>QA · Automation · Applied AI</dd></div>
