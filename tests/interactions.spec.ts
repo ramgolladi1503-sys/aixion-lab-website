@@ -34,17 +34,17 @@ test("Evidence Drawer is proof-first and closes", async ({ page }) => {
   await expect(dialog).toBeHidden();
 });
 
-test("Command palette supports keyboard navigation on desktop", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Command palette trigger is intentionally desktop-only");
+test("header menu supports keyboard navigation", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await page.keyboard.press("ControlOrMeta+K");
-  const dialog = page.getByRole("dialog");
-  await expect(dialog).toBeVisible();
-  const input = dialog.getByRole("textbox", { name: "Search Aixion pages" });
-  await input.fill("TradeBot");
-  await expect(dialog.getByRole("link", { name: /Work — TradeBot/ })).toBeVisible();
-  await input.press("Enter");
-  await expect(page).toHaveURL(/\/systems\/tradebot$/);
+  const trigger = page.getByRole("button", { name: "Menu" });
+  await trigger.click();
+  const menu = page.getByRole("navigation", { name: "Explore Aixion Lab" });
+  await expect(menu.getByRole("link")).toHaveCount(4);
+  await page.keyboard.press("Tab");
+  await expect(menu.getByRole("link").first()).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(trigger).toBeFocused();
 });
 
 test("Primary navigation exposes active route", async ({ page }, testInfo) => {
@@ -64,13 +64,13 @@ test("System page exposes internal navigation", async ({ page }) => {
 test("Mobile navigation exposes locked routes with usable targets", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "mobile", "Mobile navigation test runs only in mobile project");
   await page.goto("/", { waitUntil: "networkidle" });
-  const menu = page.getByText("Menu", { exact: true });
+  const menu = page.getByRole("button", { name: "Menu" });
   const menuBox = await menu.boundingBox();
   expect(menuBox?.height ?? 0).toBeGreaterThanOrEqual(40);
   await menu.click();
-  const navigation = page.getByRole("navigation", { name: "Mobile navigation" });
+  const navigation = page.getByRole("navigation", { name: "Explore Aixion Lab" });
   await expect(navigation).toBeVisible();
-  const work = navigation.getByRole("link", { name: "Work" });
+  const work = navigation.getByRole("link", { name: "Selected Work" });
   await expect(work).toBeVisible();
   const linkBox = await work.boundingBox();
   expect(linkBox?.height ?? 0).toBeGreaterThanOrEqual(40);

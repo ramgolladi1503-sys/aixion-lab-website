@@ -8,10 +8,10 @@ test("Pulse remains available as a dated status record without returning to prim
     await expect(primary.getByRole("link", { name: "Work" })).toBeVisible();
     await expect(primary.getByRole("link", { name: "Pulse" })).toHaveCount(0);
   } else {
-    const menu = page.locator("details.mobile-menu");
-    await menu.locator("summary").click();
+    await page.getByRole("button", { name: "Menu" }).click();
+    const menu = page.getByRole("navigation", { name: "Explore Aixion Lab" });
     await expect(menu.getByRole("link", { name: "The Lab" })).toBeVisible();
-    await expect(menu.getByRole("link", { name: "Work" })).toBeVisible();
+    await expect(menu.getByRole("link", { name: /Selected Work/ })).toBeVisible();
     await expect(menu.getByRole("link", { name: "Pulse" })).toHaveCount(0);
   }
 

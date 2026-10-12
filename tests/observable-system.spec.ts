@@ -19,12 +19,16 @@ test("mobile redesign has four approved chapter tabs, a compact menu and no hori
   const chapters = page.getByRole("tablist", { name: "Explore Aixion Lab" }).getByRole("tab");
   await expect(chapters).toHaveCount(4);
   await expect(chapters).toHaveText(["01Systems", "02Research", "03Automation", "04Analytics"]);
-  await expect(page.locator("details.mobile-menu summary")).toBeVisible();
-  const menu = page.locator("details.mobile-menu");
-  await menu.locator("summary").click();
-  const navigation = menu.getByRole("navigation", { name: "Mobile navigation" });
-  const primaryDestinations = await navigation.getByRole("link").evaluateAll((links) => links.slice(0, 5).map((link) => link.textContent?.trim()));
-  expect(primaryDestinations).toEqual(["Home", "The Lab", "Work", "Research", "Approach"]);
+  const trigger = page.getByRole("button", { name: "Menu" });
+  await expect(trigger).toBeVisible();
+  await trigger.click();
+  const navigation = page.getByRole("navigation", { name: "Explore Aixion Lab" });
+  await expect(navigation.getByRole("link")).toHaveText([
+    /The Lab/,
+    /Selected Work/,
+    /Research/,
+    /Approach/,
+  ]);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
 });

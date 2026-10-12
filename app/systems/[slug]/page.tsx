@@ -227,7 +227,7 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
 
       <section id="engineering" className="editorial-section editorial-section--cool">
         <div className="page-width">
-          <EditorialHeading eyebrow="ENGINEERING STORY" title="Problem → challenge → build → outcome" copy="The work is explained through its constraints and evidence, not a technology-logo wall." />
+          <EditorialHeading className="editorial-heading--storyline" eyebrow="ENGINEERING STORY" title="Problem → challenge → build → outcome" copy="The work is explained through its constraints and evidence, not a technology-logo wall." />
           <div className="detail-grid impact-grid">
             <article className="detail-card" data-reveal><p className="eyebrow">PROBLEM</p><h3>What makes this difficult?</h3><p>{spec.problem}</p></article>
             <article className="detail-card" data-reveal><p className="eyebrow">CHALLENGE</p><h3>What must remain controlled?</h3><p>{spec.challenge}</p></article>
@@ -258,7 +258,7 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
 
       <section id="roadmap" className="editorial-section editorial-section--dark">
         <div className="page-width next-gate" data-reveal>
-          <div><p className="eyebrow eyebrow--light">NEXT GATE</p><h2>{system.nextGate}</h2><p>{system.currentFocus}</p></div>
+          <div><p className="eyebrow eyebrow--light">NEXT GATE</p><h2 className={system.slug === "control-core" ? "next-gate__title--single" : undefined}>{system.nextGate}</h2><p>{system.currentFocus}</p></div>
           <Link href="/systems" className="button button--light">All systems <span aria-hidden="true">↗</span></Link>
         </div>
       </section>

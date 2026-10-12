@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { ActiveNav } from "./active-nav";
-import { CommandPalette } from "./command-palette";
+import { SiteMenu } from "./site-menu";
 import { ModeToggle } from "./mode-toggle";
-import { MobileNav } from "./mobile-nav";
 
 export function SiteHeader() {
   return (
@@ -15,9 +14,8 @@ export function SiteHeader() {
         <ActiveNav />
         <div className="header-actions">
           <ModeToggle />
-          <CommandPalette />
+          <SiteMenu />
           <Link className="header-contact" href="/about#contact">Contact <span aria-hidden="true">↗</span></Link>
-          <MobileNav />
         </div>
       </div>
     </header>

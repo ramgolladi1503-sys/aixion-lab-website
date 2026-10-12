@@ -7,6 +7,8 @@ test("home follows the new editorial sequence and exposes project stories", asyn
   await expect(page.getByRole("heading", { name: "When the inputs move, the evidence has to keep up." })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Useful automation needs a clear boundary around action." })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Some of the most useful results are the ones that stop a claim." })).toBeVisible();
+  await expect(page.locator(".home-person")).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: /Built by Ram, across quality engineering/ })).toHaveCount(0);
   await expect(page.locator(".story-grid, .pulse-home-card, .system-register")).toHaveCount(0);
   await expect(page.getByText("REJECTED", { exact: true })).toBeVisible();
 });
@@ -32,6 +34,20 @@ test("motion reveals the new work spreads without hiding their content", async (
   await expect(story.getByRole("img")).toBeVisible();
 });
 
+test("system section navigation follows the section in view", async ({ page }) => {
+  await page.goto("/systems/automation", { waitUntil: "networkidle" });
+  const nav = page.getByRole("navigation", { name: "Automation Systems page sections" });
+  await expect(nav.getByRole("link", { name: "Overview" })).toHaveAttribute("aria-current", "location");
+  const engineering = nav.getByRole("link", { name: "Engineering" });
+  await engineering.click();
+  await expect(engineering).toHaveAttribute("aria-current", "location");
+
+  const evidence = nav.getByRole("link", { name: "Evidence" });
+  await page.locator("#evidence").evaluate(element => element.scrollIntoView({ block: "start", behavior: "instant" }));
+  await expect(evidence).toHaveAttribute("aria-current", "location");
+  await expect(engineering).not.toHaveAttribute("aria-current", "location");
+});
+
 test("reduced motion keeps all new homepage content available", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
@@ -42,17 +58,52 @@ test("reduced motion keeps all new homepage content available", async ({ page })
   expect(parseFloat(duration)).toBeLessThanOrEqual(0.001);
 });
 
+test("the header menu opens as a four-destination panel and closes accessibly", async ({ page }) => {
+  await page.goto("/about", { waitUntil: "networkidle" });
+  const trigger = page.getByRole("button", { name: "Menu" });
+  await trigger.click();
+  const menu = page.getByRole("navigation", { name: "Explore Aixion Lab" });
+  await expect(menu).toBeVisible();
+  await expect(menu.getByRole("link")).toHaveCount(4);
+  await expect(menu.getByRole("link")).toHaveText([
+    /The Lab/,
+    /Selected Work/,
+    /Research/,
+    /Approach/,
+  ]);
+  await expect(page.getByRole("button", { name: "Close" })).toHaveAttribute("aria-expanded", "true");
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Menu" })).toHaveAttribute("aria-expanded", "false");
+  await expect(page.getByRole("button", { name: "Menu" })).toBeFocused();
+});
+
+test("journey progression is horizontal and its stages are keyboard navigable", async ({ page }) => {
+  await page.goto("/journey", { waitUntil: "networkidle" });
+  const tabs = page.getByRole("tablist", { name: "Engineering disciplines" });
+  await expect(tabs.getByRole("tab")).toHaveCount(7);
+  const first = tabs.getByRole("tab", { name: /Quality Engineering/ });
+  await expect(first).toHaveAttribute("aria-selected", "true");
+  await first.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(tabs.getByRole("tab", { name: /Automation/ })).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByRole("tabpanel")).toContainText("Can this failure be prevented consistently");
+});
+
 test("Work route and legacy systems index show the same editorial work page", async ({ page }, testInfo) => {
   await page.goto("/work", { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { name: "Built around hard questions." })).toBeVisible();
+  await expect(page.locator(".editorial-hero__image")).toHaveCount(1);
+  await expect(page.locator(".editorial-hero")).toContainText("Built around hard questions.");
+  await expect(page.locator(".work-end")).toContainText("THE COMMON THREAD");
+  await expect(page.locator(".work-end").getByRole("heading", { name: "A system earns confidence through what it can show." })).toBeVisible();
   await expect(page.locator(".work-story")).toHaveCount(2);
   await page.goto("/systems", { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { name: "Built around hard questions." })).toBeVisible();
   if (testInfo.project.name === "desktop") {
     await expect(page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Work" })).toHaveAttribute("aria-current", "page");
   } else {
-    const menu = page.locator("details.mobile-menu");
-    await menu.locator("summary").click();
-    await expect(menu.getByRole("link", { name: "Work" })).toHaveAttribute("href", "/work");
+    await page.getByRole("button", { name: "Menu" }).click();
+    const menu = page.getByRole("navigation", { name: "Explore Aixion Lab" });
+    await expect(menu.getByRole("link", { name: /Selected Work/ })).toHaveAttribute("href", "/work");
   }
 });

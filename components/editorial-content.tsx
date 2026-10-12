@@ -43,14 +43,16 @@ export function EditorialHeading({
   title,
   copy,
   align = "left",
+  className = "",
 }: {
   eyebrow?: string;
   title: string;
   copy?: string;
   align?: "left" | "center";
+  className?: string;
 }) {
   return (
-    <header className={`editorial-heading editorial-heading--${align}`} data-reveal>
+    <header className={`editorial-heading editorial-heading--${align} ${className}`} data-reveal>
       {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
       <h2>{title}</h2>
       {copy ? <p className="editorial-heading__copy">{copy}</p> : null}

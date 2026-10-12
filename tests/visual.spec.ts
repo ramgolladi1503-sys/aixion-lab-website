@@ -70,9 +70,9 @@ test("new primary structure presents editorial Work and removes the legacy regis
   if (testInfo.project.name === "desktop") {
     await expect(primary.getByRole("link")).toHaveText(["The Lab", "Work", "Research", "Approach"]);
   } else {
-    const menu = page.locator("details.mobile-menu");
-    await menu.locator("summary").click();
-    await expect(menu.getByRole("link")).toContainText(["Home", "The Lab", "Work", "Research", "Approach", "Career snapshot", "GitHub ↗"]);
+    await page.getByRole("button", { name: "Menu" }).click();
+    const menu = page.getByRole("navigation", { name: "Explore Aixion Lab" });
+    await expect(menu.getByRole("link")).toHaveText([/The Lab/, /Selected Work/, /Research/, /Approach/]);
   }
   await expect(page.locator(".system-register")).toHaveCount(0);
   await page.goto("/work", { waitUntil: "networkidle" });

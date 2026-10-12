@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { EditorialHeading, EditorialHero, ImageStory } from "@/components/editorial-content";
 import { journey } from "@/lib/site-data";
+import { JourneySpectrum } from "@/components/journey-spectrum";
 
 export const metadata: Metadata = {
   title: "Journey",
@@ -24,14 +25,7 @@ export default function JourneyPage() {
       <section id="page-content" className="editorial-section">
         <div className="page-width">
           <EditorialHeading eyebrow="A CONNECTED PRACTICE" title="Each discipline added a new way to reason about systems." copy="The sequence below describes the engineering progression, not a dated employment history." />
-          <ol className="journey-track">
-            {journey.map(([step, milestone, description]) => (
-              <li key={step} data-reveal>
-                <span className="journey-track__node" aria-hidden="true" />
-                <div><span className="journey-track__index">STAGE {step}</span><h3>{milestone}</h3><p>{description}</p></div>
-              </li>
-            ))}
-          </ol>
+          <JourneySpectrum items={journey} />
         </div>
       </section>
 

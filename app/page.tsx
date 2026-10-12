@@ -87,17 +87,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="home-person">
-        <div className="page-width home-person__grid" data-reveal>
-          <p className="eyebrow">THE ENGINEER BEHIND THE WORK</p>
-          <h2>Built by Ram, across quality engineering, automation, software and data.</h2>
-          <div>
-            <p>Aixion Lab is an evolving independent practice, not a claim of a scaled company or finished product suite. The site shares selected work at its actual stage and leaves room for the next difficult question.</p>
-            <EditorialLink href="/about">Meet Ram</EditorialLink>
-          </div>
-        </div>
-      </section>
-
       <section className="last-call home-close">
         <Image className="last-call__image" src="/images/aixion-editorial/signal-room.jpg" alt="" width={1672} height={941} sizes="100vw" />
         <div className="page-width last-call__content" data-reveal>

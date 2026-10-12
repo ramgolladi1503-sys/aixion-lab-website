@@ -61,15 +61,15 @@ test("career snapshot is honest about résumé publication status", async ({ pag
   expect(text).not.toContain("build preview");
 });
 
-test("mobile navigation closes after route change", async ({ page }) => {
+test("shared menu closes after route change", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
-  const menu = page.locator("details.mobile-menu");
-  await menu.locator("summary").click();
-  await expect(menu).toHaveAttribute("open", "");
-  await menu.getByRole("link", { name: "Research" }).click();
+  const trigger = page.locator(".site-menu__trigger");
+  await trigger.click();
+  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  await page.getByRole("navigation", { name: "Explore Aixion Lab" }).getByRole("link", { name: /Research/ }).click();
   await expect(page).toHaveURL(/\/research$/);
-  await expect(menu).not.toHaveAttribute("open", "");
+  await expect(page.getByRole("button", { name: "Menu" })).toHaveAttribute("aria-expanded", "false");
 });
 
 test("metadata endpoints are published", async ({ request }) => {
@@ -88,17 +88,20 @@ test("custom 404 is branded and legacy abstract scene is absent", async ({ page 
   await expect(page.getByRole("link", { name: /Browse work/ })).toHaveAttribute("href", "/work");
 });
 
-test("search palette is visually quiet while retaining keyboard behavior", async ({ page }) => {
+test("site menu exposes four focused destinations without a search palette", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/", { waitUntil: "networkidle" });
-  const trigger = page.getByRole("button", { name: "Open Aixion search" });
-  await expect(trigger).toHaveText("Search");
-  await expect(page.getByText("⌘K", { exact: true })).toHaveCount(0);
+  const trigger = page.getByRole("button", { name: "Menu" });
+  await expect(page.getByRole("button", { name: /search/i })).toHaveCount(0);
   await trigger.click();
-  const dialog = page.getByRole("dialog", { name: "Search Aixion" });
-  await expect(dialog).toBeVisible();
-  await expect(dialog.getByText(/select · Enter open|Esc close/i)).toHaveCount(0);
-  await expect(dialog.getByRole("button", { name: "Close search" })).toHaveText("×");
+  const menu = page.getByRole("navigation", { name: "Explore Aixion Lab" });
+  await expect(menu.getByRole("link")).toHaveCount(4);
+  await expect(menu.getByRole("link")).toHaveText([
+    /The Lab/,
+    /Selected Work/,
+    /Research/,
+    /Approach/,
+  ]);
 });
 
 test("system detail pages expose readable architecture stages on mobile", async ({ page }) => {

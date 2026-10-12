@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { EditorialLink } from "@/components/editorial-content";
+import { EditorialHero } from "@/components/editorial-content";
 import { StateTag } from "@/components/ui";
 import { systems } from "@/lib/site-data";
 
@@ -41,19 +42,17 @@ const supportImages: Record<string, { src: string; alt: string; field: string }>
 export function WorkPage() {
   return (
     <>
-      <section className="work-opening">
-        <div className="page-width work-opening__grid" data-reveal>
-          <p className="eyebrow">SELECTED WORK / AIXION LAB</p>
-          <h1>Built around hard questions.</h1>
-          <p className="work-opening__copy">Selected work in market intelligence, governed automation and decision support. Each project is shown at its actual stage, with evidence and limits in view.</p>
-        </div>
-        <div className="work-opening__image" data-reveal>
-          <Image src="/images/aixion-editorial/planning-studio.jpg" alt="An engineering studio prepared for a design review." fill priority sizes="100vw" />
-          <span>ENGINEERING / RESEARCH / DECISION SUPPORT</span>
-        </div>
-      </section>
+      <EditorialHero
+        eyebrow="SELECTED WORK / AIXION LAB"
+        title="Built around hard questions."
+        copy="Selected work in market intelligence, governed automation and decision support. Each project is shown at its actual stage, with evidence and limits in view."
+        image="/images/aixion-editorial/planning-studio.jpg"
+        imageAlt="An engineering studio prepared for a design review."
+        position="center 56%"
+        scrollTarget="work-stories"
+      />
 
-      {featured.map((story, index) => {
+      <div id="work-stories">{featured.map((story, index) => {
         const system = systems.find((item) => item.slug === story.slug);
         if (!system) return null;
         return (
@@ -72,7 +71,7 @@ export function WorkPage() {
             </div>
           </article>
         );
-      })}
+      })}</div>
 
       <section className="work-support">
         <div className="page-width">
