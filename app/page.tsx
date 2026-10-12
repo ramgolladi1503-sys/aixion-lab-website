@@ -1,75 +1,109 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { EditorialHeading, EditorialHero, EditorialLink, ImageStory } from "@/components/editorial-content";
-import { systems } from "@/lib/site-data";
+import { HomepageChapters } from "@/components/homepage-chapters";
+import { EditorialLink } from "@/components/editorial-content";
+import { StateTag } from "@/components/ui";
+import { researchNotes, systems } from "@/lib/site-data";
 
 export const metadata: Metadata = {
-  title: "Career snapshot",
-  description: "A concise view of Ram Golladi's engineering focus and the systems behind Aixion Lab.",
+  title: "Applied intelligence, engineered with evidence",
+  description: "Aixion Lab is an independent engineering practice building applied intelligence, automation and decision systems with visible evidence and clear boundaries.",
 };
 
-const capabilities = [
-  { title: "Quality engineering", body: "Manual and automated testing, scenario design, regression thinking and failure analysis." },
-  { title: "Automation", body: "Workflow and RPA patterns designed around validation, retries, recovery and traceability." },
-  { title: "Software systems", body: "APIs, services, integrations, state management and system architecture." },
-  { title: "Data and applied AI", body: "Real-time data, ML experimentation and governance for autonomous systems." },
-];
+export default function HomePage() {
+  const tradebot = systems.find((system) => system.slug === "tradebot");
+  const controlCore = systems.find((system) => system.slug === "control-core");
+  const rejected = researchNotes.find((note) => note.slug === "mean-reversion-candidate");
 
-export default function ResumePage() {
   return (
     <>
-      <EditorialHero
-        eyebrow="CAREER / QUICK VIEW"
-        title="Quality engineering, extended into systems engineering."
-        copy="A recruiter-focused summary of the work behind Aixion Lab. The project pages provide the evidence and maturity boundaries behind each capability."
-        image="/images/aixion-editorial/planning-studio.jpg"
-        imageAlt="A planning desk in an engineering studio."
-      >
-        <Link className="button button--light" href="/about#contact">Contact Ram <span aria-hidden="true">↗</span></Link>
-      </EditorialHero>
+      <HomepageChapters />
 
-      <section id="page-content" className="editorial-section">
-        <div className="page-width">
-          <EditorialHeading eyebrow="PROFILE" title="Build reliable systems by making their behavior understandable." copy="Experience across quality engineering grew into automation, software systems, data and applied AI. The through-line is explicit state, testable contracts and evidence behind decisions." />
-          <div className="principles-grid career-capabilities">
-            {capabilities.map((item, index) => <article className="principle" key={item.title} data-reveal><span className="story-index">0{index + 1}</span><h3>{item.title}</h3><p>{item.body}</p></article>)}
+      <section className="home-thesis" id="home-intro">
+        <div className="page-width home-thesis__grid" data-reveal>
+          <p className="eyebrow">A SMALL, INDEPENDENT ENGINEERING LAB</p>
+          <h2>Build with care.<br /><em>Know what the evidence says.</em></h2>
+          <div className="home-thesis__aside">
+            <p>Aixion Lab brings software, automation, data and applied AI together to work on difficult systems. The aim is practical: make the system’s state understandable, its limits visible and its decisions inspectable.</p>
+            <Link href="/about" className="text-link">Inside the lab <span aria-hidden="true">↗</span></Link>
           </div>
         </div>
       </section>
 
-      <section className="editorial-section editorial-section--cool">
-        <ImageStory
-          image="/images/aixion-editorial/systems-workbench.jpg"
-          imageAlt="A system map and engineering notes beside a computer at a workbench."
-          eyebrow="ENGINEERING IN PRACTICE"
-          title="Turn quality thinking into system behavior."
-          reverse
-          number="02"
-          href="/systems"
-          action="Explore the portfolio"
-        >
-          <p>Quality practices carry into software and applied intelligence through observable inputs, explicit state transitions, failure recovery and evidence that supports the next decision.</p>
-        </ImageStory>
+      <section className="home-work home-work--tradebot" aria-labelledby="home-tradebot-title">
+        <div className="home-work__image" data-reveal>
+          <Image src="/images/aixion-editorial/systems-workbench.jpg" alt="An engineering workspace with a system diagram, notebook and computer." fill sizes="(max-width: 760px) 100vw, 58vw" />
+          <span className="home-work__index">01 / MARKET INTELLIGENCE</span>
+        </div>
+        <div className="home-work__copy" data-reveal>
+          <p className="eyebrow">A SYSTEM UNDER VALIDATION</p>
+          <h2 id="home-tradebot-title">When the inputs move, the evidence has to keep up.</h2>
+          <p>{tradebot?.descriptor} The work focuses on data integrity, research boundaries and validation; it does not imply a live trading edge or financial performance.</p>
+          {tradebot ? <StateTag state={tradebot.state} /> : null}
+          <EditorialLink href="/systems/tradebot">Explore TradeBot</EditorialLink>
+        </div>
       </section>
 
-      <section className="editorial-section">
+      <section className="home-work home-work--core" aria-labelledby="home-core-title">
+        <div className="home-work__image" data-reveal>
+          <Image src="/images/aixion-editorial/hero-studio.jpg" alt="A quiet engineering studio with a system map on glass." fill sizes="(max-width: 760px) 100vw, 58vw" />
+          <span className="home-work__index">02 / ORCHESTRATION</span>
+        </div>
+        <div className="home-work__copy" data-reveal>
+          <p className="eyebrow">A PLATFORM TAKING SHAPE</p>
+          <h2 id="home-core-title">Useful automation needs a clear boundary around action.</h2>
+          <p>{controlCore?.descriptor} Control Core is in development, with current work on orchestration, tool boundaries, policy and evidence capture.</p>
+          {controlCore ? <StateTag state={controlCore.state} /> : null}
+          <EditorialLink href="/systems/control-core">Explore Control Core</EditorialLink>
+        </div>
+      </section>
+
+      <section className="home-finding" aria-labelledby="home-finding-title">
+        <div className="home-finding__media" data-reveal>
+          <Image src="/images/aixion-editorial/research-desk.jpg" alt="Annotated research notes and a chart on a desk." fill sizes="(max-width: 760px) 100vw, 48vw" />
+        </div>
+        <div className="home-finding__copy" data-reveal>
+          <p className="eyebrow">A RESEARCH DECISION, KEPT IN THE RECORD</p>
+          <h2 id="home-finding-title">Some of the most useful results are the ones that stop a claim.</h2>
+          <p>The mean-reversion candidate did not retain sufficient support after its validation boundary. It remains marked rejected, so a weak result is not quietly recast as a success.</p>
+          {rejected ? <p className="home-finding__state"><StateTag state={rejected.state} /><span>{rejected.title}</span></p> : null}
+          <EditorialLink href={rejected ? `/research/${rejected.slug}` : "/research"}>Read the research note</EditorialLink>
+        </div>
+      </section>
+
+      <section className="home-practice" aria-labelledby="home-practice-title">
         <div className="page-width">
-          <EditorialHeading eyebrow="PROJECT EVIDENCE" title="The work behind the capability list." copy="Each system page explains the problem, engineering choices, current status and public evidence boundary." />
-          <div className="career-projects">
-            {systems.slice(0, 2).map((system, index) => (
-              <article className="career-project" key={system.id} data-reveal>
-                <div><span className="story-index">0{index + 1} / {system.id}</span><h3>{system.name}</h3><p>{system.descriptor}</p><p className="career-project__skills"><strong>Relevant work:</strong> {system.competencies.join(" · ")}</p></div>
-                <EditorialLink href={`/systems/${system.slug}`}>Review the system</EditorialLink>
-              </article>
-            ))}
+          <div className="home-practice__intro" data-reveal>
+            <p className="eyebrow eyebrow--light">HOW THE WORK IS DONE</p>
+            <h2 id="home-practice-title">Make the important parts visible.</h2>
+          </div>
+          <div className="home-practice__lines">
+            <article data-reveal><span>01</span><h3>State</h3><p>Show what is operating, being built, under validation or still a question.</p></article>
+            <article data-reveal><span>02</span><h3>Evidence</h3><p>Keep the reasoning and result close enough to inspect, including when a hypothesis fails.</p></article>
+            <article data-reveal><span>03</span><h3>Authority</h3><p>Keep policy and human decisions explicit where software can affect important outcomes.</p></article>
+          </div>
+          <Link href="/journey" className="home-practice__link">Read the engineering approach <span aria-hidden="true">↗</span></Link>
+        </div>
+      </section>
+
+      <section className="home-person">
+        <div className="page-width home-person__grid" data-reveal>
+          <p className="eyebrow">THE ENGINEER BEHIND THE WORK</p>
+          <h2>Built by Ram, across quality engineering, automation, software and data.</h2>
+          <div>
+            <p>Aixion Lab is an evolving independent practice, not a claim of a scaled company or finished product suite. The site shares selected work at its actual stage and leaves room for the next difficult question.</p>
+            <EditorialLink href="/about">Meet Ram</EditorialLink>
           </div>
         </div>
       </section>
 
-      <section className="editorial-section editorial-section--compact">
-        <div className="page-width resume-note" data-reveal>
-          <div><p className="eyebrow">PUBLICATION STATUS</p><h2>Career snapshot</h2><p>A downloadable résumé is not published here. This page intentionally avoids stale or mismatched résumé files.</p></div>
-          <div className="resume-actions"><EditorialLink href="/about#contact">Contact</EditorialLink><Link className="button" href="/systems">Explore the portfolio <span aria-hidden="true">↗</span></Link></div>
+      <section className="last-call home-close">
+        <Image className="last-call__image" src="/images/aixion-editorial/signal-room.jpg" alt="" width={1672} height={941} sizes="100vw" />
+        <div className="page-width last-call__content" data-reveal>
+          <p className="eyebrow eyebrow--light">AIXION LAB</p>
+          <h2>Have a system that deserves a closer look?</h2>
+          <Link href="/about#contact" className="button button--light">Start a conversation <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
     </>

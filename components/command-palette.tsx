@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const items = [
-  ["TradeBot", "/systems/tradebot", "System", "VALIDATING"],
-  ["Aixion Control Core", "/systems/control-core", "System", "BUILDING"],
-  ["Automation Systems", "/systems/automation", "System", "BUILDING"],
-  ["Analytics Lab", "/systems/analytics", "System", "BUILDING"],
-  ["Research Notes", "/research", "Research", "ACTIVE + REJECTED"],
-  ["Aixion Pulse", "/pulse", "Now", "CURRENT STATE"],
-  ["Journey", "/journey", "Story", "7 QUESTIONS"],
-  ["About Ram", "/about", "Profile", "ENGINEER"],
+  ["The Lab", "/about", "Practice", "INDEPENDENT ENGINEERING"],
+  ["Selected Work", "/work", "Work", "FOUR AREAS"],
+  ["Work — TradeBot", "/systems/tradebot", "Work", "VALIDATING"],
+  ["Work — Control Core", "/systems/control-core", "Work", "BUILDING"],
+  ["Work — Automation", "/systems/automation", "Work", "BUILDING"],
+  ["Work — Analytics", "/systems/analytics", "Work", "BUILDING"],
+  ["Research", "/research", "Evidence", "ACTIVE + REJECTED"],
+  ["Approach", "/journey", "Engineering", "HOW THE WORK IS DONE"],
   ["Career Snapshot", "/resume", "Career", "LIVE WEB"],
 ] as const;
 

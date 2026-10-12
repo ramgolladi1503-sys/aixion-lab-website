@@ -64,7 +64,7 @@ export default function AboutPage() {
           <div className="contact-list">
             <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer"><span>GitHub / project work</span><span>↗</span></a>
             <Link href="/resume"><span>Career snapshot</span><span>↗</span></Link>
-            <Link href="/systems"><span>Systems portfolio</span><span>↗</span></Link>
+            <Link href="/work"><span>Selected work</span><span>↗</span></Link>
           </div>
         </div>
       </section>

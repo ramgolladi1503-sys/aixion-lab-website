@@ -1,63 +1,57 @@
 import { test, expect } from "@playwright/test";
 
-test("home keeps the approved observable dark thesis and progressive-disclosure orientation", async ({ page }) => {
+test("home follows the new editorial sequence and exposes project stories", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "Systems should be able to explain their state, their evidence and their limits." })).toBeVisible();
-  await expect(page.getByText("Built by Ram", { exact: true })).toBeVisible();
-  await expect(page.locator(".observable-home")).toBeVisible();
-  await expect(page.locator(".observable-field")).toBeVisible();
-  await expect(page.locator(".system-grid .system-card")).toHaveCount(4);
-  await expect(page.getByRole("heading", { name: "TradeBot" }).first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "The rest of the lab lives on dedicated pages." })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Governed autonomy and explicit authority/i })).toBeVisible();
-  await expect(page.locator(".editorial-home")).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: /Applied intelligence/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Build with care. Know what the evidence says." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "When the inputs move, the evidence has to keep up." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Useful automation needs a clear boundary around action." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Some of the most useful results are the ones that stop a claim." })).toBeVisible();
+  await expect(page.locator(".story-grid, .pulse-home-card, .system-register")).toHaveCount(0);
+  await expect(page.getByText("REJECTED", { exact: true })).toBeVisible();
 });
 
-test("motion reveals approved dark sections without becoming the content model", async ({ page }, testInfo) => {
+test("cinematic chapter controls use four accessible project destinations", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.locator("#motion-scope")).toHaveClass(/motion-ready/);
-  await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
-  await expect(page.locator('[data-reveal="pulse-preview"]')).toBeVisible();
-  const lifecycle = page.locator("[data-aixion-signal]").first();
-  if (testInfo.project.name === "mobile") await expect(lifecycle).toBeHidden();
-  else await expect(lifecycle).toBeVisible();
+  const tabs = page.getByRole("tablist", { name: "Explore Aixion Lab" });
+  await expect(tabs.getByRole("tab")).toHaveCount(4);
+  await expect(tabs.getByRole("tab")).toHaveText(["01TradeBot", "02Control Core", "03Research", "04Automation"]);
+  await tabs.getByRole("tab", { name: /Control Core/ }).click();
+  await expect(page.getByRole("tabpanel")).toContainText("Keep automation useful and bounded.");
+  await expect(page.getByRole("tabpanel").getByRole("link", { name: "Explore Control Core" })).toHaveAttribute("href", "/systems/control-core");
 });
 
-test("reduced-motion preserves approved content and mobile subtraction", async ({ page }, testInfo) => {
+test("motion reveals the new work spreads without hiding their content", async ({ page }) => {
+  await page.goto("/", { waitUntil: "networkidle" });
+  await expect(page.locator(".site-frame")).toHaveClass(/motion-ready/);
+  await expect(page.locator(".home-hero__top")).toHaveClass(/is-revealed/);
+  const story = page.locator(".home-work__image").first();
+  await story.scrollIntoViewIfNeeded();
+  await expect(story).toHaveClass(/is-revealed/);
+  await expect(story.getByRole("img")).toBeVisible();
+});
+
+test("reduced motion keeps all new homepage content available", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.locator("#motion-scope")).toHaveClass(/motion-reduced/);
-  await expect(page.locator('[data-reveal="hero"]')).toHaveClass(/is-revealed/);
-  await expect(page.getByRole("link", { name: /Explore systems/i }).first()).toBeVisible();
-  const lifecycle = page.locator("[data-aixion-signal]").first();
-  if (testInfo.project.name === "mobile") await expect(lifecycle).toBeHidden();
-  else await expect(lifecycle).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Applied intelligence/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Make the important parts visible." })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Start a conversation" }).first()).toBeVisible();
+  const duration = await page.locator(".home-hero__image").evaluate((element) => getComputedStyle(element).animationDuration);
+  expect(parseFloat(duration)).toBeLessThanOrEqual(0.001);
 });
 
-test("Journey is an escalating engineering-question narrative", async ({ page }) => {
-  await page.goto("/journey", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "The tools changed. The questions got stricter." })).toBeVisible();
-  await expect(page.getByText(/Why did this fail/)).toBeVisible();
-  await expect(page.getByText(/What state is the system actually in/)).toBeVisible();
-  await expect(page.getByText(/Can intelligence operate while remaining observable, governed and accountable/)).toBeVisible();
-  await expect(page.locator(".journey-question")).toHaveCount(7);
-});
-
-test("command palette carries state, not just destinations", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "The command palette is intentionally a desktop keyboard surface; mobile uses the menu.");
-  await page.goto("/", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Open Aixion search" }).click();
-  await expect(page.getByRole("dialog", { name: "Search Aixion" })).toBeVisible();
-  await expect(page.locator('.command-results a[href="/systems/tradebot"] .command-meta')).toContainText("VALIDATING");
-  await expect(page.locator('.command-results a[href="/systems/analytics"] .command-meta')).toContainText("BUILDING");
-  await expect(page.locator('.command-results a[href="/journey"] .command-meta')).toContainText("7 QUESTIONS");
-});
-
-test("system subnavigation reflects deliberate section navigation", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Sticky section authority is a desktop interaction");
-  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  const architectureLink = page.locator('.system-subnav a[href="#architecture"]');
-  await architectureLink.click();
-  await expect(architectureLink).toHaveClass(/is-active/);
-  await expect(architectureLink).toHaveAttribute("aria-current", "location");
+test("Work route and legacy systems index show the same editorial work page", async ({ page }, testInfo) => {
+  await page.goto("/work", { waitUntil: "networkidle" });
+  await expect(page.getByRole("heading", { name: "Built around hard questions." })).toBeVisible();
+  await expect(page.locator(".work-story")).toHaveCount(2);
+  await page.goto("/systems", { waitUntil: "networkidle" });
+  await expect(page.getByRole("heading", { name: "Built around hard questions." })).toBeVisible();
+  if (testInfo.project.name === "desktop") {
+    await expect(page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Work" })).toHaveAttribute("aria-current", "page");
+  } else {
+    const menu = page.locator("details.mobile-menu");
+    await menu.locator("summary").click();
+    await expect(menu.getByRole("link", { name: "Work" })).toHaveAttribute("href", "/work");
+  }
 });

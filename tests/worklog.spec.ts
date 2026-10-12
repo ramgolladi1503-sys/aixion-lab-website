@@ -1,40 +1,32 @@
 import { test, expect } from "@playwright/test";
 
-test("Home surfaces current curated lab work without becoming an activity feed", async ({ page }, testInfo) => {
+test("Pulse remains available as a dated status record without returning to primary navigation", async ({ page }, testInfo) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  const current = page.locator(".pulse-preview");
-  await expect(current).toBeVisible();
-  await expect(current.locator(".home-worklog-strip")).toHaveCount(2);
-  await expect(current.getByText("Approved dark system refinement and release validation")).toBeVisible();
-  const older = current.getByText("Hydration and regression baseline stabilized");
-  if (testInfo.project.name === "mobile") await expect(older).toBeHidden();
-  else await expect(older).toBeVisible();
+  if (testInfo.project.name === "desktop") {
+    const primary = page.getByRole("navigation", { name: "Primary navigation" });
+    await expect(primary.getByRole("link", { name: "The Lab" })).toBeVisible();
+    await expect(primary.getByRole("link", { name: "Work" })).toBeVisible();
+    await expect(primary.getByRole("link", { name: "Pulse" })).toHaveCount(0);
+  } else {
+    const menu = page.locator("details.mobile-menu");
+    await menu.locator("summary").click();
+    await expect(menu.getByRole("link", { name: "The Lab" })).toBeVisible();
+    await expect(menu.getByRole("link", { name: "Work" })).toBeVisible();
+    await expect(menu.getByRole("link", { name: "Pulse" })).toHaveCount(0);
+  }
+
+  await page.goto("/pulse", { waitUntil: "networkidle" });
+  await expect(page.getByRole("heading", { name: "A clear view of what is moving." })).toBeVisible();
+  await expect(page.locator(".pulse-snapshot")).toContainText("Last recorded snapshot");
+  await expect(page.locator(".pulse-card")).toHaveCount(4);
+  await expect(page.locator(".pulse-card").first()).toContainText("Current focus");
+  await expect(page.locator(".pulse-card").first()).toContainText("Next gate");
 });
 
-test("Pulse publishes current work and only recent meaningful public changes", async ({ page }) => {
+test("public Pulse reports states and gates without implying live telemetry or performance", async ({ page }) => {
   await page.goto("/pulse", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "What is actively moving" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Approved dark system refinement and release validation" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Only changes that matter outside the repository" })).toBeVisible();
-  await expect(page.locator(".pulse-history .worklog-row")).toHaveCount(5);
-  await expect(page.getByText(/older public milestones remain preserved/i)).toBeVisible();
-  await expect(page.getByText(/Raw commits, private conversations, credentials, proprietary logic/)).toBeVisible();
-});
-
-test("Pulse current cycle uses the authoritative system registry", async ({ page }) => {
-  await page.goto("/pulse", { waitUntil: "networkidle" });
-  const analyticsCard = page.locator(".pulse-system-card").filter({ hasText: "Analytics Lab" });
-  await expect(analyticsCard.getByText("BUILDING", { exact: true })).toBeVisible();
-  await expect(analyticsCard).toContainText("Algotradify");
-
-  const automationCard = page.locator(".pulse-system-card").filter({ hasText: "Automation Systems" });
-  await expect(automationCard.getByText("BUILDING", { exact: true })).toBeVisible();
-  await expect(automationCard).toContainText("MCP Shield");
-});
-
-test("Public activity does not expose raw activity as a progress metric", async ({ page }) => {
-  await page.goto("/pulse", { waitUntil: "networkidle" });
-  await expect(page.getByText("Never published as progress")).toBeVisible();
-  await expect(page.getByText("Not used")).toBeVisible();
-  await expect(page.locator("body")).not.toContainText(/password|api key|secret token/i);
+  const body = (await page.locator("body").innerText()).toLowerCase();
+  expect(body).toContain("not a live telemetry feed");
+  expect(body).not.toContain("win rate");
+  expect(body).not.toContain("execution allowed");
 });

@@ -17,7 +17,7 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   webServer: {
-    command: `npm run start -- -p ${testPort}`,
+    command: `node scripts/serve-export.mjs --port ${testPort}`,
     url: testUrl,
     reuseExistingServer: true,
     timeout: 120_000,

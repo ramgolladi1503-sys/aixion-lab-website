@@ -11,11 +11,10 @@ export function SiteFooter() {
           <p className="site-footer__subline">Applied intelligence and engineering, built with evidence.</p>
         </div>
         <nav className="site-footer__links" aria-label="Footer navigation">
-          <Link href="/systems">Systems</Link>
+          <Link href="/about">The Lab</Link>
+          <Link href="/work">Work</Link>
           <Link href="/research">Research</Link>
-          <Link href="/pulse">Pulse</Link>
-          <Link href="/journey">Journey</Link>
-          <Link href="/about">About Ram</Link>
+          <Link href="/journey">Approach</Link>
           <Link href="/resume">Career snapshot</Link>
         </nav>
         <div className="site-footer__contact">

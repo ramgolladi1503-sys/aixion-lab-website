@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ActiveNav } from "./active-nav";
 import { CommandPalette } from "./command-palette";
 import { ModeToggle } from "./mode-toggle";
-import { nav } from "@/lib/site-data";
+import { MobileNav } from "./mobile-nav";
 
 export function SiteHeader() {
   return (
@@ -17,15 +17,7 @@ export function SiteHeader() {
           <ModeToggle />
           <CommandPalette />
           <Link className="header-contact" href="/about#contact">Contact <span aria-hidden="true">↗</span></Link>
-          <details className="mobile-menu">
-            <summary aria-label="Open navigation">Menu</summary>
-            <nav aria-label="Mobile navigation">
-              <Link href="/">Home</Link>
-              {nav.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
-              <Link href="/resume">Career view</Link>
-              <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
-            </nav>
-          </details>
+          <MobileNav />
         </div>
       </div>
     </header>
