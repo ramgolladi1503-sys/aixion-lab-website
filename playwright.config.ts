@@ -1,5 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const testPort = process.env.AIXION_TEST_PORT ?? "3000";
+if (!/^\d{2,5}$/.test(testPort) || Number(testPort) > 65535) {
+  throw new Error("AIXION_TEST_PORT must be a valid TCP port number");
+}
+const testUrl = `http://127.0.0.1:${testPort}`;
+
 export default defineConfig({
   testDir: "./tests",
   timeout: 45_000,
@@ -7,12 +13,12 @@ export default defineConfig({
   reporter: "line",
   outputDir: "test-results",
   use: {
-    baseURL: "http://127.0.0.1:3000",
+    baseURL: testUrl,
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "npx --yes serve@latest out -l 3000",
-    url: "http://127.0.0.1:3000",
+    command: `npm run start -- -p ${testPort}`,
+    url: testUrl,
     reuseExistingServer: true,
     timeout: 120_000,
   },

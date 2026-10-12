@@ -1,17 +1,33 @@
+import Link from "next/link";
+import { DeployStamp } from "./deploy-stamp";
+
 export function SiteFooter() {
   return (
-    <footer className="site-footer site-footer--statement">
-      <div className="shell footer-closing">
-        <p className="eyebrow">AIXION LAB · CLOSING PRINCIPLE</p>
-        <p className="footer-manifesto">
-          <span className="footer-manifesto-line">Curiosity starts the question. Discipline keeps the work honest. Persistence carries it through failure.</span>
-          <span className="footer-manifesto-line">I keep building, testing and learning until the system can explain its state, its evidence and its limits.</span>
-        </p>
-        <p className="footer-signoff">Build carefully. Test what matters. Learn from what fails.</p>
+    <footer className="site-footer">
+      <div className="page-width site-footer__main">
+        <div className="site-footer__identity">
+          <p className="eyebrow eyebrow--light">AIXION LAB</p>
+          <p className="site-footer__statement">Research, build, validate, learn.</p>
+          <p className="site-footer__subline">Applied intelligence and engineering, built with evidence.</p>
+        </div>
+        <nav className="site-footer__links" aria-label="Footer navigation">
+          <Link href="/systems">Systems</Link>
+          <Link href="/research">Research</Link>
+          <Link href="/pulse">Pulse</Link>
+          <Link href="/journey">Journey</Link>
+          <Link href="/about">About Ram</Link>
+          <Link href="/resume">Career snapshot</Link>
+        </nav>
+        <div className="site-footer__contact">
+          <span>Independent applied-engineering lab</span>
+          <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <Link href="/about#contact">Start a conversation ↗</Link>
+        </div>
       </div>
-      <div className="shell build-line build-line--quiet">
-        <span>© 2026 Aixion Lab</span>
-        <span>Curiosity → Discipline → Evidence → Learn</span>
+      <div className="page-width site-footer__base">
+        <DeployStamp />
+        <span>© {new Date().getFullYear()} Aixion Lab</span>
+        <span className="site-footer__process">Research <i /> Build <i /> Validate <i /> Observe <i /> Learn</span>
       </div>
     </footer>
   );

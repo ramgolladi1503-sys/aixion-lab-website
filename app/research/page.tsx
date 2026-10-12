@@ -1,45 +1,64 @@
 import type { Metadata } from "next";
-import { SectionHeading } from "@/components/ui";
+import Image from "next/image";
+import Link from "next/link";
 import { ResearchIndex } from "@/components/research-index";
+import { EditorialHeading, EditorialHero, EditorialLink } from "@/components/editorial-content";
+import { StateTag } from "@/components/ui";
+import { researchNotes } from "@/lib/site-data";
 
 export const metadata: Metadata = {
-  title: "Research Notes",
-  description: "Questions, hypotheses, experiments and failures that move Aixion systems forward.",
+  title: "Research",
+  description: "Questions, methods and outcomes from Aixion Lab research, including frozen and rejected hypotheses.",
 };
 
 export default function ResearchPage() {
+  const featured = researchNotes.find((note) => note.slug === "mean-reversion-candidate");
+
   return (
     <>
-      <section className="page-hero research-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">AIXION LAB · RESEARCH</p>
-            <h1>Research Notes</h1>
-            <p className="lede">Questions, hypotheses, experiments and failures that move the systems forward. A rejected result is still useful when the method and boundary are clear.</p>
-          </div>
-          <div className="panel meta-board">
-            <div><span>Lifecycle</span><strong>Question → Evidence</strong></div>
-            <div><span>Promotion rule</span><strong>No silent authority</strong></div>
-            <div><span>Negative results</span><strong>Retained</strong></div>
-            <div><span>Private boundary</span><strong>Mechanics stay private</strong></div>
-          </div>
+      <EditorialHero
+        eyebrow="RESEARCH / FIELD NOTES"
+        title="Evidence before certainty."
+        copy="Research pages keep the question, method, boundaries and outcome together. A hypothesis is not a result, and a result is not execution authority."
+        image="/images/aixion-editorial/research-desk.jpg"
+        imageAlt="A research desk with annotated charts and notes."
+      >
+        <Link className="button button--light" href="#featured-research">Start with a finding <span aria-hidden="true">↓</span></Link>
+      </EditorialHero>
+
+      <section id="page-content" className="editorial-section editorial-section--compact">
+        <div className="page-width">
+          {featured ? (
+            <article id="featured-research" className="research-feature" data-reveal>
+              <Link className="research-feature__media" href={`/research/${featured.slug}`} aria-label={`Read ${featured.title}`}>
+                <Image src="/images/aixion-editorial/research-desk.jpg" alt="A printed chart and notes on a research desk." fill sizes="(max-width: 700px) 100vw, 55vw" />
+              </Link>
+              <div className="research-feature__copy">
+                <p className="eyebrow">FEATURED FINDING / {featured.domain}</p>
+                <StateTag state={featured.state} />
+                <h2>{featured.title}</h2>
+                <p>{featured.question}</p>
+                <p>The candidate did not demonstrate persistent structural edge under the defined validation assumptions. Its rejected status remains part of the research record.</p>
+                <EditorialLink href={`/research/${featured.slug}`}>Read the research note</EditorialLink>
+              </div>
+            </article>
+          ) : null}
         </div>
       </section>
 
-      <section className="section-tight research-index-section">
-        <div className="shell">
-          <SectionHeading eyebrow="INDEX" title="Research is not a success gallery." copy="The public index keeps active, frozen and rejected work visible so the site reflects how engineering actually progresses." />
+      <section className="editorial-section editorial-section--cool">
+        <div className="page-width">
+          <EditorialHeading eyebrow="RESEARCH ARCHIVE" title="Follow the question as its state changes." copy="Filter notes by state. Each record explains what is being tested and what the evidence is allowed to support." />
           <ResearchIndex />
         </div>
       </section>
 
-      <section className="section-tight research-method-section">
-        <div className="shell panel panel-pad research-method-panel">
-          <SectionHeading eyebrow="METHOD" title="How a claim earns authority." copy="Every candidate moves through explicit gates. The lifecycle makes promotion, rejection and iteration inspectable without repeating the research index above." />
-          <div className="architecture-flow research-method-flow" aria-label="Research validation lifecycle">
-            {['Question','Observation','Hypothesis','Freeze','Test','Validation','Decision'].map((stage, index, stages) => (
-              <div className="architecture-step" key={stage}><span>{stage}</span>{index < stages.length - 1 ? <b aria-hidden="true">→</b> : null}</div>
-            ))}
+      <section className="editorial-section editorial-section--compact">
+        <div className="page-width">
+          <div className="research-boundary" data-reveal>
+            <div><p className="eyebrow">RESEARCH BOUNDARY</p><h2>Evidence can open the next gate. It cannot silently move it.</h2></div>
+            <p>Proprietary strategy parameters, private data and unsupported performance claims stay outside the public site.</p>
+            <EditorialLink href="/systems/tradebot">See how the boundary is applied</EditorialLink>
           </div>
         </div>
       </section>

@@ -1,48 +1,65 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { EditorialHeading, EditorialHero, EditorialLink } from "@/components/editorial-content";
+import { StateTag } from "@/components/ui";
 import { systems } from "@/lib/site-data";
-import { SectionHeading, StateTag } from "@/components/ui";
 
 export const metadata: Metadata = {
-  title: "Systems Registry",
-  description: "The engineered systems, tools and platforms being built inside Aixion Lab.",
+  title: "Systems",
+  description: "Explore TradeBot, Aixion Control Core, automation and analytics work at their documented stages.",
+};
+
+const images: Record<string, { src: string; alt: string; eyebrow: string }> = {
+  tradebot: { src: "/images/aixion-editorial/systems-workbench.jpg", alt: "A systems engineering workstation with an architecture diagram and notebook.", eyebrow: "MARKET INTELLIGENCE · AX-SYS-001" },
+  "control-core": { src: "/images/aixion-editorial/hero-studio.jpg", alt: "An engineering studio with system diagrams on a glass wall.", eyebrow: "GOVERNED ORCHESTRATION · AX-SYS-002" },
+  automation: { src: "/images/aixion-editorial/planning-studio.jpg", alt: "Planning drawings arranged across an engineering worktable.", eyebrow: "WORKFLOW · QUALITY AUTOMATION · AX-SYS-003" },
+  analytics: { src: "/images/aixion-editorial/research-desk.jpg", alt: "Research notes and a chart on a desk.", eyebrow: "DATA · DECISION SUPPORT · AX-SYS-004" },
 };
 
 export default function SystemsPage() {
   return (
     <>
-      <section className="page-hero systems-hero">
-        <div className="shell systems-hero-copy">
-          <p className="eyebrow">AIXION LAB · SYSTEMS</p>
-          <h1>Systems Registry</h1>
-          <p className="lede">Four engineered systems, each with an explicit maturity state, current gate and public-safe focus. Research is not dressed up as production.</p>
+      <EditorialHero
+        eyebrow="SYSTEMS / PROJECTS"
+        title="Built around real constraints."
+        copy="A portfolio of applied systems work, from market-data integrity to governed automation and decision support. Each project is shown at its documented stage."
+        image="/images/aixion-editorial/systems-workbench.jpg"
+        imageAlt="A systems engineering workstation with an architecture diagram, hardware and notebook."
+      >
+        <Link className="button button--light" href="/systems/tradebot">Explore TradeBot <span aria-hidden="true">↗</span></Link>
+      </EditorialHero>
+
+      <section id="page-content" className="editorial-section editorial-section--compact">
+        <div className="page-width">
+          <EditorialHeading eyebrow="SYSTEMS REGISTRY" title="Four directions. Different maturity, shared discipline." copy="Current state and next gates are explicit. The page avoids presenting research or prototypes as deployed products." />
+          <div className="system-register">
+            {systems.map((system, index) => {
+              const image = images[system.slug];
+              return (
+                <article className="system-register__row" key={system.id} data-reveal>
+                  <span className="system-register__index">0{index + 1}</span>
+                  <Link className="system-register__image" href={`/systems/${system.slug}`} aria-label={`Open ${system.name}`}>
+                    <Image src={image.src} alt={image.alt} fill sizes="(max-width: 700px) 100vw, 28vw" />
+                  </Link>
+                  <div className="system-register__copy">
+                    <div className="story-card__meta"><span>{image.eyebrow}</span><StateTag state={system.state} /></div>
+                    <h2>{system.name}</h2>
+                    <p>{system.descriptor}</p>
+                    <dl className="system-register__facts"><div><dt>Current focus</dt><dd>{system.currentFocus}</dd></div><div><dt>Next gate</dt><dd>{system.nextGate}</dd></div></dl>
+                    <EditorialLink href={`/systems/${system.slug}`}>Explore system</EditorialLink>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      <section className="section-tight registry-section">
-        <div className="shell">
-          <SectionHeading eyebrow="REGISTRY" title="Four systems. Explicit maturity." copy="The registry is the authority. Each row carries only the information needed to understand the system and decide whether to inspect it further." />
-          <div className="registry">
-            {systems.map(system => (
-              <article className="registry-row" key={system.id}>
-                <span className="system-id">{system.id}</span>
-                <div>
-                  <h3>{system.name}</h3>
-                  <p>{system.descriptor}</p>
-                </div>
-                <div className="registry-hide-mobile">
-                  <span className="registry-label">Domain</span>
-                  <p>{system.domain}</p>
-                </div>
-                <StateTag state={system.state} />
-                <div className="registry-hide-tablet">
-                  <span className="registry-label">Current gate</span>
-                  <p>{system.currentGate}</p>
-                </div>
-                <Link className="text-link" href={`/systems/${system.slug}`}>View →</Link>
-              </article>
-            ))}
-          </div>
+      <section className="editorial-section editorial-section--dark">
+        <div className="page-width">
+          <EditorialHeading eyebrow="A SHARED ENGINEERING STANDARD" title="Research does not gain authority by looking finished." copy="State, validation and evidence stay visible from the first question to an operational decision." align="center" />
+          <div className="center-link" data-reveal><EditorialLink href="/research">See the research lifecycle</EditorialLink></div>
         </div>
       </section>
     </>

@@ -1,57 +1,53 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { EditorialHeading, EditorialHero, ImageStory } from "@/components/editorial-content";
 import { journey } from "@/lib/site-data";
-import { SectionHeading } from "@/components/ui";
-import { AixionSignal, SystemVisual } from "@/components/system-visuals";
 
 export const metadata: Metadata = {
   title: "Journey",
-  description: "From quality engineering to applied systems engineering.",
+  description: "The engineering path from quality and automation to software, data and governed autonomous systems.",
 };
 
 export default function JourneyPage() {
   return (
     <>
-      <section className="page-hero journey-hero" data-reveal="journey-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">AIXION LAB · JOURNEY</p>
-            <h1>The tools changed. The questions got stricter.</h1>
-            <p className="lede">Quality engineering started with failure. Each step since then added a harder requirement: explain the state, trust the evidence, bound the authority.</p>
-            <AixionSignal compact />
-          </div>
-          <SystemVisual kind="journey" />
-        </div>
-      </section>
+      <EditorialHero
+        eyebrow="JOURNEY / ENGINEERING EVOLUTION"
+        title="The tools changed. The standard stayed."
+        copy="A path from quality engineering through software, data and applied AI—connected by a focus on observable state, failure handling and evidence."
+        image="/images/aixion-editorial/planning-studio.jpg"
+        imageAlt="An engineering planning studio with a long worktable and drawings."
+      >
+        <Link className="button button--light" href="#page-content">Explore the path <span aria-hidden="true">↓</span></Link>
+      </EditorialHero>
 
-      <section className="section-tight journey-timeline-section" data-reveal="journey-questions">
-        <div className="shell">
-          <SectionHeading eyebrow="SEVEN QUESTIONS" title="The questions that changed the way I build." copy="This is not a second résumé. Each stage records the engineering question that the previous stage made impossible to ignore." />
-          <div className="journey-timeline">
-            {journey.map(([number, title, question]) => (
-              <article className="journey-step" key={number} data-reveal={`journey-${number}`}>
-                <span className="number">{number}</span>
-                <div>
-                  <span className="journey-question-label">Question {number}</span>
-                  <h3>{title}</h3>
-                  <p className="journey-question">“{question}”</p>
-                </div>
-              </article>
+      <section id="page-content" className="editorial-section">
+        <div className="page-width">
+          <EditorialHeading eyebrow="A CONNECTED PRACTICE" title="Each discipline added a new way to reason about systems." copy="The sequence below describes the engineering progression, not a dated employment history." />
+          <ol className="journey-track">
+            {journey.map(([step, milestone, description]) => (
+              <li key={step} data-reveal>
+                <span className="journey-track__node" aria-hidden="true" />
+                <div><span className="journey-track__index">STAGE {step}</span><h3>{milestone}</h3><p>{description}</p></div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
-      <section className="section-tight journey-principles-section" data-reveal="journey-principles">
-        <div className="shell panel panel-pad">
-          <SectionHeading eyebrow="ENGINEERING PHILOSOPHY" title="The common thread is state, evidence and failure." copy="Testing software, automating workflows, working with data and building AI systems are different disciplines. Reliable systems still need explicit state, controlled authority and evidence when things go wrong." />
-          <div className="principles-grid">
-            <div className="principle"><strong>Observable by design</strong><p>If a system cannot explain what state it is in, the interface is hiding an engineering problem.</p></div>
-            <div className="principle"><strong>Failure is evidence</strong><p>A failed experiment or runtime path belongs in the learning system rather than being erased.</p></div>
-            <div className="principle"><strong>Authority stays explicit</strong><p>Automation should not quietly gain the ability to act beyond the boundary it was designed to hold.</p></div>
-            <div className="principle"><strong>Proof beats claims</strong><p>The site makes strong claims only when a public-safe proof path exists.</p></div>
-          </div>
-          <p className="system-principle">Aixion Lab is the current answer: intelligence can be useful without becoming opaque.</p>
-        </div>
+      <section className="editorial-section editorial-section--cool">
+        <ImageStory
+          image="/images/aixion-editorial/signal-room.jpg"
+          imageAlt="A system planning studio with a network diagram on glass."
+          eyebrow="THE THROUGH-LINE"
+          title="A system should be able to explain its state."
+          reverse
+          number="07"
+          href="/systems"
+          action="Explore the systems"
+        >
+          <p>Quality engineering made failure and reproducibility visible. That discipline now informs automation, real-time systems and the boundaries around applied AI.</p>
+        </ImageStory>
       </section>
     </>
   );
