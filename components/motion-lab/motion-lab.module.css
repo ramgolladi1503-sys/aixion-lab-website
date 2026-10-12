@@ -1,0 +1,142 @@
+.experience {
+  --lab-ink: #080b0d;
+  --lab-paper: #f3eee5;
+  --lab-bronze: #b78a5f;
+  position: relative;
+  color: var(--lab-paper);
+  background: var(--lab-ink);
+  isolation: isolate;
+}
+
+.stage {
+  position: sticky;
+  z-index: 0;
+  top: 0;
+  height: 100svh;
+  min-height: 560px;
+  margin-bottom: -100svh;
+  overflow: hidden;
+  background: var(--lab-ink);
+  pointer-events: none;
+}
+
+.visualField,
+.poster,
+.vignette {
+  position: absolute;
+  inset: 0;
+}
+
+.visualField { z-index: -1; overflow: hidden; }
+.visualField canvas { display: block; width: 100%; height: 100%; }
+.poster { display: grid; place-items: center; opacity: 1; transition: opacity 500ms ease; }
+.posterHidden { opacity: 0; pointer-events: none; }
+.posterArt { width: min(69vw, 820px); max-height: 84%; overflow: visible; transform: translateX(17vw); filter: drop-shadow(0 26px 34px rgb(0 0 0 / 48%)); }
+.vignette { pointer-events: none; background: linear-gradient(90deg, rgb(5 8 9 / 79%) 0%, rgb(5 8 9 / 40%) 39%, transparent 76%), linear-gradient(0deg, rgb(5 8 9 / 78%) 0%, transparent 45%, rgb(5 8 9 / 32%) 100%), radial-gradient(ellipse at 57% 46%, transparent 20%, rgb(0 0 0 / 30%) 100%); }
+
+.chapterTrack {
+  position: relative;
+  z-index: 1;
+}
+
+.chapter {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding: 10vh max(7.5vw, 28px);
+  pointer-events: none;
+}
+
+.arrivalChapter { align-items: flex-end; padding-bottom: clamp(160px, 21vh, 230px); }
+.chapterCopy { width: min(720px, 72vw); pointer-events: auto; transition: opacity 700ms ease, transform 900ms cubic-bezier(.2,.7,.2,1); }
+.motionReady .chapter:not([data-in-view="true"]) .chapterCopy { opacity: 0; transform: translate3d(0, 26px, 0); }
+
+.kicker,
+.controlLabel,
+.sceneIndex,
+.status,
+.chapterNumber {
+  font-family: var(--mono, ui-monospace, monospace);
+  text-transform: uppercase;
+  letter-spacing: .16em;
+}
+
+.kicker { margin: 0 0 24px; color: #d9b89a; font-size: 12px; }
+:global(#main-content) .experience .kicker { font-size: 12px !important; line-height: 1.4; }
+.kicker span { padding-inline: 8px; color: #c17f72; }
+.chapterCopy h1 { margin: 0; color: var(--lab-paper); font: 400 clamp(64px, 8vw, 124px)/.88 var(--serif, Georgia, serif); letter-spacing: -.055em; text-wrap: balance; }
+.chapterCopy h1 em { color: #cfb79f; font-weight: 400; }
+.intro { max-width: 470px; margin: 24px 0 0; color: rgb(243 238 229 / 78%); font-size: clamp(16px, 1.25vw, 19px); line-height: 1.55; }
+.exploreLink { display: inline-flex; align-items: center; gap: 14px; margin-top: 24px; padding-bottom: 8px; border-bottom: 1px solid rgb(243 238 229 / 36%); color: var(--lab-paper); font-size: 13px; letter-spacing: .1em; text-decoration: none; text-transform: uppercase; }
+.exploreLink span { color: #d4a27d; }
+.exploreLink:focus-visible,
+.controls button:focus-visible,
+.systemLinks a:focus-visible,
+.retry:focus-visible { outline: 2px solid #e8c9a1; outline-offset: 4px; }
+
+.sceneIndex { position: absolute; right: max(7.5vw, 28px); bottom: 164px; display: grid; gap: 10px; color: rgb(243 238 229 / 75%); font-size: 9px; text-align: right; }
+.sceneIndex span:first-child { color: #d9b89a; }
+.progressRail { position: absolute; top: 32%; right: 28px; bottom: 32%; width: 2px; overflow: hidden; background: rgb(243 238 229 / 20%); }
+.progressRail span { display: block; width: 100%; height: calc(var(--scene-progress, 0) * 100%); background: #c78e70; transition: height 80ms linear; }
+
+.controls { position: absolute; right: max(7.5vw, 28px); bottom: 28px; max-width: min(520px, 56vw); text-align: right; pointer-events: auto; }
+.controlLabel { margin: 0 0 8px; color: rgb(243 238 229 / 62%); font-size: 10px; }
+:global(#main-content) .experience .controlLabel { font-size: 10px; line-height: 1.4; }
+.controlRow { display: flex; justify-content: flex-end; gap: 6px; }
+.controls button { min-width: 38px; min-height: 38px; padding: 0 11px; border: 1px solid rgb(243 238 229 / 34%); background: rgb(8 11 13 / 62%); color: var(--lab-paper); font: inherit; font-size: 12px; cursor: pointer; backdrop-filter: blur(8px); }
+:global(.site-main) .experience .controls button { font-size: 12px !important; line-height: 1; }
+.controls button:hover { background: rgb(243 238 229 / 12%); }
+.controls button[aria-pressed="true"] { border-color: #d4a27d; color: #e4c6a6; }
+.controls .status { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; min-height: 18px; margin: 10px 0 0; color: rgb(243 238 229 / 74%); font-size: 11px; letter-spacing: .04em; }
+:global(#main-content) .experience .controls .status { font-size: 12px !important; line-height: 1.45; }
+.retry { border: 0 !important; padding: 0 !important; min-width: 0 !important; min-height: 0 !important; color: #e4c6a6 !important; text-decoration: underline; text-underline-offset: 3px; }
+
+.systemLinks { display: grid; grid-template-columns: repeat(2, minmax(150px, 1fr)); gap: 0 32px; max-width: 520px; margin-top: 36px; border-top: 1px solid rgb(243 238 229 / 30%); }
+.systemLinks a { display: flex; justify-content: space-between; gap: 16px; padding: 15px 0; border-bottom: 1px solid rgb(243 238 229 / 24%); color: var(--lab-paper); font-size: 16px; text-decoration: none; }
+.systemLinks a span { color: #d4a27d; }
+
+@media (max-width: 760px) {
+  .stage { min-height: 600px; }
+  .posterArt { position: absolute; top: clamp(135px, 19vh, 165px); left: 50%; width: min(66vw, 260px); max-height: none; transform: translateX(-50%); }
+  .vignette { background: linear-gradient(90deg, rgb(5 8 9 / 65%) 0%, rgb(5 8 9 / 12%) 100%), linear-gradient(0deg, rgb(5 8 9 / 86%) 0%, transparent 58%, rgb(5 8 9 / 38%) 100%); }
+  .chapter { align-items: center; min-height: max(100svh, 740px); padding: 100px 26px 90px; }
+  .arrivalChapter { align-items: flex-end; min-height: max(100svh, 760px); padding-bottom: 206px; }
+  .chapterCopy { width: min(620px, 100%); }
+  .chapterCopy h1 { font-size: clamp(59px, 15vw, 88px); }
+  .kicker { margin-bottom: 16px; }
+  :global(#main-content) .experience .kicker { font-size: 11px !important; letter-spacing: .12em; }
+  .intro { max-width: 350px; margin-top: 18px; font-size: 16px; }
+  .sceneIndex { right: 25px; bottom: 162px; font-size: 8px; }
+  .sceneIndex { display: none; }
+  .progressRail { right: 12px; }
+  .controls { left: 24px; right: 24px; bottom: 18px; max-width: none; text-align: left; }
+  .controlRow { justify-content: flex-start; flex-wrap: wrap; gap: 4px; }
+  .controls button { min-width: 34px; min-height: 34px; padding-inline: 7px; }
+  .controls .status { justify-content: flex-start; text-align: left; line-height: 1.5; }
+  .systemLinks { gap: 0 20px; }
+}
+
+@media (max-width: 380px) {
+  .arrivalChapter { min-height: 700px; padding-inline: 22px; padding-bottom: 196px; }
+  .chapterCopy h1 { font-size: 58px; }
+  .controls { left: 22px; right: 22px; bottom: 12px; }
+  :global(.site-main) .experience .controls button { min-width: 32px; min-height: 34px; padding-inline: 6px; font-size: 12px !important; }
+  .controls .status { max-width: 100%; font-size: 11px !important; }
+  .systemLinks { grid-template-columns: 1fr; margin-top: 24px; }
+}
+
+@media (max-width: 380px) and (min-height: 640px) {
+  .controls { bottom: 40px; }
+}
+
+@media (max-width: 760px) and (max-height: 760px) {
+  .posterArt { top: clamp(48px, 7vh, 62px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster,
+  .chapterCopy,
+  .progressRail span { transition: none; }
+  .motionReady .chapter:not([data-in-view="true"]) .chapterCopy { opacity: 1; transform: none; }
+}
