@@ -23,9 +23,18 @@ for (const [name, route] of routes) {
     expect(hasHorizontalOverflow, `${route} must not overflow horizontally`).toBe(false);
     await expect(page.locator(".abstract-scene")).toHaveCount(0);
     await page.evaluate(async () => {
-      window.scrollTo(0, document.documentElement.scrollHeight);
-      await new Promise<void>((resolve) => setTimeout(resolve, 250));
+      const root = document.documentElement;
+      const previousScrollBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      const step = Math.max(320, Math.floor(window.innerHeight * 0.72));
+      for (let top = 0; top < root.scrollHeight; top += step) {
+        window.scrollTo(0, top);
+        await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+      }
+      window.scrollTo(0, root.scrollHeight);
+      await new Promise<void>((resolve) => setTimeout(resolve, 950));
       window.scrollTo(0, 0);
+      root.style.scrollBehavior = previousScrollBehavior;
       await new Promise<void>((resolve) => setTimeout(resolve, 950));
     });
     const destination = path.join("test-results", "screenshots", testInfo.project.name, `${name}.png`);
