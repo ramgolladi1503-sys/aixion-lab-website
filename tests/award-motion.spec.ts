@@ -11,14 +11,15 @@ test("home follows the new editorial sequence and exposes project stories", asyn
   await expect(page.getByText("REJECTED", { exact: true })).toBeVisible();
 });
 
-test("cinematic chapter controls use four accessible project destinations", async ({ page }) => {
+test("cinematic chapter controls use the four approved editorial destinations", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   const tabs = page.getByRole("tablist", { name: "Explore Aixion Lab" });
   await expect(tabs.getByRole("tab")).toHaveCount(4);
-  await expect(tabs.getByRole("tab")).toHaveText(["01TradeBot", "02Control Core", "03Research", "04Automation"]);
-  await tabs.getByRole("tab", { name: /Control Core/ }).click();
-  await expect(page.getByRole("tabpanel")).toContainText("Keep automation useful and bounded.");
-  await expect(page.getByRole("tabpanel").getByRole("link", { name: "Explore Control Core" })).toHaveAttribute("href", "/systems/control-core");
+  await expect(tabs.getByRole("tab")).toHaveText(["01Systems", "02Research", "03Automation", "04Analytics"]);
+  await expect(page.getByRole("tabpanel").getByRole("link", { name: "Explore TradeBot" })).toHaveAttribute("href", "/systems/tradebot");
+  await tabs.getByRole("tab", { name: /Analytics/ }).click();
+  await expect(page.getByRole("tabpanel")).toContainText("Make the evidence easier to use.");
+  await expect(page.getByRole("tabpanel").getByRole("link", { name: "Explore analytics" })).toHaveAttribute("href", "/systems/analytics");
 });
 
 test("motion reveals the new work spreads without hiding their content", async ({ page }) => {

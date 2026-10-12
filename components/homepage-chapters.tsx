@@ -6,26 +6,15 @@ import { useEffect, useRef, useState } from "react";
 
 const chapters = [
   {
-    id: "tradebot",
-    label: "TradeBot",
-    eyebrow: "MARKET INTELLIGENCE · VALIDATING",
+    id: "systems",
+    label: "Systems",
+    eyebrow: "SYSTEMS · MARKET INTELLIGENCE",
     title: "Build a clearer view of a changing market.",
-    copy: "TradeBot brings data integrity, research boundaries and validation into one market-intelligence system.",
+    copy: "TradeBot leads Aixion’s systems work in market-data integrity and validation. Control Core is developing bounded automation with explicit policy and human authority.",
     href: "/systems/tradebot",
     action: "Explore TradeBot",
     image: "/images/aixion-editorial/systems-workbench.jpg",
     alt: "A systems engineering workstation with an architecture diagram, notebook and computer.",
-  },
-  {
-    id: "control-core",
-    label: "Control Core",
-    eyebrow: "ORCHESTRATION · BUILDING",
-    title: "Keep automation useful and bounded.",
-    copy: "Aixion Control Core is being developed around policy, tool boundaries, evidence and human authority.",
-    href: "/systems/control-core",
-    action: "Explore Control Core",
-    image: "/images/aixion-editorial/hero-studio.jpg",
-    alt: "A quiet engineering studio with a system map on glass.",
   },
   {
     id: "research",
@@ -48,6 +37,17 @@ const chapters = [
     action: "Explore automation",
     image: "/images/aixion-editorial/planning-studio.jpg",
     alt: "An engineering planning studio with large drawings spread across a worktable.",
+  },
+  {
+    id: "analytics",
+    label: "Analytics",
+    eyebrow: "DATA · DECISION SUPPORT",
+    title: "Make the evidence easier to use.",
+    copy: "Analytics work connects runtime state, replay and outcomes so a decision can be understood in context.",
+    href: "/systems/analytics",
+    action: "Explore analytics",
+    image: "/images/aixion-editorial/research-desk.jpg",
+    alt: "Research notes and a marked-up chart on a desk, photographed in natural light.",
   },
 ] as const;
 

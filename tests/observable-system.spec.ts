@@ -13,10 +13,12 @@ test("homepage keeps system claims within their documented maturity", async ({ p
   expect(body).not.toContain("tests passed");
 });
 
-test("mobile redesign has four usable project tabs, a compact menu and no horizontal overflow", async ({ page }) => {
+test("mobile redesign has four approved chapter tabs, a compact menu and no horizontal overflow", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("tablist", { name: "Explore Aixion Lab" }).getByRole("tab")).toHaveCount(4);
+  const chapters = page.getByRole("tablist", { name: "Explore Aixion Lab" }).getByRole("tab");
+  await expect(chapters).toHaveCount(4);
+  await expect(chapters).toHaveText(["01Systems", "02Research", "03Automation", "04Analytics"]);
   await expect(page.locator("details.mobile-menu summary")).toBeVisible();
   const menu = page.locator("details.mobile-menu");
   await menu.locator("summary").click();
