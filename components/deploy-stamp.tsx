@@ -30,7 +30,7 @@ export function DeployStamp() {
   }, []);
 
   if (!attestation?.git_sha) {
-    return <span>AIXION LAB / BUILD PREVIEW</span>;
+    return <span>AIXION LAB / DEPLOYMENT ATTESTATION UNAVAILABLE</span>;
   }
 
   const sha = attestation.git_sha.slice(0, 8);

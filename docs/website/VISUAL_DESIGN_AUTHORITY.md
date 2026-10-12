@@ -1,9 +1,11 @@
-# AIXION LAB — VISUAL DESIGN AUTHORITY
+# AIXION LAB — VISUAL DESIGN AUTHORITY (HISTORICAL)
 
-**Status:** LOCKED  
-**Authority date:** 2026-08-23  
-**Applies to:** `aixionlab.com` clean rebuild  
-**Architecture authority:** `docs/website/AIXION_WEBSITE_MASTER_BLUEPRINT.md`
+**Status:** SUPERSEDED FOR VISUAL AND MOTION RULES
+**Original authority date:** 2026-08-23
+**Superseded by:** `docs/website/OLYMPIC_REFERENCE_ADOPTION.md` (2026-10-12)
+**Still applicable:** the information architecture, public/private boundaries and content rules in `docs/website/AIXION_WEBSITE_MASTER_BLUEPRINT.md`
+
+This document records the prior soft-neutral design direction. Its visual and motion requirements no longer govern implementation. The Olympic reference adoption note is the current visual authority; factual-content and system-maturity requirements in the master blueprint remain active.
 
 ## Locked direction
 

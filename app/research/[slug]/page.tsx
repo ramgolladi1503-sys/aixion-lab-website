@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { EditorialHeading, EditorialHero, ImageStory } from "@/components/editorial-content";
+import { StateTag } from "@/components/ui";
 import { researchNotes } from "@/lib/site-data";
-import { SectionHeading, StateTag } from "@/components/ui";
 
 const researchDetail: Record<string, {
   why: string;
@@ -51,68 +53,71 @@ const researchDetail: Record<string, {
 };
 
 export function generateStaticParams() {
-  return researchNotes.map(note => ({ slug: note.slug }));
+  return researchNotes.map((note) => ({ slug: note.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const note = researchNotes.find(item => item.slug === slug);
-  if (!note) return {};
-  return { title: note.title, description: note.question };
+  const note = researchNotes.find((item) => item.slug === slug);
+  return note ? { title: note.title, description: note.question } : {};
 }
 
 export default async function ResearchDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const note = researchNotes.find(item => item.slug === slug);
+  const note = researchNotes.find((item) => item.slug === slug);
   const detail = researchDetail[slug];
   if (!note || !detail) notFound();
 
   return (
     <>
-      <section className="page-hero">
-        <div className="shell page-hero-grid">
-          <div>
-            <p className="eyebrow">RESEARCH NOTE · {note.domain}</p>
-            <h1>{note.title}</h1>
-            <p className="lede">{note.question}</p>
-            <StateTag state={note.state} />
+      <EditorialHero
+        eyebrow={`RESEARCH NOTE / ${note.domain}`}
+        title={note.title}
+        copy={note.question}
+        image="/images/aixion-editorial/research-desk.jpg"
+        imageAlt="A research chart and working notes on a desk."
+        scrollTarget="page-content"
+      >
+        <div className="system-hero-meta"><StateTag state={note.state} /><Link className="button button--light" href="#result">Read the finding <span aria-hidden="true">↓</span></Link></div>
+      </EditorialHero>
+
+      <section id="page-content" className="editorial-section">
+        <div className="page-width">
+          <EditorialHeading eyebrow="QUESTION / METHOD / RESULT" title="Keep the reasoning attached to the result." copy="The note gives the reader enough context to understand why the work exists and where its conclusions stop." />
+          <div className="research-answers">
+            <article data-reveal><span className="eyebrow">WHY THIS MATTERS</span><h2>Why investigate it?</h2><p>{detail.why}</p></article>
+            <article data-reveal><span className="eyebrow">OBSERVATION</span><h2>What was seen?</h2><p>{detail.observation}</p></article>
+            <article data-reveal><span className="eyebrow">HYPOTHESIS</span><h2>What is being tested?</h2><p>{detail.hypothesis}</p></article>
+            <article id="result" data-reveal><span className="eyebrow">RESULT / STATE</span><h2>Where it stands</h2><p>{detail.result}</p></article>
           </div>
-          <div className="panel meta-board">
-            <div><span>Visibility</span><strong>Public summary</strong></div>
-            <div><span>Method</span><strong>Evidence-gated</strong></div>
-            <div><span>Related system</span><strong>{slug === 'evidence-bound-autonomy' ? 'Control Core' : 'TradeBot'}</strong></div>
-            <div><span>Outcome authority</span><strong>Explicit</strong></div>
+        </div>
+      </section>
+
+      <section className="editorial-section editorial-section--cool">
+        <div className="page-width research-method-layout">
+          <div data-reveal>
+            <EditorialHeading eyebrow="METHOD" title="How the study stays bounded" />
+            <ol className="editorial-list">{detail.method.map((item) => <li key={item}>{item}</li>)}</ol>
+          </div>
+          <div data-reveal>
+            <EditorialHeading eyebrow="BOUNDARIES" title="What this page will not claim" />
+            <ul className="editorial-list editorial-list--quiet">{detail.boundaries.map((item) => <li key={item}>{item}</li>)}</ul>
           </div>
         </div>
       </section>
 
-      <section className="section-tight">
-        <div className="shell detail-grid">
-          <article className="detail-card"><p className="eyebrow">WHY THIS MATTERS</p><h3>Why investigate it?</h3><p>{detail.why}</p></article>
-          <article className="detail-card"><p className="eyebrow">OBSERVATION</p><h3>What was seen?</h3><p>{detail.observation}</p></article>
-          <article className="detail-card"><p className="eyebrow">HYPOTHESIS</p><h3>What is being tested?</h3><p>{detail.hypothesis}</p></article>
-          <article className="detail-card"><p className="eyebrow">RESULT / STATE</p><h3>Where it stands</h3><p>{detail.result}</p></article>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="shell detail-grid">
-          <article className="panel panel-pad">
-            <SectionHeading eyebrow="METHOD" title="How the study stays bounded" />
-            <ol>{detail.method.map(item => <li key={item}>{item}</li>)}</ol>
-          </article>
-          <article className="panel panel-pad">
-            <SectionHeading eyebrow="BOUNDARIES" title="What this page will not claim" />
-            <ul>{detail.boundaries.map(item => <li key={item}>{item}</li>)}</ul>
-          </article>
-        </div>
-      </section>
-
-      <section className="section-tight">
-        <div className="shell panel panel-pad">
-          <p className="eyebrow">NEXT STEP</p>
-          <h2>{detail.next}</h2>
-        </div>
+      <section className="editorial-section editorial-section--compact">
+        <ImageStory
+          image="/images/aixion-editorial/planning-studio.jpg"
+          imageAlt="A studio worktable with technical plans laid out for review."
+          eyebrow="NEXT STEP"
+          title={detail.next}
+          reverse
+          href="/research"
+          action="Return to research archive"
+        >
+          <p>The current state stays attached to the evidence until the next gate is met.</p>
+        </ImageStory>
       </section>
     </>
   );

@@ -23,7 +23,7 @@ export function MobileNav() {
       <nav aria-label="Mobile navigation">
         <Link href="/" onClick={closeMenu}>Home</Link>
         {nav.map(([label, href]) => <Link key={href} href={href} onClick={closeMenu}>{label}</Link>)}
-        <Link href="/resume" onClick={closeMenu}>Résumé</Link>
+        <Link href="/resume" onClick={closeMenu}>Career snapshot</Link>
         <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer" onClick={closeMenu}>GitHub ↗</a>
       </nav>
     </details>

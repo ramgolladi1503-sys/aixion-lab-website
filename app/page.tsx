@@ -1,132 +1,100 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { systems } from "@/lib/site-data";
-import labActivity from "@/content/lab-activity.json";
-import { CareerStrip, ProgressLane, SectionHeading, StateTag, SystemCard } from "@/components/ui";
-import { AixionSignal, SystemVisual } from "@/components/system-visuals";
-import { ObservableStateField } from "@/components/observable-state-field";
+import { HomepageChapters } from "@/components/homepage-chapters";
+import { EditorialLink } from "@/components/editorial-content";
+import { StateTag } from "@/components/ui";
+import { researchNotes, systems } from "@/lib/site-data";
+
+export const metadata: Metadata = {
+  title: "Applied intelligence, engineered with evidence",
+  description: "Aixion Lab is an independent engineering practice building applied intelligence, automation and decision systems with visible evidence and clear boundaries.",
+};
 
 export default function HomePage() {
-  const tradebot = systems[0];
-  const activeWork = labActivity.active[0];
-  const latestActivity = labActivity.entries[0];
+  const tradebot = systems.find((system) => system.slug === "tradebot");
+  const controlCore = systems.find((system) => system.slug === "control-core");
+  const rejected = researchNotes.find((note) => note.slug === "mean-reversion-candidate");
 
   return (
-    <div className="observable-home">
-      <section className="observable-hero" data-reveal="hero">
-        <div className="observable-hero-grid shell">
-          <div className="observable-copy">
-            <p className="eyebrow">AIXION LAB · THE SYSTEM IS EXPLAINING ITSELF</p>
-            <h1>Systems should be able to explain their state, their evidence and their limits.</h1>
-            <p className="lede">A living engineering lab where applied intelligence becomes real systems through explicit validation, evidence and authority boundaries.</p>
-            <p className="hero-philosophy">The visual field is public-state driven: work that is building remains incomplete, validation accumulates evidence, and rejected research remains visible instead of disappearing.</p>
-            <div className="hero-attribution">
-              <strong>Built by Ram</strong>
-              <span>Quality Engineering · Automation · Software · Data · Applied AI</span>
-              <Link className="hero-career-link" href="/resume">Hire Ram · Recruiter fast path →</Link>
-            </div>
-            <div className="button-row hero-actions-visible">
-              <Link className="button" href="/systems">Explore systems →</Link>
-              <Link className="button-secondary" href="/collaborate">Work with Aixion Lab</Link>
-            </div>
-            <AixionSignal compact />
-          </div>
-          <ObservableStateField />
-        </div>
+    <>
+      <HomepageChapters />
 
-        <div className="panel pulse-preview shell" data-reveal="pulse-preview">
-          <div className="pulse-head">
-            <div>
-              <p className="eyebrow">AIXION PULSE · PUBLIC STATE</p>
-              <h2>Current system state, evidence and next gates.</h2>
-            </div>
-            <p>Curated public-safe state · no arbitrary completion percentages</p>
-          </div>
-          <ProgressLane label="TradeBot" stage="VALIDATING" />
-          <ProgressLane label="Control Core" stage="BUILDING" />
-          <ProgressLane label="Automation" stage="BUILDING" />
-          <ProgressLane label="Analytics Lab" stage="BUILDING" />
-          <div className="home-worklog-strip" aria-label="Latest Aixion Lab work">
-            <div>
-              <span className="system-id">WORKING NOW · {activeWork.date}</span>
-              <strong>{activeWork.title}</strong>
-              <p>{activeWork.summary}</p>
-            </div>
-            <StateTag state={activeWork.state} />
-          </div>
-          <div className="home-worklog-strip home-worklog-strip--latest">
-            <div>
-              <span className="system-id">LATEST VALIDATED ACTIVITY · {latestActivity.date}</span>
-              <strong>{latestActivity.title}</strong>
-              <p>{latestActivity.summary}</p>
-            </div>
-            <StateTag state={latestActivity.state} />
-          </div>
-          <Link className="text-link" href="/pulse">Open operational Pulse →</Link>
-        </div>
-      </section>
-
-      <section className="section" data-reveal="systems-registry">
-        <div className="shell">
-          <SectionHeading eyebrow="SYSTEMS REGISTRY" title="Four systems. Different problems. One engineering discipline." copy="Each system exposes maturity, current gate, public-safe evidence and the next decision point." />
-          <div className="system-grid">
-            {systems.map(system => <SystemCard key={system.id} system={system} />)}
+      <section className="home-thesis" id="home-intro">
+        <div className="page-width home-thesis__grid" data-reveal>
+          <p className="eyebrow">A SMALL, INDEPENDENT ENGINEERING LAB</p>
+          <h2>Build with care.<br /><em>Know what the evidence says.</em></h2>
+          <div className="home-thesis__aside">
+            <p>Aixion Lab brings software, automation, data and applied AI together to work on difficult systems. The aim is practical: make the system’s state understandable, its limits visible and its decisions inspectable.</p>
+            <Link href="/about" className="text-link">Inside the lab <span aria-hidden="true">↗</span></Link>
           </div>
         </div>
       </section>
 
-      <section className="section-tight" data-reveal="tradebot-feature">
-        <div className="shell feature-split">
-          <article className="panel feature-copy">
-            <p className="eyebrow">AX-SYS-001 · FLAGSHIP · VALIDATING</p>
-            <h2>TradeBot</h2>
-            <p className="system-principle">A market system should know whether its data is trustworthy before it makes a claim.</p>
-            <p>{tradebot.descriptor}</p>
-            <p>Market data, research output and automated analysis are deliberately separated from risk and human execution authority.</p>
-            <p className="competency-bridge">Demonstrates: {tradebot.competencies.slice(0, 5).join(" · ")}</p>
-            <div className="button-row"><StateTag state={tradebot.state} /><Link className="button-secondary" href="/systems/tradebot#evidence">Evidence →</Link></div>
-            <CareerStrip skills={tradebot.competencies} />
-            <Link className="text-link" href="/systems/tradebot">Explore the flagship system →</Link>
-          </article>
-          <SystemVisual kind="tradebot" />
+      <section className="home-work home-work--tradebot" aria-labelledby="home-tradebot-title">
+        <div className="home-work__image" data-reveal>
+          <Image src="/images/aixion-editorial/systems-workbench.jpg" alt="An engineering workspace with a system diagram, notebook and computer." fill sizes="(max-width: 760px) 100vw, 58vw" />
+          <span className="home-work__index">01 / MARKET INTELLIGENCE</span>
+        </div>
+        <div className="home-work__copy" data-reveal>
+          <p className="eyebrow">A SYSTEM UNDER VALIDATION</p>
+          <h2 id="home-tradebot-title">When the inputs move, the evidence has to keep up.</h2>
+          <p>{tradebot?.descriptor} The work focuses on data integrity, research boundaries and validation; it does not imply a live trading edge or financial performance.</p>
+          {tradebot ? <StateTag state={tradebot.state} /> : null}
+          <EditorialLink href="/systems/tradebot">Explore TradeBot</EditorialLink>
         </div>
       </section>
 
-      <section className="section-tight home-deeper" data-reveal="deeper-paths">
-        <div className="shell">
-          <SectionHeading eyebrow="GO DEEPER" title="The rest of the lab lives on dedicated pages." copy="Home stops here by design. The deeper evidence, research and engineering progression remain available without duplicating them into the landing page." />
-          <nav className="home-deeper-rail" aria-label="Deeper Aixion Lab paths">
-            <Link href="/systems/control-core"><span>CONTROL CORE</span><strong>Governed autonomy and explicit authority →</strong></Link>
-            <Link href="/research"><span>RESEARCH</span><strong>Questions, frozen hypotheses and rejected work →</strong></Link>
-            <Link href="/journey"><span>JOURNEY</span><strong>How quality engineering evolved into systems thinking →</strong></Link>
-          </nav>
+      <section className="home-work home-work--core" aria-labelledby="home-core-title">
+        <div className="home-work__image" data-reveal>
+          <Image src="/images/aixion-editorial/hero-studio.jpg" alt="A quiet engineering studio with a system map on glass." fill sizes="(max-width: 760px) 100vw, 58vw" />
+          <span className="home-work__index">02 / ORCHESTRATION</span>
+        </div>
+        <div className="home-work__copy" data-reveal>
+          <p className="eyebrow">A PLATFORM TAKING SHAPE</p>
+          <h2 id="home-core-title">Useful automation needs a clear boundary around action.</h2>
+          <p>{controlCore?.descriptor} Control Core is in development, with current work on orchestration, tool boundaries, policy and evidence capture.</p>
+          {controlCore ? <StateTag state={controlCore.state} /> : null}
+          <EditorialLink href="/systems/control-core">Explore Control Core</EditorialLink>
         </div>
       </section>
 
-      <section className="section" data-reveal="contact">
-        <div className="shell">
-          <SectionHeading eyebrow="TWO WAYS TO WORK TOGETHER" title="Hire the engineer, or collaborate with the lab." copy="Aixion Lab is an independent engineering lab led by Ram—not a claim of a staffed agency. The same evidence supports two different opportunity paths." />
-          <div className="contact-panel">
-            <div className="panel contact-copy contact-copy--career">
-              <p className="eyebrow">HIRE RAM</p>
-              <h3>Looking for an engineer who can bridge quality, automation, software, data and applied AI?</h3>
-              <p>The recruiter path translates the systems into competencies and career evidence without changing or inflating the underlying work.</p>
-              <div className="button-row">
-                <Link className="button" href="/resume">Career snapshot →</Link>
-                <a className="button-secondary" href="https://www.linkedin.com/in/ram-golladi" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-              </div>
-            </div>
-            <div className="panel contact-copy contact-copy--conversation">
-              <p className="eyebrow">WORK WITH AIXION LAB</p>
-              <h3>Have a bounded engineering problem worth building or validating properly?</h3>
-              <p>Explore selective collaboration around QA architecture, workflow automation, AI / agent validation, data systems and evidence-led prototypes.</p>
-              <div className="button-row">
-                <Link className="button" href="/collaborate">Collaboration path →</Link>
-                <Link className="button-secondary" href="/about#contact">Contact</Link>
-              </div>
-            </div>
+      <section className="home-finding" aria-labelledby="home-finding-title">
+        <div className="home-finding__media" data-reveal>
+          <Image src="/images/aixion-editorial/research-desk.jpg" alt="Annotated research notes and a chart on a desk." fill sizes="(max-width: 760px) 100vw, 48vw" />
+        </div>
+        <div className="home-finding__copy" data-reveal>
+          <p className="eyebrow">A RESEARCH DECISION, KEPT IN THE RECORD</p>
+          <h2 id="home-finding-title">Some of the most useful results are the ones that stop a claim.</h2>
+          <p>The mean-reversion candidate did not retain sufficient support after its validation boundary. It remains marked rejected, so a weak result is not quietly recast as a success.</p>
+          {rejected ? <p className="home-finding__state"><StateTag state={rejected.state} /><span>{rejected.title}</span></p> : null}
+          <EditorialLink href={rejected ? `/research/${rejected.slug}` : "/research"}>Read the research note</EditorialLink>
+        </div>
+      </section>
+
+      <section className="home-practice" aria-labelledby="home-practice-title">
+        <div className="page-width">
+          <div className="home-practice__intro" data-reveal>
+            <p className="eyebrow eyebrow--light">HOW THE WORK IS DONE</p>
+            <h2 id="home-practice-title">Make the important parts visible.</h2>
           </div>
+          <div className="home-practice__lines">
+            <article data-reveal><span>01</span><h3>State</h3><p>Show what is operating, being built, under validation or still a question.</p></article>
+            <article data-reveal><span>02</span><h3>Evidence</h3><p>Keep the reasoning and result close enough to inspect, including when a hypothesis fails.</p></article>
+            <article data-reveal><span>03</span><h3>Authority</h3><p>Keep policy and human decisions explicit where software can affect important outcomes.</p></article>
+          </div>
+          <Link href="/journey" className="home-practice__link">Read the engineering approach <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
-    </div>
+
+      <section className="last-call home-close">
+        <Image className="last-call__image" src="/images/aixion-editorial/signal-room.jpg" alt="" width={1672} height={941} sizes="100vw" />
+        <div className="page-width last-call__content" data-reveal>
+          <p className="eyebrow eyebrow--light">AIXION LAB</p>
+          <h2>Have a system that deserves a closer look?</h2>
+          <Link href="/about#contact" className="button button--light">Start a conversation <span aria-hidden="true">↗</span></Link>
+        </div>
+      </section>
+    </>
   );
 }

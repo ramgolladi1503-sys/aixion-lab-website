@@ -1,20 +1,14 @@
 import Link from "next/link";
-import { AixionSignal } from "@/components/system-visuals";
 
 export default function NotFound() {
   return (
-    <section className="not-found section">
-      <div className="shell">
-        <p className="eyebrow">404 · SIGNAL LOST</p>
-        <h1>404</h1>
-        <h2>Lost in the Lab?</h2>
-        <p className="lede" style={{ marginInline: "auto" }}>The page you were looking for does not exist, but the system still knows where home is.</p>
-        <div className="panel panel-pad not-found-status">
-          <p className="eyebrow">ROUTE STATE · NOT FOUND</p>
-          <p>The requested route is outside the published system map. Use the lifecycle below to return to a known state.</p>
-          <AixionSignal compact />
-        </div>
-        <Link className="button" href="/">Return home →</Link>
+    <section className="not-found">
+      <div className="page-width" data-reveal>
+        <p className="eyebrow">404 / ROUTE NOT FOUND</p>
+        <h1>Not this way.</h1>
+        <h2>The page could not be found.</h2>
+        <p>Return to the lab overview or browse the work and research pages.</p>
+        <div className="not-found-actions"><Link className="button" href="/">Return home <span aria-hidden="true">↗</span></Link><Link className="editorial-link" href="/work">Browse work <span aria-hidden="true">↗</span></Link></div>
       </div>
     </section>
   );
