@@ -5,7 +5,8 @@
 - Goal: an original, isolated `/motion-lab` experience. The public homepage, shared navigation and other production routes remain unchanged.
 - Branch: `ram/aixion-motion-lab`, based on PR #16 head `a4339dba69a4cf5184683c952e4cee796e8708d6`.
 - Implemented: one shared Canvas, Arrival sculpture, scroll-morphed engineering graph, four-cluster applied-systems scene, semantic chapter content and links, native reversible scroll progress, responsive layout, reduced-motion and failure fallbacks.
-- GitHub PR #16 was rechecked on 2026-10-13: open, unmerged, head `a4339dba69a4cf5184683c952e4cee796e8708d6`. This prototype branch is based on that same head. A direct PR to `main` would include PR #16's existing redesign diff; see `INTEGRATION.md` for the stacked review path. No merge or deployment has occurred.
+- GitHub PR #16 was rechecked on 2026-10-13: open, unmerged, head `a4339dba69a4cf5184683c952e4cee796e8708d6`. Draft PR #17 is open and unmerged at `https://github.com/ramgolladi1503-sys/aixion-lab-website/pull/17`, based on that exact head. Its current head is `488b5b189de7e2081425d5702f386906849f6996`; GitHub reports it mergeable. A direct PR to `main` would include PR #16's existing redesign diff. No merge or deployment has occurred.
+- PR #17 has no GitHub Actions workflow run or commit status check: `website-ci.yml` is configured to trigger only on pull requests targeting `main`. This is a missing run, not a passing CI check. See `INTEGRATION.md` for exact-base handling and rollout boundaries.
 - The abandoned broad homepage experiment remains preserved at `/Users/madhuram/aixion-active-theory-pr` and is not part of this branch.
 
 ## Execution gates
@@ -17,7 +18,7 @@
 | C — interaction | PASS in desktop/mobile emulation | Semantic links, keyboard view controls, mobile touch anchor, reduced-motion and no-WebGL paths pass focused browser checks. Physical phone input has not been spot-checked. |
 | D — quality | PASS for M1 desktop and mobile-sized emulation; physical-phone check outstanding | Native ARM64 Chromium confirmed `ANGLE Metal Renderer: Apple M1`. At 1440×900, each scene delivered about 60 FPS with median and p95 frame intervals of 16.7 ms. At 390×844, device scale factor 3 (canvas 526×1139), each scene also delivered about 60 FPS with no horizontal overflow. All six runs recorded zero `pageerror` events. The samples ran for four seconds per scene and are refresh-capped observations, not maximum-throughput or sustained thermal tests. Injected WebGL context loss switches to the static fallback while retaining content. A live route transition removed the Canvas on `/systems`; browser-back restored exactly one Canvas in `ready` state. React Three Fiber 9.8.1 unmount teardown disposes the root scene/renderer and calls `forceContextLoss()`. A physical phone/GPU run remains outstanding. |
 | E — regression | PASS (headless suite) | `npx next build --webpack` passes and typechecking completed in the build. The focused motion-lab run after the 319×664 adjustment: 23 passed, 1 expected desktop-only skip. The earlier full serial run completed: 163 passed, 5 skipped, 0 failed in 5.7 minutes. The earlier isolated timeout did not recur. |
-| F — review | PARTIAL | `git diff --check` passes and the production homepage/shared-layout files have no changes. `INTEGRATION.md` records the stacked base, rollout and rollback. Physical-device performance and owner review remain outstanding. No merge or deployment has occurred. |
+| F — review | PARTIAL | `git diff --check` passes and the production homepage/shared-layout files have no changes. Draft PR #17 is open, mergeable and stacked on PR #16's exact head. The configured Website CI workflow did not run because its pull-request trigger only accepts base `main`; local build and browser evidence are documented, but no remote CI pass is claimed. Physical-device performance and owner visual review remain outstanding. No merge or deployment has occurred. |
 
 ## Visual evidence
 
@@ -58,4 +59,4 @@ The headless Metal samples were refresh-capped near 60 Hz. They demonstrate this
 ## Next work
 
 1. Obtain a physical-phone interaction and GPU frame-time check; the existing mobile result is browser emulation on an Apple M1, not a mobile GPU.
-2. Prepare the scoped draft review against PR #16's branch. If PR #16 changes disposition, reassess and move only Motion Lab-specific changes to the intended base.
+2. Request owner visual review of draft PR #17. If PR #16 changes disposition, reassess the stacked base and exact-head CI requirements before any retargeting.
