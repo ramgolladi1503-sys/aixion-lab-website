@@ -23,8 +23,12 @@ The homepage opens with four manually selected chapters: Systems, Research, Auto
 
 - Chapter changes crossfade and settle the new image/copy in response to explicit user input.
 - Section and image reveals happen once as they enter view; image scale and hover changes stay restrained.
-- Do not autoplay chapters, hijack scrolling, add sound or use decorative WebGL/particle effects.
+- Do not autoplay chapters, hijack scrolling, add sound or use decorative WebGL/particle effects on the public editorial pages.
 - Respect `prefers-reduced-motion`; content stays visible without animation.
+
+### Isolated motion experiment
+
+`/motion-lab` is a separately scoped, noindex experiment for original WebGL scene engineering. It is not part of the public homepage or editorial route system, and it does not amend the visual direction above. Its only permitted WebGL exception is the isolated route itself, under `docs/motion-lab/`; do not import its renderer or motion components into shared layouts, the homepage, or other public pages without a separate owner-approved integration decision. It must keep semantic HTML content, a static no-WebGL view, a reduced-motion equivalent, bounded resource use and a reversible failure path. This experiment must not change the site’s factual content or public/private boundary.
 
 ## Content and evidence boundaries
 

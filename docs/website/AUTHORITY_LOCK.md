@@ -3,6 +3,7 @@
 **Updated:** 2026-10-12
 **Information architecture and content authority:** `AIXION_WEBSITE_MASTER_BLUEPRINT.md` v1.0
 **Current visual authority:** `OLYMPIC_REFERENCE_ADOPTION.md`
+**Isolated experiment:** `docs/motion-lab/` (`/motion-lab` only; no homepage integration)
 **Archive branch:** `archive/pre-blueprint-rebuild-20260823`
 
 ## Hard rules
@@ -14,3 +15,4 @@
 5. Historical work remains preserved in Git and must not be copied forward by default.
 6. TradeBot and other system claims must obey the public/summary/private boundary.
 7. Unsupported metrics, fake telemetry and arbitrary progress percentages are prohibited.
+8. The motion-lab experiment cannot change the public homepage, shared route motion or factual claims without a separate owner-approved integration decision.
