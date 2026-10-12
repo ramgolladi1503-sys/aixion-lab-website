@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const chapters = [
   {
@@ -53,9 +53,14 @@ const chapters = [
 
 export function HomepageChapters() {
   const [active, setActive] = useState(0);
+  const [outgoing, setOutgoing] = useState<number | null>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const transitionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const chapter = chapters[active];
+
+  useEffect(() => () => {
+    if (transitionTimer.current) clearTimeout(transitionTimer.current);
+  }, []);
 
   function selectChapter(index: number) {
     if (index === active) return;
@@ -67,7 +72,11 @@ export function HomepageChapters() {
     if (hero) {
       hero.dataset.chapterTransition = "true";
       if (transitionTimer.current) clearTimeout(transitionTimer.current);
-      transitionTimer.current = setTimeout(() => delete hero.dataset.chapterTransition, 520);
+      setOutgoing(active);
+      transitionTimer.current = setTimeout(() => {
+        setOutgoing(null);
+        delete hero.dataset.chapterTransition;
+      }, 950);
     }
     setActive(index);
   }
@@ -86,7 +95,18 @@ export function HomepageChapters() {
 
   return (
     <section className="home-hero" aria-label="Aixion Lab overview">
-      <Image key={chapter.image} className="home-hero__image" src={chapter.image} alt={chapter.alt} fill priority sizes="100vw" />
+      <Image key={chapter.image} className={`home-hero__image${outgoing !== null ? " home-hero__image--enter" : ""}`} src={chapter.image} alt={chapter.alt} fill priority sizes="100vw" />
+      {outgoing !== null ? (
+        <Image
+          key={`outgoing-${chapters[outgoing].id}`}
+          className="home-hero__image home-hero__image--exit"
+          src={chapters[outgoing].image}
+          alt=""
+          fill
+          sizes="100vw"
+          aria-hidden="true"
+        />
+      ) : null}
       <div className="home-hero__shade" aria-hidden="true" />
       <div className="home-hero__top page-width" data-reveal>
         <p className="eyebrow eyebrow--light">INDEPENDENT APPLIED ENGINEERING</p>
