@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 
 export function EditorialMotion({ children }: { children: ReactNode }) {
   const frame = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const root = frame.current;
@@ -23,6 +25,7 @@ export function EditorialMotion({ children }: { children: ReactNode }) {
     root.classList.add("motion-ready");
     const targets = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal]"));
     targets.forEach((element) => observer.observe(element));
+    const heroImage = root.querySelector<HTMLElement>(".home-hero__image, .editorial-hero__image");
 
     let scrollFrame = 0;
     const revealPassedSections = () => {
@@ -36,6 +39,15 @@ export function EditorialMotion({ children }: { children: ReactNode }) {
             observer.unobserve(element);
           }
         }
+
+        if (heroImage) {
+          const hero = heroImage.parentElement;
+          if (hero) {
+            const bounds = hero.getBoundingClientRect();
+            const progress = Math.min(1, Math.max(0, -bounds.top / bounds.height));
+            heroImage.style.setProperty("--hero-drift", `${Math.round(progress * -34)}px`);
+          }
+        }
       });
     };
     window.addEventListener("scroll", revealPassedSections, { passive: true });
@@ -47,7 +59,7 @@ export function EditorialMotion({ children }: { children: ReactNode }) {
       observer.disconnect();
       root.classList.remove("motion-ready");
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <div className="site-frame" ref={frame}>
