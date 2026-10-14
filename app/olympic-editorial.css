@@ -673,19 +673,52 @@ html[data-view="career"] .lab-only { display: none !important; }
 .site-main .system-subnav a,
 .site-main .evidence-row > span:first-child,
 .site-main .state-tag,
+.site-main .quiet-light-link,
 .site-main button,
 .site-main .button,
 .site-main .editorial-link,
 .site-main .text-link,
-.site-header .desktop-nav a,
-.site-header .header-contact,
+.site-header .brand-copy strong,
+.site-header .brand-copy small,
+.site-header .mode-toggle,
+.site-header .mode-toggle strong,
+.site-header .mode-toggle .mode-label,
 .site-header .mobile-menu summary,
 .site-header .mobile-menu nav a,
+.site-header .desktop-nav a,
+.site-header .header-contact,
+.site-main .scroll-cue,
+.site-main .story-index,
+.site-main .journey-spectrum__number,
+.site-main .signal-line__index,
+.site-main .research-domain,
+.site-main .home-work__index,
+.site-main .work-opening__image > span,
+.site-main .work-story__image > span,
+.site-main .home-finding__state > span:last-child,
+.site-main .home-practice__lines article > span,
+.site-main .system-timeline > div > span,
 .site-footer a,
 .site-footer .site-footer__base {
   font-size: max(12px, 1em) !important;
 }
+.site-header .brand-copy strong,
+.site-header .desktop-nav a,
+.site-header .header-contact,
+.site-header .mobile-menu summary,
+.site-header .mobile-menu nav a,
+.site-main .quiet-light-link,
+.site-main .scroll-cue,
+.site-footer .site-footer__base {
+  font-size: max(14px, 1em) !important;
+}
 .site-footer a { font-size: max(14px, 1em) !important; }
+
+@media (min-width: 981px) and (max-width: 1100px) {
+  .site-header__inner { grid-template-columns: 1fr auto; column-gap: 16px; }
+  .desktop-nav { grid-column: 1 / -1; grid-row: 2; justify-content: center; gap: clamp(12px, 2vw, 18px); padding-bottom: 12px; }
+  .header-actions { grid-column: 2; grid-row: 1; gap: 8px; }
+}
 
 .work-opening { padding-top: 92px; color: white; background: #142331; }
 .work-opening--compact { padding-top: 88px; }
