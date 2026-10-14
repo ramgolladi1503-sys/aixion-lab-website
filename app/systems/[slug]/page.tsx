@@ -178,7 +178,7 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
     <>
       <section id="overview">
         <EditorialHero
-          eyebrow={`${system.id} / ${system.domain}`}
+          eyebrow={system.domain}
           title={system.name}
           copy={system.descriptor}
           image={visual.src}
@@ -258,7 +258,7 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
 
       <section id="roadmap" className="editorial-section editorial-section--dark">
         <div className="page-width next-gate" data-reveal>
-          <div><p className="eyebrow eyebrow--light">NEXT GATE</p><h2 className={system.slug === "control-core" ? "next-gate__title--single" : undefined}>{system.nextGate}</h2><p>{system.currentFocus}</p></div>
+          <div><p className="eyebrow eyebrow--light">NEXT GATE</p><h2 className={system.slug === "control-core" || system.slug === "tradebot" ? "next-gate__title--single" : undefined}>{system.nextGate}</h2><p>{system.currentFocus}</p></div>
           <Link href="/systems" className="button button--light">All systems <span aria-hidden="true">↗</span></Link>
         </div>
       </section>

@@ -52,7 +52,6 @@ export function JourneySpectrum({ items }: { items: readonly JourneyItem[] }) {
           <button type="button" onClick={() => move(1)} aria-label="Next stage">→</button>
         </div>
       </section>
-      <p className="journey-spectrum__hint">Select a stage to follow the progression <span>·</span> use arrow keys to move</p>
     </div>
   );
 }

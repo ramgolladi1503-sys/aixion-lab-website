@@ -62,7 +62,7 @@ export function WorkPage() {
               <span>{story.number} / {story.field}</span>
             </div>
             <div className="work-story__copy" data-reveal>
-              <p className="eyebrow">{system.name} / {system.id}</p>
+              <p className="eyebrow">{system.name}</p>
               <h2>{story.title}</h2>
               <p>{story.note}</p>
               <div className="work-story__state"><StateTag state={system.state} /><span>{system.currentGate}</span></div>

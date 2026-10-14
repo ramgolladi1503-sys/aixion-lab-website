@@ -44,7 +44,7 @@ for (const [name, route] of routes) {
 
 test("home primary action is visible without scrolling", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  const action = page.getByRole("link", { name: /Explore TradeBot/ }).first();
+  const action = page.getByRole("link", { name: "Discuss a workflow" }).first();
   await expect(action).toBeVisible();
   const box = await action.boundingBox();
   const viewport = page.viewportSize();
@@ -60,8 +60,10 @@ test("home chapter tabs switch the featured story accessibly", async ({ page }) 
   await tabs.getByRole("tab", { name: /Research/ }).click();
   await expect(page.getByRole("tabpanel")).toContainText("A good question deserves an honest result.");
   await expect(tabs.getByRole("tab", { name: /Research/ })).toHaveAttribute("aria-selected", "true");
-  await expect(page.locator(".home-hero__image--enter")).toHaveCSS("transition-property", /opacity/);
-  await expect(page.locator(".home-hero__image--enter")).toHaveAttribute("src", "/images/aixion-editorial/research-desk.jpg");
+  const researchImage = page.locator(".home-hero__image:not(.home-hero__image--exit)");
+  await expect(researchImage).toHaveAttribute("src", "/images/aixion-editorial/research-desk.jpg");
+  await expect(researchImage).toHaveCSS("transition-property", /opacity/);
+  await expect.poll(() => researchImage.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
 });
 
 test("new primary structure presents editorial Work and removes the legacy registry", async ({ page }, testInfo) => {

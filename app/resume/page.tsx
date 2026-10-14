@@ -58,7 +58,7 @@ export default function ResumePage() {
           <div className="career-projects">
             {systems.slice(0, 2).map((system, index) => (
               <article className="career-project" key={system.id} data-reveal>
-                <div><span className="story-index">0{index + 1} / {system.id}</span><h3>{system.name}</h3><p>{system.descriptor}</p><p className="career-project__skills"><strong>Relevant work:</strong> {system.competencies.join(" · ")}</p></div>
+                <div><span className="story-index">0{index + 1}</span><h3>{system.name}</h3><p>{system.descriptor}</p><p className="career-project__skills"><strong>Relevant work:</strong> {system.competencies.join(" · ")}</p></div>
                 <EditorialLink href={`/systems/${system.slug}`}>Review the system</EditorialLink>
               </article>
             ))}
