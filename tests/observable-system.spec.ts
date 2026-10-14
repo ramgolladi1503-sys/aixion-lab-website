@@ -39,5 +39,5 @@ test("work spreads prioritize two flagship systems and separate supporting work"
   await expect(page.locator(".work-support__item")).toHaveCount(2);
   await expect(page.locator(".work-story__copy").first()).toContainText("TradeBot");
   await expect(page.locator(".work-story__copy").nth(1)).toContainText("Aixion Control Core");
-  await expect(page.getByRole("heading", { name: "Useful work continues beyond the flagship systems." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Useful work continues beyond the flagship system" })).toBeVisible();
 });
