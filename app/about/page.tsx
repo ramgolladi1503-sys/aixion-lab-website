@@ -62,6 +62,8 @@ export default function AboutPage() {
             <p>For engineering roles, applied-AI work, automation systems or a technical conversation about one of the projects.</p>
           </div>
           <div className="contact-list">
+            <a href="mailto:contact@aixionlab.com"><span>Email / contact@aixionlab.com</span><span>↗</span></a>
+            <a href="https://www.linkedin.com/company/145311242/" target="_blank" rel="noreferrer"><span>LinkedIn / Aixion Lab</span><span>↗</span></a>
             <a href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer"><span>GitHub / project work</span><span>↗</span></a>
             <Link href="/resume"><span>Career snapshot</span><span>↗</span></Link>
             <Link href="/work"><span>Selected work</span><span>↗</span></Link>
