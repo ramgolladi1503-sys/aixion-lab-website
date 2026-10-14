@@ -60,3 +60,74 @@ test("all public routes keep body copy readable and avoid excessive section padd
     }
   }
 });
+
+test("small interface labels and captions remain readable across public routes", async ({ page }) => {
+  const readableLabels = [
+    ".site-header .brand-copy strong",
+    ".site-header .brand-copy small",
+    ".site-header .mode-toggle",
+    ".site-header .mode-toggle strong",
+    ".site-header .mode-toggle .mode-label",
+    ".site-main .scroll-cue",
+    ".site-main .story-index",
+    ".site-main .journey-spectrum__number",
+    ".site-main .signal-line__index",
+    ".site-main .research-domain",
+    ".site-main .home-work__index",
+    ".site-main .work-opening__image > span",
+    ".site-main .work-story__image > span",
+    ".site-main .system-timeline > div > span",
+    ".site-footer .site-footer__base",
+  ];
+
+  for (const route of publicRoutes.filter((item) => item !== "/page-that-does-not-exist")) {
+    await page.goto(route, { waitUntil: "domcontentloaded" });
+    for (const selector of readableLabels) {
+      const elements = page.locator(selector);
+      for (const element of await elements.all()) {
+        const layout = await element.evaluate((node) => {
+          const style = getComputedStyle(node);
+          const rect = node.getBoundingClientRect();
+          return {
+            visible: rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden",
+            text: (node.textContent ?? "").trim().slice(0, 64),
+            size: parseFloat(style.fontSize),
+          };
+        });
+        if (layout.visible) {
+          expect(layout.size, `${route} ${selector} should be at least 12px: ${layout.text}`).toBeGreaterThanOrEqual(12);
+        }
+      }
+    }
+  }
+});
+
+test("header remains readable and contained at intermediate desktop widths", async ({ page }) => {
+  for (const width of [1100, 1024, 981]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of ["/", "/work", "/journey", "/systems/tradebot"]) {
+      await page.goto(route, { waitUntil: "domcontentloaded" });
+      const layout = await page.evaluate(() => {
+        const header = document.querySelector(".site-header");
+        const brand = document.querySelector(".site-header .brand");
+        const nav = document.querySelector(".site-header .desktop-nav");
+        const actions = document.querySelector(".site-header .header-actions");
+        return {
+          overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          brand: brand?.getBoundingClientRect().toJSON(),
+          nav: nav?.getBoundingClientRect().toJSON(),
+          actions: actions?.getBoundingClientRect().toJSON(),
+          navVisible: !!nav && getComputedStyle(nav).display !== "none",
+          actionsVisible: !!actions && getComputedStyle(actions).display !== "none",
+          headerHeight: header?.getBoundingClientRect().height ?? 0,
+        };
+      });
+      expect(layout.overflow, `${route} at ${width}px should not overflow`).toBeLessThanOrEqual(1);
+      expect(layout.navVisible, `${route} at ${width}px should retain navigation`).toBe(true);
+      expect(layout.actionsVisible, `${route} at ${width}px should retain header controls`).toBe(true);
+      expect(layout.brand!.right, `${route} at ${width}px brand and actions should not overlap`).toBeLessThanOrEqual(layout.actions!.left + 1);
+      expect(layout.nav!.top, `${route} at ${width}px navigation should sit below the header row`).toBeGreaterThan(layout.brand!.top);
+      expect(layout.headerHeight).toBeGreaterThan(92);
+    }
+  }
+});
