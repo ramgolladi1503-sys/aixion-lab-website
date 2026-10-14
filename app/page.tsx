@@ -7,8 +7,8 @@ import { StateTag } from "@/components/ui";
 import { researchNotes, systems } from "@/lib/site-data";
 
 export const metadata: Metadata = {
-  title: "Applied intelligence, engineered with evidence",
-  description: "Aixion Lab is an independent engineering practice building applied intelligence, automation and decision systems with visible evidence and clear boundaries.",
+  title: "Software & automation for business operations — Aixion Lab",
+  description: "Aixion Lab helps businesses simplify operations, automate repetitive work and build reliable software around their existing workflows.",
 };
 
 export default function HomePage() {
@@ -20,15 +20,23 @@ export default function HomePage() {
     <>
       <HomepageChapters />
 
-      <section className="home-thesis" id="home-intro">
-        <div className="page-width home-thesis__grid" data-reveal>
-          <p className="eyebrow">A SMALL, INDEPENDENT ENGINEERING LAB</p>
-          <h2>Build with care.<br /><em>Know what the evidence says.</em></h2>
-          <div className="home-thesis__aside">
-            <p>Aixion Lab brings software, automation, data and applied AI together to work on difficult systems. The aim is practical: make the system’s state understandable, its limits visible and its decisions inspectable.</p>
-            <Link href="/about" className="text-link">Inside the lab <span aria-hidden="true">↗</span></Link>
-          </div>
+      <section className="home-work home-business" id="home-intro" aria-labelledby="home-business-title">
+        <div className="home-work__image" data-reveal>
+          <Image src="/images/aixion-editorial/planning-studio.jpg" alt="Plans and tools arranged across a bright worktable." fill sizes="(max-width: 760px) 100vw, 58vw" />
+          <span className="home-work__index">00 / BUSINESS OPERATIONS</span>
         </div>
+        <div className="home-work__copy" data-reveal>
+          <p className="eyebrow">SOFTWARE & AUTOMATION FOR BUSINESSES</p>
+          <h2 id="home-business-title">Make everyday operations easier to run.</h2>
+          <p>We help businesses simplify operations, automate repetitive work and build reliable software around how their teams actually work.</p>
+          <EditorialLink href="/about#contact">Tell us about a workflow</EditorialLink>
+        </div>
+        <div className="home-business__services" aria-label="Examples of business workflows Aixion Lab can help with">
+          <article><span>01 / CUSTOMER REQUESTS</span><p>Keep incoming enquiries, follow-ups and next steps visible in one workflow.</p></article>
+          <article><span>02 / ORDERS & HANDOFFS</span><p>Make order status, ownership and missing information easier to track.</p></article>
+          <article><span>03 / REPEATED ADMIN</span><p>Connect existing tools to reduce duplicate entry and simplify routine reporting.</p></article>
+        </div>
+        <p className="home-business__note">These are starting points, not packaged products. Each project is scoped around your process and the tools you already use.</p>
       </section>
 
       <section className="home-work home-work--tradebot" aria-labelledby="home-tradebot-title">

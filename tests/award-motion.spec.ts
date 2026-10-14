@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test("home follows the new editorial sequence and exposes project stories", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { name: /Applied intelligence/ })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Build with care. Know what the evidence says." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Make everyday operations easier to run." })).toBeVisible();
   await expect(page.getByRole("heading", { name: "When the inputs move, the evidence has to keep up." })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Useful automation needs a clear boundary around action." })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Some of the most useful results are the ones that stop a claim." })).toBeVisible();
@@ -17,11 +17,12 @@ test("cinematic chapter controls use the four approved editorial destinations", 
   await page.goto("/", { waitUntil: "networkidle" });
   const tabs = page.getByRole("tablist", { name: "Explore Aixion Lab" });
   await expect(tabs.getByRole("tab")).toHaveCount(4);
-  await expect(tabs.getByRole("tab")).toHaveText(["01Systems", "02Research", "03Automation", "04Analytics"]);
+  await expect(tabs.getByRole("tab")).toHaveText(["01Business", "02Systems", "03Research", "04Automation"]);
+  await expect(page.getByRole("tabpanel")).toContainText("Your business has a problem. We engineer the solution.");
+  await expect(page.getByRole("tabpanel").getByRole("link", { name: "Discuss a workflow" })).toHaveAttribute("href", "/about#contact");
+  await tabs.getByRole("tab", { name: /Systems/ }).click();
+  await expect(page.getByRole("tabpanel")).toContainText("Build a clearer view of a changing market.");
   await expect(page.getByRole("tabpanel").getByRole("link", { name: "Explore TradeBot" })).toHaveAttribute("href", "/systems/tradebot");
-  await tabs.getByRole("tab", { name: /Analytics/ }).click();
-  await expect(page.getByRole("tabpanel")).toContainText("Make the evidence easier to use.");
-  await expect(page.getByRole("tabpanel").getByRole("link", { name: "Explore analytics" })).toHaveAttribute("href", "/systems/analytics");
 });
 
 test("motion reveals the new work spreads without hiding their content", async ({ page }) => {
@@ -79,6 +80,7 @@ test("the header menu opens as a four-destination panel and closes accessibly", 
 
 test("journey progression is horizontal and its stages are keyboard navigable", async ({ page }) => {
   await page.goto("/journey", { waitUntil: "networkidle" });
+  await expect(page.getByText("Select a stage to follow the progression", { exact: false })).toHaveCount(0);
   const tabs = page.getByRole("tablist", { name: "Engineering disciplines" });
   await expect(tabs.getByRole("tab")).toHaveCount(7);
   const first = tabs.getByRole("tab", { name: /Quality Engineering/ });

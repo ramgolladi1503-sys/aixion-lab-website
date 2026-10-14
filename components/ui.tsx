@@ -24,7 +24,6 @@ export function SystemCard({ system }: { system: SystemRecord }) {
   return (
     <article className={`system-card accent-${system.accent}`}>
       <div className="system-card-top">
-        <span className="system-id">{system.id}</span>
         <StateTag state={system.state} />
       </div>
       <h3>{system.name}</h3>

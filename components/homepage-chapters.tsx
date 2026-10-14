@@ -6,6 +6,17 @@ import { useEffect, useRef, useState } from "react";
 
 const chapters = [
   {
+    id: "business",
+    label: "Business",
+    eyebrow: "SOFTWARE & AUTOMATION FOR BUSINESS OPERATIONS",
+    title: "Your business has a problem. We engineer the solution.",
+    copy: "We help businesses simplify operations, automate repetitive work and build reliable software around how their teams actually work.",
+    href: "/about#contact",
+    action: "Discuss a workflow",
+    image: "/images/aixion-editorial/planning-studio.jpg",
+    alt: "Planning drawings laid out across an engineering worktable.",
+  },
+  {
     id: "systems",
     label: "Systems",
     eyebrow: "SYSTEMS · MARKET INTELLIGENCE",
@@ -38,23 +49,13 @@ const chapters = [
     image: "/images/aixion-editorial/planning-studio.jpg",
     alt: "An engineering planning studio with large drawings spread across a worktable.",
   },
-  {
-    id: "analytics",
-    label: "Analytics",
-    eyebrow: "DATA · DECISION SUPPORT",
-    title: "Make the evidence easier to use.",
-    copy: "Analytics work connects runtime state, replay and outcomes so a decision can be understood in context.",
-    href: "/systems/analytics",
-    action: "Explore analytics",
-    image: "/images/aixion-editorial/research-desk.jpg",
-    alt: "Research notes and a marked-up chart on a desk, photographed in natural light.",
-  },
 ] as const;
 
 export function HomepageChapters() {
   const [active, setActive] = useState(0);
   const [outgoing, setOutgoing] = useState<number | null>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const preloadedImages = useRef(new Set<string>([chapters[0].image]));
   const transitionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const chapter = chapters[active];
 
@@ -79,6 +80,15 @@ export function HomepageChapters() {
       }, 950);
     }
     setActive(index);
+  }
+
+  function preloadChapterImage(index: number) {
+    const src = chapters[index].image;
+    if (preloadedImages.current.has(src)) return;
+    const image = new window.Image();
+    image.decoding = "async";
+    image.src = src;
+    preloadedImages.current.add(src);
   }
 
   function handleTabKey(event: React.KeyboardEvent<HTMLButtonElement>) {
@@ -131,6 +141,8 @@ export function HomepageChapters() {
               aria-controls="chapter-panel"
               tabIndex={index === active ? 0 : -1}
               onClick={() => selectChapter(index)}
+              onPointerEnter={() => preloadChapterImage(index)}
+              onFocus={() => preloadChapterImage(index)}
               onKeyDown={handleTabKey}
             >
               <span>0{index + 1}</span>{item.label}

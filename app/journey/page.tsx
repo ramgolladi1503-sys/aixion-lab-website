@@ -24,7 +24,7 @@ export default function JourneyPage() {
 
       <section id="page-content" className="editorial-section">
         <div className="page-width">
-          <EditorialHeading eyebrow="A CONNECTED PRACTICE" title="Each discipline added a new way to reason about systems." copy="The sequence below describes the engineering progression, not a dated employment history." />
+          <EditorialHeading className="journey-intro" eyebrow="A CONNECTED PRACTICE" title="Each discipline added a new way to reason about systems." copy="The sequence below describes the engineering progression, not a dated employment history." />
           <JourneySpectrum items={journey} />
         </div>
       </section>

@@ -38,7 +38,6 @@ export default function PulsePage() {
               return (
                 <article className="pulse-card" key={record.slug} data-reveal>
                   <div className="pulse-card__state">
-                    <span className="eyebrow">{record.id}</span>
                     <strong>{record.name}</strong>
                     <StateTag state={record.state} />
                     <EditorialLink href={`/systems/${record.slug}`}>Open system</EditorialLink>

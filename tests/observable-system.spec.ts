@@ -18,7 +18,7 @@ test("mobile redesign has four approved chapter tabs, a compact menu and no hori
   await page.goto("/", { waitUntil: "networkidle" });
   const chapters = page.getByRole("tablist", { name: "Explore Aixion Lab" }).getByRole("tab");
   await expect(chapters).toHaveCount(4);
-  await expect(chapters).toHaveText(["01Systems", "02Research", "03Automation", "04Analytics"]);
+  await expect(chapters).toHaveText(["01Business", "02Systems", "03Research", "04Automation"]);
   const trigger = page.getByRole("button", { name: "Menu" });
   await expect(trigger).toBeVisible();
   await trigger.click();
