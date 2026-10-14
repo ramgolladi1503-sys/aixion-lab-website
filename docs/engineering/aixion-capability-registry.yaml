@@ -1,0 +1,84 @@
+version: 1
+lab: Aixion Lab
+policy:
+  default_context_budget_kb: 8
+  source_of_truth: repository
+  persist_transcript: false
+  require_acceptance_criteria: true
+  require_verification_for_code_changes: true
+  prefer_deterministic_tools_first: true
+
+projects:
+  tradebot:
+    status: flagship
+    repo: ramgolladi1503-sys/tradebot
+    domains: [market-research, backtesting, execution-governance, data]
+    risk: high
+
+  aixion-control-tower:
+    status: flagship
+    repo: ramgolladi1503-sys/aixion-control-tower
+    domains: [remote-approval, adapters, agent-control, mobile]
+    risk: high
+
+  website:
+    status: active
+    repo: ramgolladi1503-sys/aixion-lab-website
+    domains: [web, content, design, qa]
+    risk: medium
+
+  mcp:
+    status: experimental
+    repo: ramgolladi1503-sys/MCP
+    domains: [mcp, security, policy-enforcement]
+    risk: high
+
+  veriforge:
+    status: experimental
+    repo: ramgolladi1503-sys/veriforge
+    domains: [verification, qa]
+    risk: medium
+
+  job-application-agent:
+    status: experimental
+    repo: ramgolladi1503-sys/Job-Application-Agent
+    domains: [automation, job-search]
+    risk: medium
+
+  axiom:
+    status: experimental
+    repo: ramgolladi1503-sys/axiom
+    domains: [prototype]
+    risk: medium
+
+  tablock:
+    status: experimental
+    repo: ramgolladi1503-sys/tablock
+    domains: [browser-extension, prototype]
+    risk: low
+
+capabilities:
+  - id: task-router
+    default_model_class: cheap
+    permissions: [read-metadata, choose-context]
+  - id: repo-explorer
+    default_model_class: cheap
+    permissions: [read, search]
+  - id: planner
+    default_model_class: reasoning
+    permissions: [read, propose]
+  - id: implementer
+    default_model_class: balanced
+    permissions: [read, write, test]
+  - id: verifier
+    default_model_class: cheap
+    permissions: [read, test, report]
+  - id: failure-miner
+    default_model_class: cheap
+    permissions: [read-results, append-memory]
+  - id: research-synthesizer
+    default_model_class: reasoning
+    permissions: [research, synthesize, persist-evidence]
+  - id: release-gate
+    default_model_class: cheap
+    permissions: [read, test, gate]
