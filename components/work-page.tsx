@@ -77,7 +77,7 @@ export function WorkPage() {
         <div className="page-width">
           <div className="work-support__heading" data-reveal>
             <p className="eyebrow">OTHER DIRECTIONS</p>
-            <h2>Useful work continues beyond the flagship systems.</h2>
+            <h2>Useful work continues beyond the flagship system</h2>
           </div>
           <div className="work-support__list">
             {systems.slice(2).map((system, index) => {
