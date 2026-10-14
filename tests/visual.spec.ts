@@ -105,7 +105,7 @@ test("desktop home hero begins near the sticky header", async ({ page }, testInf
 test("About contact gives direct links alongside the introduction", async ({ page }) => {
   await page.goto("/about", { waitUntil: "networkidle" });
   const panel = page.locator(".contact-list");
-  await expect(panel.getByRole("link")).toHaveCount(3);
+  await expect(panel.getByRole("link")).toHaveCount(5);
   await expect(page.locator(".contact-copy")).toBeVisible();
 });
 
