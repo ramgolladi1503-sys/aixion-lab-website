@@ -1,3 +1,4 @@
+import { InteractiveSentinelTelemetry } from "@/components/interactive-sentinel-telemetry";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,27 +30,45 @@ export default function HomePage() {
           <p className="eyebrow">SOFTWARE & AUTOMATION FOR BUSINESSES</p>
           <h2 id="home-business-title">Make everyday operations easier to run.</h2>
           <p>We help businesses simplify operations, automate repetitive work and build reliable software around how their teams actually work.</p>
-          <EditorialLink href="/about#contact">Tell us about a workflow</EditorialLink>
+          <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", margin: "16px 0" }}>
+            <Link className="button" href="/about#contact">Discuss a Project <span aria-hidden="true">↗</span></Link>
+            <a className="button-secondary" href="/Ram-Golladi-Resume.pdf" download="Ram-Golladi-Resume.pdf">Download Resume <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
-        <div className="home-business__services" aria-label="Examples of business workflows Aixion Lab can help with">
-          <article><span>01 / CUSTOMER REQUESTS</span><p>Keep incoming enquiries, follow-ups and next steps visible in one workflow.</p></article>
-          <article><span>02 / ORDERS & HANDOFFS</span><p>Make order status, ownership and missing information easier to track.</p></article>
-          <article><span>03 / REPEATED ADMIN</span><p>Connect existing tools to reduce duplicate entry and simplify routine reporting.</p></article>
+        <div className="home-business__services" aria-label="Core Engineering Services">
+          <article>
+            <span style={{ color: "var(--accent-deep)", fontWeight: 700 }}>01 / AUTONOMOUS AGENT PLATFORMS</span>
+            <p>Production multi-agent systems (Hermes, GSD, Codex) with fail-closed security gates, policy enforcement, and zero-trust human sign-offs.</p>
+          </article>
+          <article>
+            <span style={{ color: "var(--accent-deep)", fontWeight: 700 }}>02 / FULL-STACK APPS & COCKPITS</span>
+            <p>Mobile and web operations command centers (React, Next.js, Flutter) featuring sub-100ms real-time WebSocket telemetry and live queues.</p>
+          </article>
+          <article>
+            <span style={{ color: "var(--accent-deep)", fontWeight: 700 }}>03 / AUTOMATED QA & INTEGRITY AUDITING</span>
+            <p>End-to-end regression engines, invariant testing, automated adversarial audit suites, and tamper-proof compliance logging.</p>
+          </article>
         </div>
         <p className="home-business__note">These are starting points, not packaged products. Each project is scoped around your process and the tools you already use.</p>
       </section>
 
-      <section className="home-work home-work--tradebot" aria-labelledby="home-tradebot-title">
-        <div className="home-work__image" data-reveal>
-          <Image src="/images/aixion-editorial/systems-workbench.jpg" alt="An engineering workspace with a system diagram, notebook and computer." fill sizes="(max-width: 760px) 100vw, 58vw" />
-          <span className="home-work__index">01 / MARKET INTELLIGENCE</span>
-        </div>
-        <div className="home-work__copy" data-reveal>
-          <p className="eyebrow">A SYSTEM UNDER VALIDATION</p>
-          <h2 id="home-tradebot-title">When the inputs move, the evidence has to keep up.</h2>
-          <p>{tradebot?.descriptor} The work focuses on data integrity, research boundaries and validation; it does not imply a live trading edge or financial performance.</p>
-          {tradebot ? <StateTag state={tradebot.state} /> : null}
-          <EditorialLink href="/systems/tradebot">Explore TradeBot</EditorialLink>
+      <section className="editorial-section editorial-section--cool" id="home-sentinel" style={{ padding: "4rem 0" }}>
+        <div className="page-width">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "20px", marginBottom: "2rem" }}>
+            <div>
+              <p className="eyebrow" style={{ color: "var(--accent-deep)", fontWeight: 700 }}>FLAGSHIP MARKET INFRASTRUCTURE</p>
+              <h2 style={{ fontFamily: "var(--serif)", fontSize: "clamp(34px, 3.8vw, 50px)", margin: "8px 0", color: "var(--text)", letterSpacing: "-0.03em" }}>
+                TradeBot Sentinel: Sub-Millisecond Microstructure Observability
+              </h2>
+              <p style={{ maxWidth: "780px", color: "var(--muted)", fontSize: "15px", lineHeight: 1.7, margin: 0 }}>
+                High-throughput market data architecture processing Level-5 order book depth, in-memory tick freshness, Stoikov micro-price pressure, and automated invariant risk boundaries in real time.
+              </p>
+            </div>
+            <Link className="button" href="/systems/tradebot#sentinel">
+              Explore Full 4-Vector Architecture <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+          <InteractiveSentinelTelemetry />
         </div>
       </section>
 

@@ -1,3 +1,4 @@
+import { InteractiveSentinelTelemetry } from "@/components/interactive-sentinel-telemetry";
 import { InteractiveControlTower } from "@/components/interactive-control-tower";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -108,7 +109,7 @@ const images: Record<string, { src: string; alt: string; stages: string[] }> = {
 };
 
 const tabs: Record<string, [string, string][]> = {
-  tradebot: [["Overview", "overview"], ["Architecture", "architecture"], ["Engineering", "engineering"], ["Research", "research"], ["Evidence", "evidence"], ["Timeline", "timeline"]],
+  tradebot: [["Overview", "overview"], ["Architecture", "architecture"], ["Sentinel Telemetry", "sentinel"], ["Engineering", "engineering"], ["Research", "research"], ["Evidence", "evidence"], ["Timeline", "timeline"]],
   "control-core": [["Overview", "overview"], ["Architecture", "architecture"], ["Demo", "demo"], ["Capabilities", "capabilities"], ["MVP", "mvp"], ["Evidence", "evidence"], ["Roadmap", "roadmap"]],
   automation: [["Overview", "overview"], ["Workflow", "architecture"], ["Engineering", "engineering"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
   analytics: [["Overview", "overview"], ["Decision model", "architecture"], ["Engineering", "engineering"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
@@ -129,7 +130,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 function SystemSpecificSection({ slug }: { slug: string }) {
   if (slug === "tradebot") {
     return (
-      <section id="research" className="editorial-section editorial-section--compact">
+      <>
+        <section id="sentinel" className="editorial-section editorial-section--cool">
+          <div className="page-width">
+            <EditorialHeading
+              className="editorial-heading--storyline"
+              eyebrow="LIVE OBSERVABILITY ENGINE"
+              title="TradeBot Sentinel: Sub-Millisecond Microstructure Telemetry"
+              copy="Real-time in-memory telemetry, Level-5 order book depth parsing, cross-strike causal skew boundaries, and forensic audit logging—built strictly as a read-only software engineering framework."
+            />
+            <InteractiveSentinelTelemetry />
+          </div>
+        </section>
+
+        <section id="research" className="editorial-section editorial-section--compact">
         <div className="page-width">
           <EditorialHeading eyebrow="RESEARCH BOUNDARY" title="Research is a gated lifecycle, not a shortcut to authority." copy="The public page explains method without publishing proprietary strategy mechanics." />
           <div className="detail-grid">
@@ -143,6 +157,7 @@ function SystemSpecificSection({ slug }: { slug: string }) {
           </div>
         </div>
       </section>
+      </>
     );
   }
 

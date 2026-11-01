@@ -151,13 +151,35 @@ export function InteractiveControlTower() {
       overflow: "hidden",
       boxShadow: "0 20px 50px rgba(0, 0, 0, 0.05)",
     }}>
+      <style>{`
+        .tower-stepper-bar {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          border-bottom: 1px solid var(--line-strong);
+          background: rgba(0, 0, 0, 0.02);
+          overflow-x: auto;
+        }
+        .tower-main-stage {
+          display: grid;
+          grid-template-columns: minmax(300px, 360px) 1fr;
+          gap: 48px;
+          padding: 44px 48px;
+          align-items: center;
+        }
+        @media (max-width: 900px) {
+          .tower-stepper-bar {
+            grid-template-columns: repeat(6, minmax(140px, 1fr));
+            scroll-snap-type: x mandatory;
+          }
+          .tower-main-stage {
+            grid-template-columns: 1fr;
+            padding: 28px 20px;
+            gap: 36px;
+          }
+        }
+      `}</style>
       {/* Interactive Chapter Stepper Tab Bar */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(6, 1fr)",
-        borderBottom: "1px solid var(--line-strong)",
-        background: "rgba(0, 0, 0, 0.02)",
-      }}>
+      <div className="tower-stepper-bar">
         {steps.map((s, idx) => {
           const isActive = idx === activeIdx;
           return (
@@ -213,13 +235,7 @@ export function InteractiveControlTower() {
       </div>
 
       {/* Main Interactive Stage: Live Device Frame on Left, Rich Story on Right */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "minmax(320px, 380px) 1fr",
-        gap: "48px",
-        padding: "44px 48px",
-        alignItems: "center",
-      }}>
+      <div className="tower-main-stage">
         {/* Left: Device Chassis with Pure Mobile UI Video */}
         <div style={{
           display: "flex",

@@ -25,7 +25,14 @@ export default function ResumePage() {
         image="/images/aixion-editorial/planning-studio.jpg"
         imageAlt="A planning desk in an engineering studio."
       >
-        <Link className="button button--light" href="/about#contact">Contact Ram <span aria-hidden="true">↗</span></Link>
+        <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+          <a className="button button--light" href="/Ram-Golladi-Resume.pdf" download="Ram-Golladi-Resume.pdf">
+            Download Verified Resume (PDF) <span aria-hidden="true">↓</span>
+          </a>
+          <Link className="quiet-light-link" href="/about#contact">
+            Contact Ram <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
       </EditorialHero>
 
       <section id="page-content" className="editorial-section">
@@ -68,8 +75,15 @@ export default function ResumePage() {
 
       <section className="editorial-section editorial-section--compact">
         <div className="page-width resume-note" data-reveal>
-          <div><p className="eyebrow">PUBLICATION STATUS</p><h2>Career snapshot</h2><p>A downloadable résumé is not published here. This page intentionally avoids stale or mismatched résumé files.</p></div>
-          <div className="resume-actions"><EditorialLink href="/about#contact">Contact</EditorialLink><Link className="button" href="/systems">Explore the portfolio <span aria-hidden="true">↗</span></Link></div>
+          <div>
+            <p className="eyebrow">VERIFIED CREDENTIALS</p>
+            <h2>One-Page Verified Resume</h2>
+            <p>Directly formatted for engineering leadership and recruiting teams. Includes verifiable system traces, architectural invariants, and code links.</p>
+          </div>
+          <div className="resume-actions">
+            <a className="button" href="/Ram-Golladi-Resume.pdf" download="Ram-Golladi-Resume.pdf">Download PDF <span aria-hidden="true">↓</span></a>
+            <EditorialLink href="/about#contact">Schedule a call</EditorialLink>
+          </div>
         </div>
       </section>
     </>
