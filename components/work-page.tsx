@@ -83,11 +83,12 @@ export function WorkPage() {
             {systems.slice(2).map((system, index) => {
               const visual = supportImages[system.slug];
               if (!visual) return null;
+              const sequence = String(index + 3).padStart(2, "0");
               return (
                 <article className="work-support__item" key={system.id} data-reveal>
-                  <Link className="work-support__image" href={`/systems/${system.slug}`} aria-label={`Read about ${system.name}`}>
+                  <Link className="work-support__image" href={`/systems/${system.slug}`} aria-label={`${sequence}: Read about ${system.name}`}>
                     <Image src={visual.src} alt={visual.alt} fill sizes="(max-width: 700px) 100vw, 32vw" />
-                    <span>0{index + 3}</span>
+                    <span>{sequence}</span>
                   </Link>
                   <div className="work-support__copy">
                     <p className="eyebrow">{visual.field}</p>
