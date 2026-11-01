@@ -30,7 +30,7 @@ export function ModeToggle() {
       className="mode-toggle"
       onClick={toggle}
       aria-pressed={career}
-      aria-label={`View ${career ? "Career" : "Lab"}; switch to ${career ? "Lab" : "Career"} view`}
+      aria-label={`View ${career ? "Career" : "Lab"}. Toggle Lab and Career view`}
     >
       <span className="mode-label">View</span>
       <strong>{career ? "Career" : "Lab"}</strong>
