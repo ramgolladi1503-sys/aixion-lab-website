@@ -1,3 +1,4 @@
+import { InteractiveControlTower } from "@/components/interactive-control-tower";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -108,7 +109,7 @@ const images: Record<string, { src: string; alt: string; stages: string[] }> = {
 
 const tabs: Record<string, [string, string][]> = {
   tradebot: [["Overview", "overview"], ["Architecture", "architecture"], ["Engineering", "engineering"], ["Research", "research"], ["Evidence", "evidence"], ["Timeline", "timeline"]],
-  "control-core": [["Overview", "overview"], ["Architecture", "architecture"], ["Capabilities", "capabilities"], ["MVP", "mvp"], ["Evidence", "evidence"], ["Roadmap", "roadmap"]],
+  "control-core": [["Overview", "overview"], ["Architecture", "architecture"], ["Demo", "demo"], ["Capabilities", "capabilities"], ["MVP", "mvp"], ["Evidence", "evidence"], ["Roadmap", "roadmap"]],
   automation: [["Overview", "overview"], ["Workflow", "architecture"], ["Engineering", "engineering"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
   analytics: [["Overview", "overview"], ["Decision model", "architecture"], ["Engineering", "engineering"], ["Evidence", "evidence"], ["Next gate", "roadmap"]],
 };
@@ -148,19 +149,33 @@ function SystemSpecificSection({ slug }: { slug: string }) {
   if (slug === "control-core") {
     const capabilities = ["Intent routing", "Context assembly", "Planning", "Agent coordination", "Tool execution", "Policy boundaries", "Evidence capture", "Human approval"];
     return (
-      <section id="capabilities" className="editorial-section editorial-section--cool">
-        <div className="page-width">
-          <EditorialHeading eyebrow="CONTROL CORE CAPABILITIES" title="The control plane is built from explicit capabilities." />
-          <div className="content-grid">
-            {capabilities.map((item, index) => <article className="content-card" key={item} data-reveal><span className="story-index">0{index + 1}</span><h3>{item}</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article>)}
+      <>
+        <section id="demo" className="editorial-section editorial-section--cool">
+          <div className="page-width">
+            <EditorialHeading
+              className="editorial-heading--storyline"
+              eyebrow="LIVE OPERATIONAL DEMO"
+              title="Aixion Control Tower in Action"
+              copy="Explore the complete mobile governance lifecycle step-by-step: select any operational phase below to inspect live agent interactions, policy checkpoints, and cryptographic audit proofs."
+            />
+            <InteractiveControlTower />
           </div>
-          <div id="mvp" className="detail-card control-core-demo" data-reveal>
-            <p className="eyebrow">ILLUSTRATIVE ARCHITECTURE TRACE</p>
-            <h3>Intent → planner → approved tool → evidence → policy → human review</h3>
-            <p>This sequence explains the proposed runtime model. It is a labelled architecture illustration, not production telemetry.</p>
+        </section>
+
+        <section id="capabilities" className="editorial-section editorial-section--cool">
+          <div className="page-width">
+            <EditorialHeading eyebrow="CONTROL CORE CAPABILITIES" title="The control plane is built from explicit capabilities." />
+            <div className="content-grid">
+              {capabilities.map((item, index) => <article className="content-card" key={item} data-reveal><span className="story-index">0{index + 1}</span><h3>{item}</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article>)}
+            </div>
+            <div id="mvp" className="detail-card control-core-demo" data-reveal>
+              <p className="eyebrow">ILLUSTRATIVE ARCHITECTURE TRACE</p>
+              <h3>Intent → planner → approved tool → evidence → policy → human review</h3>
+              <p>This sequence explains the proposed runtime model. It is a labelled architecture illustration, not production telemetry.</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </>
     );
   }
 
