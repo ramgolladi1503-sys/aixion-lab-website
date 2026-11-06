@@ -1499,7 +1499,7 @@
     }
 
   </style>
-</head>
+  </head>
 <body class="theme-dark">
   <!-- Master Aixion Lab Header (Exact 4 Tabs: The Lab, Work, Research, Approach) -->
   <header class="site-header">
@@ -1579,8 +1579,256 @@
     </div>
   </footer>
 
+  <!-- Background WebGL Ambient Canvas -->
+  <canvas id="webgl-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.65;"></canvas>
 
-  <script src="./lenis.min.js"></script>
+  <!-- Interactive Sleek Cursor Dot -->
+  <div id="cursor" style="position:fixed;top:0;left:0;width:8px;height:8px;background:#ffffff;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform 0.15s ease-out;"></div>
+
+  <script id="native-kirifuda-engine">
+  (function() {
+    // ==========================================================================
+    // 1. NATIVE SMOOTH KINETIC SCROLL & SKEW PHYSICS (Zero External Dependencies)
+    // ==========================================================================
+    var currentVelocity = 0;
+    var lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    var lastScrollTime = performance.now();
+    var currentSkew = 0;
+    var targetSkew = 0;
+
+    var skewElements = document.querySelectorAll(
+      '.kf_scroll_skew, .editorial-hero, .work-story, .principle, .detail-card, .research-row, .pulse-card, .system-facts, .system-timeline > div'
+    );
+
+    window.addEventListener('scroll', function() {
+      var now = performance.now();
+      var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      var dt = Math.max(1, now - lastScrollTime);
+      var vel = (scrollY - lastScrollY) / dt * 15;
+      var clampedVel = Math.max(-14, Math.min(14, vel));
+
+      targetSkew = clampedVel * 0.22; // Kirifuda subtle dynamic skew (-3deg to +3deg)
+      currentVelocity = Math.abs(clampedVel);
+      lastScrollY = scrollY;
+      lastScrollTime = now;
+    }, { passive: true });
+
+    function updatePhysics() {
+      currentSkew += (targetSkew - currentSkew) * 0.12;
+      targetSkew *= 0.88;
+
+      if (Math.abs(currentSkew) > 0.005) {
+        var skewStr = 'skewY(' + currentSkew.toFixed(3) + 'deg)';
+        for (var i = 0; i < skewElements.length; i++) {
+          skewElements[i].style.transform = skewStr;
+          skewElements[i].style.transition = 'transform 0.05s ease-out';
+        }
+      } else {
+        for (var j = 0; j < skewElements.length; j++) {
+          skewElements[j].style.transform = 'none';
+        }
+      }
+      requestAnimationFrame(updatePhysics);
+    }
+    requestAnimationFrame(updatePhysics);
+
+    // ==========================================================================
+    // 2. INTERACTIVE SLEEK CURSOR DOT
+    // ==========================================================================
+    var cursor = document.getElementById('cursor');
+    var mX = window.innerWidth / 2, mY = window.innerHeight / 2;
+    var cX = mX, cY = mY;
+
+    window.addEventListener('mousemove', function(e) {
+      mX = e.clientX;
+      mY = e.clientY;
+    });
+
+    function updateCursor() {
+      cX += (mX - cX) * 0.45;
+      cY += (mY - cY) * 0.45;
+      if (cursor) {
+        cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px)';
+      }
+      requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    var hoverTargets = document.querySelectorAll(
+      'a, button, .principle, .work-story, .detail-card, .research-row, .pulse-card, .state-tag, .editorial-link'
+    );
+    hoverTargets.forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        if (cursor) cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px) scale(2.4)';
+      });
+      el.addEventListener('mouseleave', function() {
+        if (cursor) cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px) scale(1)';
+      });
+    });
+
+    // ==========================================================================
+    // 3. NATIVE HARDWARE-ACCELERATED ORDER-FLOW WEBGL FLUID SHADER
+    // ==========================================================================
+    var canvas = document.getElementById('webgl-canvas');
+    if (canvas) {
+      var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (gl) {
+        function resizeCanvas() {
+          var dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = window.innerWidth * dpr;
+          canvas.height = window.innerHeight * dpr;
+          gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        var vsSource = [
+          'attribute vec2 a_pos;',
+          'varying vec2 vUv;',
+          'void main() {',
+          '  vUv = a_pos * 0.5 + 0.5;',
+          '  gl_Position = vec4(a_pos, 0.0, 1.0);',
+          '}'
+        ].join('\n');
+
+        var fsSource = [
+          'precision mediump float;',
+          'uniform float u_time;',
+          'uniform float u_pow;',
+          'uniform vec2 u_mouse;',
+          'uniform vec2 u_resolution;',
+          'varying vec2 vUv;',
+
+          'vec2 fluidOrderFlow(vec2 uv, float dist) {',
+          '  vec2 p = uv * 2.0 - 1.0;',
+          '  float r = length(p);',
+          '  float angle = atan(p.y, p.x);',
+          '  float theta = angle + sin(r * 4.0 - u_time * 0.8) * 0.08 * dist;',
+          '  vec2 warped = vec2(cos(theta), sin(theta)) * r;',
+          '  return warped * 0.5 + 0.5;',
+          '}',
+
+          'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }',
+
+          'float noise(vec2 p) {',
+          '  vec2 i = floor(p);',
+          '  vec2 f = fract(p);',
+          '  f = f * f * (3.0 - 2.0 * f);',
+          '  return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), f.x),',
+          '             mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);',
+          '}',
+
+          'float fbm(vec2 p) {',
+          '  float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0);',
+          '  mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));',
+          '  for (int i = 0; i < 4; ++i) {',
+          '    v += a * noise(p); p = rot * p * 2.0 + shift; a *= 0.5;',
+          '  }',
+          '  return v;',
+          '}',
+
+          'void main() {',
+          '  vec2 st = gl_FragCoord.xy / u_resolution.xy;',
+          '  st.x *= u_resolution.x / u_resolution.y;',
+          '  float distpow = u_pow * 5.5;',
+          '  vec2 distUv = fluidOrderFlow(vUv, distpow);',
+          '  vec2 q = vec2(fbm(st + 0.04 * u_time), fbm(st + vec2(1.0)));',
+          '  vec2 r = vec2(fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.12 * u_time),',
+          '                fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.10 * u_time));',
+          '  float f = fbm(st + r);',
+          '  float intensity = smoothstep(0.38, 0.72, f);',
+          '  vec3 color = vec3(intensity * 0.08);',
+          '  float mouseDist = length(vUv - u_mouse);',
+          '  color += (1.0 - smoothstep(0.0, 0.28, mouseDist)) * 0.05;',
+          '  gl_FragColor = vec4(color, 1.0);',
+          '}'
+        ].join('\n');
+
+        function compileShader(type, src) {
+          var shader = gl.createShader(type);
+          gl.shaderSource(shader, src);
+          gl.compileShader(shader);
+          return shader;
+        }
+
+        var prog = gl.createProgram();
+        gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSource));
+        gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSource));
+        gl.linkProgram(prog);
+        gl.useProgram(prog);
+
+        var buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+
+        var aPos = gl.getAttribLocation(prog, 'a_pos');
+        gl.enableVertexAttribArray(aPos);
+        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+        var uTime = gl.getUniformLocation(prog, 'u_time');
+        var uPow = gl.getUniformLocation(prog, 'u_pow');
+        var uMouse = gl.getUniformLocation(prog, 'u_mouse');
+        var uRes = gl.getUniformLocation(prog, 'u_resolution');
+
+        var startTime = performance.now();
+        var targetPow = 0;
+        var currentPow = 0;
+
+        function renderWebGL() {
+          var now = performance.now();
+          var elapsed = (now - startTime) * 0.001;
+
+          targetPow += 0.002 * currentVelocity;
+          currentPow += (targetPow - currentPow) * 0.12;
+          currentPow *= 0.93;
+          targetPow *= 0.90;
+
+          gl.uniform1f(uTime, elapsed);
+          gl.uniform1f(uPow, currentPow);
+          gl.uniform2f(uMouse, mX / window.innerWidth, 1.0 - (mY / window.innerHeight));
+          gl.uniform2f(uRes, canvas.width, canvas.height);
+
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+          requestAnimationFrame(renderWebGL);
+        }
+        requestAnimationFrame(renderWebGL);
+      }
+    }
+
+    // ==========================================================================
+    // 4. INTERSECTION OBSERVER ENTRANCE & SCROLL REVEALS
+    // ==========================================================================
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll(
+      '.editorial-hero__content, .principles-grid .principle, .detail-grid .detail-card, .work-story, .research-row, .pulse-card, .system-timeline > div'
+    ).forEach(function(el) {
+      el.classList.add('kf-reveal-init');
+      revealObserver.observe(el);
+    });
+
+  })();
+  </script>
+
+  <style>
+    /* Kirifuda Stagger Entrance Animation Keyframes */
+    .kf-reveal-init {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .kf-reveal-init.is-revealed {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
 
 <script id="journey-tabs-interactive">
 document.addEventListener('DOMContentLoaded', function() {
@@ -1649,6 +1897,5 @@ document.addEventListener('DOMContentLoaded', function() {
   setStage(0);
 });
 </script>
-
 </body>
 </html>
