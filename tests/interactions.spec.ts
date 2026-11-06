@@ -3,11 +3,12 @@ import { test, expect } from "@playwright/test";
 test("Lab Career mode changes presentation state", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "The view toggle is intentionally desktop-only; mobile exposes Career view in navigation");
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  const toggle = page.getByRole("button", { name: "Toggle Lab and Career view" });
+  const toggle = page.getByRole("button", { name: /View Lab/ });
   await toggle.click();
   await expect(page.locator("html")).toHaveAttribute("data-view", "career");
   await expect(page.locator(".career-only").first()).toBeVisible();
-  await expect(toggle).toContainText("Career");
+  const careerToggle = page.getByRole("button", { name: /View Career/ });
+  await expect(careerToggle).toContainText("Career");
 });
 
 test("Research status filters are functional", async ({ page }) => {
