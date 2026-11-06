@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aixion Control Core — Aixion Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Padauk:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./kirifuda.css">
+  <link rel="stylesheet" href="./kirifuda_theme_dark.css">
+  <link rel="stylesheet" href="./aixion_content.css">
+  <style id="subpage-refined-css">
+
+    /* ==========================================================================
+       AIXION x KIRIFUDA MASTER PURE-TYPOGRAPHIC STYLES
+       - Zero Image Dependencies (All images removed for crisp minimal aesthetics)
+       - Full Text Alignment & Justification
+       - Single-Line Status Badges & Action CTAs
+       - Elimination of all numbering traces
+       ========================================================================== */
+
+    html {
+      overflow-y: scroll !important;
+      overflow-x: hidden !important;
+    }
+    body {
+      overflow-x: hidden !important;
+      position: relative !important;
+      font-family: 'Padauk', sans-serif !important;
+      color: #e0e0e0 !important;
+      background-color: #070709 !important;
+    }
+
+    /* 1. HIDE ALL IMAGES, BROKEN BOXES & RESIDUAL NUMBERING */
+    img,
+    .editorial-hero__image,
+    .work-story__image,
+    .work-support__image,
+    .image-story__media,
+    .story-index,
+    .signal-line__index,
+    .signal-line__node,
+    .site-menu__number,
+    .image-story__number,
+    .home-work__index,
+    .journey-spectrum__active-index,
+    .journey-spectrum__number,
+    .journey-spectrum__dot {
+      display: none !important;
+    }
+
+    /* 2. SUBPAGE HERO (Clean Editorial Layout) */
+    .editorial-hero {
+      padding: 140px 4vw 60px !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+    }
+    .editorial-hero__content {
+      max-width: 1000px !important;
+    }
+    .editorial-hero__content h1 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(48px, 8vw, 110px) !important;
+      font-weight: 700 !important;
+      letter-spacing: -1.5px !important;
+      line-height: 0.95 !important;
+      text-transform: uppercase !important;
+      margin: 0 0 24px !important;
+      color: #ffffff !important;
+    }
+    .editorial-hero__copy {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: clamp(16px, 1.8vw, 22px) !important;
+      line-height: 1.65 !important;
+      color: #aaaaaa !important;
+      max-width: 900px !important;
+      margin-bottom: 32px !important;
+      text-align: justify !important;
+      text-justify: inter-word !important;
+    }
+    .editorial-hero__actions {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 20px !important;
+      margin-top: 30px !important;
+    }
+    .editorial-hero__actions .button,
+    .editorial-hero__actions .button-secondary,
+    .editorial-hero__actions a {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 14px 28px !important;
+      border: 1px solid #ffffff !important;
+      background: transparent !important;
+      color: #ffffff !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      text-decoration: none !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .editorial-hero__actions .button:hover,
+    .editorial-hero__actions .button-secondary:hover,
+    .editorial-hero__actions a:hover {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    /* 3. PARAGRAPHS & EDITORIAL BODY JUSTIFICATION */
+    p, 
+    .editorial-heading__copy, 
+    .image-story__body p,
+    .chapter-copy p,
+    .work-story__copy p,
+    .detail-card p,
+    .content-card p {
+      text-align: justify !important;
+      text-justify: inter-word !important;
+      line-height: 1.75 !important;
+    }
+
+    /* Headings remain aligned left */
+    h1, h2, h3, h4, .eyebrow, dt {
+      text-align: left !important;
+    }
+
+    /* 4. WORK STORIES (Pure Typographic Presentation) */
+    .work-story, .work-story--reverse {
+      display: block !important;
+      width: 100% !important;
+      margin: 60px 0 !important;
+      padding: 48px !important;
+      border: 1px solid #202024 !important;
+      background: rgba(12, 12, 16, 0.6) !important;
+      box-sizing: border-box !important;
+      direction: ltr !important;
+    }
+    .work-story__copy {
+      max-width: 900px !important;
+    }
+    .work-story__copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 4.5vw, 54px) !important;
+      line-height: 1.05 !important;
+      margin: 12px 0 20px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .work-story__state {
+      display: inline-flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 14px !important;
+      margin: 16px 0 24px !important;
+    }
+    .work-story__state span:last-child {
+      font-family: 'Space Mono', monospace !important;
+      font-size: 13px !important;
+      color: #888888 !important;
+    }
+    .work-story dl {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+      gap: 24px !important;
+      margin: 28px 0 !important;
+      padding: 24px 0 !important;
+      border-top: 1px solid #1c1c22 !important;
+      border-bottom: 1px solid #1c1c22 !important;
+    }
+    .work-story dt {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #666666 !important;
+      text-transform: uppercase !important;
+      margin-bottom: 6px !important;
+    }
+    .work-story dd {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #cccccc !important;
+      margin: 0 !important;
+      line-height: 1.5 !important;
+    }
+
+    /* Work Support 2-Column Grid (Automation & Analytics Lab) */
+    .work-support__list {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 32px !important;
+      margin: 60px 0 100px !important;
+    }
+    @media (max-width: 800px) {
+      .work-support__list {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .work-support__item {
+      border: 1px solid #202024 !important;
+      padding: 40px !important;
+      background: rgba(12, 12, 16, 0.6) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      gap: 24px !important;
+    }
+    .work-support__title {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      margin-bottom: 8px !important;
+    }
+    .work-support__title h3 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 28px !important;
+      margin: 0 !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+
+    /* 5. IMAGE STORY (about.html & subpages without images) */
+    .image-story, .image-story--reverse {
+      display: block !important;
+      margin: 60px 0 !important;
+      width: 100% !important;
+    }
+    .image-story__copy {
+      max-width: 900px !important;
+    }
+    .image-story__copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 5vw, 64px) !important;
+      line-height: 1.05 !important;
+      margin: 16px 0 24px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+
+    /* 6. SYSTEM FACTS (Current gate, Current focus, Next gate) */
+    .system-facts {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 24px !important;
+      margin: 40px 0 20px !important;
+      padding: 32px 0 !important;
+      border-top: 1px solid #282828 !important;
+      border-bottom: 1px solid #282828 !important;
+      width: 100% !important;
+    }
+    @media (max-width: 900px) {
+      .system-facts {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+      }
+    }
+    .system-facts div {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      padding-right: 20px !important;
+      border-right: 1px solid #1a1a1a !important;
+    }
+    .system-facts div:last-child {
+      border-right: none !important;
+    }
+    .system-facts dt {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #666666 !important;
+    }
+    .system-facts dd {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      line-height: 1.5 !important;
+      font-weight: 500 !important;
+    }
+
+    /* 7. CAREER STRIP (Tags/Badges) */
+    .career-strip {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 16px !important;
+      padding: 24px 0 !important;
+      border-bottom: 1px solid #282828 !important;
+    }
+    .career-strip > span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #666666 !important;
+      text-transform: uppercase !important;
+      margin-right: 8px !important;
+    }
+    .career-strip div {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+    .career-strip i {
+      font-style: normal !important;
+      font-family: 'Space Mono', monospace !important;
+      font-size: 11px !important;
+      color: #aaaaaa !important;
+      background: #111116 !important;
+      border: 1px solid #222228 !important;
+      padding: 5px 12px !important;
+      border-radius: 2px !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    /* 8. SYSTEM SIGNAL FLOW (Horizontal Connected Pipeline) */
+    ol.signal-line {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      list-style: none !important;
+      margin: 28px 0 60px !important;
+      padding: 0 !important;
+      gap: 16px !important;
+    }
+    ol.signal-line li {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 14px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      background: #0d0d12 !important;
+      border: 1px solid #25252c !important;
+      padding: 10px 20px !important;
+      transition: all 0.3s ease !important;
+    }
+    ol.signal-line li::after {
+      content: '→' !important;
+      color: #444444 !important;
+      font-size: 14px !important;
+      margin-left: 8px !important;
+    }
+    ol.signal-line li:last-child::after {
+      display: none !important;
+    }
+    ol.signal-line li:hover {
+      border-color: #ffffff !important;
+      transform: translateY(-2px) !important;
+    }
+
+    /* 9. TIMELINE / MILESTONES (DATA / RESEARCH / LIVE) */
+    .system-timeline {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+      gap: 20px !important;
+      margin: 30px 0 60px !important;
+    }
+    .system-timeline > div {
+      border: 1px solid #282828 !important;
+      padding: 24px 28px !important;
+      background: rgba(10, 10, 14, 0.7) !important;
+    }
+    .system-timeline span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 2px !important;
+      color: #777777 !important;
+      text-transform: uppercase !important;
+      display: block !important;
+      margin-bottom: 8px !important;
+    }
+    .system-timeline strong {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #ffffff !important;
+      font-weight: 500 !important;
+      line-height: 1.5 !important;
+    }
+
+    /* 10. EVIDENCE ROWS & ACTIONS */
+    .evidence-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+      margin: 36px 0 60px !important;
+    }
+    .evidence-row {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 24px 28px !important;
+      border: 1px solid #282828 !important;
+      background: rgba(12, 12, 15, 0.8) !important;
+      gap: 24px !important;
+      flex-wrap: wrap !important;
+    }
+    .evidence-row > span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      color: #888888 !important;
+      text-transform: uppercase !important;
+      min-width: 90px !important;
+    }
+    .evidence-row > strong {
+      flex: 1 !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      color: #ffffff !important;
+      min-width: 260px !important;
+    }
+    .evidence-actions {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 14px !important;
+    }
+    .evidence-trigger, .command-trigger {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      background: transparent !important;
+      border: 1px solid #444444 !important;
+      padding: 8px 16px !important;
+      cursor: pointer !important;
+      transition: all 0.25s ease !important;
+    }
+    .evidence-trigger:hover, .command-trigger:hover {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    /* 11. STATE TAGS & SINGLE-LINE CTA BADGES */
+    .state-tag {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 6px 14px !important;
+      border: 1px solid #ffffff !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      background: transparent !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+    }
+    .state-building {
+      border-color: #ffffff !important;
+      color: #ffffff !important;
+    }
+    .state-rejected {
+      border-color: #ff5555 !important;
+      color: #ff5555 !important;
+    }
+    .state-validating {
+      border-color: #55ff99 !important;
+      color: #55ff99 !important;
+    }
+
+    .editorial-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      border-bottom: 1px solid #444444 !important;
+      padding-bottom: 4px !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+      transition: all 0.3s ease !important;
+    }
+    .editorial-link:hover {
+      border-bottom-color: #ffffff !important;
+      color: #ffffff !important;
+    }
+    .editorial-link span {
+      display: inline-block !important;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .editorial-link:hover span {
+      transform: translate(3px, -3px) !important;
+    }
+
+    /* 12. JOURNEY SPECTRUM */
+    .journey-spectrum__rail {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 12px !important;
+      margin: 40px 0 !important;
+      padding-bottom: 24px !important;
+      border-bottom: 1px solid #282828 !important;
+    }
+    .journey-spectrum__stage {
+      display: inline-flex !important;
+      align-items: center !important;
+      padding: 12px 24px !important;
+      background: #0d0d12 !important;
+      border: 1px solid #222228 !important;
+      color: #aaaaaa !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    .journey-spectrum__stage[aria-selected="true"],
+    .journey-spectrum__stage.active {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border-color: #ffffff !important;
+    }
+    .journey-spectrum__name {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+    }
+    .journey-spectrum__panel {
+      padding: 40px 0 !important;
+    }
+
+    /* 13. PULSE CARDS */
+    .pulse-snapshot {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)) !important;
+      gap: 24px !important;
+      margin: 40px 0 80px !important;
+    }
+    .pulse-card {
+      border: 1px solid #282828 !important;
+      padding: 32px !important;
+      background: rgba(12, 12, 16, 0.8) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      gap: 24px !important;
+    }
+    .pulse-card__state {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding-bottom: 20px !important;
+      border-bottom: 1px solid #202026 !important;
+    }
+    .pulse-card__state strong {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 20px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .pulse-card__details {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 16px !important;
+    }
+    .pulse-card__details dt {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #666666 !important;
+      text-transform: uppercase !important;
+    }
+    .pulse-card__details dd {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      color: #dddddd !important;
+      margin: 0 !important;
+    }
+
+    /* ==========================================================================
+       AUTHENTIC AIXION LAB 3-COLUMN FOOTER & CONTACT STYLES
+       Matches the exact layout, typography, and links from production aixionlab.com
+       ========================================================================== */
+
+    .site-footer {
+      background: #06080d !important;
+      border-top: 1px solid #1c2333 !important;
+      padding: 80px 4vw 40px !important;
+      margin-top: 100px !important;
+      font-family: 'Padauk', sans-serif !important;
+      color: #94a3b8 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      z-index: 10 !important;
+    }
+    .site-footer__main {
+      display: grid !important;
+      grid-template-columns: 2fr 1fr 1.5fr !important;
+      gap: 60px !important;
+      max-width: 1400px !important;
+      margin: 0 auto 60px !important;
+      align-items: start !important;
+    }
+    @media (max-width: 900px) {
+      .site-footer__main {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+    }
+    .site-footer__identity {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+    .site-footer__eyebrow {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 3px !important;
+      color: #cbd5e1 !important;
+      text-transform: uppercase !important;
+      margin: 0 !important;
+    }
+    .site-footer__statement {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 24px !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      letter-spacing: 0.5px !important;
+    }
+    .site-footer__subline {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #64748b !important;
+      margin: 0 !important;
+      line-height: 1.6 !important;
+      max-width: 440px !important;
+    }
+
+    .site-footer__links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+    .site-footer__links a {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+      text-decoration: none !important;
+      transition: color 0.25s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__links a:hover {
+      color: #ffffff !important;
+    }
+
+    .site-footer__contact {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+    }
+    .site-footer__desc {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      color: #64748b !important;
+    }
+    .site-footer__link {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #cbd5e1 !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      transition: color 0.25s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__link:hover {
+      color: #ffffff !important;
+    }
+    .site-footer__link .arrow {
+      font-size: 14px !important;
+      transition: transform 0.25s ease !important;
+    }
+    .site-footer__link:hover .arrow {
+      transform: translate(2px, -2px) !important;
+    }
+
+    .site-footer__base {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
+      padding-top: 32px !important;
+      border-top: 1px solid #141c2c !important;
+      max-width: 1400px !important;
+      margin: 0 auto !important;
+      font-size: 12px !important;
+      color: #475569 !important;
+      font-family: 'Space Mono', monospace !important;
+    }
+    .site-footer__badge {
+      letter-spacing: 1px !important;
+    }
+    .site-footer__copy {
+      color: #64748b !important;
+    }
+    .site-footer__process {
+      color: #64748b !important;
+      display: flex !important;
+      gap: 8px !important;
+      align-items: center !important;
+    }
+    .site-footer__process i {
+      font-style: normal !important;
+      color: #334155 !important;
+    }
+
+    /* Contact Section / Contact List Alignment (about.html) */
+    .contact-layout {
+      margin: 80px 0 !important;
+      padding: 60px 0 !important;
+      border-top: 1px solid #202026 !important;
+    }
+    .contact-copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 4vw, 56px) !important;
+      margin: 12px 0 16px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .contact-copy p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 16px !important;
+      color: #94a3b8 !important;
+      line-height: 1.7 !important;
+      max-width: 720px !important;
+      margin-bottom: 40px !important;
+    }
+    .contact-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+      max-width: 760px !important;
+    }
+    .contact-list a {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 18px 24px !important;
+      border: 1px solid #222228 !important;
+      background: rgba(12, 12, 16, 0.7) !important;
+      color: #e2e8f0 !important;
+      text-decoration: none !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      transition: all 0.25s ease !important;
+      border-radius: 4px !important;
+    }
+    .contact-list a:hover {
+      border-color: #ffffff !important;
+      background: rgba(22, 22, 28, 0.9) !important;
+      color: #ffffff !important;
+      transform: translateX(4px) !important;
+    }
+    .contact-list a strong {
+      font-weight: 600 !important;
+    }
+    .contact-list a span:last-child {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 16px !important;
+    }
+
+    /* ==========================================================================
+       AUTHENTIC AIXION LAB 4-TAB HEADER & NAVIGATION
+       Matches exact layout: Brand | [The Lab, Work, Research, Approach] | View Lab, Menu, Contact
+       ========================================================================== */
+
+    .site-header {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 72px !important;
+      background: rgba(7, 7, 10, 0.85) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      z-index: 1000 !important;
+      box-sizing: border-box !important;
+    }
+    .site-header__inner {
+      max-width: 1440px !important;
+      height: 100% !important;
+      margin: 0 auto !important;
+      padding: 0 4vw !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+    }
+
+    /* Brand */
+    .brand {
+      display: flex !important;
+      align-items: center !important;
+      gap: 14px !important;
+      text-decoration: none !important;
+      color: #ffffff !important;
+    }
+    .brand-mark {
+      width: 32px !important;
+      height: 32px !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: #ffffff !important;
+      letter-spacing: 0.5px !important;
+    }
+    .brand-copy {
+      display: flex !important;
+      flex-direction: column !important;
+      line-height: 1.15 !important;
+    }
+    .brand-copy strong {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: 1.5px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .brand-copy small {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 11px !important;
+      color: #71717a !important;
+    }
+
+    /* 4 Primary Navigation Tabs */
+    .desktop-nav {
+      display: flex !important;
+      align-items: center !important;
+      gap: 36px !important;
+    }
+    @media (max-width: 860px) {
+      .desktop-nav {
+        display: none !important;
+      }
+    }
+    .desktop-nav a {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2.5px !important;
+      text-transform: uppercase !important;
+      color: #a1a1aa !important;
+      text-decoration: none !important;
+      position: relative !important;
+      padding: 6px 0 !important;
+      transition: color 0.25s ease !important;
+    }
+    .desktop-nav a:hover,
+    .desktop-nav a.active {
+      color: #ffffff !important;
+    }
+    .desktop-nav a.active::after {
+      content: '' !important;
+      position: absolute !important;
+      bottom: -2px !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 1px !important;
+      background: #e2e8f0 !important;
+    }
+
+    /* Header Actions: View Lab, Menu, Contact */
+    .header-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 16px !important;
+    }
+    .mode-toggle {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 6px 14px !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: 99px !important;
+      background: transparent !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 12px !important;
+      color: #d4d4d8 !important;
+      user-select: none !important;
+    }
+    @media (max-width: 600px) {
+      .mode-toggle {
+        display: none !important;
+      }
+    }
+    .mode-label {
+      color: #71717a !important;
+    }
+    .mode-toggle strong {
+      color: #ffffff !important;
+      font-weight: 500 !important;
+    }
+    .mode-track {
+      width: 20px !important;
+      height: 10px !important;
+      background: #27272a !important;
+      border-radius: 99px !important;
+      position: relative !important;
+      display: inline-block !important;
+    }
+    .mode-knob {
+      width: 8px !important;
+      height: 8px !important;
+      border-radius: 50% !important;
+      background: #ffffff !important;
+      position: absolute !important;
+      top: 1px !important;
+      left: 10px !important;
+    }
+
+    .header-menu-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 6px 14px !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: 99px !important;
+      background: transparent !important;
+      color: #d4d4d8 !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      text-decoration: none !important;
+      transition: all 0.25s ease !important;
+    }
+    .header-menu-pill:hover {
+      border-color: #ffffff !important;
+      color: #ffffff !important;
+    }
+    .menu-lines {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 3px !important;
+      width: 12px !important;
+    }
+    .menu-lines i {
+      display: block !important;
+      height: 1px !important;
+      width: 100% !important;
+      background: currentColor !important;
+    }
+
+    .header-contact {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      padding: 6px 0 !important;
+      transition: color 0.25s ease !important;
+    }
+    .header-contact:hover {
+      color: #a1a1aa !important;
+    }
+    .header-contact .arrow {
+      font-size: 14px !important;
+      transition: transform 0.25s ease !important;
+    }
+    .header-contact:hover .arrow {
+      transform: translate(2px, -2px) !important;
+    }
+
+    /* 2. REMOVE ← → ARROWS FROM JOURNEY SPECTRUM */
+    .journey-spectrum__controls {
+      display: none !important;
+    }
+
+    /* ==========================================================================
+       RESEARCH ARCHIVE & PAPER STYLES
+       ========================================================================== */
+
+    .research-feature {
+      margin: 40px 0 80px !important;
+      padding: 48px !important;
+      border: 1px solid #202028 !important;
+      background: rgba(12, 12, 16, 0.7) !important;
+      box-sizing: border-box !important;
+    }
+    .research-feature__copy {
+      max-width: 900px !important;
+    }
+    .research-feature__copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 4.5vw, 56px) !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      margin: 16px 0 20px !important;
+    }
+
+    .research-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 20px !important;
+      margin: 40px 0 80px !important;
+    }
+    .research-row {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 32px 36px !important;
+      border: 1px solid #222228 !important;
+      background: rgba(10, 10, 14, 0.75) !important;
+      text-decoration: none !important;
+      gap: 32px !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .research-row:hover {
+      border-color: #ffffff !important;
+      background: rgba(18, 18, 24, 0.95) !important;
+      transform: translateX(6px) !important;
+    }
+    @media (max-width: 860px) {
+      .research-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 20px !important;
+      }
+    }
+    .research-row > div:first-child {
+      flex: 1 !important;
+      max-width: 760px !important;
+    }
+    .research-row h3 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 24px !important;
+      color: #ffffff !important;
+      margin: 0 0 10px !important;
+      text-transform: uppercase !important;
+    }
+    .research-row p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      line-height: 1.6 !important;
+      color: #94a3b8 !important;
+      margin: 0 0 8px !important;
+    }
+    .research-state-reason {
+      font-size: 13px !important;
+      color: #64748b !important;
+      margin: 0 !important;
+    }
+    .research-state-reason span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 10px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      color: #475569 !important;
+      display: inline-block !important;
+      margin-right: 8px !important;
+    }
+    .research-domain {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #64748b !important;
+      min-width: 140px !important;
+      text-align: right !important;
+    }
+    @media (max-width: 860px) {
+      .research-domain {
+        text-align: left !important;
+      }
+    }
+    .state-active-validation {
+      border-color: #38bdf8 !important;
+      color: #38bdf8 !important;
+    }
+    .state-hypothesis-frozen {
+      border-color: #fbbf24 !important;
+      color: #fbbf24 !important;
+    }
+    .state-active {
+      border-color: #34d399 !important;
+      color: #34d399 !important;
+    }
+
+    /* ==========================================================================
+       AIXION PRODUCTION HERO & FOOTER ARCHITECTURE
+       1. Eliminates massive empty voids:
+          - Content-driven height (no forced 100vh / min-height: 760px emptiness)
+          - Restores fluid typography and natural flow
+       2. Exact production footer:
+          - Authentic 3-column layout (2fr 1fr 1fr)
+          - Left-to-right aligned base bar with proper flex wrap and margins
+       ========================================================================== */
+
+    /* 1. ELIMINATE VOID / EMPTY SPACE IN EDITORIAL HEROES */
+    .home-hero,
+    .editorial-hero {
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      padding: 130px 4vw 60px !important;
+      background: #070709 !important;
+      position: relative !important;
+      box-sizing: border-box !important;
+    }
+    .editorial-hero__content {
+      max-width: 1100px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .editorial-hero__content h1 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(48px, 7vw, 92px) !important;
+      font-weight: 700 !important;
+      letter-spacing: -1px !important;
+      line-height: 0.98 !important;
+      text-transform: uppercase !important;
+      margin: 14px 0 24px !important;
+      color: #ffffff !important;
+    }
+    .editorial-hero__copy {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: clamp(16px, 1.8vw, 21px) !important;
+      line-height: 1.65 !important;
+      color: #94a3b8 !important;
+      max-width: 840px !important;
+      margin: 0 0 28px !important;
+      text-align: justify !important;
+      text-justify: inter-word !important;
+    }
+    .editorial-hero__actions {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 18px !important;
+      margin-top: 24px !important;
+    }
+
+    /* Tighten gap between hero and subsequent sections */
+    .editorial-section,
+    .editorial-section--compact,
+    .editorial-section--cool {
+      padding: 40px 4vw 60px !important;
+      margin: 0 auto !important;
+      max-width: 1440px !important;
+      box-sizing: border-box !important;
+    }
+
+    /* 2. AUTHENTIC AIXION PRODUCTION 3-COLUMN FOOTER */
+    .site-footer {
+      background: #06090e !important;
+      border-top: 1px solid #151d2a !important;
+      padding: 60px 4vw 32px !important;
+      margin-top: 80px !important;
+      font-family: 'Padauk', sans-serif !important;
+      color: #94a3b8 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      z-index: 10 !important;
+    }
+    .site-footer__main {
+      display: grid !important;
+      grid-template-columns: 2fr 1fr 1fr !important;
+      gap: 50px !important;
+      max-width: 1400px !important;
+      margin: 0 auto 48px !important;
+      align-items: start !important;
+      box-sizing: border-box !important;
+    }
+    @media (max-width: 860px) {
+      .site-footer__main {
+        grid-template-columns: 1fr !important;
+        gap: 36px !important;
+      }
+    }
+
+    /* Column 1: Identity */
+    .site-footer__identity {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+    .site-footer__eyebrow {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 3px !important;
+      color: #94a3b8 !important;
+      text-transform: uppercase !important;
+      margin: 0 !important;
+    }
+    .site-footer__statement {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(24px, 3.2vw, 42px) !important;
+      font-weight: 500 !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      letter-spacing: -0.5px !important;
+      line-height: 1.1 !important;
+      text-transform: uppercase !important;
+    }
+    .site-footer__subline {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      color: #64748b !important;
+      margin: 0 !important;
+      line-height: 1.6 !important;
+      max-width: 420px !important;
+    }
+
+    /* Column 2: Navigation Links */
+    .site-footer__links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+    .site-footer__links a {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      color: #94a3b8 !important;
+      text-decoration: none !important;
+      transition: color 0.2s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__links a:hover {
+      color: #ffffff !important;
+    }
+
+    /* Column 3: Contact & Links */
+    .site-footer__contact {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+    .site-footer__desc {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      color: #64748b !important;
+    }
+    .site-footer__link {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      color: #cbd5e1 !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      transition: color 0.2s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__link:hover {
+      color: #ffffff !important;
+    }
+    .site-footer__link .arrow {
+      font-size: 13px !important;
+      transition: transform 0.2s ease !important;
+    }
+    .site-footer__link:hover .arrow {
+      transform: translate(2px, -2px) !important;
+    }
+
+    /* Base Horizontal Bar */
+    .site-footer__base {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
+      padding-top: 24px !important;
+      border-top: 1px solid #131b28 !important;
+      max-width: 1400px !important;
+      margin: 0 auto !important;
+      font-size: 11px !important;
+      color: #475569 !important;
+      font-family: 'Space Mono', monospace !important;
+      box-sizing: border-box !important;
+    }
+    .site-footer__badge {
+      letter-spacing: 1px !important;
+    }
+    .site-footer__copy {
+      color: #64748b !important;
+    }
+    .site-footer__process {
+      color: #64748b !important;
+      display: flex !important;
+      gap: 8px !important;
+      align-items: center !important;
+    }
+    .site-footer__process i {
+      font-style: normal !important;
+      color: #334155 !important;
+    }
+
+    /* ==========================================================================
+       AIXION LAB ARCHITECTURAL GRID & ALIGNMENT SYSTEM
+       Restores crisp multi-column cards, justified copy, and perfect margins
+       ========================================================================== */
+
+    :root {
+      --page-max-width: 1320px;
+    }
+
+    /* Container alignment */
+    .page-width,
+    .editorial-hero__content,
+    .site-header__inner,
+    .site-footer__main,
+    .site-footer__base {
+      width: 100% !important;
+      max-width: var(--page-max-width) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Sections */
+    .editorial-section,
+    .editorial-hero,
+    .home-hero {
+      width: 100% !important;
+      padding-left: clamp(20px, 4vw, 60px) !important;
+      padding-right: clamp(20px, 4vw, 60px) !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Headings & Text Alignment */
+    h1, h2, h3, h4, .eyebrow, dt {
+      text-align: left !important;
+    }
+    p, dd, .image-story__body p, .chapter-copy p, .detail-card p, .content-card p, .principle p {
+      text-align: justify !important;
+      text-justify: inter-word !important;
+      line-height: 1.7 !important;
+    }
+
+    /* 1. PRINCIPLES GRID (3 Columns: Make state visible | Test the assumption | Keep authority explicit) */
+    .principles-grid,
+    .content-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: 28px !important;
+      margin: 40px 0 80px !important;
+      width: 100% !important;
+    }
+    @media (max-width: 900px) {
+      .principles-grid,
+      .content-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+      }
+    }
+    .principle,
+    .content-card {
+      border: 1px solid #1e2430 !important;
+      background: rgba(12, 16, 24, 0.7) !important;
+      padding: 32px 28px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+      transition: border-color 0.25s ease !important;
+    }
+    .principle:hover,
+    .content-card:hover {
+      border-color: #3b82f6 !important;
+    }
+    .principle h3,
+    .content-card h3 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 22px !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+    }
+    .principle p,
+    .content-card p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+      margin: 0 !important;
+      line-height: 1.6 !important;
+    }
+
+    /* 2. DETAIL GRID (2 Columns) */
+    .detail-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 28px !important;
+      margin: 36px 0 70px !important;
+      width: 100% !important;
+    }
+    @media (max-width: 800px) {
+      .detail-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .detail-card {
+      border: 1px solid #1e2430 !important;
+      background: rgba(12, 16, 24, 0.7) !important;
+      padding: 36px 32px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+    }
+    .detail-card h3 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 24px !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      text-transform: uppercase !important;
+    }
+    .detail-card p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+      margin: 0 !important;
+    }
+
+    /* 3. WORK STORIES & SELECTED SYSTEMS (Generous width, clean padding) */
+    .work-story, .work-story--reverse {
+      display: block !important;
+      width: 100% !important;
+      margin: 48px 0 !important;
+      padding: 48px !important;
+      border: 1px solid #1e2430 !important;
+      background: rgba(10, 14, 22, 0.75) !important;
+      box-sizing: border-box !important;
+    }
+    .work-story__copy {
+      max-width: 1000px !important;
+    }
+
+    /* 4. TIGHTEN HERO SPACING WHILE PRESERVING BREATHING ROOM */
+    .editorial-hero {
+      padding-top: 130px !important;
+      padding-bottom: 50px !important;
+      background: #070709 !important;
+    }
+    .editorial-hero__content {
+      padding: 0 !important;
+    }
+
+    /* 5. FOOTER (Balanced 3-Column + Base Alignment) */
+    .site-footer {
+      background: #06090e !important;
+      border-top: 1px solid #151d2a !important;
+      padding: 70px clamp(20px, 4vw, 60px) 36px !important;
+      margin-top: 80px !important;
+    }
+    .site-footer__main {
+      display: grid !important;
+      grid-template-columns: 2fr 1fr 1fr !important;
+      gap: 60px !important;
+      margin-bottom: 50px !important;
+    }
+    @media (max-width: 860px) {
+      .site-footer__main {
+        grid-template-columns: 1fr !important;
+        gap: 36px !important;
+      }
+    }
+    .site-footer__base {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
+      padding-top: 28px !important;
+      border-top: 1px solid #131b28 !important;
+      font-family: 'Space Mono', monospace !important;
+      font-size: 12px !important;
+      color: #475569 !important;
+    }
+
+  </style>
+</head>
+<body class="theme-dark">
+  <!-- Master Aixion Lab Header (Exact 4 Tabs: The Lab, Work, Research, Approach) -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" aria-label="Aixion Lab home" href="./index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span class="brand-copy">
+          <strong>AIXION LAB</strong>
+          <small>Applied systems engineering</small>
+        </span>
+      </a>
+
+      <!-- 4 Primary Tabs from aixionlab.com -->
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="./about.html">The Lab</a>
+        <a href="./work.html" class="active">Work</a>
+        <a href="./research.html">Research</a>
+        <a href="./journey.html">Approach</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <div class="mode-toggle" aria-label="Lab View Active">
+          <span class="mode-label">View</span>
+          <strong>Lab</strong>
+          <span class="mode-track"><span class="mode-knob"></span></span>
+        </div>
+        <a class="header-menu-pill" href="./about.html#contact">
+          <span class="menu-lines"><i></i><i></i></span>
+          <span>Menu</span>
+        </a>
+        <a class="header-contact" href="./about.html#contact">
+          Contact <span class="arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- Page Breadcrumb -->
+  <div style="padding: 110px 4vw 0; max-width: 1440px; margin: 0 auto; display: flex; gap: 8px; font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: 2px; color: #64748b; text-transform: uppercase;">
+    <a href="./index.html" style="color: #64748b; text-decoration: none;">AIXION LAB</a>
+    <span>/</span>
+    <span style="color: #ffffff;">AIXION CONTROL CORE</span>
+  </div>
+
+  <main id="main-content">
+<section id="overview"><section class="editorial-hero"><div class="editorial-hero__shade" aria-hidden="true"></div><div class="editorial-hero__content page-width" data-reveal="true"><p class="eyebrow eyebrow--light">Agent orchestration · governance · automation</p><h1>Aixion Control Core</h1><p class="editorial-hero__copy">A governed orchestration layer for context, agents, tools, policy, evidence and human authority.</p><div class="editorial-hero__actions"><div class="system-hero-meta"><span class="state-tag state-building">BUILDING</span><a class="button button--light" href="#evidence">Review evidence <span aria-hidden="true">↓</span></a></div></div></div><a class="scroll-cue" href="#system-current-state" aria-label="Scroll to explore this page"><span aria-hidden="true"></span> Scroll to explore</a></section></section><div class="system-subnav-wrap"><nav class="page-width system-subnav" aria-label="Aixion Control Core page sections"><a href="#overview">Overview</a><a href="#architecture">Architecture</a><a href="#demo">Demo</a><a href="#capabilities">Capabilities</a><a href="#mvp">MVP</a><a href="#evidence">Evidence</a><a href="#roadmap">Roadmap</a></nav></div><section id="page-content" class="editorial-section editorial-section--compact"><div class="page-width"><dl id="system-current-state" class="system-facts" data-reveal="true"><div><dt>Current gate</dt><dd>MVP runtime</dd></div><div><dt>Current focus</dt><dd>Orchestration, tool boundaries, policy and evidence capture.</dd></div><div><dt>Next gate</dt><dd>Policy-bound execution trace.</dd></div></dl><div class="career-only"><div class="career-only career-strip"><span>Career translation</span><div><i>Agent orchestration</i><i>Tool integration</i><i>Policy architecture</i><i>Human-in-the-loop</i><i>Evidence</i><i>APIs</i><i>State management</i></div></div></div></div></section><section id="architecture" class="editorial-section"><section class="image-story  visual-core" data-reveal="true"><div class="image-story__media"></div><div class="image-story__copy"><p class="eyebrow">PUBLIC ARCHITECTURE</p><h2>How this system makes the difficult parts visible.</h2><div class="image-story__body"><p>Coordinate autonomous capabilities while keeping execution observable, policy-bound and reviewable.</p><p>An orchestration architecture for intent routing, context assembly, planning, agents, tool execution, evidence capture and explicit approval boundaries.</p></div><a class="editorial-link" href="#engineering">Read the engineering approach<span aria-hidden="true">↗</span></a></div></section><div class="page-width architecture-wrap" data-reveal="true"><p class="eyebrow">SYSTEM FLOW / PUBLIC MODEL</p><ol class="signal-line" aria-label="Engineering lifecycle"><li><span class="signal-line__node" aria-hidden="true"></span><span>Intent</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Context</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Planning</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Tools</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Evidence</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Policy</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Human review</span></li></ol></div></section><section id="engineering" class="editorial-section editorial-section--cool"><div class="page-width"><header class="editorial-heading editorial-heading--left editorial-heading--storyline" data-reveal="true"><p class="eyebrow">ENGINEERING STORY</p><h2>Problem → challenge → build → outcome</h2><p class="editorial-heading__copy">The work is explained through its constraints and evidence, not a technology-logo wall.</p></header><div class="detail-grid impact-grid"><article class="detail-card" data-reveal="true"><p class="eyebrow">PROBLEM</p><h3>What makes this difficult?</h3><p>Useful agent systems can still become unreliable when context, tools, policy and authority are implicit.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">CHALLENGE</p><h3>What must remain controlled?</h3><p>Coordinate autonomous capabilities while keeping execution observable, policy-bound and reviewable.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">WHAT EXISTS</p><h3>The system response</h3><p>An orchestration architecture for intent routing, context assembly, planning, agents, tool execution, evidence capture and explicit approval boundaries.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">OUTCOME</p><h3>What this enables</h3><p>An MVP path focused on controlled autonomy rather than a generic chat interface.</p></article></div><div class="detail-grid engineering-grid"><article class="detail-card" data-reveal="true"><h3>Orchestration</h3><p>Intent is decomposed into explicit stages so the system can explain what it is doing and why.</p></article><article class="detail-card" data-reveal="true"><h3>Tool boundaries</h3><p>Tools are treated as governed capabilities rather than invisible side effects of an agent response.</p></article><article class="detail-card" data-reveal="true"><h3>Evidence before authority</h3><p>Execution traces, policy checks and evidence are first-class parts of the architecture.</p></article></div></div></section><section id="demo" class="editorial-section editorial-section--cool"><div class="page-width"><header class="editorial-heading editorial-heading--left editorial-heading--storyline" data-reveal="true"><p class="eyebrow">LIVE OPERATIONAL DEMO</p><h2>Aixion Control Tower in Action</h2><p class="editorial-heading__copy">Explore the complete mobile governance lifecycle step-by-step: select any operational phase below to inspect live agent interactions, policy checkpoints, and cryptographic audit proofs.</p></header><div style="margin:2rem 0 3rem;background:var(--paper-bright);border:1px solid var(--line-strong);border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(0, 0, 0, 0.05)"><style>
+        .tower-stepper-bar {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          border-bottom: 1px solid var(--line-strong);
+          background: rgba(0, 0, 0, 0.02);
+          overflow-x: auto;
+        }
+        .tower-main-stage {
+          display: grid;
+          grid-template-columns: minmax(300px, 360px) 1fr;
+          gap: 48px;
+          padding: 44px 48px;
+          align-items: center;
+        }
+        @media (max-width: 900px) {
+          .tower-stepper-bar {
+            grid-template-columns: repeat(6, minmax(140px, 1fr));
+            scroll-snap-type: x mandatory;
+          }
+          .tower-main-stage {
+            grid-template-columns: 1fr;
+            padding: 28px 20px;
+            gap: 36px;
+          }
+        }
+      </style><div class="tower-stepper-bar"><button style="padding:16px 14px;border:none;background:var(--paper-bright);border-bottom:2px solid var(--ink);cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--accent-deep);margin-bottom:4px">01<!-- --> • <!-- -->SECURE ACCESS</div><div style="font-size:13px;font-family:var(--serif);font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Enterprise Mobile Gateway</div><div style="position:absolute;bottom:-2px;left:0;width:0%;height:2px;background:var(--accent-deep);transition:width 0.1s linear"></div></button><button style="padding:16px 14px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">02<!-- --> • <!-- -->REAL-TIME TELEMETRY</div><div style="font-size:13px;font-family:var(--serif);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Live Action Queue</div></button><button style="padding:16px 14px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">03<!-- --> • <!-- -->GOVERNANCE SETUP</div><div style="font-size:13px;font-family:var(--serif);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Autonomous Fleet Pairing</div></button><button style="padding:16px 14px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">04<!-- --> • <!-- -->HUMAN-IN-THE-LOOP</div><div style="font-size:13px;font-family:var(--serif);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Review &amp; One-Tap Approval</div></button><button style="padding:16px 14px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">05<!-- --> • <!-- -->FAIL-CLOSED DEFENSE</div><div style="font-size:13px;font-family:var(--serif);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Adversarial Risk Detection</div></button><button style="padding:16px 14px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">06<!-- --> • <!-- -->IMMUTABLE AUDIT</div><div style="font-size:13px;font-family:var(--serif);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Tamper-Proof Audit Trail</div></button></div><div class="tower-main-stage"><div style="display:flex;justify-content:center;align-items:center"><div style="width:320px;aspect-ratio:9/20;border-radius:44px;background:#0d1117;padding:10px;box-shadow:0 28px 65px -15px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.12);position:relative;cursor:pointer" title="Click to Pause"><div style="position:absolute;top:16px;left:50%;transform:translateX(-50%);width:72px;height:4px;border-radius:4px;background:rgba(255, 255, 255, 0.25);z-index:10"></div><div style="width:100%;height:100%;border-radius:36px;overflow:hidden;position:relative;background:#ffffff"><video src="/videos/steps/01_login.mp4" playsInline="" muted="" autoPlay="" style="width:100%;height:100%;object-fit:cover;display:block"></video></div></div></div><div><div style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:99px;background:rgba(0, 0, 0, 0.04);border:1px solid var(--line-strong);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--accent-deep);margin-bottom:16px">PHASE <!-- -->01<!-- --> • <!-- -->SECURE ACCESS</div><h2 style="font-family:var(--serif);font-size:clamp(32px, 3.2vw, 44px);font-weight:400;line-height:1.12;margin:0 0 16px 0;color:var(--text);letter-spacing:-0.02em">Enterprise Mobile Gateway</h2><p style="font-size:15px;line-height:1.75;color:var(--muted);margin:0 0 28px 0;max-width:620px">Instant authenticated access to autonomous agent operations. Review code diffs and sensitive tool calls from anywhere.</p><div style="display:grid;gap:14px;max-width:620px;margin-bottom:28px"><div style="padding:16px 20px;border-radius:12px;border:1px solid var(--line);background:rgba(0, 0, 0, 0.015);display:flex;align-items:flex-start;gap:16px"><span style="font-size:20px;line-height:1">🔐</span><div><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px">Hardware-Backed Session</div><div style="font-size:12px;color:var(--muted);line-height:1.5">Biometric session keys with cryptographic device pinning</div></div></div><div style="padding:16px 20px;border-radius:12px;border:1px solid var(--line);background:rgba(0, 0, 0, 0.015);display:flex;align-items:flex-start;gap:16px"><span style="font-size:20px;line-height:1">⚡</span><div><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px">Zero Latency Access</div><div style="font-size:12px;color:var(--muted);line-height:1.5">Direct streaming connection to control tower cluster</div></div></div></div><div style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:8px;background:rgba(0, 0, 0, 0.03);font-size:11px;font-family:var(--mono);letter-spacing:0.05em;color:var(--muted)"><span>✓</span><span>ZERO-TRUST GUARANTEE • NEVER SHIPS WITHOUT EXPLICIT APPROVAL • <!-- -->FIPS-140-3 READY</span></div></div></div></div></div></section><section id="capabilities" class="editorial-section editorial-section--cool"><div class="page-width"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">CONTROL CORE CAPABILITIES</p><h2>The control plane is built from explicit capabilities.</h2></header><div class="content-grid"><article class="content-card" data-reveal="true"><h3>Intent routing</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Context assembly</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Planning</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Agent coordination</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Tool execution</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Policy boundaries</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Evidence capture</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Human approval</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article></div><div id="mvp" class="detail-card control-core-demo" data-reveal="true"><p class="eyebrow">ILLUSTRATIVE ARCHITECTURE TRACE</p><h3>Intent → planner → approved tool → evidence → policy → human review</h3><p>This sequence explains the proposed runtime model. It is a labelled architecture illustration, not production telemetry.</p></div></div></section><section id="evidence" class="editorial-section editorial-section--compact"><div class="page-width"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">EVIDENCE / PUBLIC BOUNDARY</p><h2>Claims stay bounded by what can be shown.</h2><p class="editorial-heading__copy">Proof records are public-safe summaries. Sensitive logic and operational data stay outside the site.</p></header><div class="evidence-list"><div class="evidence-row" data-reveal="true"><span>MVP</span><strong>Architecture and runtime implementation in active development</strong><div class="evidence-actions"><span class="state-tag state-building">BUILDING</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="Aixion Control Core / Architecture and runtime implementation in active development evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>Aixion Control Core / Architecture and runtime implementation in active development</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>BUILDING</strong><p>Architecture and runtime implementation in active development</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>MVP</dd></div><div><dt>Authority</dt><dd>Public-safe evidence summary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div><div class="evidence-row" data-reveal="true"><span>DEMO</span><strong>Public site uses clearly labelled architecture demonstrations</strong><div class="evidence-actions"><span class="state-tag state-demo">DEMO</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="Aixion Control Core / Public site uses clearly labelled architecture demonstrations evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>Aixion Control Core / Public site uses clearly labelled architecture demonstrations</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>DEMO</strong><p>Public site uses clearly labelled architecture demonstrations</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>DEMO</dd></div><div><dt>Authority</dt><dd>Public-safe evidence summary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div><div class="evidence-row" data-reveal="true"><span>BOUNDARY</span><strong>Demo traces are never presented as production telemetry</strong><div class="evidence-actions"><span class="state-tag state-enforced">ENFORCED</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="Aixion Control Core / Demo traces are never presented as production telemetry evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>Aixion Control Core / Demo traces are never presented as production telemetry</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>ENFORCED</strong><p>Demo traces are never presented as production telemetry</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>BOUNDARY</dd></div><div><dt>Authority</dt><dd>Public/private boundary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div></div></div></section><section id="roadmap" class="editorial-section editorial-section--dark"><div class="page-width next-gate" data-reveal="true"><div><p class="eyebrow eyebrow--light">NEXT GATE</p><h2 class="next-gate__title--single">Policy-bound execution trace.</h2><p>Orchestration, tool boundaries, policy and evidence capture.</p></div><a class="button button--light" href="./work.html">All systems <span aria-hidden="true">↗</span></a></div></section><!--$--><!--/$-->
+  </main>
+
+
+  <!-- Global Standard Aixion x Kirifuda Footer -->
+  <footer class="site-footer">
+    <div class="site-footer__main">
+      <div class="site-footer__identity">
+        <p class="site-footer__eyebrow">AIXION LAB</p>
+        <p class="site-footer__statement">Research, build, validate, learn.</p>
+        <p class="site-footer__subline">Applied intelligence and engineering, built with evidence.</p>
+      </div>
+      <nav class="site-footer__links" aria-label="Footer navigation">
+        <a href="./about.html">The Lab</a>
+        <a href="./work.html">Work</a>
+        <a href="./research.html">Research</a>
+        <a href="./journey.html">Approach</a>
+        <a href="./resume.html">Career snapshot</a>
+      </nav>
+      <div class="site-footer__contact">
+        <span class="site-footer__desc">Independent applied-engineering lab</span>
+        <a class="site-footer__link" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub <span class="arrow">↗</span></a>
+        <a class="site-footer__link" href="./about.html#contact">Start a conversation <span class="arrow">↗</span></a>
+      </div>
+    </div>
+    <div class="site-footer__base">
+      <span class="site-footer__badge">AIXION LAB / DEPLOYMENT ATTESTATION UNAVAILABLE</span>
+      <span class="site-footer__copy">© 2026 Aixion Lab</span>
+      <span class="site-footer__process">Research <i>·</i> Build <i>·</i> Validate <i>·</i> Observe <i>·</i> Learn</span>
+    </div>
+  </footer>
+
+
+  <script src="./lenis.min.js"></script>
+
+</body>
+</html>

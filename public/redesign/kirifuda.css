@@ -1,0 +1,1002 @@
+
+    /* ==========================================================================
+       FULL-WIDTH IMMERSIVE DESIGN SYSTEM (KIRIFUDA MOTION + AIXION CONTENT)
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Padauk', 'Helvetica Neue', Arial, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ==========================================================================
+       1. FULL-SCREEN SIGNATURE 6-CARD SHUFFLER: A - I - X - I - O - N
+       ========================================================================== */
+    #shuffler_stage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000;
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #shuffler_stage.landed {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.05);
+    }
+
+    .shuffler_container {
+      position: relative;
+      width: 440px;
+      height: 220px;
+    }
+
+    .card_item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 82px;
+      height: 118px;
+      background: #0d0e11;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 4px;
+      box-shadow: 0px 14px 34px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 8px 9px;
+      backface-visibility: hidden;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+      font-family: 'Oswald', sans-serif;
+      overflow: hidden;
+    }
+    .card_item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    }
+    .card_item .card_blade_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 4px;
+    }
+    .card_item .card_blade_footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 4px;
+    }
+    .card_item .card_sub_micro {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.5px;
+      color: #888888;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .card_item .card_corner_mark {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      color: rgba(255, 255, 255, 0.45);
+      line-height: 1;
+    }
+    .card_item .letter {
+      font-family: 'Oswald', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+      text-align: center;
+      margin: auto 0;
+      letter-spacing: 1px;
+      text-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
+    }
+
+    /* Mechanical Stack & Cascade Initial Positioning - Exact Center at 180px */
+    .c--1 { z-index: 6; transform: translate3d(175px, 52px, 0) rotate(-5deg); }
+    .c--2 { z-index: 5; transform: translate3d(177px, 52px, 0) rotate(-3deg); }
+    .c--3 { z-index: 4; transform: translate3d(179px, 52px, 0) rotate(-1deg); }
+    .c--4 { z-index: 3; transform: translate3d(181px, 52px, 0) rotate(1deg); }
+    .c--5 { z-index: 2; transform: translate3d(183px, 52px, 0) rotate(3deg); }
+    .c--6 { z-index: 1; transform: translate3d(185px, 52px, 0) rotate(5deg); }
+
+    /* Authentic Deck-Cut, Riffle & Interleave Shuffling */
+    .animating .c--1 { animation: true_riffle_1 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+    .animating .c--2 { animation: true_riffle_2 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+    .animating .c--3 { animation: true_riffle_3 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+    .animating .c--4 { animation: true_riffle_4 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+    .animating .c--5 { animation: true_riffle_5 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+    .animating .c--6 { animation: true_riffle_6 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+
+    @keyframes true_riffle_1 {
+      0% { transform: translate3d(175px, 52px, 0) rotate(-5deg); z-index: 6; }
+      25% { transform: translate3d(55px, -20px, 0) rotate(-24deg) scale(1.1); z-index: 12; }
+      55% { transform: translate3d(305px, 35px, 0) rotate(16deg) scale(1.04); z-index: 1; }
+      75% { transform: translate3d(230px, 56px, 0) rotate(6deg); z-index: 1; }
+      100% { transform: translate3d(175px, 52px, 0) rotate(-5deg); z-index: 1; }
+    }
+    @keyframes true_riffle_2 {
+      0% { transform: translate3d(177px, 52px, 0) rotate(-3deg); z-index: 5; }
+      25% { transform: translate3d(85px, -12px, 0) rotate(-16deg) scale(1.06); z-index: 11; }
+      55% { transform: translate3d(275px, 40px, 0) rotate(10deg) scale(1.02); z-index: 2; }
+      75% { transform: translate3d(210px, 54px, 0) rotate(4deg); z-index: 2; }
+      100% { transform: translate3d(177px, 52px, 0) rotate(-3deg); z-index: 2; }
+    }
+    @keyframes true_riffle_3 {
+      0% { transform: translate3d(179px, 52px, 0) rotate(-1deg); z-index: 4; }
+      30% { transform: translate3d(125px, -4px, 0) rotate(-8deg) scale(1.04); z-index: 10; }
+      60% { transform: translate3d(235px, 44px, 0) rotate(6deg); z-index: 3; }
+      80% { transform: translate3d(195px, 52px, 0) rotate(1deg); z-index: 3; }
+      100% { transform: translate3d(179px, 52px, 0) rotate(-1deg); z-index: 3; }
+    }
+    @keyframes true_riffle_4 {
+      0% { transform: translate3d(181px, 52px, 0) rotate(1deg); z-index: 3; }
+      30% { transform: translate3d(235px, -4px, 0) rotate(8deg) scale(1.04); z-index: 9; }
+      60% { transform: translate3d(125px, 44px, 0) rotate(-6deg); z-index: 4; }
+      80% { transform: translate3d(165px, 52px, 0) rotate(-1deg); z-index: 4; }
+      100% { transform: translate3d(181px, 52px, 0) rotate(1deg); z-index: 4; }
+    }
+    @keyframes true_riffle_5 {
+      0% { transform: translate3d(183px, 52px, 0) rotate(3deg); z-index: 2; }
+      25% { transform: translate3d(275px, -12px, 0) rotate(16deg) scale(1.06); z-index: 8; }
+      55% { transform: translate3d(85px, 40px, 0) rotate(-10deg) scale(1.02); z-index: 5; }
+      75% { transform: translate3d(150px, 54px, 0) rotate(-4deg); z-index: 5; }
+      100% { transform: translate3d(183px, 52px, 0) rotate(3deg); z-index: 5; }
+    }
+    @keyframes true_riffle_6 {
+      0% { transform: translate3d(185px, 52px, 0) rotate(5deg); z-index: 1; }
+      25% { transform: translate3d(305px, -20px, 0) rotate(24deg) scale(1.1); z-index: 7; }
+      55% { transform: translate3d(55px, 35px, 0) rotate(-16deg) scale(1.04); z-index: 6; }
+      75% { transform: translate3d(130px, 56px, 0) rotate(-6deg); z-index: 6; }
+      100% { transform: translate3d(185px, 52px, 0) rotate(5deg); z-index: 6; }
+    }
+
+    .shuffler_status {
+      margin-top: 36px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: #888888;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .shuffler_status_bar {
+      width: 140px;
+      height: 2px;
+      background: #222222;
+      position: relative;
+      overflow: hidden;
+    }
+    .shuffler_status_progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: #ffffff;
+      transition: width 0.1s linear;
+    }
+
+    /* WebGL Distortion Canvas */
+    #webgl-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.85;
+    }
+
+    /* Dual Elastic Cursor */
+    /* Precise Sleek Pointer Dot */
+    .custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+    }
+
+        /* Kirifuda Elastic Scroll Skew Container */
+    .kf_scroll_skew {
+      will-change: transform;
+      transform-origin: center center;
+      backface-visibility: hidden;
+    }
+
+    /* 2. FULL-WIDTH FLUID HEADER */
+    #full_header {
+      width: 100%;
+      height: 70px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4vw;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .header_brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: #ffffff;
+    }
+    .header_brand_mark {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255,255,255,0.4);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .header_brand:hover .header_brand_mark {
+      background: #ffffff;
+      color: #000000;
+    }
+    .header_brand_text strong {
+      font-family: 'Oswald', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      display: block;
+      line-height: 1.1;
+    }
+    .header_brand_text small {
+      font-family: 'Padauk', sans-serif;
+      font-size: 11px;
+      color: #888888;
+      letter-spacing: 0.5px;
+    }
+
+    .header_nav ul {
+      display: flex;
+      list-style: none;
+      gap: 40px;
+    }
+    .header_nav a {
+      text-decoration: none;
+      color: white;
+      font-size: 14px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+      padding: 6px 0;
+    }
+    .header_nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #ffffff;
+      transition: width 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .header_nav a:hover::after {
+      width: 100%;
+    }
+    .header_meta {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      color: #888888;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* 3. FULL-WIDTH EXPANSIVE CONTENT CONTAINER */
+    #full_content {
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 150px 4vw 80px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Expansive Hero Section */
+    .hero_section {
+      width: 100%;
+      padding-bottom: 80px;
+      border-bottom: 1px solid #333333;
+    }
+    .hero_eyebrow {
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      letter-spacing: 4px;
+      color: #888888;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero_title_massive {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(68px, 9.5vw, 150px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    .hero_title_massive em {
+      font-style: normal;
+      display: block;
+      color: #666666;
+    }
+    .hero_h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(24px, 2.8vw, 38px);
+      font-weight: 400;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+    .hero_desc_fluid {
+      font-family: 'Padauk', sans-serif;
+      font-size: 19px;
+      color: #aaaaaa;
+      line-height: 1.6;
+      max-width: 900px;
+      margin-bottom: 40px;
+    }
+    .hero_actions {
+      display: flex;
+      gap: 20px;
+    }
+    .btn_kf {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 36px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #ffffff;
+      border: 1px solid #ffffff;
+      background: transparent;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .btn_kf:hover {
+      background: #ffffff;
+      color: #000000;
+      transform: translateY(-2px);
+    }
+    .btn_kf_light {
+      background: #ffffff;
+      color: #000000;
+    }
+    .btn_kf_light:hover {
+      background: #cccccc;
+      border-color: #cccccc;
+    }
+
+    /* 4-Chapters Strip (Expansive) */
+    .chapters_bar_full {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid #333333;
+      margin-bottom: 100px;
+    }
+    .chapter_box {
+      padding: 30px 24px;
+      border-right: 1px solid #333333;
+      font-family: 'Oswald', sans-serif;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    .chapter_box:last-child {
+      border-right: none;
+    }
+    .chapter_box:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .ch_name {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+      text-transform: uppercase;
+    }
+
+    /* Section Headers */
+    .section_heading_bar {
+      width: 100%;
+      padding: 60px 0 30px;
+      border-bottom: 1px solid #333333;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .section_heading_title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(52px, 7vw, 110px);
+      font-weight: 600;
+      letter-spacing: 2px;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+    .section_heading_sub {
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      color: #777777;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding-bottom: 12px;
+    }
+
+    /* 4. EXPANSIVE FULL-WIDTH WORKS ROWS (KIRIFUDA 154px INVERSION) */
+    .works_list_full {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .work_row_exp {
+      width: 100%;
+      min-height: 154px;
+      display: grid;
+      grid-template-columns: 340px 1fr 180px;
+      align-items: center;
+      padding: 36px 40px;
+      border-bottom: 1px solid #333333;
+      color: #ffffff;
+      text-decoration: none;
+      transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  padding-left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  padding-right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .work_row_exp:hover {
+      background-color: #ffffff;
+      color: #000000;
+      padding-left: 56px;
+      padding-right: 56px;
+    }
+    .work_row_exp:hover .row_meta_label,
+    .work_row_exp:hover .row_desc,
+    .work_row_exp:hover .row_sub {
+      color: #555555;
+    }
+
+    .row_meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .row_meta_label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      color: #666666;
+      letter-spacing: 1.5px;
+      transition: color 0.3s;
+    }
+    .row_meta_val {
+      font-family: 'Padauk', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .row_body {
+      padding: 0 40px;
+    }
+    .row_sub {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 200;
+      color: #888888;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .row_title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(28px, 3.2vw, 46px);
+      font-weight: 600;
+      letter-spacing: 1px;
+      line-height: 1.1;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .row_desc {
+      font-family: 'Padauk', sans-serif;
+      font-size: 15px;
+      color: #888888;
+      line-height: 1.6;
+      max-width: 800px;
+      transition: color 0.3s;
+    }
+
+    .row_action {
+      text-align: right;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+    }
+    .row_badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 14px;
+      border: 1px solid currentColor;
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .row_arrow {
+      font-size: 22px;
+      line-height: 1;
+      display: inline-block;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .work_row_exp:hover .row_arrow {
+      transform: translate(6px, -6px);
+    }
+
+    /* 5. TRADEBOT SENTINEL ARCHITECTURE (EXPANSIVE) */
+    .sentinel_full_block {
+      width: 100%;
+      margin: 100px 0;
+      border: 1px solid #333333;
+      padding: 60px 4vw;
+      background: rgba(10, 10, 10, 0.9);
+    }
+    .sentinel_full_block h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(36px, 4.5vw, 64px);
+      font-weight: 600;
+      letter-spacing: 1px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .sentinel_lead {
+      font-family: 'Padauk', sans-serif;
+      font-size: 18px;
+      color: #aaaaaa;
+      line-height: 1.6;
+      max-width: 1000px;
+      margin-bottom: 30px;
+    }
+
+    .telemetry_strip_full {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #333333;
+      border-bottom: 1px solid #333333;
+      padding: 18px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      margin: 30px 0;
+    }
+    .telemetry_strip_full strong {
+      color: #ffffff;
+    }
+
+    .vectors_grid_full {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: #333333;
+      margin: 40px 0;
+    }
+    .vector_card_full {
+      background: #000000;
+      padding: 36px 28px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .vector_card_full:hover {
+      background: #111111;
+      transform: translateY(-4px);
+    }
+    .v_tag_micro {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      color: #777777;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .v_title_exp {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .v_desc_exp {
+      font-family: 'Padauk', sans-serif;
+      font-size: 14px;
+      color: #888888;
+      line-height: 1.6;
+    }
+
+    .code_display_box {
+      background: #050505;
+      border: 1px solid #222222;
+      padding: 24px 30px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #cccccc;
+      line-height: 1.7;
+      margin: 24px 0;
+    }
+    .scope_notice {
+      font-family: 'Padauk', sans-serif;
+      font-size: 13px;
+      color: #777777;
+      line-height: 1.7;
+      border-top: 1px solid #222222;
+      padding-top: 24px;
+      margin-top: 30px;
+    }
+
+    /* 6. HOW THE WORK IS DONE (3 EXPANSIVE COLUMNS) */
+    .practice_full_section {
+      width: 100%;
+      margin: 100px 0;
+      border-top: 1px solid #333333;
+      padding-top: 80px;
+    }
+    .practice_full_section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(48px, 6.5vw, 96px);
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: 2px;
+      margin-bottom: 50px;
+      text-transform: uppercase;
+    }
+    .practice_full_grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: #333333;
+    }
+    .practice_col_full {
+      background: #000000;
+      padding: 44px 40px;
+      transition: background 0.3s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .practice_col_full:hover {
+      background: #111111;
+      transform: translateY(-4px);
+    }
+    .p_title_exp {
+      font-family: 'Oswald', sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .p_desc_exp {
+      font-family: 'Padauk', sans-serif;
+      font-size: 16px;
+      color: #888888;
+      line-height: 1.6;
+    }
+
+    /* 7. AUTHENTIC KIRIFUDA SPLIT-SCREEN CONTACT SECTION (49% / 51%) WITH FULL DYNAMIC HIGHLIGHTING */
+    .split_contact_full {
+      width: 100%;
+      display: flex;
+      border-top: 1px solid #333333;
+      margin-top: 120px;
+    }
+    .contact_left_side,
+    .contact_right_side {
+      position: relative;
+      padding: 120px 6vw;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .contact_left_side {
+      width: 49%;
+      background-color: #ffffff;
+      color: #000000;
+    }
+    .contact_left_side:hover {
+      background-color: #000000;
+      color: #ffffff;
+      box-shadow: inset 0 0 0 2px #ffffff;
+    }
+    .contact_left_side:hover .side_title,
+    .contact_left_side:hover .btn_mail_b {
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+    .contact_left_side:hover .side_desc {
+      color: #cccccc;
+    }
+
+    .contact_left_side .side_title {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: clamp(60px, 8vw, 115px);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .contact_left_side .side_desc {
+      font-family: 'Almarai', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8em;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      color: #222222;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn_mail_b {
+      font-family: 'Padauk', sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: #000000;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 6px;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.3s ease;
+    }
+    .btn_mail_b:hover {
+      transform: translateX(4px);
+    }
+
+    .contact_right_side {
+      width: 51%;
+      background-color: #000000;
+      color: #ffffff;
+      border-left: 1px solid #333333;
+    }
+    .contact_right_side:hover {
+      background-color: #ffffff;
+      color: #000000;
+      box-shadow: inset 0 0 0 2px #000000;
+    }
+    .contact_right_side:hover .side_title,
+    .contact_right_side:hover .side_sub,
+    .contact_right_side:hover .btn_mail_w {
+      color: #000000;
+      border-color: #000000;
+    }
+    .contact_right_side:hover .side_desc {
+      color: #222222;
+    }
+
+    .contact_right_side .side_sub {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      color: #888888;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .contact_right_side .side_title {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: clamp(60px, 8vw, 115px);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .contact_right_side .side_desc {
+      font-family: 'Almarai', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8em;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      color: #aaaaaa;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn_mail_w {
+      font-family: 'Padauk', sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: #ffffff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 2px solid #ffffff;
+      padding-bottom: 6px;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.3s ease;
+    }
+    .btn_mail_w:hover {
+      transform: translateX(4px);
+    }
+
+    /* 8. SLIDE-IN OVERLAY DRAWER */
+    .cover_drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000;
+      z-index: 200000;
+      transform: translateY(100%);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      padding: 120px 6vw;
+    }
+    .cover_drawer.open {
+      transform: translateY(0%);
+    }
+    .drawer_content_box {
+      max-width: 900px;
+      margin: 0 auto;
+      color: #ffffff;
+    }
+    .drawer_row_item {
+      margin-bottom: 28px;
+      display: flex;
+      align-items: baseline;
+    }
+    .drawer_label {
+      width: 100px;
+      color: #888888;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+    }
+    .drawer_title_large {
+      font-family: 'Padauk', sans-serif;
+      font-size: 38px;
+      font-weight: 700;
+    }
+    .drawer_val_text {
+      font-family: 'Padauk', sans-serif;
+      font-size: 18px;
+    }
+    .drawer_body_p {
+      font-family: 'Padauk', sans-serif;
+      font-size: 18px;
+      line-height: 2em;
+      color: #cccccc;
+      margin: 40px 0;
+      border-top: 1px solid #333333;
+      padding-top: 40px;
+    }
+    .btn_close_drawer {
+      width: 200px;
+      height: 52px;
+      font-size: 14px;
+      font-family: 'Padauk', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      background: transparent;
+      color: white;
+      border: 1px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      margin: 60px auto 0;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn_close_drawer:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    footer {
+      border-top: 1px solid #222222;
+      padding: 60px 4vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      color: #666666;
+      text-transform: uppercase;
+    }
+  
+    /* ==========================================================================
+       AUTHENTIC KIRIFUDA SCROLL REVEALS & SKEW MOTION PHYSICS
+       ========================================================================== */
+    .kf_reveal_mask {
+      overflow: hidden;
+      display: block;
+    }
+    .kf_reveal_up {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0) skewY(4deg);
+      transform-origin: top left;
+      will-change: transform, opacity;
+    }
+    .kf_reveal_clip {
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+      will-change: clip-path, transform;
+    }
+    .kf_reveal_fade {
+      opacity: 0;
+      transform: translate3d(0, 40px, 0);
+      will-change: transform, opacity;
+    }
+    .kf_line_grow {
+      transform: scaleX(0);
+      transform-origin: left center;
+      will-change: transform;
+    }
+    

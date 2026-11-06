@@ -1,0 +1,2919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1">
+  <title>Software &amp; automation for business operations — Aixion Lab</title>
+  <meta name="description" content="Aixion Lab helps businesses simplify operations, automate repetitive work and build reliable software around their existing workflows.">
+  <meta property="og:title" content="Aixion Lab — Applied intelligence, engineered with evidence">
+  <meta property="og:description" content="An independent engineering lab building applied intelligence, automation and decision systems with visible evidence and explicit boundaries.">
+  <meta property="og:url" content="https://aixionlab.com">
+
+  <!-- Exact Kirifuda Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Padauk:wght@400;700&family=Almarai:wght@300;400;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Three.js + GSAP + Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t,e){return(1-e)*r+e*t}function z(r,t,e,i){return W(r,t,1-Math.exp(-e*i))}function x(r,t){return(r%t+t)%t}var y=class{isRunning=!1;value=0;from=0;to=0;currentTime=0;lerp;duration;easing;onUpdate;advance(t){if(!this.isRunning)return;let e=!1;if(this.duration&&this.easing){this.currentTime+=t;let i=w(0,this.currentTime/this.duration,1);e=i>=1;let s=e?1:this.easing(i);this.value=this.from+(this.to-this.from)*s}else this.lerp?(this.value=z(this.value,this.to,this.lerp*60,t),Math.round(this.value)===this.to&&(this.value=this.to,e=!0)):(this.value=this.to,e=!0);e&&this.stop(),this.onUpdate?.(this.value,e)}stop(){this.isRunning=!1}fromTo(t,e,{lerp:i,duration:s,easing:o,onStart:l,onUpdate:h}){this.from=this.value=t,this.to=e,this.lerp=i,this.duration=s,this.easing=o,this.currentTime=0,this.isRunning=!0,l?.(),this.onUpdate=h}};function R(r,t){let e;return function(...i){let s=this;clearTimeout(e),e=setTimeout(()=>{e=void 0,r.apply(s,i)},t)}}var E=class{constructor(t,e,{autoResize:i=!0,debounce:s=250}={}){this.wrapper=t;this.content=e;i&&(this.debouncedResize=R(this.resize,s),this.wrapper instanceof Window?window.addEventListener("resize",this.debouncedResize,!1):(this.wrapperResizeObserver=new ResizeObserver(this.debouncedResize),this.wrapperResizeObserver.observe(this.wrapper)),this.contentResizeObserver=new ResizeObserver(this.debouncedResize),this.contentResizeObserver.observe(this.content)),this.resize()}width=0;height=0;scrollHeight=0;scrollWidth=0;debouncedResize;wrapperResizeObserver;contentResizeObserver;destroy(){this.wrapperResizeObserver?.disconnect(),this.contentResizeObserver?.disconnect(),this.wrapper===window&&this.debouncedResize&&window.removeEventListener("resize",this.debouncedResize,!1)}resize=()=>{this.onWrapperResize(),this.onContentResize()};onWrapperResize=()=>{this.wrapper instanceof Window?(this.width=window.innerWidth,this.height=window.innerHeight):(this.width=this.wrapper.clientWidth,this.height=this.wrapper.clientHeight)};onContentResize=()=>{this.wrapper instanceof Window?(this.scrollHeight=this.content.scrollHeight,this.scrollWidth=this.content.scrollWidth):(this.scrollHeight=this.wrapper.scrollHeight,this.scrollWidth=this.wrapper.scrollWidth)};get limit(){return{x:this.scrollWidth-this.width,y:this.scrollHeight-this.height}}};var f=class{events={};emit(t,...e){let i=this.events[t]||[];for(let s=0,o=i.length;s<o;s++)i[s]?.(...e)}on(t,e){return this.events[t]?.push(e)||(this.events[t]=[e]),()=>{this.events[t]=this.events[t]?.filter(i=>e!==i)}}off(t,e){this.events[t]=this.events[t]?.filter(i=>e!==i)}destroy(){this.events={}}};var _=100/6,u={passive:!1},T=class{constructor(t,e={wheelMultiplier:1,touchMultiplier:1}){this.element=t;this.options=e;window.addEventListener("resize",this.onWindowResize,!1),this.onWindowResize(),this.element.addEventListener("wheel",this.onWheel,u),this.element.addEventListener("touchstart",this.onTouchStart,u),this.element.addEventListener("touchmove",this.onTouchMove,u),this.element.addEventListener("touchend",this.onTouchEnd,u)}touchStart={x:0,y:0};lastDelta={x:0,y:0};window={width:0,height:0};emitter=new f;on(t,e){return this.emitter.on(t,e)}destroy(){this.emitter.destroy(),window.removeEventListener("resize",this.onWindowResize,!1),this.element.removeEventListener("wheel",this.onWheel,u),this.element.removeEventListener("touchstart",this.onTouchStart,u),this.element.removeEventListener("touchmove",this.onTouchMove,u),this.element.removeEventListener("touchend",this.onTouchEnd,u)}onTouchStart=t=>{let{clientX:e,clientY:i}=t.targetTouches?t.targetTouches[0]:t;this.touchStart.x=e,this.touchStart.y=i,this.lastDelta={x:0,y:0},this.emitter.emit("scroll",{deltaX:0,deltaY:0,event:t})};onTouchMove=t=>{let{clientX:e,clientY:i}=t.targetTouches?t.targetTouches[0]:t,s=-(e-this.touchStart.x)*this.options.touchMultiplier,o=-(i-this.touchStart.y)*this.options.touchMultiplier;this.touchStart.x=e,this.touchStart.y=i,this.lastDelta={x:s,y:o},this.emitter.emit("scroll",{deltaX:s,deltaY:o,event:t})};onTouchEnd=t=>{this.emitter.emit("scroll",{deltaX:this.lastDelta.x,deltaY:this.lastDelta.y,event:t})};onWheel=t=>{let{deltaX:e,deltaY:i,deltaMode:s}=t,o=s===1?_:s===2?this.window.width:1,l=s===1?_:s===2?this.window.height:1;e*=o,i*=l,e*=this.options.wheelMultiplier,i*=this.options.wheelMultiplier,this.emitter.emit("scroll",{deltaX:e,deltaY:i,event:t})};onWindowResize=()=>{this.window={width:window.innerWidth,height:window.innerHeight}}};var L=class{_isScrolling=!1;_isStopped=!1;_isLocked=!1;_preventNextNativeScrollEvent=!1;_resetVelocityTimeout=null;__rafID=null;isTouching;time=0;userData={};lastVelocity=0;velocity=0;direction=0;options;targetScroll;animatedScroll;animate=new y;emitter=new f;dimensions;virtualScroll;constructor({wrapper:t=window,content:e=document.documentElement,eventsTarget:i=t,smoothWheel:s=!0,syncTouch:o=!1,syncTouchLerp:l=.075,touchInertiaMultiplier:h=35,duration:S,easing:d=H=>Math.min(1,1.001-Math.pow(2,-10*H)),lerp:c=.1,infinite:p=!1,orientation:b="vertical",gestureOrientation:n="vertical",touchMultiplier:a=1,wheelMultiplier:v=1,autoResize:g=!0,prevent:m,virtualScroll:N,overscroll:M=!0,autoRaf:O=!1,__experimental__naiveDimensions:D=!1}={}){window.lenisVersion=k,(!t||t===document.documentElement||t===document.body)&&(t=window),this.options={wrapper:t,content:e,eventsTarget:i,smoothWheel:s,syncTouch:o,syncTouchLerp:l,touchInertiaMultiplier:h,duration:S,easing:d,lerp:c,infinite:p,gestureOrientation:n,orientation:b,touchMultiplier:a,wheelMultiplier:v,autoResize:g,prevent:m,virtualScroll:N,overscroll:M,autoRaf:O,__experimental__naiveDimensions:D},this.dimensions=new E(t,e,{autoResize:g}),this.updateClassName(),this.targetScroll=this.animatedScroll=this.actualScroll,this.options.wrapper.addEventListener("scroll",this.onNativeScroll,!1),this.options.wrapper.addEventListener("pointerdown",this.onPointerDown,!1),this.virtualScroll=new T(i,{touchMultiplier:a,wheelMultiplier:v}),this.virtualScroll.on("scroll",this.onVirtualScroll),this.options.autoRaf&&(this.__rafID=requestAnimationFrame(this.raf))}destroy(){this.emitter.destroy(),this.options.wrapper.removeEventListener("scroll",this.onNativeScroll,!1),this.options.wrapper.removeEventListener("pointerdown",this.onPointerDown,!1),this.virtualScroll.destroy(),this.dimensions.destroy(),this.cleanUpClassName(),this.__rafID&&cancelAnimationFrame(this.__rafID)}on(t,e){return this.emitter.on(t,e)}off(t,e){return this.emitter.off(t,e)}setScroll(t){this.isHorizontal?this.rootElement.scrollLeft=t:this.rootElement.scrollTop=t}onPointerDown=t=>{t.button===1&&this.reset()};onVirtualScroll=t=>{if(typeof this.options.virtualScroll=="function"&&this.options.virtualScroll(t)===!1)return;let{deltaX:e,deltaY:i,event:s}=t;if(this.emitter.emit("virtual-scroll",{deltaX:e,deltaY:i,event:s}),s.ctrlKey||s.lenisStopPropagation)return;let o=s.type.includes("touch"),l=s.type.includes("wheel");this.isTouching=s.type==="touchstart"||s.type==="touchmove";let h=e===0&&i===0;if(this.options.syncTouch&&o&&s.type==="touchstart"&&h&&!this.isStopped&&!this.isLocked){this.reset();return}let d=this.options.gestureOrientation==="vertical"&&i===0||this.options.gestureOrientation==="horizontal"&&e===0;if(h||d)return;let c=s.composedPath();c=c.slice(0,c.indexOf(this.rootElement));let p=this.options.prevent;if(c.find(m=>m instanceof HTMLElement&&(typeof p=="function"&&p?.(m)||m.hasAttribute?.("data-lenis-prevent")||o&&m.hasAttribute?.("data-lenis-prevent-touch")||l&&m.hasAttribute?.("data-lenis-prevent-wheel"))))return;if(this.isStopped||this.isLocked){s.preventDefault();return}if(!(this.options.syncTouch&&o||this.options.smoothWheel&&l)){this.isScrolling="native",this.animate.stop(),s.lenisStopPropagation=!0;return}let n=i;this.options.gestureOrientation==="both"?n=Math.abs(i)>Math.abs(e)?i:e:this.options.gestureOrientation==="horizontal"&&(n=e),(!this.options.overscroll||this.options.infinite||this.options.wrapper!==window&&(this.animatedScroll>0&&this.animatedScroll<this.limit||this.animatedScroll===0&&i>0||this.animatedScroll===this.limit&&i<0))&&(s.lenisStopPropagation=!0),s.preventDefault();let a=o&&this.options.syncTouch,g=o&&s.type==="touchend"&&Math.abs(n)>5;g&&(n=this.velocity*this.options.touchInertiaMultiplier),this.scrollTo(this.targetScroll+n,{programmatic:!1,...a?{lerp:g?this.options.syncTouchLerp:1}:{lerp:this.options.lerp,duration:this.options.duration,easing:this.options.easing}})};resize(){this.dimensions.resize(),this.animatedScroll=this.targetScroll=this.actualScroll,this.emit()}emit(){this.emitter.emit("scroll",this)}onNativeScroll=()=>{if(this._resetVelocityTimeout!==null&&(clearTimeout(this._resetVelocityTimeout),this._resetVelocityTimeout=null),this._preventNextNativeScrollEvent){this._preventNextNativeScrollEvent=!1;return}if(this.isScrolling===!1||this.isScrolling==="native"){let t=this.animatedScroll;this.animatedScroll=this.targetScroll=this.actualScroll,this.lastVelocity=this.velocity,this.velocity=this.animatedScroll-t,this.direction=Math.sign(this.animatedScroll-t),this.isStopped||(this.isScrolling="native"),this.emit(),this.velocity!==0&&(this._resetVelocityTimeout=setTimeout(()=>{this.lastVelocity=this.velocity,this.velocity=0,this.isScrolling=!1,this.emit()},400))}};reset(){this.isLocked=!1,this.isScrolling=!1,this.animatedScroll=this.targetScroll=this.actualScroll,this.lastVelocity=this.velocity=0,this.animate.stop()}start(){this.isStopped&&(this.reset(),this.isStopped=!1)}stop(){this.isStopped||(this.reset(),this.isStopped=!0)}raf=t=>{let e=t-(this.time||t);this.time=t,this.animate.advance(e*.001),this.options.autoRaf&&(this.__rafID=requestAnimationFrame(this.raf))};scrollTo(t,{offset:e=0,immediate:i=!1,lock:s=!1,duration:o=this.options.duration,easing:l=this.options.easing,lerp:h=this.options.lerp,onStart:S,onComplete:d,force:c=!1,programmatic:p=!0,userData:b}={}){if(!((this.isStopped||this.isLocked)&&!c)){if(typeof t=="string"&&["top","left","start"].includes(t))t=0;else if(typeof t=="string"&&["bottom","right","end"].includes(t))t=this.limit;else{let n;if(typeof t=="string"?n=document.querySelector(t):t instanceof HTMLElement&&t?.nodeType&&(n=t),n){if(this.options.wrapper!==window){let v=this.rootElement.getBoundingClientRect();e-=this.isHorizontal?v.left:v.top}let a=n.getBoundingClientRect();t=(this.isHorizontal?a.left:a.top)+this.animatedScroll}}if(typeof t=="number"){if(t+=e,t=Math.round(t),this.options.infinite?p&&(this.targetScroll=this.animatedScroll=this.scroll):t=w(0,t,this.limit),t===this.targetScroll){S?.(this),d?.(this);return}if(this.userData=b??{},i){this.animatedScroll=this.targetScroll=t,this.setScroll(this.scroll),this.reset(),this.preventNextNativeScrollEvent(),this.emit(),d?.(this),this.userData={};return}p||(this.targetScroll=t),this.animate.fromTo(this.animatedScroll,t,{duration:o,easing:l,lerp:h,onStart:()=>{s&&(this.isLocked=!0),this.isScrolling="smooth",S?.(this)},onUpdate:(n,a)=>{this.isScrolling="smooth",this.lastVelocity=this.velocity,this.velocity=n-this.animatedScroll,this.direction=Math.sign(this.velocity),this.animatedScroll=n,this.setScroll(this.scroll),p&&(this.targetScroll=n),a||this.emit(),a&&(this.reset(),this.emit(),d?.(this),this.userData={},this.preventNextNativeScrollEvent())}})}}}preventNextNativeScrollEvent(){this._preventNextNativeScrollEvent=!0,requestAnimationFrame(()=>{this._preventNextNativeScrollEvent=!1})}get rootElement(){return this.options.wrapper===window?document.documentElement:this.options.wrapper}get limit(){return this.options.__experimental__naiveDimensions?this.isHorizontal?this.rootElement.scrollWidth-this.rootElement.clientWidth:this.rootElement.scrollHeight-this.rootElement.clientHeight:this.dimensions.limit[this.isHorizontal?"x":"y"]}get isHorizontal(){return this.options.orientation==="horizontal"}get actualScroll(){return this.isHorizontal?this.rootElement.scrollLeft:this.rootElement.scrollTop}get scroll(){return this.options.infinite?x(this.animatedScroll,this.limit):this.animatedScroll}get progress(){return this.limit===0?1:this.scroll/this.limit}get isScrolling(){return this._isScrolling}set isScrolling(t){this._isScrolling!==t&&(this._isScrolling=t,this.updateClassName())}get isStopped(){return this._isStopped}set isStopped(t){this._isStopped!==t&&(this._isStopped=t,this.updateClassName())}get isLocked(){return this._isLocked}set isLocked(t){this._isLocked!==t&&(this._isLocked=t,this.updateClassName())}get isSmooth(){return this.isScrolling==="smooth"}get className(){let t="lenis";return this.isStopped&&(t+=" lenis-stopped"),this.isLocked&&(t+=" lenis-locked"),this.isScrolling&&(t+=" lenis-scrolling"),this.isScrolling==="smooth"&&(t+=" lenis-smooth"),t}updateClassName(){this.cleanUpClassName(),this.rootElement.className=`${this.rootElement.className} ${this.className}`.trim()}cleanUpClassName(){this.rootElement.className=this.rootElement.className.replace(/lenis(-\w+)?/g,"").trim()}};globalThis.Lenis=L;
+//# sourceMappingURL=lenis.min.js.map
+window.Lenis = globalThis.Lenis;
+</script>
+
+  <style>
+    /* ==========================================================================
+       FULL-WIDTH IMMERSIVE DESIGN SYSTEM (KIRIFUDA MOTION + AIXION CONTENT)
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Padauk', 'Helvetica Neue', Arial, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ==========================================================================
+       1. FULL-SCREEN SIGNATURE 6-CARD SHUFFLER: A - I - X - I - O - N
+       ========================================================================== */
+    #shuffler_stage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000;
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #shuffler_stage.landed {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.05);
+    }
+
+    .shuffler_container {
+      position: relative;
+      width: 440px;
+      height: 220px;
+    }
+
+    .card_item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 82px;
+      height: 118px;
+      background: #0d0e11;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 4px;
+      box-shadow: 0px 14px 34px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 8px 9px;
+      backface-visibility: hidden;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+      font-family: 'Oswald', sans-serif;
+      overflow: hidden;
+    }
+    .card_item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    }
+    .card_item .card_blade_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 4px;
+    }
+    .card_item .card_blade_footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 4px;
+    }
+    .card_item .card_sub_micro {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.5px;
+      color: #888888;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .card_item .card_corner_mark {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      color: rgba(255, 255, 255, 0.45);
+      line-height: 1;
+    }
+    .card_item .letter {
+      font-family: 'Oswald', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+      text-align: center;
+      margin: auto 0;
+      letter-spacing: 1px;
+      text-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
+    }
+
+    /* Mechanical Stack & Cascade Initial Positioning - Exact Center at 180px */
+    .c--1 { z-index: 6; transform: translate3d(175px, 52px, 0) rotate(-5deg); }
+    .c--2 { z-index: 5; transform: translate3d(177px, 52px, 0) rotate(-3deg); }
+    .c--3 { z-index: 4; transform: translate3d(179px, 52px, 0) rotate(-1deg); }
+    .c--4 { z-index: 3; transform: translate3d(181px, 52px, 0) rotate(1deg); }
+    .c--5 { z-index: 2; transform: translate3d(183px, 52px, 0) rotate(3deg); }
+    .c--6 { z-index: 1; transform: translate3d(185px, 52px, 0) rotate(5deg); }
+
+    /* Authentic Deck-Cut, Riffle & Interleave Shuffling */
+    .animating .c--1 { animation: true_riffle_1 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+    .animating .c--2 { animation: true_riffle_2 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+    .animating .c--3 { animation: true_riffle_3 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+    .animating .c--4 { animation: true_riffle_4 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+    .animating .c--5 { animation: true_riffle_5 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+    .animating .c--6 { animation: true_riffle_6 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+
+    @keyframes true_riffle_1 {
+      0% { transform: translate3d(175px, 52px, 0) rotate(-5deg); z-index: 6; }
+      25% { transform: translate3d(55px, -20px, 0) rotate(-24deg) scale(1.1); z-index: 12; }
+      55% { transform: translate3d(305px, 35px, 0) rotate(16deg) scale(1.04); z-index: 1; }
+      75% { transform: translate3d(230px, 56px, 0) rotate(6deg); z-index: 1; }
+      100% { transform: translate3d(175px, 52px, 0) rotate(-5deg); z-index: 1; }
+    }
+    @keyframes true_riffle_2 {
+      0% { transform: translate3d(177px, 52px, 0) rotate(-3deg); z-index: 5; }
+      25% { transform: translate3d(85px, -12px, 0) rotate(-16deg) scale(1.06); z-index: 11; }
+      55% { transform: translate3d(275px, 40px, 0) rotate(10deg) scale(1.02); z-index: 2; }
+      75% { transform: translate3d(210px, 54px, 0) rotate(4deg); z-index: 2; }
+      100% { transform: translate3d(177px, 52px, 0) rotate(-3deg); z-index: 2; }
+    }
+    @keyframes true_riffle_3 {
+      0% { transform: translate3d(179px, 52px, 0) rotate(-1deg); z-index: 4; }
+      30% { transform: translate3d(125px, -4px, 0) rotate(-8deg) scale(1.04); z-index: 10; }
+      60% { transform: translate3d(235px, 44px, 0) rotate(6deg); z-index: 3; }
+      80% { transform: translate3d(195px, 52px, 0) rotate(1deg); z-index: 3; }
+      100% { transform: translate3d(179px, 52px, 0) rotate(-1deg); z-index: 3; }
+    }
+    @keyframes true_riffle_4 {
+      0% { transform: translate3d(181px, 52px, 0) rotate(1deg); z-index: 3; }
+      30% { transform: translate3d(235px, -4px, 0) rotate(8deg) scale(1.04); z-index: 9; }
+      60% { transform: translate3d(125px, 44px, 0) rotate(-6deg); z-index: 4; }
+      80% { transform: translate3d(165px, 52px, 0) rotate(-1deg); z-index: 4; }
+      100% { transform: translate3d(181px, 52px, 0) rotate(1deg); z-index: 4; }
+    }
+    @keyframes true_riffle_5 {
+      0% { transform: translate3d(183px, 52px, 0) rotate(3deg); z-index: 2; }
+      25% { transform: translate3d(275px, -12px, 0) rotate(16deg) scale(1.06); z-index: 8; }
+      55% { transform: translate3d(85px, 40px, 0) rotate(-10deg) scale(1.02); z-index: 5; }
+      75% { transform: translate3d(150px, 54px, 0) rotate(-4deg); z-index: 5; }
+      100% { transform: translate3d(183px, 52px, 0) rotate(3deg); z-index: 5; }
+    }
+    @keyframes true_riffle_6 {
+      0% { transform: translate3d(185px, 52px, 0) rotate(5deg); z-index: 1; }
+      25% { transform: translate3d(305px, -20px, 0) rotate(24deg) scale(1.1); z-index: 7; }
+      55% { transform: translate3d(55px, 35px, 0) rotate(-16deg) scale(1.04); z-index: 6; }
+      75% { transform: translate3d(130px, 56px, 0) rotate(-6deg); z-index: 6; }
+      100% { transform: translate3d(185px, 52px, 0) rotate(5deg); z-index: 6; }
+    }
+
+    .shuffler_status {
+      margin-top: 36px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: #888888;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .shuffler_status_bar {
+      width: 140px;
+      height: 2px;
+      background: #222222;
+      position: relative;
+      overflow: hidden;
+    }
+    .shuffler_status_progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: #ffffff;
+      transition: width 0.1s linear;
+    }
+
+    /* WebGL Distortion Canvas */
+    #webgl-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.85;
+    }
+
+    /* Dual Elastic Cursor */
+    /* Precise Sleek Pointer Dot */
+    .custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+    }
+
+        /* Kirifuda Elastic Scroll Skew Container */
+    .kf_scroll_skew {
+      will-change: transform;
+      transform-origin: center center;
+      backface-visibility: hidden;
+    }
+
+    /* 2. FULL-WIDTH FLUID HEADER */
+    #full_header {
+      width: 100%;
+      height: 70px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4vw;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .header_brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: #ffffff;
+    }
+    .header_brand_mark {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255,255,255,0.4);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .header_brand:hover .header_brand_mark {
+      background: #ffffff;
+      color: #000000;
+    }
+    .header_brand_text strong {
+      font-family: 'Oswald', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      display: block;
+      line-height: 1.1;
+    }
+    .header_brand_text small {
+      font-family: 'Padauk', sans-serif;
+      font-size: 11px;
+      color: #888888;
+      letter-spacing: 0.5px;
+    }
+
+    .header_nav ul {
+      display: flex;
+      list-style: none;
+      gap: 40px;
+    }
+    .header_nav a {
+      text-decoration: none;
+      color: white;
+      font-size: 14px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+      padding: 6px 0;
+    }
+    .header_nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #ffffff;
+      transition: width 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .header_nav a:hover::after {
+      width: 100%;
+    }
+    .header_meta {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      color: #888888;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* 3. FULL-WIDTH EXPANSIVE CONTENT CONTAINER */
+    #full_content {
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 150px 4vw 80px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Expansive Hero Section */
+    .hero_section {
+      width: 100%;
+      padding-bottom: 80px;
+      border-bottom: 1px solid #333333;
+    }
+    .hero_eyebrow {
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      letter-spacing: 4px;
+      color: #888888;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero_title_massive {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(68px, 9.5vw, 150px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    .hero_title_massive em {
+      font-style: normal;
+      display: block;
+      color: #666666;
+    }
+    .hero_h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(24px, 2.8vw, 38px);
+      font-weight: 400;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+    .hero_desc_fluid {
+      font-family: 'Padauk', sans-serif;
+      font-size: 19px;
+      color: #aaaaaa;
+      line-height: 1.6;
+      max-width: 900px;
+      margin-bottom: 40px;
+    }
+    .hero_actions {
+      display: flex;
+      gap: 20px;
+    }
+    .btn_kf {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 36px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #ffffff;
+      border: 1px solid #ffffff;
+      background: transparent;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .btn_kf:hover {
+      background: #ffffff;
+      color: #000000;
+      transform: translateY(-2px);
+    }
+    .btn_kf_light {
+      background: #ffffff;
+      color: #000000;
+    }
+    .btn_kf_light:hover {
+      background: #cccccc;
+      border-color: #cccccc;
+    }
+
+    /* 4-Chapters Strip (Expansive) */
+    .chapters_bar_full {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid #333333;
+      margin-bottom: 100px;
+    }
+    .chapter_box {
+      padding: 30px 24px;
+      border-right: 1px solid #333333;
+      font-family: 'Oswald', sans-serif;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    .chapter_box:last-child {
+      border-right: none;
+    }
+    .chapter_box:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .ch_name {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+      text-transform: uppercase;
+    }
+
+    /* Section Headers */
+    .section_heading_bar {
+      width: 100%;
+      padding: 60px 0 30px;
+      border-bottom: 1px solid #333333;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .section_heading_title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(52px, 7vw, 110px);
+      font-weight: 600;
+      letter-spacing: 2px;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+    .section_heading_sub {
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      color: #777777;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding-bottom: 12px;
+    }
+
+    /* 4. EXPANSIVE FULL-WIDTH WORKS ROWS (KIRIFUDA 154px INVERSION) */
+    .works_list_full {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .work_row_exp {
+      width: 100%;
+      min-height: 154px;
+      display: grid;
+      grid-template-columns: 340px 1fr 180px;
+      align-items: center;
+      padding: 36px 40px;
+      border-bottom: 1px solid #333333;
+      color: #ffffff;
+      text-decoration: none;
+      transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  padding-left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  padding-right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .work_row_exp:hover {
+      background-color: #ffffff;
+      color: #000000;
+      padding-left: 56px;
+      padding-right: 56px;
+    }
+    .work_row_exp:hover .row_meta_label,
+    .work_row_exp:hover .row_desc,
+    .work_row_exp:hover .row_sub {
+      color: #555555;
+    }
+
+    .row_meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .row_meta_label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      color: #666666;
+      letter-spacing: 1.5px;
+      transition: color 0.3s;
+    }
+    .row_meta_val {
+      font-family: 'Padauk', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .row_body {
+      padding: 0 40px;
+    }
+    .row_sub {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 200;
+      color: #888888;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .row_title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(28px, 3.2vw, 46px);
+      font-weight: 600;
+      letter-spacing: 1px;
+      line-height: 1.1;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .row_desc {
+      font-family: 'Padauk', sans-serif;
+      font-size: 15px;
+      color: #888888;
+      line-height: 1.6;
+      max-width: 800px;
+      transition: color 0.3s;
+    }
+
+    .row_action {
+      text-align: right;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+    }
+    .row_badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 14px;
+      border: 1px solid currentColor;
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .row_arrow {
+      font-size: 22px;
+      line-height: 1;
+      display: inline-block;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .work_row_exp:hover .row_arrow {
+      transform: translate(6px, -6px);
+    }
+
+    /* 5. TRADEBOT SENTINEL ARCHITECTURE (EXPANSIVE) */
+    .sentinel_full_block {
+      width: 100%;
+      margin: 100px 0;
+      border: 1px solid #333333;
+      padding: 60px 4vw;
+      background: rgba(10, 10, 10, 0.9);
+    }
+    .sentinel_full_block h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(36px, 4.5vw, 64px);
+      font-weight: 600;
+      letter-spacing: 1px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .sentinel_lead {
+      font-family: 'Padauk', sans-serif;
+      font-size: 18px;
+      color: #aaaaaa;
+      line-height: 1.6;
+      max-width: 1000px;
+      margin-bottom: 30px;
+    }
+
+    .telemetry_strip_full {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #333333;
+      border-bottom: 1px solid #333333;
+      padding: 18px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      margin: 30px 0;
+    }
+    .telemetry_strip_full strong {
+      color: #ffffff;
+    }
+
+    .vectors_grid_full {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: #333333;
+      margin: 40px 0;
+    }
+    .vector_card_full {
+      background: #000000;
+      padding: 36px 28px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .vector_card_full:hover {
+      background: #111111;
+      transform: translateY(-4px);
+    }
+    .v_tag_micro {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      color: #777777;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .v_title_exp {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .v_desc_exp {
+      font-family: 'Padauk', sans-serif;
+      font-size: 14px;
+      color: #888888;
+      line-height: 1.6;
+    }
+
+    .code_display_box {
+      background: #050505;
+      border: 1px solid #222222;
+      padding: 24px 30px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #cccccc;
+      line-height: 1.7;
+      margin: 24px 0;
+    }
+    .scope_notice {
+      font-family: 'Padauk', sans-serif;
+      font-size: 13px;
+      color: #777777;
+      line-height: 1.7;
+      border-top: 1px solid #222222;
+      padding-top: 24px;
+      margin-top: 30px;
+    }
+
+    /* 6. HOW THE WORK IS DONE (3 EXPANSIVE COLUMNS) */
+    .practice_full_section {
+      width: 100%;
+      margin: 100px 0;
+      border-top: 1px solid #333333;
+      padding-top: 80px;
+    }
+    .practice_full_section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(48px, 6.5vw, 96px);
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: 2px;
+      margin-bottom: 50px;
+      text-transform: uppercase;
+    }
+    .practice_full_grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: #333333;
+    }
+    .practice_col_full {
+      background: #000000;
+      padding: 44px 40px;
+      transition: background 0.3s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .practice_col_full:hover {
+      background: #111111;
+      transform: translateY(-4px);
+    }
+    .p_title_exp {
+      font-family: 'Oswald', sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .p_desc_exp {
+      font-family: 'Padauk', sans-serif;
+      font-size: 16px;
+      color: #888888;
+      line-height: 1.6;
+    }
+
+    /* 7. AUTHENTIC KIRIFUDA SPLIT-SCREEN CONTACT SECTION (49% / 51%) WITH FULL DYNAMIC HIGHLIGHTING */
+    .split_contact_full {
+      width: 100%;
+      display: flex;
+      border-top: 1px solid #333333;
+      margin-top: 120px;
+    }
+    .contact_left_side,
+    .contact_right_side {
+      position: relative;
+      padding: 120px 6vw;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .contact_left_side {
+      width: 49%;
+      background-color: #ffffff;
+      color: #000000;
+    }
+    .contact_left_side:hover {
+      background-color: #000000;
+      color: #ffffff;
+      box-shadow: inset 0 0 0 2px #ffffff;
+    }
+    .contact_left_side:hover .side_title,
+    .contact_left_side:hover .btn_mail_b {
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+    .contact_left_side:hover .side_desc {
+      color: #cccccc;
+    }
+
+    .contact_left_side .side_title {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: clamp(60px, 8vw, 115px);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .contact_left_side .side_desc {
+      font-family: 'Almarai', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8em;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      color: #222222;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn_mail_b {
+      font-family: 'Padauk', sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: #000000;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 6px;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.3s ease;
+    }
+    .btn_mail_b:hover {
+      transform: translateX(4px);
+    }
+
+    .contact_right_side {
+      width: 51%;
+      background-color: #000000;
+      color: #ffffff;
+      border-left: 1px solid #333333;
+    }
+    .contact_right_side:hover {
+      background-color: #ffffff;
+      color: #000000;
+      box-shadow: inset 0 0 0 2px #000000;
+    }
+    .contact_right_side:hover .side_title,
+    .contact_right_side:hover .side_sub,
+    .contact_right_side:hover .btn_mail_w {
+      color: #000000;
+      border-color: #000000;
+    }
+    .contact_right_side:hover .side_desc {
+      color: #222222;
+    }
+
+    .contact_right_side .side_sub {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      color: #888888;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .contact_right_side .side_title {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: clamp(60px, 8vw, 115px);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .contact_right_side .side_desc {
+      font-family: 'Almarai', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8em;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      color: #aaaaaa;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn_mail_w {
+      font-family: 'Padauk', sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: #ffffff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 2px solid #ffffff;
+      padding-bottom: 6px;
+      transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.3s ease;
+    }
+    .btn_mail_w:hover {
+      transform: translateX(4px);
+    }
+
+    /* 8. SLIDE-IN OVERLAY DRAWER */
+    .cover_drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000;
+      z-index: 200000;
+      transform: translateY(100%);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      padding: 120px 6vw;
+    }
+    .cover_drawer.open {
+      transform: translateY(0%);
+    }
+    .drawer_content_box {
+      max-width: 900px;
+      margin: 0 auto;
+      color: #ffffff;
+    }
+    .drawer_row_item {
+      margin-bottom: 28px;
+      display: flex;
+      align-items: baseline;
+    }
+    .drawer_label {
+      width: 100px;
+      color: #888888;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+    }
+    .drawer_title_large {
+      font-family: 'Padauk', sans-serif;
+      font-size: 38px;
+      font-weight: 700;
+    }
+    .drawer_val_text {
+      font-family: 'Padauk', sans-serif;
+      font-size: 18px;
+    }
+    .drawer_body_p {
+      font-family: 'Padauk', sans-serif;
+      font-size: 18px;
+      line-height: 2em;
+      color: #cccccc;
+      margin: 40px 0;
+      border-top: 1px solid #333333;
+      padding-top: 40px;
+    }
+    .btn_close_drawer {
+      width: 200px;
+      height: 52px;
+      font-size: 14px;
+      font-family: 'Padauk', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      background: transparent;
+      color: white;
+      border: 1px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      margin: 60px auto 0;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn_close_drawer:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    footer {
+      border-top: 1px solid #222222;
+      padding: 60px 4vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      color: #666666;
+      text-transform: uppercase;
+    }
+  
+    /* ==========================================================================
+       AUTHENTIC KIRIFUDA SCROLL REVEALS & SKEW MOTION PHYSICS
+       ========================================================================== */
+    .kf_reveal_mask {
+      overflow: hidden;
+      display: block;
+    }
+    .kf_reveal_up {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0) skewY(4deg);
+      transform-origin: top left;
+      will-change: transform, opacity;
+    }
+    .kf_reveal_clip {
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+      will-change: clip-path, transform;
+    }
+    .kf_reveal_fade {
+      opacity: 0;
+      transform: translate3d(0, 40px, 0);
+      will-change: transform, opacity;
+    }
+    .kf_line_grow {
+      transform: scaleX(0);
+      transform-origin: left center;
+      will-change: transform;
+    }
+    </style>
+<style id="subpage-refined-css">
+
+    /* ==========================================================================
+       AIXION x KIRIFUDA MASTER PURE-TYPOGRAPHIC STYLES
+       - Zero Image Dependencies (All images removed for crisp minimal aesthetics)
+       - Full Text Alignment & Justification
+       - Single-Line Status Badges & Action CTAs
+       - Elimination of all numbering traces
+       ========================================================================== */
+
+    html {
+      overflow-y: scroll !important;
+      overflow-x: hidden !important;
+    }
+    body {
+      overflow-x: hidden !important;
+      position: relative !important;
+      font-family: 'Padauk', sans-serif !important;
+      color: #e0e0e0 !important;
+      background-color: #070709 !important;
+    }
+
+    /* 1. HIDE ALL IMAGES, BROKEN BOXES & RESIDUAL NUMBERING */
+    img,
+    .editorial-hero__image,
+    .work-story__image,
+    .work-support__image,
+    .image-story__media,
+    .story-index,
+    .signal-line__index,
+    .signal-line__node,
+    .site-menu__number,
+    .image-story__number,
+    .home-work__index,
+    .journey-spectrum__active-index,
+    .journey-spectrum__number,
+    .journey-spectrum__dot {
+      display: none !important;
+    }
+
+    /* 2. SUBPAGE HERO (Clean Editorial Layout) */
+    .editorial-hero {
+      padding: 140px 4vw 60px !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+    }
+    .editorial-hero__content {
+      max-width: 1000px !important;
+    }
+    .editorial-hero__content h1 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(48px, 8vw, 110px) !important;
+      font-weight: 700 !important;
+      letter-spacing: -1.5px !important;
+      line-height: 0.95 !important;
+      text-transform: uppercase !important;
+      margin: 0 0 24px !important;
+      color: #ffffff !important;
+    }
+    .editorial-hero__copy {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: clamp(16px, 1.8vw, 22px) !important;
+      line-height: 1.65 !important;
+      color: #aaaaaa !important;
+      max-width: 900px !important;
+      margin-bottom: 32px !important;
+      text-align: justify !important;
+      text-justify: inter-word !important;
+    }
+    .editorial-hero__actions {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 20px !important;
+      margin-top: 30px !important;
+    }
+    .editorial-hero__actions .button,
+    .editorial-hero__actions .button-secondary,
+    .editorial-hero__actions a {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 14px 28px !important;
+      border: 1px solid #ffffff !important;
+      background: transparent !important;
+      color: #ffffff !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      text-decoration: none !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .editorial-hero__actions .button:hover,
+    .editorial-hero__actions .button-secondary:hover,
+    .editorial-hero__actions a:hover {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    /* 3. PARAGRAPHS & EDITORIAL BODY JUSTIFICATION */
+    p, 
+    .editorial-heading__copy, 
+    .image-story__body p,
+    .chapter-copy p,
+    .work-story__copy p,
+    .detail-card p,
+    .content-card p {
+      text-align: justify !important;
+      text-justify: inter-word !important;
+      line-height: 1.75 !important;
+    }
+
+    /* Headings remain aligned left */
+    h1, h2, h3, h4, .eyebrow, dt {
+      text-align: left !important;
+    }
+
+    /* 4. WORK STORIES (Pure Typographic Presentation) */
+    .work-story, .work-story--reverse {
+      display: block !important;
+      width: 100% !important;
+      margin: 60px 0 !important;
+      padding: 48px !important;
+      border: 1px solid #202024 !important;
+      background: rgba(12, 12, 16, 0.6) !important;
+      box-sizing: border-box !important;
+      direction: ltr !important;
+    }
+    .work-story__copy {
+      max-width: 900px !important;
+    }
+    .work-story__copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 4.5vw, 54px) !important;
+      line-height: 1.05 !important;
+      margin: 12px 0 20px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .work-story__state {
+      display: inline-flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 14px !important;
+      margin: 16px 0 24px !important;
+    }
+    .work-story__state span:last-child {
+      font-family: 'Space Mono', monospace !important;
+      font-size: 13px !important;
+      color: #888888 !important;
+    }
+    .work-story dl {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+      gap: 24px !important;
+      margin: 28px 0 !important;
+      padding: 24px 0 !important;
+      border-top: 1px solid #1c1c22 !important;
+      border-bottom: 1px solid #1c1c22 !important;
+    }
+    .work-story dt {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #666666 !important;
+      text-transform: uppercase !important;
+      margin-bottom: 6px !important;
+    }
+    .work-story dd {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #cccccc !important;
+      margin: 0 !important;
+      line-height: 1.5 !important;
+    }
+
+    /* Work Support 2-Column Grid (Automation & Analytics Lab) */
+    .work-support__list {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 32px !important;
+      margin: 60px 0 100px !important;
+    }
+    @media (max-width: 800px) {
+      .work-support__list {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .work-support__item {
+      border: 1px solid #202024 !important;
+      padding: 40px !important;
+      background: rgba(12, 12, 16, 0.6) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      gap: 24px !important;
+    }
+    .work-support__title {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      margin-bottom: 8px !important;
+    }
+    .work-support__title h3 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 28px !important;
+      margin: 0 !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+
+    /* 5. IMAGE STORY (about.html & subpages without images) */
+    .image-story, .image-story--reverse {
+      display: block !important;
+      margin: 60px 0 !important;
+      width: 100% !important;
+    }
+    .image-story__copy {
+      max-width: 900px !important;
+    }
+    .image-story__copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 5vw, 64px) !important;
+      line-height: 1.05 !important;
+      margin: 16px 0 24px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+
+    /* 6. SYSTEM FACTS (Current gate, Current focus, Next gate) */
+    .system-facts {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 24px !important;
+      margin: 40px 0 20px !important;
+      padding: 32px 0 !important;
+      border-top: 1px solid #282828 !important;
+      border-bottom: 1px solid #282828 !important;
+      width: 100% !important;
+    }
+    @media (max-width: 900px) {
+      .system-facts {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+      }
+    }
+    .system-facts div {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      padding-right: 20px !important;
+      border-right: 1px solid #1a1a1a !important;
+    }
+    .system-facts div:last-child {
+      border-right: none !important;
+    }
+    .system-facts dt {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #666666 !important;
+    }
+    .system-facts dd {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      line-height: 1.5 !important;
+      font-weight: 500 !important;
+    }
+
+    /* 7. CAREER STRIP (Tags/Badges) */
+    .career-strip {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 16px !important;
+      padding: 24px 0 !important;
+      border-bottom: 1px solid #282828 !important;
+    }
+    .career-strip > span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #666666 !important;
+      text-transform: uppercase !important;
+      margin-right: 8px !important;
+    }
+    .career-strip div {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+    .career-strip i {
+      font-style: normal !important;
+      font-family: 'Space Mono', monospace !important;
+      font-size: 11px !important;
+      color: #aaaaaa !important;
+      background: #111116 !important;
+      border: 1px solid #222228 !important;
+      padding: 5px 12px !important;
+      border-radius: 2px !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    /* 8. SYSTEM SIGNAL FLOW (Horizontal Connected Pipeline) */
+    ol.signal-line {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      list-style: none !important;
+      margin: 28px 0 60px !important;
+      padding: 0 !important;
+      gap: 16px !important;
+    }
+    ol.signal-line li {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 14px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      background: #0d0d12 !important;
+      border: 1px solid #25252c !important;
+      padding: 10px 20px !important;
+      transition: all 0.3s ease !important;
+    }
+    ol.signal-line li::after {
+      content: '→' !important;
+      color: #444444 !important;
+      font-size: 14px !important;
+      margin-left: 8px !important;
+    }
+    ol.signal-line li:last-child::after {
+      display: none !important;
+    }
+    ol.signal-line li:hover {
+      border-color: #ffffff !important;
+      transform: translateY(-2px) !important;
+    }
+
+    /* 9. TIMELINE / MILESTONES (DATA / RESEARCH / LIVE) */
+    .system-timeline {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+      gap: 20px !important;
+      margin: 30px 0 60px !important;
+    }
+    .system-timeline > div {
+      border: 1px solid #282828 !important;
+      padding: 24px 28px !important;
+      background: rgba(10, 10, 14, 0.7) !important;
+    }
+    .system-timeline span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 2px !important;
+      color: #777777 !important;
+      text-transform: uppercase !important;
+      display: block !important;
+      margin-bottom: 8px !important;
+    }
+    .system-timeline strong {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #ffffff !important;
+      font-weight: 500 !important;
+      line-height: 1.5 !important;
+    }
+
+    /* 10. EVIDENCE ROWS & ACTIONS */
+    .evidence-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+      margin: 36px 0 60px !important;
+    }
+    .evidence-row {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 24px 28px !important;
+      border: 1px solid #282828 !important;
+      background: rgba(12, 12, 15, 0.8) !important;
+      gap: 24px !important;
+      flex-wrap: wrap !important;
+    }
+    .evidence-row > span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      color: #888888 !important;
+      text-transform: uppercase !important;
+      min-width: 90px !important;
+    }
+    .evidence-row > strong {
+      flex: 1 !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      color: #ffffff !important;
+      min-width: 260px !important;
+    }
+    .evidence-actions {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 14px !important;
+    }
+    .evidence-trigger, .command-trigger {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      background: transparent !important;
+      border: 1px solid #444444 !important;
+      padding: 8px 16px !important;
+      cursor: pointer !important;
+      transition: all 0.25s ease !important;
+    }
+    .evidence-trigger:hover, .command-trigger:hover {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    /* 11. STATE TAGS & SINGLE-LINE CTA BADGES */
+    .state-tag {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 6px 14px !important;
+      border: 1px solid #ffffff !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      background: transparent !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+    }
+    .state-building {
+      border-color: #ffffff !important;
+      color: #ffffff !important;
+    }
+    .state-rejected {
+      border-color: #ff5555 !important;
+      color: #ff5555 !important;
+    }
+    .state-validating {
+      border-color: #55ff99 !important;
+      color: #55ff99 !important;
+    }
+
+    .editorial-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      border-bottom: 1px solid #444444 !important;
+      padding-bottom: 4px !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+      transition: all 0.3s ease !important;
+    }
+    .editorial-link:hover {
+      border-bottom-color: #ffffff !important;
+      color: #ffffff !important;
+    }
+    .editorial-link span {
+      display: inline-block !important;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .editorial-link:hover span {
+      transform: translate(3px, -3px) !important;
+    }
+
+    /* 12. JOURNEY SPECTRUM */
+    .journey-spectrum__rail {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 12px !important;
+      margin: 40px 0 !important;
+      padding-bottom: 24px !important;
+      border-bottom: 1px solid #282828 !important;
+    }
+    .journey-spectrum__stage {
+      display: inline-flex !important;
+      align-items: center !important;
+      padding: 12px 24px !important;
+      background: #0d0d12 !important;
+      border: 1px solid #222228 !important;
+      color: #aaaaaa !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    .journey-spectrum__stage[aria-selected="true"],
+    .journey-spectrum__stage.active {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border-color: #ffffff !important;
+    }
+    .journey-spectrum__name {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+    }
+    .journey-spectrum__panel {
+      padding: 40px 0 !important;
+    }
+
+    /* 13. PULSE CARDS */
+    .pulse-snapshot {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)) !important;
+      gap: 24px !important;
+      margin: 40px 0 80px !important;
+    }
+    .pulse-card {
+      border: 1px solid #282828 !important;
+      padding: 32px !important;
+      background: rgba(12, 12, 16, 0.8) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      gap: 24px !important;
+    }
+    .pulse-card__state {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding-bottom: 20px !important;
+      border-bottom: 1px solid #202026 !important;
+    }
+    .pulse-card__state strong {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 20px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .pulse-card__details {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 16px !important;
+    }
+    .pulse-card__details dt {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #666666 !important;
+      text-transform: uppercase !important;
+    }
+    .pulse-card__details dd {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      color: #dddddd !important;
+      margin: 0 !important;
+    }
+
+    /* ==========================================================================
+       AUTHENTIC AIXION LAB 3-COLUMN FOOTER & CONTACT STYLES
+       Matches the exact layout, typography, and links from production aixionlab.com
+       ========================================================================== */
+
+    .site-footer {
+      background: #06080d !important;
+      border-top: 1px solid #1c2333 !important;
+      padding: 80px 4vw 40px !important;
+      margin-top: 100px !important;
+      font-family: 'Padauk', sans-serif !important;
+      color: #94a3b8 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      z-index: 10 !important;
+    }
+    .site-footer__main {
+      display: grid !important;
+      grid-template-columns: 2fr 1fr 1.5fr !important;
+      gap: 60px !important;
+      max-width: 1400px !important;
+      margin: 0 auto 60px !important;
+      align-items: start !important;
+    }
+    @media (max-width: 900px) {
+      .site-footer__main {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+    }
+    .site-footer__identity {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+    .site-footer__eyebrow {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 3px !important;
+      color: #cbd5e1 !important;
+      text-transform: uppercase !important;
+      margin: 0 !important;
+    }
+    .site-footer__statement {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 24px !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      letter-spacing: 0.5px !important;
+    }
+    .site-footer__subline {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #64748b !important;
+      margin: 0 !important;
+      line-height: 1.6 !important;
+      max-width: 440px !important;
+    }
+
+    .site-footer__links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+    .site-footer__links a {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+      text-decoration: none !important;
+      transition: color 0.25s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__links a:hover {
+      color: #ffffff !important;
+    }
+
+    .site-footer__contact {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+    }
+    .site-footer__desc {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      color: #64748b !important;
+    }
+    .site-footer__link {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #cbd5e1 !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      transition: color 0.25s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__link:hover {
+      color: #ffffff !important;
+    }
+    .site-footer__link .arrow {
+      font-size: 14px !important;
+      transition: transform 0.25s ease !important;
+    }
+    .site-footer__link:hover .arrow {
+      transform: translate(2px, -2px) !important;
+    }
+
+    .site-footer__base {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
+      padding-top: 32px !important;
+      border-top: 1px solid #141c2c !important;
+      max-width: 1400px !important;
+      margin: 0 auto !important;
+      font-size: 12px !important;
+      color: #475569 !important;
+      font-family: 'Space Mono', monospace !important;
+    }
+    .site-footer__badge {
+      letter-spacing: 1px !important;
+    }
+    .site-footer__copy {
+      color: #64748b !important;
+    }
+    .site-footer__process {
+      color: #64748b !important;
+      display: flex !important;
+      gap: 8px !important;
+      align-items: center !important;
+    }
+    .site-footer__process i {
+      font-style: normal !important;
+      color: #334155 !important;
+    }
+
+    /* Contact Section / Contact List Alignment (about.html) */
+    .contact-layout {
+      margin: 80px 0 !important;
+      padding: 60px 0 !important;
+      border-top: 1px solid #202026 !important;
+    }
+    .contact-copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 4vw, 56px) !important;
+      margin: 12px 0 16px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .contact-copy p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 16px !important;
+      color: #94a3b8 !important;
+      line-height: 1.7 !important;
+      max-width: 720px !important;
+      margin-bottom: 40px !important;
+    }
+    .contact-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+      max-width: 760px !important;
+    }
+    .contact-list a {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 18px 24px !important;
+      border: 1px solid #222228 !important;
+      background: rgba(12, 12, 16, 0.7) !important;
+      color: #e2e8f0 !important;
+      text-decoration: none !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      transition: all 0.25s ease !important;
+      border-radius: 4px !important;
+    }
+    .contact-list a:hover {
+      border-color: #ffffff !important;
+      background: rgba(22, 22, 28, 0.9) !important;
+      color: #ffffff !important;
+      transform: translateX(4px) !important;
+    }
+    .contact-list a strong {
+      font-weight: 600 !important;
+    }
+    .contact-list a span:last-child {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 16px !important;
+    }
+
+    /* ==========================================================================
+       AUTHENTIC AIXION LAB 4-TAB HEADER & NAVIGATION
+       Matches exact layout: Brand | [The Lab, Work, Research, Approach] | View Lab, Menu, Contact
+       ========================================================================== */
+
+    .site-header {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 72px !important;
+      background: rgba(7, 7, 10, 0.85) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      z-index: 1000 !important;
+      box-sizing: border-box !important;
+    }
+    .site-header__inner {
+      max-width: 1440px !important;
+      height: 100% !important;
+      margin: 0 auto !important;
+      padding: 0 4vw !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+    }
+
+    /* Brand */
+    .brand {
+      display: flex !important;
+      align-items: center !important;
+      gap: 14px !important;
+      text-decoration: none !important;
+      color: #ffffff !important;
+    }
+    .brand-mark {
+      width: 32px !important;
+      height: 32px !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: #ffffff !important;
+      letter-spacing: 0.5px !important;
+    }
+    .brand-copy {
+      display: flex !important;
+      flex-direction: column !important;
+      line-height: 1.15 !important;
+    }
+    .brand-copy strong {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: 1.5px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .brand-copy small {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 11px !important;
+      color: #71717a !important;
+    }
+
+    /* 4 Primary Navigation Tabs */
+    .desktop-nav {
+      display: flex !important;
+      align-items: center !important;
+      gap: 36px !important;
+    }
+    @media (max-width: 860px) {
+      .desktop-nav {
+        display: none !important;
+      }
+    }
+    .desktop-nav a {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2.5px !important;
+      text-transform: uppercase !important;
+      color: #a1a1aa !important;
+      text-decoration: none !important;
+      position: relative !important;
+      padding: 6px 0 !important;
+      transition: color 0.25s ease !important;
+    }
+    .desktop-nav a:hover,
+    .desktop-nav a.active {
+      color: #ffffff !important;
+    }
+    .desktop-nav a.active::after {
+      content: '' !important;
+      position: absolute !important;
+      bottom: -2px !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 1px !important;
+      background: #e2e8f0 !important;
+    }
+
+    /* Header Actions: View Lab, Menu, Contact */
+    .header-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 16px !important;
+    }
+    .mode-toggle {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 6px 14px !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: 99px !important;
+      background: transparent !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 12px !important;
+      color: #d4d4d8 !important;
+      user-select: none !important;
+    }
+    @media (max-width: 600px) {
+      .mode-toggle {
+        display: none !important;
+      }
+    }
+    .mode-label {
+      color: #71717a !important;
+    }
+    .mode-toggle strong {
+      color: #ffffff !important;
+      font-weight: 500 !important;
+    }
+    .mode-track {
+      width: 20px !important;
+      height: 10px !important;
+      background: #27272a !important;
+      border-radius: 99px !important;
+      position: relative !important;
+      display: inline-block !important;
+    }
+    .mode-knob {
+      width: 8px !important;
+      height: 8px !important;
+      border-radius: 50% !important;
+      background: #ffffff !important;
+      position: absolute !important;
+      top: 1px !important;
+      left: 10px !important;
+    }
+
+    .header-menu-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 6px 14px !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: 99px !important;
+      background: transparent !important;
+      color: #d4d4d8 !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      text-decoration: none !important;
+      transition: all 0.25s ease !important;
+    }
+    .header-menu-pill:hover {
+      border-color: #ffffff !important;
+      color: #ffffff !important;
+    }
+    .menu-lines {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 3px !important;
+      width: 12px !important;
+    }
+    .menu-lines i {
+      display: block !important;
+      height: 1px !important;
+      width: 100% !important;
+      background: currentColor !important;
+    }
+
+    .header-contact {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      padding: 6px 0 !important;
+      transition: color 0.25s ease !important;
+    }
+    .header-contact:hover {
+      color: #a1a1aa !important;
+    }
+    .header-contact .arrow {
+      font-size: 14px !important;
+      transition: transform 0.25s ease !important;
+    }
+    .header-contact:hover .arrow {
+      transform: translate(2px, -2px) !important;
+    }
+
+    /* 2. REMOVE ← → ARROWS FROM JOURNEY SPECTRUM */
+    .journey-spectrum__controls {
+      display: none !important;
+    }
+
+</style>
+</head>
+<body>
+
+  <!-- 1. FULL-SCREEN SIGNATURE 6-CARD SHUFFLER (A - I - X - I - O - N) -->
+  <div id="shuffler_stage" class="animating">
+    <div class="shuffler_container">
+      <div class="card_item c--1">
+        <div class="card_blade_header">
+          <span class="card_sub_micro">AIXION</span>
+          <span class="card_corner_mark">+</span>
+        </div>
+        <div class="letter">A</div>
+        <div class="card_blade_footer">
+          <span class="card_corner_mark">SYS</span>
+          <span class="card_sub_micro">CORE</span>
+        </div>
+      </div>
+      <div class="card_item c--2">
+        <div class="card_blade_header">
+          <span class="card_sub_micro">AIXION</span>
+          <span class="card_corner_mark">+</span>
+        </div>
+        <div class="letter">I</div>
+        <div class="card_blade_footer">
+          <span class="card_corner_mark">SYS</span>
+          <span class="card_sub_micro">CORE</span>
+        </div>
+      </div>
+      <div class="card_item c--3">
+        <div class="card_blade_header">
+          <span class="card_sub_micro">AIXION</span>
+          <span class="card_corner_mark">+</span>
+        </div>
+        <div class="letter">X</div>
+        <div class="card_blade_footer">
+          <span class="card_corner_mark">SYS</span>
+          <span class="card_sub_micro">CORE</span>
+        </div>
+      </div>
+      <div class="card_item c--4">
+        <div class="card_blade_header">
+          <span class="card_sub_micro">AIXION</span>
+          <span class="card_corner_mark">+</span>
+        </div>
+        <div class="letter">I</div>
+        <div class="card_blade_footer">
+          <span class="card_corner_mark">SYS</span>
+          <span class="card_sub_micro">CORE</span>
+        </div>
+      </div>
+      <div class="card_item c--5">
+        <div class="card_blade_header">
+          <span class="card_sub_micro">AIXION</span>
+          <span class="card_corner_mark">+</span>
+        </div>
+        <div class="letter">O</div>
+        <div class="card_blade_footer">
+          <span class="card_corner_mark">SYS</span>
+          <span class="card_sub_micro">CORE</span>
+        </div>
+      </div>
+      <div class="card_item c--6">
+        <div class="card_blade_header">
+          <span class="card_sub_micro">AIXION</span>
+          <span class="card_corner_mark">+</span>
+        </div>
+        <div class="letter">N</div>
+        <div class="card_blade_footer">
+          <span class="card_corner_mark">SYS</span>
+          <span class="card_sub_micro">CORE</span>
+        </div>
+      </div>
+    </div>
+    <div class="shuffler_status">
+      <span>LAB</span>
+      <div class="shuffler_status_bar">
+        <div class="shuffler_status_progress" id="shuffler_pbar"></div>
+      </div>
+      <span id="shuffler_pct">0%</span>
+    </div>
+  </div>
+
+  <!-- WebGL Background Distortion Canvas -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Sleek Pointer Dot -->
+  <div class="custom-cursor" id="cursor"></div>
+
+  <!-- Full-Width Fluid Header -->
+    <!-- Master Aixion Lab Header (Exact 4 Tabs: The Lab, Work, Research, Approach) -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" aria-label="Aixion Lab home" href="./index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span class="brand-copy">
+          <strong>AIXION LAB</strong>
+          <small>Applied systems engineering</small>
+        </span>
+      </a>
+
+      <!-- 4 Primary Tabs from aixionlab.com -->
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="./about.html">The Lab</a>
+        <a href="./work.html">Work</a>
+        <a href="./research.html">Research</a>
+        <a href="./journey.html">Approach</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <div class="mode-toggle" aria-label="Lab View Active">
+          <span class="mode-label">View</span>
+          <strong>Lab</strong>
+          <span class="mode-track"><span class="mode-knob"></span></span>
+        </div>
+        <a class="header-menu-pill" href="./about.html#contact">
+          <span class="menu-lines"><i></i><i></i></span>
+          <span>Menu</span>
+        </a>
+        <a class="header-contact" href="./about.html#contact">
+          Contact <span class="arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- Full-Width Expansive Container (100% Unrestricted Canvas) -->
+  <main id="full_content">
+
+    <!-- Hero Section (Exact Copy) -->
+    <section class="hero_section kf_scroll_skew" id="about">
+      <p class="hero_eyebrow">INDEPENDENT APPLIED ENGINEERING</p>
+      <h1 class="hero_title_massive">
+        Applied intelligence.
+        <em>Engineered with evidence.</em>
+      </h1>
+
+      <p class="hero_eyebrow" style="margin-top: 40px;">SOFTWARE &amp; AUTOMATION FOR BUSINESS OPERATIONS</p>
+      <h2 class="hero_h2">Your business has a problem. We engineer the solution.</h2>
+      <p class="hero_desc_fluid">
+        We help businesses simplify operations, automate repetitive work and build reliable software around how their teams actually work.
+      </p>
+
+      <div class="hero_actions">
+        <a href="#contact" class="btn_kf btn_kf_light">
+          <span>Discuss a workflow</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a href="#works" class="btn_kf">
+          <span>Explore Services</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 4-Chapter Strip (Expansive Full Width) -->
+    <div class="chapters_bar_full">
+      <div class="chapter_box">
+        <div class="ch_name">Business</div>
+      </div>
+      <div class="chapter_box">
+        <div class="ch_name">Systems</div>
+      </div>
+      <div class="chapter_box">
+        <div class="ch_name">Research</div>
+      </div>
+      <div class="chapter_box">
+        <div class="ch_name">Automation</div>
+      </div>
+    </div>
+
+    <!-- Works Section Header -->
+    <section id="works">
+      <div class="section_heading_bar">
+        <div>
+          <div class="section_heading_sub">BUSINESS OPERATIONS</div>
+          <h2 class="section_heading_title">SOFTWARE &amp; AUTOMATION FOR BUSINESSES</h2>
+        </div>
+        <div class="section_heading_sub">Make everyday operations easier to run.</div>
+      </div>
+
+      <p style="font-family:'Padauk'; font-size:17px; color:#888888; margin: 36px 0 50px; max-width:900px;">
+        We help businesses simplify operations, automate repetitive work and build reliable software around how their teams actually work.
+      </p>
+
+      <!-- Expansive Full-Width Works Rows (Interactive Inversion) -->
+      <div class="works_list_full kf_scroll_skew">
+        <!-- Service 1 -->
+        <div class="work_row_exp" onclick="openDrawer('s1')">
+          <div class="row_meta">
+            <span class="row_meta_label">SERVICE</span>
+            <span class="row_meta_val">AGENT PLATFORMS</span>
+          </div>
+          <div class="row_body">
+            <div class="row_sub">AUTONOMOUS MULTI-AGENT ARCHITECTURE</div>
+            <h3 class="row_title">AUTONOMOUS AGENT PLATFORMS</h3>
+            <p class="row_desc">Production multi-agent systems (Hermes, GSD, Codex) with fail-closed security gates, policy enforcement, and zero-trust human sign-offs.</p>
+          </div>
+          <div class="row_action">
+            <span class="row_badge">PRODUCTION</span>
+            <span class="row_arrow">↗</span>
+          </div>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="work_row_exp" onclick="openDrawer('s2')">
+          <div class="row_meta">
+            <span class="row_meta_label">SERVICE</span>
+            <span class="row_meta_val">FULL-STACK &amp; COCKPITS</span>
+          </div>
+          <div class="row_body">
+            <div class="row_sub">REAL-TIME MISSION CONTROL</div>
+            <h3 class="row_title">FULL-STACK APPS &amp; COCKPITS</h3>
+            <p class="row_desc">Mobile and web operations command centers (React, Next.js, Flutter) featuring sub-100ms real-time WebSocket telemetry and live queues.</p>
+          </div>
+          <div class="row_action">
+            <span class="row_badge">FULL-STACK</span>
+            <span class="row_arrow">↗</span>
+          </div>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="work_row_exp" onclick="openDrawer('s3')">
+          <div class="row_meta">
+            <span class="row_meta_label">SERVICE</span>
+            <span class="row_meta_val">QA &amp; INTEGRITY AUDITING</span>
+          </div>
+          <div class="row_body">
+            <div class="row_sub">INVARIANT REGRESSION ENGINES</div>
+            <h3 class="row_title">AUTOMATED QA &amp; INTEGRITY AUDITING</h3>
+            <p class="row_desc">End-to-end regression engines, invariant testing, automated adversarial audit suites, and tamper-proof compliance logging.</p>
+          </div>
+          <div class="row_action">
+            <span class="row_badge">VERIFIED</span>
+            <span class="row_arrow">↗</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-family:'Padauk'; font-size:15px; color:#666666; margin-top:30px;">
+        These are starting points, not packaged products. Each project is scoped around your process and the tools you already use.
+      </p>
+
+      <div style="display:flex; gap:20px; margin-top:36px;">
+        <a href="#contact" class="btn_kf">
+          <span>Discuss a Project</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a href="/resume.pdf" class="btn_kf">
+          <span>Download Resume</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- FLAGSHIP MARKET INFRASTRUCTURE: TRADEBOT SENTINEL (EXPANSIVE) -->
+    <section class="sentinel_full_block" id="sentinel">
+      <p style="font-family:'Oswald'; font-size:13px; color:#888888; letter-spacing:3px; text-transform:uppercase; margin-bottom:12px;">FLAGSHIP MARKET INFRASTRUCTURE</p>
+      <h2>TradeBot Sentinel: Sub-Millisecond Microstructure Observability</h2>
+      <p class="sentinel_lead">
+        High-throughput market data architecture processing Level-5 order book depth, in-memory tick freshness, Stoikov micro-price pressure, and automated invariant risk boundaries in real time.
+      </p>
+
+      <a href="/work/tradebot" class="btn_kf">
+        <span>Explore Full 4-Vector Architecture</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+
+      <!-- Telemetry Strip -->
+      <div class="telemetry_strip_full">
+        <div>LATENCY: <strong>0.8 ms</strong></div>
+        <div>SKEW: <strong>16 ms</strong></div>
+        <div>SPREAD: <strong>0.85 %</strong></div>
+        <div>MODE: <strong>READ_ONLY</strong></div>
+        
+      </div>
+
+      <!-- 4 Vectors Grid -->
+      <div class="vectors_grid_full">
+        <div class="vector_card_full">
+          <div class="v_tag_micro">VECTOR • INSTITUTIONAL GEX</div>
+          <div class="v_title_exp">Dealer Gamma Exposure &amp; Wall Absorption</div>
+          <p class="v_desc_exp">Tracks market maker delta-hedging obligations across index option surfaces in real time. When net dealer gamma is strongly positive, automated entry gates veto momentum breakout setups and favor mean-reversion absorption.</p>
+        </div>
+        <div class="vector_card_full">
+          <div class="v_tag_micro">VECTOR • STOIKOV (2018)</div>
+          <div class="v_title_exp">Stoikov Micro-Price &amp; Book Imbalance</div>
+          <p class="v_desc_exp">Computes expected mid-price conditioned on order-flow imbalance and queue dynamics across top-of-book levels.</p>
+        </div>
+        <div class="vector_card_full">
+          <div class="v_tag_micro">VECTOR • TEMPORAL TRANSMISSION</div>
+          <div class="v_title_exp">Cross-Index Basis Lead-Lag Transmission</div>
+          <p class="v_desc_exp">High-frequency lead-lag metrics measuring signal propagation between underlying spot indexes and derivative contracts.</p>
+        </div>
+        <div class="vector_card_full">
+          <div class="v_tag_micro">VECTOR • FINITE STATE MACHINE</div>
+          <div class="v_title_exp">Active Position Manager &amp; Crash WAL</div>
+          <p class="v_desc_exp">Deterministic state machine with write-ahead logging ensuring instant fail-closed state recovery upon telemetry interruption.</p>
+        </div>
+      </div>
+
+      <!-- Invariant Model Formulation -->
+      <div style="margin: 28px 0;">
+        
+
+      <p class="scope_notice">
+        Regulatory &amp; Operational Scope Notice: TradeBot Sentinel is an engineering research and market microstructure observability framework developed by Aixion Lab. It operates exclusively in an isolated, read-only paper telemetry mode (broker_api_called=false, is_order_action=false). It does not provide investment advice, trading tips, portfolio management, or public financial recommendations under SEBI regulations. All metrics reflect streaming data integrity, feed freshness, and software invariant proofs.
+      </p>
+    </section>
+
+    <!-- ORCHESTRATION: CONTROL CORE -->
+    <section style="margin: 100px 0;" id="orchestration">
+      <div class="section_heading_bar">
+        <div>
+          <div class="section_heading_sub">ORCHESTRATION</div>
+          <h2 class="section_heading_title">A PLATFORM TAKING SHAPE</h2>
+        </div>
+        <div class="section_heading_sub">Useful automation needs a clear boundary around action.</div>
+      </div>
+
+      <div class="works_list_full kf_scroll_skew" style="margin-top: 40px;">
+        <div class="work_row_exp" onclick="openDrawer('s4')">
+          <div class="row_meta">
+            <span class="row_meta_label">STATUS</span>
+            <span class="row_meta_val">BUILDING</span>
+          </div>
+          <div class="row_body">
+            <div class="row_sub">AIXION CONTROL CORE</div>
+            <h3 class="row_title">A governed orchestration layer</h3>
+            <p class="row_desc">A governed orchestration layer for context, agents, tools, policy, evidence and human authority. Control Core is in development, with current work on orchestration, tool boundaries, policy and evidence capture.</p>
+          </div>
+          <div class="row_action">
+            <span class="row_badge">BUILDING</span>
+            <span class="row_arrow">↗</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESEARCH DECISION RECORD -->
+    <section style="margin: 100px 0;" id="research">
+      <div class="section_heading_bar">
+        <div>
+          <div class="section_heading_sub">RESEARCH</div>
+          <h2 class="section_heading_title">A RESEARCH DECISION, KEPT IN THE RECORD</h2>
+        </div>
+        <div class="section_heading_sub">Some of the most useful results are the ones that stop a claim.</div>
+      </div>
+
+      <div class="works_list_full kf_scroll_skew" style="margin-top: 40px;">
+        <div class="work_row_exp" onclick="openDrawer('s5')">
+          <div class="row_meta">
+            <span class="row_meta_label">OUTCOME</span>
+            <span class="row_meta_val" style="color:#ff6666;">REJECTED</span>
+          </div>
+          <div class="row_body">
+            <div class="row_sub">QUANT RESEARCH RECORD</div>
+            <h3 class="row_title">Mean reversion candidate</h3>
+            <p class="row_desc">The mean-reversion candidate did not retain sufficient support after its validation boundary. It remains marked rejected, so a weak result is not quietly recast as a success.</p>
+          </div>
+          <div class="row_action">
+            <span class="row_badge" style="border-color:#ff6666; color:#ff6666;">REJECTED</span>
+            <span class="row_arrow">↗</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW THE WORK IS DONE (3 COLUMNS) -->
+    <section class="practice_full_section kf_scroll_skew" id="journey">
+      <div class="section_heading_bar" style="border-bottom:none; padding:0 0 40px 0;">
+        <div>
+          <div class="section_heading_sub">HOW THE WORK IS DONE</div>
+          <h2 class="section_heading_title">Make the important parts visible.</h2>
+        </div>
+        <a href="/journey" class="btn_kf">
+          <span>Read the engineering approach</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div class="practice_full_grid">
+        <div class="practice_col_full">
+          <h3 class="p_title_exp">State</h3>
+          <p class="p_desc_exp">Show what is operating, being built, under validation or still a question.</p>
+        </div>
+        <div class="practice_col_full">
+          <h3 class="p_title_exp">Evidence</h3>
+          <p class="p_desc_exp">Keep the reasoning and result close enough to inspect, including when a hypothesis fails.</p>
+        </div>
+        <div class="practice_col_full">
+          <h3 class="p_title_exp">Authority</h3>
+          <p class="p_desc_exp">Keep policy and human decisions explicit where software can affect important outcomes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LAST CALL -->
+    <section style="margin: 100px 0; border: 1px solid #333; padding: 80px 4vw; background: #fff; color: #000; text-align: center;">
+      <p style="font-family:'Oswald'; font-size:14px; letter-spacing:3px; color:#666; margin-bottom:16px;">AIXION LAB</p>
+      <h2 style="font-family:'Oswald'; font-size:clamp(36px, 5vw, 76px); font-weight:600; text-transform:uppercase; margin-bottom:28px;">Have a system that deserves a closer look?</h2>
+      <a href="#contact" class="btn_kf" style="background:#000; color:#fff; border-color:#000;">
+        <span>Start a conversation</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </section>
+
+  </main>
+
+
+  <!-- Split-Screen Contact Section (49% White / 51% Black) -->
+  <div class="split_contact_full" id="contact">
+    <div class="contact_left_side">
+      <div class="side_title">CONTACT</div>
+      <p class="side_desc">
+        Have a system that deserves a closer look?<br>
+        We build reliable software around how your team actually works.
+      </p>
+      <a href="mailto:ram@aixionlab.com" class="btn_mail_b">ram@aixionlab.com ↗</a>
+    </div>
+
+    <div class="contact_right_side">
+      <div class="side_sub">INDEPENDENT LAB</div>
+      <div class="side_title">ENGAGE</div>
+      <p class="side_desc">
+        A practice built around evidence, observable state, and verifiable truth.<br>
+        Consultation for enterprise automation &amp; quantitative intelligence.
+      </p>
+      <a href="https://linkedin.com" target="_blank" class="btn_mail_w">Connect on LinkedIn ↗</a>
+    </div>
+  </div>
+
+  <!-- Kirifuda Slide-in Drawer -->
+  <div class="cover_drawer" id="cover_drawer">
+    <div class="drawer_content_box">
+      <div class="drawer_row_item">
+        <div class="drawer_label">SYSTEM</div>
+        <div class="drawer_title_large" id="dr_client">AIXION AGENT PLATFORMS</div>
+      </div>
+      <div class="drawer_row_item">
+        <div class="drawer_label">SCOPE</div>
+        <div class="drawer_val_text" id="dr_type">Autonomous Multi-Agent Architecture</div>
+      </div>
+      <div class="drawer_row_item">
+        <div class="drawer_label">STANDARD</div>
+        <div class="drawer_val_text" id="dr_standard">Fail-Closed Verification Gates</div>
+      </div>
+      <div class="drawer_body_p" id="dr_desc">
+        Production multi-agent systems (Hermes, GSD, Codex) with fail-closed security gates, policy enforcement, and zero-trust human sign-offs.
+      </div>
+      <button class="btn_close_drawer" onclick="closeDrawer()">BACK TO WORKS</button>
+    </div>
+  </div>
+
+  <!-- Footer removed as requested -->
+
+  <!-- Scripts -->
+  <script>
+    // 1. Shuffler Progress & Landing Transition
+    const shufflerStage = document.getElementById('shuffler_stage');
+    const pbar = document.getElementById('shuffler_pbar');
+    const pct = document.getElementById('shuffler_pct');
+
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 2.5;
+      if (progress > 100) progress = 100;
+      pbar.style.width = progress + '%';
+      pct.innerText = Math.floor(progress) + '%';
+
+      if (progress === 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          shufflerStage.classList.remove('animating');
+          // Fan out smoothly - Symmetrical around center (180px)
+          document.querySelector('.c--1').style.transform = 'translate3d(10px, 52px, 0) rotate(-28deg) scale(0.92)';
+          document.querySelector('.c--2').style.transform = 'translate3d(78px, 46px, 0) rotate(-16deg) scale(0.96)';
+          document.querySelector('.c--3').style.transform = 'translate3d(146px, 42px, 0) rotate(-5deg) scale(1.02)';
+          document.querySelector('.c--4').style.transform = 'translate3d(214px, 42px, 0) rotate(5deg) scale(1.02)';
+          document.querySelector('.c--5').style.transform = 'translate3d(282px, 46px, 0) rotate(16deg) scale(0.96)';
+          document.querySelector('.c--6').style.transform = 'translate3d(350px, 52px, 0) rotate(28deg) scale(0.92)';
+
+          setTimeout(() => {
+            shufflerStage.classList.add('landed');
+            // GSAP Entrance
+            gsap.from(".hero_title_massive", { y: 60, opacity: 0, duration: 1.2, ease: "power4.out" });
+            gsap.from("#full_header", { y: -70, opacity: 0, duration: 0.8, ease: "power3.out" });
+          }, 600);
+        }, 300);
+      }
+    }, 45); // ~1.8 seconds total shuffle duration
+
+    // 2. Lenis Silky Smooth Scroll with Graceful Fallback
+    let lenis = null;
+    let currentVelocity = 0;
+    if (typeof Lenis !== 'undefined') {
+      lenis = new Lenis({
+        duration: 1.0,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1.0
+      });
+
+      lenis.on('scroll', (e) => {
+        currentVelocity = Math.abs(e.velocity || 0);
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    } else {
+      let lastY = window.scrollY;
+      let lastTime = performance.now();
+      window.addEventListener('scroll', () => {
+        const now = performance.now();
+        const dt = Math.max(1, now - lastTime);
+        currentVelocity = Math.abs((window.scrollY - lastY) / dt) * 15;
+        lastY = window.scrollY;
+        lastTime = now;
+      }, { passive: true });
+    }
+
+    // 3. Precise Sleek Pointer Dot
+    const cursor = document.getElementById('cursor');
+    let mX = window.innerWidth / 2, mY = window.innerHeight / 2;
+    let cX = mX, cY = mY;
+
+    window.addEventListener('mousemove', (e) => {
+      mX = e.clientX;
+      mY = e.clientY;
+    });
+
+    function updateCursor() {
+      cX += (mX - cX) * 0.45;
+      cY += (mY - cY) * 0.45;
+      cursor.style.transform = `translate(${cX}px, ${cY}px)`;
+      requestAnimationFrame(updateCursor);
+    }
+    updateCursor();
+
+    document.querySelectorAll('a, button, .work_row_exp, .chapter_box, .vector_card_full, .contact_left_side, .contact_right_side').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = `translate(${cX}px, ${cY}px) scale(1.8)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = `translate(${cX}px, ${cY}px) scale(1)`;
+      });
+    });
+
+    // 4. Aixion Order-Flow Fluid Telemetry Distortion Shader
+    const canvas = document.getElementById('webgl-canvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const vertexShader = `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = vec4(position, 1.0);
+      }
+    `;
+
+    const fragmentShader = `
+      uniform float u_time;
+      uniform float u_pow;
+      uniform vec2 u_mouse;
+      uniform vec2 u_resolution;
+      varying vec2 vUv;
+
+      vec2 fluidOrderFlowDistortion(vec2 uv, float dist) {
+        vec2 p = uv * 2.0 - 1.0;
+        float r = length(p);
+        float angle = atan(p.y, p.x);
+        float theta = angle + sin(r * 4.0 - u_time * 0.8) * 0.08 * dist;
+        vec2 warped = vec2(cos(theta), sin(theta)) * r;
+        return warped * 0.5 + 0.5;
+      }
+
+      float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+
+      float noise(vec2 p) {
+        vec2 i = floor(p);
+        vec2 f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), f.x),
+                   mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+      }
+
+      float fbm(vec2 p) {
+        float v = 0.0;
+        float a = 0.5;
+        vec2 shift = vec2(100.0);
+        mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
+        for (int i = 0; i < 4; ++i) {
+          v += a * noise(p);
+          p = rot * p * 2.0 + shift;
+          a *= 0.5;
+        }
+        return v;
+      }
+
+      void main() {
+        vec2 st = gl_FragCoord.xy / u_resolution.xy;
+        st.x *= u_resolution.x / u_resolution.y;
+
+        float distpow = u_pow * 5.5;
+        vec2 distUv = fluidOrderFlowDistortion(vUv, distpow);
+
+        vec2 q = vec2(fbm(st + 0.04 * u_time), fbm(st + vec2(1.0)));
+        vec2 r = vec2(fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.12 * u_time),
+                      fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.10 * u_time));
+        float f = fbm(st + r);
+
+        float intensity = smoothstep(0.38, 0.72, f);
+        vec3 color = vec3(intensity * 0.08);
+
+        float mouseDist = length(vUv - u_mouse);
+        color += (1.0 - smoothstep(0.0, 0.28, mouseDist)) * 0.05;
+
+        gl_FragColor = vec4(color, 1.0);
+      }
+    `;
+
+    const uniforms = {
+      u_time: { value: 0 },
+      u_pow: { value: 0 },
+      u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
+      u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+    };
+
+    const material = new THREE.ShaderMaterial({
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+      uniforms: uniforms,
+      transparent: true
+    });
+
+    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+
+    let targetPow = 0;
+    function render(time) {
+      requestAnimationFrame(render);
+      targetPow += 0.002 * Math.abs(currentVelocity);
+      uniforms.u_pow.value += (targetPow - uniforms.u_pow.value) * 0.12;
+      uniforms.u_pow.value *= 0.93;
+      targetPow *= 0.90;
+
+      uniforms.u_mouse.value.x += ((mX / window.innerWidth) - uniforms.u_mouse.value.x) * 0.1;
+      uniforms.u_mouse.value.y += ((1.0 - (mY / window.innerHeight)) - uniforms.u_mouse.value.y) * 0.1;
+
+      uniforms.u_time.value = time * 0.001;
+      renderer.render(scene, camera);
+    }
+    requestAnimationFrame(render);
+
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+    });
+
+    // 5. Drawer Actions
+    const drawerData = {
+      s1: {
+        client: "AUTONOMOUS AGENT PLATFORMS",
+        type: "Production multi-agent systems (Hermes, GSD, Codex)",
+        standard: "Fail-closed security gates, policy enforcement, zero-trust sign-offs.",
+        desc: "We build reliable autonomous agent networks with explicit boundaries around state and actuation. Each agent operates under bounded role definitions with dual-quorum verification before mutating state."
+      },
+      s2: {
+        client: "FULL-STACK APPS & COCKPITS",
+        type: "Mobile and web operations command centers",
+        standard: "React, Next.js, Flutter, sub-100ms real-time WebSockets.",
+        desc: "High-density cockpits providing real-time operational visibility into data streams, pending human sign-off leases, and active queues."
+      },
+      s3: {
+        client: "AUTOMATED QA & INTEGRITY AUDITING",
+        type: "End-to-end regression engines and invariant testing",
+        standard: "Tamper-proof compliance logging & adversarial audit suites.",
+        desc: "Automated verification suites that validate system behavior, assert mathematical correctness, and prevent regression before code affects live operations."
+      },
+      s4: {
+        client: "AIXION CONTROL CORE",
+        type: "Governed Orchestration Layer",
+        standard: "Context, agents, tools, policy, evidence, human authority.",
+        desc: "A governed orchestration layer for context, agents, tools, policy, evidence and human authority. Control Core is in development, with current work on orchestration, tool boundaries, policy and evidence capture."
+      },
+      s5: {
+        client: "MEAN REVERSION CANDIDATE",
+        type: "Quantitative Research Decision Record",
+        standard: "Status: REJECTED",
+        desc: "Some of the most useful results are the ones that stop a claim. The mean-reversion candidate did not retain sufficient support after its validation boundary. It remains marked rejected, so a weak result is not quietly recast as a success."
+      }
+    };
+
+    function openDrawer(key) {
+      const data = drawerData[key];
+      if (!data) return;
+      document.getElementById('dr_client').innerText = data.client;
+      document.getElementById('dr_type').innerText = data.type;
+      document.getElementById('dr_standard').innerText = data.standard;
+      document.getElementById('dr_desc').innerText = data.desc;
+      document.getElementById('cover_drawer').classList.add('open');
+    }
+
+    function closeDrawer() {
+      document.getElementById('cover_drawer').classList.remove('open');
+    }
+  
+    // ==========================================================================
+    // AUTHENTIC KIRIFUDA SCROLL-TRIGGER & DYNAMIC VELOCITY SKEW ENGINE
+    // ==========================================================================
+    gsap.registerPlugin(ScrollTrigger);
+    if (lenis) {
+      lenis.on('scroll', ScrollTrigger.update);
+    } else {
+      window.addEventListener('scroll', ScrollTrigger.update, { passive: true });
+    }
+
+    // Kirifuda Elastic Smooth Velocity Skew (Smoothly damped, zero trembling)
+    let currentSkew = 0;
+    let targetSkew = 0;
+    const skewElements = document.querySelectorAll('.kf_scroll_skew');
+
+    if (lenis) {
+      lenis.on('scroll', (e) => {
+        // Gentle velocity to skew factor (-3.5 to +3.5 deg max)
+        const vel = e.velocity || 0;
+        const clampedVel = Math.max(-12, Math.min(12, vel));
+        targetSkew = clampedVel * 0.28;
+      });
+    } else {
+      let lastScrollY = window.scrollY;
+      let lastScrollTime = performance.now();
+      window.addEventListener('scroll', () => {
+        const now = performance.now();
+        const dt = Math.max(1, now - lastScrollTime);
+        const vel = (window.scrollY - lastScrollY) / dt * 10;
+        const clampedVel = Math.max(-12, Math.min(12, vel));
+        targetSkew = clampedVel * 0.28;
+        lastScrollY = window.scrollY;
+        lastScrollTime = now;
+      }, { passive: true });
+    }
+
+    // Continuous smooth dampening in RAF
+    function updateSkewPhysics() {
+      // Spring lerp towards target, decaying smoothly to zero
+      currentSkew += (targetSkew - currentSkew) * 0.12;
+      targetSkew *= 0.88;
+
+      if (Math.abs(currentSkew) > 0.005) {
+        const skewStr = 'skewY(' + currentSkew.toFixed(3) + 'deg)';
+        skewElements.forEach(el => {
+          el.style.transform = skewStr;
+        });
+      } else {
+        skewElements.forEach(el => {
+          el.style.transform = 'none';
+        });
+      }
+      requestAnimationFrame(updateSkewPhysics);
+    }
+    requestAnimationFrame(updateSkewPhysics);
+
+    // 1. Kirifuda Masked Header & Eyebrow Reveals
+    gsap.utils.toArray('.section_heading_bar').forEach((heading) => {
+      const title = heading.querySelector('.section_heading_title');
+      const sub = heading.querySelector('.section_heading_sub');
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heading,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+      if (sub) {
+        tl.fromTo(sub, 
+          { y: 25, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }
+        );
+      }
+      if (title) {
+        tl.fromTo(title,
+          { y: '100%', skewY: 5, opacity: 0 },
+          { y: '0%', skewY: 0, opacity: 1, duration: 1.1, ease: 'power4.out' },
+          '-=0.6'
+        );
+      }
+    });
+
+    // 2. Kirifuda 4-Chapter Strip Sequential Stagger
+    gsap.fromTo('.chapter_box',
+      { y: 60, opacity: 0, scale: 0.96 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.chapters_bar_full',
+          start: 'top 82%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+
+    // 3. Kirifuda Works Accordion Rows Clip & Slide Reveal
+    gsap.utils.toArray('.work_row_exp').forEach((row, i) => {
+      gsap.fromTo(row,
+        { opacity: 0, y: 50, borderTopColor: 'transparent' },
+        {
+          opacity: 1,
+          y: 0,
+          borderTopColor: '#333333',
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: row,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    });
+
+    // 4. Kirifuda Architecture Vector Cards Sequential Fly-In
+    gsap.fromTo('.vector_card_full',
+      { y: 80, opacity: 0, rotationX: 10 },
+      {
+        y: 0,
+        opacity: 1,
+        rotationX: 0,
+        duration: 1.1,
+        stagger: 0.15,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: '.vector_card_full',
+          start: 'top 82%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+
+    // 5. Practice Columns Stagger Reveal (State / Evidence / Authority)
+    gsap.fromTo('.practice_col_full',
+      { y: 70, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1.0,
+        stagger: 0.18,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.practice_full_section',
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+
+    // 6. Split Contact Section Dramatic Curtain Reveal
+    gsap.fromTo('.contact_left_side',
+      { x: '-80px', opacity: 0 },
+      {
+        x: '0px',
+        opacity: 1,
+        duration: 1.2,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: '.split_contact_full',
+          start: 'top 82%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+    gsap.fromTo('.contact_right_side',
+      { x: '80px', opacity: 0 },
+      {
+        x: '0px',
+        opacity: 1,
+        duration: 1.2,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: '.split_contact_full',
+          start: 'top 82%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+
+  </script>
+</body>
+</html>
