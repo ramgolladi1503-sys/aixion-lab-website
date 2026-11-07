@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>REC-MD Structural Interaction — Aixion Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Padauk:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./kirifuda.css">
+  <link rel="stylesheet" href="./kirifuda_theme_dark.css">
+  <link rel="stylesheet" href="./aixion_content.css">
+  <style id="subpage-refined-css">
+
+    /* ==========================================================================
+       AIXION x KIRIFUDA AUTHENTIC EDITORIAL & FOOTER ALIGNMENT
+       - Disabled Menu Pill
+       - Fixed Editorial Hero Flow & Perfect Horizontal Padding
+       - Authentic aixionlab.com Navy Footer (3-column layout + base attestation)
+       - Clean Typography & Spacing
+       ========================================================================== */
+
+    html {
+      overflow-y: scroll !important;
+      overflow-x: hidden !important;
+      scroll-behavior: smooth;
+    }
+    body {
+      overflow-x: hidden !important;
+      position: relative !important;
+      font-family: 'Padauk', sans-serif !important;
+      color: #e2e8f0 !important;
+      background-color: #070709 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* 1. HIDE RESIDUAL UNWANTED ARTIFACTS */
+    img,
+    .editorial-hero__image,
+    .editorial-hero__shade,
+    .work-story__image,
+    .work-support__image,
+    .image-story__media,
+    .story-index,
+    .signal-line__index,
+    .signal-line__node,
+    .site-menu__number,
+    .image-story__number,
+    .home-work__index,
+    .journey-spectrum__active-index,
+    .journey-spectrum__number,
+    .journey-spectrum__dot,
+    .header-menu-pill {
+      display: none !important;
+    }
+
+    /* 2. HEADER - MATCH AIXIONLAB.COM EXACTLY (4 TABS, NO MENU) */
+    .site-header {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 72px !important;
+      background: rgba(7, 7, 10, 0.90) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      z-index: 1000 !important;
+      display: flex !important;
+      align-items: center !important;
+      padding: 0 4vw !important;
+      box-sizing: border-box !important;
+    }
+    .site-header__inner {
+      width: 100% !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+    }
+    .brand {
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      text-decoration: none !important;
+      color: #ffffff !important;
+    }
+    .brand-mark {
+      width: 32px !important;
+      height: 32px !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: #ffffff !important;
+    }
+    .brand-copy {
+      display: flex !important;
+      flex-direction: column !important;
+      line-height: 1.15 !important;
+    }
+    .brand-copy strong {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 14px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+    }
+    .brand-copy small {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 11px !important;
+      color: #64748b !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    .desktop-nav {
+      display: flex !important;
+      align-items: center !important;
+      gap: 36px !important;
+    }
+    .desktop-nav a {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #94a3b8 !important;
+      text-decoration: none !important;
+      position: relative !important;
+      padding: 6px 0 !important;
+      transition: color 0.25s ease !important;
+    }
+    .desktop-nav a:hover,
+    .desktop-nav a.active {
+      color: #ffffff !important;
+    }
+    .desktop-nav a.active::after {
+      content: '' !important;
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 1.5px !important;
+      background: #ffffff !important;
+    }
+
+    .header-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 16px !important;
+    }
+    .mode-toggle {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 6px 14px !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: 99px !important;
+      background: transparent !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 12px !important;
+      color: #d4d4d8 !important;
+      user-select: none !important;
+    }
+    .mode-track {
+      width: 24px !important;
+      height: 12px !important;
+      border-radius: 99px !important;
+      background: rgba(255, 255, 255, 0.15) !important;
+      position: relative !important;
+      display: inline-block !important;
+    }
+    .mode-knob {
+      width: 8px !important;
+      height: 8px !important;
+      border-radius: 50% !important;
+      background: #ffffff !important;
+      position: absolute !important;
+      top: 2px !important;
+      right: 2px !important;
+    }
+    .header-contact {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      padding: 6px 12px !important;
+      transition: opacity 0.25s ease !important;
+    }
+    .header-contact:hover {
+      opacity: 0.8 !important;
+    }
+
+    /* 3. BREADCRUMB - ALIGNED TO PAGE WIDTH */
+    .page-breadcrumb {
+      padding: 110px 4vw 0 !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      display: flex !important;
+      gap: 8px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #64748b !important;
+      text-transform: uppercase !important;
+      box-sizing: border-box !important;
+    }
+    .page-breadcrumb a {
+      color: #64748b !important;
+      text-decoration: none !important;
+    }
+    .page-breadcrumb a:hover {
+      color: #ffffff !important;
+    }
+
+    /* 4. EDITORIAL HERO (CRITICAL ALIGNMENT FIX) */
+    .editorial-hero {
+      position: relative !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      padding: 40px 4vw 80px !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      box-sizing: border-box !important;
+      overflow: visible !important;
+      background: transparent !important;
+    }
+    .editorial-hero__content {
+      position: relative !important;
+      inset: auto !important;
+      transform: none !important;
+      max-width: 1040px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    .editorial-hero__content h1 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(48px, 7vw, 100px) !important;
+      font-weight: 700 !important;
+      letter-spacing: -1.5px !important;
+      line-height: 0.98 !important;
+      text-transform: uppercase !important;
+      margin: 0 0 24px !important;
+      color: #ffffff !important;
+      word-break: normal !important;
+    }
+    .editorial-hero__copy {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: clamp(16px, 1.8vw, 22px) !important;
+      line-height: 1.65 !important;
+      color: #94a3b8 !important;
+      max-width: 880px !important;
+      margin: 0 0 36px !important;
+      text-align: left !important;
+    }
+    .editorial-hero__actions {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 16px !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      margin-top: 24px !important;
+    }
+    .editorial-hero__actions .button {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      padding: 12px 24px !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      border-radius: 4px !important;
+      background: rgba(255, 255, 255, 0.04) !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      transition: all 0.25s ease !important;
+    }
+    .editorial-hero__actions .button:hover {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    .scroll-cue {
+      display: none !important;
+    }
+
+    /* 5. EDITORIAL SECTIONS & CONTENT PADDING */
+    .editorial-section,
+    #page-content {
+      padding: 60px 4vw !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      z-index: 2 !important;
+    }
+    .page-width {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .image-story,
+    .image-story--reverse {
+      display: flex !important;
+      flex-direction: column !important;
+      max-width: 100% !important;
+      margin: 40px 0 !important;
+      padding: 0 !important;
+    }
+    .image-story__copy {
+      max-width: 900px !important;
+    }
+    .image-story__copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(36px, 5vw, 64px) !important;
+      font-weight: 700 !important;
+      letter-spacing: -1px !important;
+      line-height: 1.05 !important;
+      color: #ffffff !important;
+      margin: 12px 0 20px !important;
+      text-transform: uppercase !important;
+    }
+    .image-story__body p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 17px !important;
+      line-height: 1.7 !important;
+      color: #cbd5e1 !important;
+      margin-bottom: 20px !important;
+    }
+    .eyebrow {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 2.5px !important;
+      text-transform: uppercase !important;
+      color: #94a3b8 !important;
+      margin-bottom: 12px !important;
+    }
+
+    /* 6. AUTHENTIC AIXIONLAB.COM NAVY FOOTER */
+    .site-footer {
+      background: #0b131e !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+      padding: 72px 4vw 40px !important;
+      margin-top: 100px !important;
+      font-family: 'Padauk', sans-serif !important;
+      color: #94a3b8 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      z-index: 20 !important;
+    }
+    .site-footer__main {
+      display: grid !important;
+      grid-template-columns: 2fr 1fr 1.5fr !important;
+      gap: 60px !important;
+      max-width: 1440px !important;
+      margin: 0 auto 60px !important;
+      align-items: start !important;
+    }
+    @media (max-width: 900px) {
+      .site-footer__main {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+    }
+    .site-footer__identity {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+    .site-footer__eyebrow {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 3px !important;
+      color: #cbd5e1 !important;
+      text-transform: uppercase !important;
+      margin: 0 !important;
+    }
+    .site-footer__statement {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 17px !important;
+      color: #e2e8f0 !important;
+      margin: 0 !important;
+      line-height: 1.5 !important;
+    }
+    .site-footer__subline {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #64748b !important;
+      margin: 0 !important;
+      line-height: 1.6 !important;
+      max-width: 440px !important;
+    }
+
+    .site-footer__links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+    .site-footer__links a {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+      text-decoration: none !important;
+      transition: color 0.25s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__links a:hover {
+      color: #ffffff !important;
+    }
+
+    .site-footer__contact {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+    .site-footer__desc {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+    }
+    .site-footer__link {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #cbd5e1 !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      transition: color 0.25s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__link:hover {
+      color: #ffffff !important;
+    }
+    .site-footer__link .arrow {
+      font-size: 14px !important;
+      transition: transform 0.25s ease !important;
+    }
+    .site-footer__link:hover .arrow {
+      transform: translate(2px, -2px) !important;
+    }
+
+    .site-footer__base {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
+      padding-top: 32px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      font-size: 12px !important;
+      color: #64748b !important;
+      font-family: 'Space Mono', monospace !important;
+    }
+    .site-footer__badge {
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+    }
+    .site-footer__copy {
+      color: #64748b !important;
+    }
+    .site-footer__process {
+      color: #64748b !important;
+      display: flex !important;
+      gap: 8px !important;
+      align-items: center !important;
+    }
+    .site-footer__process i {
+      font-style: normal !important;
+      color: #475569 !important;
+    }
+
+    /* REVEAL ANIMATIONS */
+    [data-reveal="true"],
+    [data-reveal] {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
+    }
+
+  </style>
+  </head>
+<body class="theme-dark">
+  <!-- Master Aixion Lab Header (Exact 4 Tabs: The Lab, Work, Research, Approach) -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" aria-label="Aixion Lab home" href="./index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span class="brand-copy">
+          <strong>AIXION LAB</strong>
+          <small>Applied systems engineering</small>
+        </span>
+      </a>
+
+      <!-- 4 Primary Tabs from aixionlab.com -->
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="./about.html">The Lab</a>
+        <a href="./work.html">Work</a>
+        <a href="./research.html" class="active">Research</a>
+        <a href="./journey.html">Approach</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <div class="mode-toggle" aria-label="Lab View Active">
+          <span class="mode-label">View</span>
+          <strong>Lab</strong>
+          <span class="mode-track"><span class="mode-knob"></span></span>
+        </div>
+        <a class="header-contact" href="./about.html#contact">
+          Contact <span class="arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- Page Breadcrumb -->
+  <div class="page-breadcrumb">
+    <a href="./index.html" style="color: #64748b; text-decoration: none;">AIXION LAB</a>
+    <span>/</span>
+    <span style="color: #ffffff;">REC-MD STRUCTURAL INTERACTION</span>
+  </div>
+
+  <main id="main-content">
+<section class="editorial-hero"><div class="editorial-hero__shade" aria-hidden="true"></div><div class="editorial-hero__content page-width" data-reveal="true"><p class="eyebrow eyebrow--light">RESEARCH NOTE / Market research</p><h1>REC-MD structural interaction</h1><p class="editorial-hero__copy">Do structural interactions contain repeatable information before a candidate becomes eligible for validation?</p><div class="editorial-hero__actions"><div class="system-hero-meta"><span class="state-tag state-hypothesis-frozen">HYPOTHESIS FROZEN</span><a class="button button--light" href="#result">Read the finding <span aria-hidden="true">↓</span></a></div></div></div><a class="scroll-cue" href="#page-content" aria-label="Scroll to explore this page"><span aria-hidden="true"></span> Scroll to explore</a></section><section id="page-content" class="editorial-section"><div class="page-width"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">QUESTION / METHOD / RESULT</p><h2>Keep the reasoning attached to the result.</h2><p class="editorial-heading__copy">The note gives the reader enough context to understand why the work exists and where its conclusions stop.</p></header><div class="research-answers"><article data-reveal="true"><span class="eyebrow">WHY THIS MATTERS</span><h2>Why investigate it?</h2><p>Pattern descriptions are easy to overfit after seeing what happened. The research question is whether the structure exists before outcome knowledge is allowed in.</p></article><article data-reveal="true"><span class="eyebrow">OBSERVATION</span><h2>What was seen?</h2><p>Repeated market-state interactions can look compelling visually even when they do not survive a governed producer/evidence boundary.</p></article><article data-reveal="true"><span class="eyebrow">HYPOTHESIS</span><h2>What is being tested?</h2><p>A frozen structural interaction may improve candidate quality if it survives exact producer authority, recurrence and holdout checks.</p></article><article id="result" data-reveal="true"><span class="eyebrow">RESULT / STATE</span><h2>Where it stands</h2><p>Hypothesis frozen. Work remains constrained by producer/evidence authority rather than being forced into a positive result.</p></article></div></div></section><section class="editorial-section editorial-section--cool"><div class="page-width research-method-layout"><div data-reveal="true"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">METHOD</p><h2>How the study stays bounded</h2></header><ol class="editorial-list"><li>Freeze the mechanism</li><li>Map exact producer authority</li><li>Evaluate only admissible real-corpus candidates</li><li>Reject unsupported producer assumptions</li><li>Preserve the frozen hypothesis if authority is missing</li></ol></div><div data-reveal="true"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">BOUNDARIES</p><h2>What this page will not claim</h2></header><ul class="editorial-list editorial-list--quiet"><li>No invented producer</li><li>No backfilled authority</li><li>No holdout access before the gate</li><li>No claim that a frozen hypothesis is a validated edge</li></ul></div></div></section><section class="editorial-section editorial-section--compact"><section class="image-story image-story--reverse " data-reveal="true"><div class="image-story__media"></div><div class="image-story__copy"><p class="eyebrow">NEXT STEP</p><h2>Resume only from a qualifying producer and preserve the original frozen mechanism for comparison.</h2><div class="image-story__body"><p>The current state stays attached to the evidence until the next gate is met.</p></div><a class="editorial-link" href="./research.html">Return to research archive<span aria-hidden="true">↗</span></a></div></section></section><!--$--><!--/$-->
+  </main>
+
+
+  <!-- Global Standard Aixion x Kirifuda Footer -->
+    <!-- Authentic Aixion Lab Navy Footer -->
+  <footer class="site-footer">
+    <div class="site-footer__main">
+      <div class="site-footer__identity">
+        <p class="site-footer__eyebrow">AIXION LAB</p>
+        <p class="site-footer__statement">Research, build, validate, learn.</p>
+        <p class="site-footer__subline">Applied intelligence and engineering, built with evidence.</p>
+      </div>
+      <nav class="site-footer__links" aria-label="Footer navigation">
+        <a href="./about.html">The Lab</a>
+        <a href="./work.html">Work</a>
+        <a href="./research.html">Research</a>
+        <a href="./journey.html">Approach</a>
+        <a href="./resume.html">Career snapshot</a>
+      </nav>
+      <div class="site-footer__contact">
+        <span class="site-footer__desc">Independent applied-engineering lab</span>
+        <a class="site-footer__link" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub <span class="arrow">↗</span></a>
+        <a class="site-footer__link" href="./about.html#contact">Start a conversation <span class="arrow">↗</span></a>
+      </div>
+    </div>
+    <div class="site-footer__base">
+      <span class="site-footer__badge">AIXION LAB / DEPLOYMENT ATTESTATION UNAVAILABLE</span>
+      <span class="site-footer__copy">© 2026 Aixion Lab</span>
+      <span class="site-footer__process">Research <i>·</i> Build <i>·</i> Validate <i>·</i> Observe <i>·</i> Learn</span>
+    </div>
+  </footer>
+
+  <!-- Background WebGL Ambient Canvas -->
+  <canvas id="webgl-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.65;"></canvas>
+
+  <!-- Interactive Sleek Cursor Dot -->
+  <div id="cursor" style="position:fixed;top:0;left:0;width:8px;height:8px;background:#ffffff;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform 0.15s ease-out;"></div>
+
+  <script id="native-kirifuda-engine">
+  (function() {
+    // ==========================================================================
+    // 1. NATIVE SMOOTH KINETIC SCROLL & SKEW PHYSICS (Zero External Dependencies)
+    // ==========================================================================
+    var currentVelocity = 0;
+    var lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    var lastScrollTime = performance.now();
+    var currentSkew = 0;
+    var targetSkew = 0;
+
+    var skewElements = document.querySelectorAll(
+      '.kf_scroll_skew, .editorial-hero, .work-story, .principle, .detail-card, .research-row, .pulse-card, .system-facts, .system-timeline > div'
+    );
+
+    window.addEventListener('scroll', function() {
+      var now = performance.now();
+      var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      var dt = Math.max(1, now - lastScrollTime);
+      var vel = (scrollY - lastScrollY) / dt * 15;
+      var clampedVel = Math.max(-14, Math.min(14, vel));
+
+      targetSkew = clampedVel * 0.22; // Kirifuda subtle dynamic skew (-3deg to +3deg)
+      currentVelocity = Math.abs(clampedVel);
+      lastScrollY = scrollY;
+      lastScrollTime = now;
+    }, { passive: true });
+
+    function updatePhysics() {
+      currentSkew += (targetSkew - currentSkew) * 0.12;
+      targetSkew *= 0.88;
+
+      if (Math.abs(currentSkew) > 0.005) {
+        var skewStr = 'skewY(' + currentSkew.toFixed(3) + 'deg)';
+        for (var i = 0; i < skewElements.length; i++) {
+          skewElements[i].style.transform = skewStr;
+          skewElements[i].style.transition = 'transform 0.05s ease-out';
+        }
+      } else {
+        for (var j = 0; j < skewElements.length; j++) {
+          skewElements[j].style.transform = 'none';
+        }
+      }
+      requestAnimationFrame(updatePhysics);
+    }
+    requestAnimationFrame(updatePhysics);
+
+    // ==========================================================================
+    // 2. INTERACTIVE SLEEK CURSOR DOT
+    // ==========================================================================
+    var cursor = document.getElementById('cursor');
+    var mX = window.innerWidth / 2, mY = window.innerHeight / 2;
+    var cX = mX, cY = mY;
+
+    window.addEventListener('mousemove', function(e) {
+      mX = e.clientX;
+      mY = e.clientY;
+    });
+
+    function updateCursor() {
+      cX += (mX - cX) * 0.45;
+      cY += (mY - cY) * 0.45;
+      if (cursor) {
+        cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px)';
+      }
+      requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    var hoverTargets = document.querySelectorAll(
+      'a, button, .principle, .work-story, .detail-card, .research-row, .pulse-card, .state-tag, .editorial-link'
+    );
+    hoverTargets.forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        if (cursor) cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px) scale(2.4)';
+      });
+      el.addEventListener('mouseleave', function() {
+        if (cursor) cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px) scale(1)';
+      });
+    });
+
+    // ==========================================================================
+    // 3. NATIVE HARDWARE-ACCELERATED ORDER-FLOW WEBGL FLUID SHADER
+    // ==========================================================================
+    var canvas = document.getElementById('webgl-canvas');
+    if (canvas) {
+      var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (gl) {
+        function resizeCanvas() {
+          var dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = window.innerWidth * dpr;
+          canvas.height = window.innerHeight * dpr;
+          gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        var vsSource = [
+          'attribute vec2 a_pos;',
+          'varying vec2 vUv;',
+          'void main() {',
+          '  vUv = a_pos * 0.5 + 0.5;',
+          '  gl_Position = vec4(a_pos, 0.0, 1.0);',
+          '}'
+        ].join('\n');
+
+        var fsSource = [
+          'precision mediump float;',
+          'uniform float u_time;',
+          'uniform float u_pow;',
+          'uniform vec2 u_mouse;',
+          'uniform vec2 u_resolution;',
+          'varying vec2 vUv;',
+
+          'vec2 fluidOrderFlow(vec2 uv, float dist) {',
+          '  vec2 p = uv * 2.0 - 1.0;',
+          '  float r = length(p);',
+          '  float angle = atan(p.y, p.x);',
+          '  float theta = angle + sin(r * 4.0 - u_time * 0.8) * 0.08 * dist;',
+          '  vec2 warped = vec2(cos(theta), sin(theta)) * r;',
+          '  return warped * 0.5 + 0.5;',
+          '}',
+
+          'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }',
+
+          'float noise(vec2 p) {',
+          '  vec2 i = floor(p);',
+          '  vec2 f = fract(p);',
+          '  f = f * f * (3.0 - 2.0 * f);',
+          '  return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), f.x),',
+          '             mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);',
+          '}',
+
+          'float fbm(vec2 p) {',
+          '  float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0);',
+          '  mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));',
+          '  for (int i = 0; i < 4; ++i) {',
+          '    v += a * noise(p); p = rot * p * 2.0 + shift; a *= 0.5;',
+          '  }',
+          '  return v;',
+          '}',
+
+          'void main() {',
+          '  vec2 st = gl_FragCoord.xy / u_resolution.xy;',
+          '  st.x *= u_resolution.x / u_resolution.y;',
+          '  float distpow = u_pow * 5.5;',
+          '  vec2 distUv = fluidOrderFlow(vUv, distpow);',
+          '  vec2 q = vec2(fbm(st + 0.04 * u_time), fbm(st + vec2(1.0)));',
+          '  vec2 r = vec2(fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.12 * u_time),',
+          '                fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.10 * u_time));',
+          '  float f = fbm(st + r);',
+          '  float intensity = smoothstep(0.38, 0.72, f);',
+          '  vec3 color = vec3(intensity * 0.08);',
+          '  float mouseDist = length(vUv - u_mouse);',
+          '  color += (1.0 - smoothstep(0.0, 0.28, mouseDist)) * 0.05;',
+          '  gl_FragColor = vec4(color, 1.0);',
+          '}'
+        ].join('\n');
+
+        function compileShader(type, src) {
+          var shader = gl.createShader(type);
+          gl.shaderSource(shader, src);
+          gl.compileShader(shader);
+          return shader;
+        }
+
+        var prog = gl.createProgram();
+        gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSource));
+        gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSource));
+        gl.linkProgram(prog);
+        gl.useProgram(prog);
+
+        var buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+
+        var aPos = gl.getAttribLocation(prog, 'a_pos');
+        gl.enableVertexAttribArray(aPos);
+        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+        var uTime = gl.getUniformLocation(prog, 'u_time');
+        var uPow = gl.getUniformLocation(prog, 'u_pow');
+        var uMouse = gl.getUniformLocation(prog, 'u_mouse');
+        var uRes = gl.getUniformLocation(prog, 'u_resolution');
+
+        var startTime = performance.now();
+        var targetPow = 0;
+        var currentPow = 0;
+
+        function renderWebGL() {
+          var now = performance.now();
+          var elapsed = (now - startTime) * 0.001;
+
+          targetPow += 0.002 * currentVelocity;
+          currentPow += (targetPow - currentPow) * 0.12;
+          currentPow *= 0.93;
+          targetPow *= 0.90;
+
+          gl.uniform1f(uTime, elapsed);
+          gl.uniform1f(uPow, currentPow);
+          gl.uniform2f(uMouse, mX / window.innerWidth, 1.0 - (mY / window.innerHeight));
+          gl.uniform2f(uRes, canvas.width, canvas.height);
+
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+          requestAnimationFrame(renderWebGL);
+        }
+        requestAnimationFrame(renderWebGL);
+      }
+    }
+
+    // ==========================================================================
+    // 4. INTERSECTION OBSERVER ENTRANCE & SCROLL REVEALS
+    // ==========================================================================
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll(
+      '.editorial-hero__content, .principles-grid .principle, .detail-grid .detail-card, .work-story, .research-row, .pulse-card, .system-timeline > div'
+    ).forEach(function(el) {
+      el.classList.add('kf-reveal-init');
+      revealObserver.observe(el);
+    });
+
+  })();
+  </script>
+
+  <style>
+    /* Kirifuda Stagger Entrance Animation Keyframes */
+    .kf-reveal-init {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .kf-reveal-init.is-revealed {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
+
+</body>
+</html>

@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aixion Control Core — Aixion Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Padauk:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./kirifuda.css">
+  <link rel="stylesheet" href="./kirifuda_theme_dark.css">
+  <link rel="stylesheet" href="./aixion_content.css">
+  <style id="subpage-refined-css">
+
+    /* ==========================================================================
+       AIXION x KIRIFUDA AUTHENTIC EDITORIAL & FOOTER ALIGNMENT
+       - Disabled Menu Pill
+       - Fixed Editorial Hero Flow & Perfect Horizontal Padding
+       - Authentic aixionlab.com Navy Footer (3-column layout + base attestation)
+       - Clean Typography & Spacing
+       ========================================================================== */
+
+    html {
+      overflow-y: scroll !important;
+      overflow-x: hidden !important;
+      scroll-behavior: smooth;
+    }
+    body {
+      overflow-x: hidden !important;
+      position: relative !important;
+      font-family: 'Padauk', sans-serif !important;
+      color: #e2e8f0 !important;
+      background-color: #070709 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* 1. HIDE RESIDUAL UNWANTED ARTIFACTS */
+    img,
+    .editorial-hero__image,
+    .editorial-hero__shade,
+    .work-story__image,
+    .work-support__image,
+    .image-story__media,
+    .story-index,
+    .signal-line__index,
+    .signal-line__node,
+    .site-menu__number,
+    .image-story__number,
+    .home-work__index,
+    .journey-spectrum__active-index,
+    .journey-spectrum__number,
+    .journey-spectrum__dot,
+    .header-menu-pill {
+      display: none !important;
+    }
+
+    /* 2. HEADER - MATCH AIXIONLAB.COM EXACTLY (4 TABS, NO MENU) */
+    .site-header {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 72px !important;
+      background: rgba(7, 7, 10, 0.90) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      z-index: 1000 !important;
+      display: flex !important;
+      align-items: center !important;
+      padding: 0 4vw !important;
+      box-sizing: border-box !important;
+    }
+    .site-header__inner {
+      width: 100% !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+    }
+    .brand {
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      text-decoration: none !important;
+      color: #ffffff !important;
+    }
+    .brand-mark {
+      width: 32px !important;
+      height: 32px !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: #ffffff !important;
+    }
+    .brand-copy {
+      display: flex !important;
+      flex-direction: column !important;
+      line-height: 1.15 !important;
+    }
+    .brand-copy strong {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 14px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+    }
+    .brand-copy small {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 11px !important;
+      color: #64748b !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    .desktop-nav {
+      display: flex !important;
+      align-items: center !important;
+      gap: 36px !important;
+    }
+    .desktop-nav a {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #94a3b8 !important;
+      text-decoration: none !important;
+      position: relative !important;
+      padding: 6px 0 !important;
+      transition: color 0.25s ease !important;
+    }
+    .desktop-nav a:hover,
+    .desktop-nav a.active {
+      color: #ffffff !important;
+    }
+    .desktop-nav a.active::after {
+      content: '' !important;
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 1.5px !important;
+      background: #ffffff !important;
+    }
+
+    .header-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 16px !important;
+    }
+    .mode-toggle {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 6px 14px !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: 99px !important;
+      background: transparent !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 12px !important;
+      color: #d4d4d8 !important;
+      user-select: none !important;
+    }
+    .mode-track {
+      width: 24px !important;
+      height: 12px !important;
+      border-radius: 99px !important;
+      background: rgba(255, 255, 255, 0.15) !important;
+      position: relative !important;
+      display: inline-block !important;
+    }
+    .mode-knob {
+      width: 8px !important;
+      height: 8px !important;
+      border-radius: 50% !important;
+      background: #ffffff !important;
+      position: absolute !important;
+      top: 2px !important;
+      right: 2px !important;
+    }
+    .header-contact {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      padding: 6px 12px !important;
+      transition: opacity 0.25s ease !important;
+    }
+    .header-contact:hover {
+      opacity: 0.8 !important;
+    }
+
+    /* 3. BREADCRUMB - ALIGNED TO PAGE WIDTH */
+    .page-breadcrumb {
+      padding: 110px 4vw 0 !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      display: flex !important;
+      gap: 8px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #64748b !important;
+      text-transform: uppercase !important;
+      box-sizing: border-box !important;
+    }
+    .page-breadcrumb a {
+      color: #64748b !important;
+      text-decoration: none !important;
+    }
+    .page-breadcrumb a:hover {
+      color: #ffffff !important;
+    }
+
+    /* 4. EDITORIAL HERO (CRITICAL ALIGNMENT FIX) */
+    .editorial-hero {
+      position: relative !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      padding: 40px 4vw 80px !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      box-sizing: border-box !important;
+      overflow: visible !important;
+      background: transparent !important;
+    }
+    .editorial-hero__content {
+      position: relative !important;
+      inset: auto !important;
+      transform: none !important;
+      max-width: 1040px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    .editorial-hero__content h1 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(48px, 7vw, 100px) !important;
+      font-weight: 700 !important;
+      letter-spacing: -1.5px !important;
+      line-height: 0.98 !important;
+      text-transform: uppercase !important;
+      margin: 0 0 24px !important;
+      color: #ffffff !important;
+      word-break: normal !important;
+    }
+    .editorial-hero__copy {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: clamp(16px, 1.8vw, 22px) !important;
+      line-height: 1.65 !important;
+      color: #94a3b8 !important;
+      max-width: 880px !important;
+      margin: 0 0 36px !important;
+      text-align: left !important;
+    }
+    .editorial-hero__actions {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 16px !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      margin-top: 24px !important;
+    }
+    .editorial-hero__actions .button {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      padding: 12px 24px !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      border-radius: 4px !important;
+      background: rgba(255, 255, 255, 0.04) !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      transition: all 0.25s ease !important;
+    }
+    .editorial-hero__actions .button:hover {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    .scroll-cue {
+      display: none !important;
+    }
+
+    /* 5. EDITORIAL SECTIONS & CONTENT PADDING */
+    .editorial-section,
+    #page-content {
+      padding: 60px 4vw !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      z-index: 2 !important;
+    }
+    .page-width {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .image-story,
+    .image-story--reverse {
+      display: flex !important;
+      flex-direction: column !important;
+      max-width: 100% !important;
+      margin: 40px 0 !important;
+      padding: 0 !important;
+    }
+    .image-story__copy {
+      max-width: 900px !important;
+    }
+    .image-story__copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(36px, 5vw, 64px) !important;
+      font-weight: 700 !important;
+      letter-spacing: -1px !important;
+      line-height: 1.05 !important;
+      color: #ffffff !important;
+      margin: 12px 0 20px !important;
+      text-transform: uppercase !important;
+    }
+    .image-story__body p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 17px !important;
+      line-height: 1.7 !important;
+      color: #cbd5e1 !important;
+      margin-bottom: 20px !important;
+    }
+    .eyebrow {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 2.5px !important;
+      text-transform: uppercase !important;
+      color: #94a3b8 !important;
+      margin-bottom: 12px !important;
+    }
+
+    /* 6. AUTHENTIC AIXIONLAB.COM NAVY FOOTER */
+    .site-footer {
+      background: #0b131e !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+      padding: 72px 4vw 40px !important;
+      margin-top: 100px !important;
+      font-family: 'Padauk', sans-serif !important;
+      color: #94a3b8 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      z-index: 20 !important;
+    }
+    .site-footer__main {
+      display: grid !important;
+      grid-template-columns: 2fr 1fr 1.5fr !important;
+      gap: 60px !important;
+      max-width: 1440px !important;
+      margin: 0 auto 60px !important;
+      align-items: start !important;
+    }
+    @media (max-width: 900px) {
+      .site-footer__main {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+    }
+    .site-footer__identity {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+    .site-footer__eyebrow {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 3px !important;
+      color: #cbd5e1 !important;
+      text-transform: uppercase !important;
+      margin: 0 !important;
+    }
+    .site-footer__statement {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 17px !important;
+      color: #e2e8f0 !important;
+      margin: 0 !important;
+      line-height: 1.5 !important;
+    }
+    .site-footer__subline {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #64748b !important;
+      margin: 0 !important;
+      line-height: 1.6 !important;
+      max-width: 440px !important;
+    }
+
+    .site-footer__links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+    .site-footer__links a {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+      text-decoration: none !important;
+      transition: color 0.25s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__links a:hover {
+      color: #ffffff !important;
+    }
+
+    .site-footer__contact {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+    .site-footer__desc {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+    }
+    .site-footer__link {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #cbd5e1 !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      transition: color 0.25s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__link:hover {
+      color: #ffffff !important;
+    }
+    .site-footer__link .arrow {
+      font-size: 14px !important;
+      transition: transform 0.25s ease !important;
+    }
+    .site-footer__link:hover .arrow {
+      transform: translate(2px, -2px) !important;
+    }
+
+    .site-footer__base {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
+      padding-top: 32px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      font-size: 12px !important;
+      color: #64748b !important;
+      font-family: 'Space Mono', monospace !important;
+    }
+    .site-footer__badge {
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+    }
+    .site-footer__copy {
+      color: #64748b !important;
+    }
+    .site-footer__process {
+      color: #64748b !important;
+      display: flex !important;
+      gap: 8px !important;
+      align-items: center !important;
+    }
+    .site-footer__process i {
+      font-style: normal !important;
+      color: #475569 !important;
+    }
+
+    /* REVEAL ANIMATIONS */
+    [data-reveal="true"],
+    [data-reveal] {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
+    }
+
+  </style>
+  </head>
+<body class="theme-dark">
+  <!-- Master Aixion Lab Header (Exact 4 Tabs: The Lab, Work, Research, Approach) -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" aria-label="Aixion Lab home" href="./index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span class="brand-copy">
+          <strong>AIXION LAB</strong>
+          <small>Applied systems engineering</small>
+        </span>
+      </a>
+
+      <!-- 4 Primary Tabs from aixionlab.com -->
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="./about.html">The Lab</a>
+        <a href="./work.html" class="active">Work</a>
+        <a href="./research.html">Research</a>
+        <a href="./journey.html">Approach</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <div class="mode-toggle" aria-label="Lab View Active">
+          <span class="mode-label">View</span>
+          <strong>Lab</strong>
+          <span class="mode-track"><span class="mode-knob"></span></span>
+        </div>
+        <a class="header-contact" href="./about.html#contact">
+          Contact <span class="arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- Page Breadcrumb -->
+  <div class="page-breadcrumb">
+    <a href="./index.html" style="color: #64748b; text-decoration: none;">AIXION LAB</a>
+    <span>/</span>
+    <span style="color: #ffffff;">AIXION CONTROL CORE</span>
+  </div>
+
+  <main id="main-content">
+<section id="overview"><section class="editorial-hero"><div class="editorial-hero__shade" aria-hidden="true"></div><div class="editorial-hero__content page-width" data-reveal="true"><p class="eyebrow eyebrow--light">Agent orchestration · governance · automation</p><h1>Aixion Control Core</h1><p class="editorial-hero__copy">A governed orchestration layer for context, agents, tools, policy, evidence and human authority.</p><div class="editorial-hero__actions"><div class="system-hero-meta"><span class="state-tag state-building">BUILDING</span><a class="button button--light" href="#evidence">Review evidence <span aria-hidden="true">↓</span></a></div></div></div><a class="scroll-cue" href="#system-current-state" aria-label="Scroll to explore this page"><span aria-hidden="true"></span> Scroll to explore</a></section></section><div class="system-subnav-wrap"><nav class="page-width system-subnav" aria-label="Aixion Control Core page sections"><a href="#overview">Overview</a><a href="#architecture">Architecture</a><a href="#demo">Demo</a><a href="#capabilities">Capabilities</a><a href="#mvp">MVP</a><a href="#evidence">Evidence</a><a href="#roadmap">Roadmap</a></nav></div><section id="page-content" class="editorial-section editorial-section--compact"><div class="page-width"><dl id="system-current-state" class="system-facts" data-reveal="true"><div><dt>Current gate</dt><dd>MVP runtime</dd></div><div><dt>Current focus</dt><dd>Orchestration, tool boundaries, policy and evidence capture.</dd></div><div><dt>Next gate</dt><dd>Policy-bound execution trace.</dd></div></dl><div class="career-only"><div class="career-only career-strip"><span>Career translation</span><div><i>Agent orchestration</i><i>Tool integration</i><i>Policy architecture</i><i>Human-in-the-loop</i><i>Evidence</i><i>APIs</i><i>State management</i></div></div></div></div></section><section id="architecture" class="editorial-section"><section class="image-story  visual-core" data-reveal="true"><div class="image-story__media"></div><div class="image-story__copy"><p class="eyebrow">PUBLIC ARCHITECTURE</p><h2>How this system makes the difficult parts visible.</h2><div class="image-story__body"><p>Coordinate autonomous capabilities while keeping execution observable, policy-bound and reviewable.</p><p>An orchestration architecture for intent routing, context assembly, planning, agents, tool execution, evidence capture and explicit approval boundaries.</p></div><a class="editorial-link" href="#engineering">Read the engineering approach<span aria-hidden="true">↗</span></a></div></section><div class="page-width architecture-wrap" data-reveal="true"><p class="eyebrow">SYSTEM FLOW / PUBLIC MODEL</p><ol class="signal-line" aria-label="Engineering lifecycle"><li><span class="signal-line__node" aria-hidden="true"></span><span>Intent</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Context</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Planning</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Tools</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Evidence</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Policy</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Human review</span></li></ol></div></section><section id="engineering" class="editorial-section editorial-section--cool"><div class="page-width"><header class="editorial-heading editorial-heading--left editorial-heading--storyline" data-reveal="true"><p class="eyebrow">ENGINEERING STORY</p><h2>Problem → challenge → build → outcome</h2><p class="editorial-heading__copy">The work is explained through its constraints and evidence, not a technology-logo wall.</p></header><div class="detail-grid impact-grid"><article class="detail-card" data-reveal="true"><p class="eyebrow">PROBLEM</p><h3>What makes this difficult?</h3><p>Useful agent systems can still become unreliable when context, tools, policy and authority are implicit.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">CHALLENGE</p><h3>What must remain controlled?</h3><p>Coordinate autonomous capabilities while keeping execution observable, policy-bound and reviewable.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">WHAT EXISTS</p><h3>The system response</h3><p>An orchestration architecture for intent routing, context assembly, planning, agents, tool execution, evidence capture and explicit approval boundaries.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">OUTCOME</p><h3>What this enables</h3><p>An MVP path focused on controlled autonomy rather than a generic chat interface.</p></article></div><div class="detail-grid engineering-grid"><article class="detail-card" data-reveal="true"><h3>Orchestration</h3><p>Intent is decomposed into explicit stages so the system can explain what it is doing and why.</p></article><article class="detail-card" data-reveal="true"><h3>Tool boundaries</h3><p>Tools are treated as governed capabilities rather than invisible side effects of an agent response.</p></article><article class="detail-card" data-reveal="true"><h3>Evidence before authority</h3><p>Execution traces, policy checks and evidence are first-class parts of the architecture.</p></article></div></div></section><section id="demo" class="editorial-section editorial-section--cool"><div class="page-width"><header class="editorial-heading editorial-heading--left editorial-heading--storyline" data-reveal="true"><p class="eyebrow">LIVE OPERATIONAL DEMO</p><h2>Aixion Control Tower in Action</h2><p class="editorial-heading__copy">Explore the complete mobile governance lifecycle step-by-step: select any operational phase below to inspect live agent interactions, policy checkpoints, and cryptographic audit proofs.</p></header><div style="margin:2rem 0 3rem;background:var(--paper-bright);border:1px solid var(--line-strong);border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(0, 0, 0, 0.05)"><style>
+        .tower-stepper-bar {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          border-bottom: 1px solid var(--line-strong);
+          background: rgba(0, 0, 0, 0.02);
+          overflow-x: auto;
+        }
+        .tower-main-stage {
+          display: grid;
+          grid-template-columns: minmax(300px, 360px) 1fr;
+          gap: 48px;
+          padding: 44px 48px;
+          align-items: center;
+        }
+        @media (max-width: 900px) {
+          .tower-stepper-bar {
+            grid-template-columns: repeat(6, minmax(140px, 1fr));
+            scroll-snap-type: x mandatory;
+          }
+          .tower-main-stage {
+            grid-template-columns: 1fr;
+            padding: 28px 20px;
+            gap: 36px;
+          }
+        }
+      </style><div class="tower-stepper-bar"><button style="padding:16px 14px;border:none;background:var(--paper-bright);border-bottom:2px solid var(--ink);cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--accent-deep);margin-bottom:4px">01<!-- --> • <!-- -->SECURE ACCESS</div><div style="font-size:13px;font-family:var(--serif);font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Enterprise Mobile Gateway</div><div style="position:absolute;bottom:-2px;left:0;width:0%;height:2px;background:var(--accent-deep);transition:width 0.1s linear"></div></button><button style="padding:16px 14px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">02<!-- --> • <!-- -->REAL-TIME TELEMETRY</div><div style="font-size:13px;font-family:var(--serif);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Live Action Queue</div></button><button style="padding:16px 14px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">03<!-- --> • <!-- -->GOVERNANCE SETUP</div><div style="font-size:13px;font-family:var(--serif);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Autonomous Fleet Pairing</div></button><button style="padding:16px 14px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">04<!-- --> • <!-- -->HUMAN-IN-THE-LOOP</div><div style="font-size:13px;font-family:var(--serif);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Review &amp; One-Tap Approval</div></button><button style="padding:16px 14px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">05<!-- --> • <!-- -->FAIL-CLOSED DEFENSE</div><div style="font-size:13px;font-family:var(--serif);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Adversarial Risk Detection</div></button><button style="padding:16px 14px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease;position:relative"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">06<!-- --> • <!-- -->IMMUTABLE AUDIT</div><div style="font-size:13px;font-family:var(--serif);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Tamper-Proof Audit Trail</div></button></div><div class="tower-main-stage"><div style="display:flex;justify-content:center;align-items:center"><div style="width:320px;aspect-ratio:9/20;border-radius:44px;background:#0d1117;padding:10px;box-shadow:0 28px 65px -15px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.12);position:relative;cursor:pointer" title="Click to Pause"><div style="position:absolute;top:16px;left:50%;transform:translateX(-50%);width:72px;height:4px;border-radius:4px;background:rgba(255, 255, 255, 0.25);z-index:10"></div><div style="width:100%;height:100%;border-radius:36px;overflow:hidden;position:relative;background:#ffffff"><video src="/videos/steps/01_login.mp4" playsInline="" muted="" autoPlay="" style="width:100%;height:100%;object-fit:cover;display:block"></video></div></div></div><div><div style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:99px;background:rgba(0, 0, 0, 0.04);border:1px solid var(--line-strong);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--accent-deep);margin-bottom:16px">PHASE <!-- -->01<!-- --> • <!-- -->SECURE ACCESS</div><h2 style="font-family:var(--serif);font-size:clamp(32px, 3.2vw, 44px);font-weight:400;line-height:1.12;margin:0 0 16px 0;color:var(--text);letter-spacing:-0.02em">Enterprise Mobile Gateway</h2><p style="font-size:15px;line-height:1.75;color:var(--muted);margin:0 0 28px 0;max-width:620px">Instant authenticated access to autonomous agent operations. Review code diffs and sensitive tool calls from anywhere.</p><div style="display:grid;gap:14px;max-width:620px;margin-bottom:28px"><div style="padding:16px 20px;border-radius:12px;border:1px solid var(--line);background:rgba(0, 0, 0, 0.015);display:flex;align-items:flex-start;gap:16px"><span style="font-size:20px;line-height:1">🔐</span><div><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px">Hardware-Backed Session</div><div style="font-size:12px;color:var(--muted);line-height:1.5">Biometric session keys with cryptographic device pinning</div></div></div><div style="padding:16px 20px;border-radius:12px;border:1px solid var(--line);background:rgba(0, 0, 0, 0.015);display:flex;align-items:flex-start;gap:16px"><span style="font-size:20px;line-height:1">⚡</span><div><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px">Zero Latency Access</div><div style="font-size:12px;color:var(--muted);line-height:1.5">Direct streaming connection to control tower cluster</div></div></div></div><div style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:8px;background:rgba(0, 0, 0, 0.03);font-size:11px;font-family:var(--mono);letter-spacing:0.05em;color:var(--muted)"><span>✓</span><span>ZERO-TRUST GUARANTEE • NEVER SHIPS WITHOUT EXPLICIT APPROVAL • <!-- -->FIPS-140-3 READY</span></div></div></div></div></div></section><section id="capabilities" class="editorial-section editorial-section--cool"><div class="page-width"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">CONTROL CORE CAPABILITIES</p><h2>The control plane is built from explicit capabilities.</h2></header><div class="content-grid"><article class="content-card" data-reveal="true"><h3>Intent routing</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Context assembly</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Planning</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Agent coordination</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Tool execution</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Policy boundaries</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Evidence capture</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article><article class="content-card" data-reveal="true"><h3>Human approval</h3><p>Designed as an inspectable stage rather than an invisible side effect.</p></article></div><div id="mvp" class="detail-card control-core-demo" data-reveal="true"><p class="eyebrow">ILLUSTRATIVE ARCHITECTURE TRACE</p><h3>Intent → planner → approved tool → evidence → policy → human review</h3><p>This sequence explains the proposed runtime model. It is a labelled architecture illustration, not production telemetry.</p></div></div></section><section id="evidence" class="editorial-section editorial-section--compact"><div class="page-width"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">EVIDENCE / PUBLIC BOUNDARY</p><h2>Claims stay bounded by what can be shown.</h2><p class="editorial-heading__copy">Proof records are public-safe summaries. Sensitive logic and operational data stay outside the site.</p></header><div class="evidence-list"><div class="evidence-row" data-reveal="true"><span>MVP</span><strong>Architecture and runtime implementation in active development</strong><div class="evidence-actions"><span class="state-tag state-building">BUILDING</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="Aixion Control Core / Architecture and runtime implementation in active development evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>Aixion Control Core / Architecture and runtime implementation in active development</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>BUILDING</strong><p>Architecture and runtime implementation in active development</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>MVP</dd></div><div><dt>Authority</dt><dd>Public-safe evidence summary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div><div class="evidence-row" data-reveal="true"><span>DEMO</span><strong>Public site uses clearly labelled architecture demonstrations</strong><div class="evidence-actions"><span class="state-tag state-demo">DEMO</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="Aixion Control Core / Public site uses clearly labelled architecture demonstrations evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>Aixion Control Core / Public site uses clearly labelled architecture demonstrations</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>DEMO</strong><p>Public site uses clearly labelled architecture demonstrations</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>DEMO</dd></div><div><dt>Authority</dt><dd>Public-safe evidence summary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div><div class="evidence-row" data-reveal="true"><span>BOUNDARY</span><strong>Demo traces are never presented as production telemetry</strong><div class="evidence-actions"><span class="state-tag state-enforced">ENFORCED</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="Aixion Control Core / Demo traces are never presented as production telemetry evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>Aixion Control Core / Demo traces are never presented as production telemetry</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>ENFORCED</strong><p>Demo traces are never presented as production telemetry</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>BOUNDARY</dd></div><div><dt>Authority</dt><dd>Public/private boundary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div></div></div></section><section id="roadmap" class="editorial-section editorial-section--dark"><div class="page-width next-gate" data-reveal="true"><div><p class="eyebrow eyebrow--light">NEXT GATE</p><h2 class="next-gate__title--single">Policy-bound execution trace.</h2><p>Orchestration, tool boundaries, policy and evidence capture.</p></div><a class="button button--light" href="./work.html">All systems <span aria-hidden="true">↗</span></a></div></section><!--$--><!--/$-->
+  </main>
+
+
+  <!-- Global Standard Aixion x Kirifuda Footer -->
+    <!-- Authentic Aixion Lab Navy Footer -->
+  <footer class="site-footer">
+    <div class="site-footer__main">
+      <div class="site-footer__identity">
+        <p class="site-footer__eyebrow">AIXION LAB</p>
+        <p class="site-footer__statement">Research, build, validate, learn.</p>
+        <p class="site-footer__subline">Applied intelligence and engineering, built with evidence.</p>
+      </div>
+      <nav class="site-footer__links" aria-label="Footer navigation">
+        <a href="./about.html">The Lab</a>
+        <a href="./work.html">Work</a>
+        <a href="./research.html">Research</a>
+        <a href="./journey.html">Approach</a>
+        <a href="./resume.html">Career snapshot</a>
+      </nav>
+      <div class="site-footer__contact">
+        <span class="site-footer__desc">Independent applied-engineering lab</span>
+        <a class="site-footer__link" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub <span class="arrow">↗</span></a>
+        <a class="site-footer__link" href="./about.html#contact">Start a conversation <span class="arrow">↗</span></a>
+      </div>
+    </div>
+    <div class="site-footer__base">
+      <span class="site-footer__badge">AIXION LAB / DEPLOYMENT ATTESTATION UNAVAILABLE</span>
+      <span class="site-footer__copy">© 2026 Aixion Lab</span>
+      <span class="site-footer__process">Research <i>·</i> Build <i>·</i> Validate <i>·</i> Observe <i>·</i> Learn</span>
+    </div>
+  </footer>
+
+  <!-- Background WebGL Ambient Canvas -->
+  <canvas id="webgl-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.65;"></canvas>
+
+  <!-- Interactive Sleek Cursor Dot -->
+  <div id="cursor" style="position:fixed;top:0;left:0;width:8px;height:8px;background:#ffffff;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform 0.15s ease-out;"></div>
+
+  <script id="native-kirifuda-engine">
+  (function() {
+    // ==========================================================================
+    // 1. NATIVE SMOOTH KINETIC SCROLL & SKEW PHYSICS (Zero External Dependencies)
+    // ==========================================================================
+    var currentVelocity = 0;
+    var lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    var lastScrollTime = performance.now();
+    var currentSkew = 0;
+    var targetSkew = 0;
+
+    var skewElements = document.querySelectorAll(
+      '.kf_scroll_skew, .editorial-hero, .work-story, .principle, .detail-card, .research-row, .pulse-card, .system-facts, .system-timeline > div'
+    );
+
+    window.addEventListener('scroll', function() {
+      var now = performance.now();
+      var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      var dt = Math.max(1, now - lastScrollTime);
+      var vel = (scrollY - lastScrollY) / dt * 15;
+      var clampedVel = Math.max(-14, Math.min(14, vel));
+
+      targetSkew = clampedVel * 0.22; // Kirifuda subtle dynamic skew (-3deg to +3deg)
+      currentVelocity = Math.abs(clampedVel);
+      lastScrollY = scrollY;
+      lastScrollTime = now;
+    }, { passive: true });
+
+    function updatePhysics() {
+      currentSkew += (targetSkew - currentSkew) * 0.12;
+      targetSkew *= 0.88;
+
+      if (Math.abs(currentSkew) > 0.005) {
+        var skewStr = 'skewY(' + currentSkew.toFixed(3) + 'deg)';
+        for (var i = 0; i < skewElements.length; i++) {
+          skewElements[i].style.transform = skewStr;
+          skewElements[i].style.transition = 'transform 0.05s ease-out';
+        }
+      } else {
+        for (var j = 0; j < skewElements.length; j++) {
+          skewElements[j].style.transform = 'none';
+        }
+      }
+      requestAnimationFrame(updatePhysics);
+    }
+    requestAnimationFrame(updatePhysics);
+
+    // ==========================================================================
+    // 2. INTERACTIVE SLEEK CURSOR DOT
+    // ==========================================================================
+    var cursor = document.getElementById('cursor');
+    var mX = window.innerWidth / 2, mY = window.innerHeight / 2;
+    var cX = mX, cY = mY;
+
+    window.addEventListener('mousemove', function(e) {
+      mX = e.clientX;
+      mY = e.clientY;
+    });
+
+    function updateCursor() {
+      cX += (mX - cX) * 0.45;
+      cY += (mY - cY) * 0.45;
+      if (cursor) {
+        cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px)';
+      }
+      requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    var hoverTargets = document.querySelectorAll(
+      'a, button, .principle, .work-story, .detail-card, .research-row, .pulse-card, .state-tag, .editorial-link'
+    );
+    hoverTargets.forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        if (cursor) cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px) scale(2.4)';
+      });
+      el.addEventListener('mouseleave', function() {
+        if (cursor) cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px) scale(1)';
+      });
+    });
+
+    // ==========================================================================
+    // 3. NATIVE HARDWARE-ACCELERATED ORDER-FLOW WEBGL FLUID SHADER
+    // ==========================================================================
+    var canvas = document.getElementById('webgl-canvas');
+    if (canvas) {
+      var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (gl) {
+        function resizeCanvas() {
+          var dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = window.innerWidth * dpr;
+          canvas.height = window.innerHeight * dpr;
+          gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        var vsSource = [
+          'attribute vec2 a_pos;',
+          'varying vec2 vUv;',
+          'void main() {',
+          '  vUv = a_pos * 0.5 + 0.5;',
+          '  gl_Position = vec4(a_pos, 0.0, 1.0);',
+          '}'
+        ].join('\n');
+
+        var fsSource = [
+          'precision mediump float;',
+          'uniform float u_time;',
+          'uniform float u_pow;',
+          'uniform vec2 u_mouse;',
+          'uniform vec2 u_resolution;',
+          'varying vec2 vUv;',
+
+          'vec2 fluidOrderFlow(vec2 uv, float dist) {',
+          '  vec2 p = uv * 2.0 - 1.0;',
+          '  float r = length(p);',
+          '  float angle = atan(p.y, p.x);',
+          '  float theta = angle + sin(r * 4.0 - u_time * 0.8) * 0.08 * dist;',
+          '  vec2 warped = vec2(cos(theta), sin(theta)) * r;',
+          '  return warped * 0.5 + 0.5;',
+          '}',
+
+          'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }',
+
+          'float noise(vec2 p) {',
+          '  vec2 i = floor(p);',
+          '  vec2 f = fract(p);',
+          '  f = f * f * (3.0 - 2.0 * f);',
+          '  return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), f.x),',
+          '             mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);',
+          '}',
+
+          'float fbm(vec2 p) {',
+          '  float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0);',
+          '  mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));',
+          '  for (int i = 0; i < 4; ++i) {',
+          '    v += a * noise(p); p = rot * p * 2.0 + shift; a *= 0.5;',
+          '  }',
+          '  return v;',
+          '}',
+
+          'void main() {',
+          '  vec2 st = gl_FragCoord.xy / u_resolution.xy;',
+          '  st.x *= u_resolution.x / u_resolution.y;',
+          '  float distpow = u_pow * 5.5;',
+          '  vec2 distUv = fluidOrderFlow(vUv, distpow);',
+          '  vec2 q = vec2(fbm(st + 0.04 * u_time), fbm(st + vec2(1.0)));',
+          '  vec2 r = vec2(fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.12 * u_time),',
+          '                fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.10 * u_time));',
+          '  float f = fbm(st + r);',
+          '  float intensity = smoothstep(0.38, 0.72, f);',
+          '  vec3 color = vec3(intensity * 0.08);',
+          '  float mouseDist = length(vUv - u_mouse);',
+          '  color += (1.0 - smoothstep(0.0, 0.28, mouseDist)) * 0.05;',
+          '  gl_FragColor = vec4(color, 1.0);',
+          '}'
+        ].join('\n');
+
+        function compileShader(type, src) {
+          var shader = gl.createShader(type);
+          gl.shaderSource(shader, src);
+          gl.compileShader(shader);
+          return shader;
+        }
+
+        var prog = gl.createProgram();
+        gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSource));
+        gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSource));
+        gl.linkProgram(prog);
+        gl.useProgram(prog);
+
+        var buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+
+        var aPos = gl.getAttribLocation(prog, 'a_pos');
+        gl.enableVertexAttribArray(aPos);
+        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+        var uTime = gl.getUniformLocation(prog, 'u_time');
+        var uPow = gl.getUniformLocation(prog, 'u_pow');
+        var uMouse = gl.getUniformLocation(prog, 'u_mouse');
+        var uRes = gl.getUniformLocation(prog, 'u_resolution');
+
+        var startTime = performance.now();
+        var targetPow = 0;
+        var currentPow = 0;
+
+        function renderWebGL() {
+          var now = performance.now();
+          var elapsed = (now - startTime) * 0.001;
+
+          targetPow += 0.002 * currentVelocity;
+          currentPow += (targetPow - currentPow) * 0.12;
+          currentPow *= 0.93;
+          targetPow *= 0.90;
+
+          gl.uniform1f(uTime, elapsed);
+          gl.uniform1f(uPow, currentPow);
+          gl.uniform2f(uMouse, mX / window.innerWidth, 1.0 - (mY / window.innerHeight));
+          gl.uniform2f(uRes, canvas.width, canvas.height);
+
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+          requestAnimationFrame(renderWebGL);
+        }
+        requestAnimationFrame(renderWebGL);
+      }
+    }
+
+    // ==========================================================================
+    // 4. INTERSECTION OBSERVER ENTRANCE & SCROLL REVEALS
+    // ==========================================================================
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll(
+      '.editorial-hero__content, .principles-grid .principle, .detail-grid .detail-card, .work-story, .research-row, .pulse-card, .system-timeline > div'
+    ).forEach(function(el) {
+      el.classList.add('kf-reveal-init');
+      revealObserver.observe(el);
+    });
+
+  })();
+  </script>
+
+  <style>
+    /* Kirifuda Stagger Entrance Animation Keyframes */
+    .kf-reveal-init {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .kf-reveal-init.is-revealed {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
+
+</body>
+</html>
