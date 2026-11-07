@@ -13,11 +13,7 @@
   <style id="subpage-refined-css">
 
     /* ==========================================================================
-       AIXION x KIRIFUDA AUTHENTIC EDITORIAL & FOOTER ALIGNMENT
-       - Disabled Menu Pill
-       - Fixed Editorial Hero Flow & Perfect Horizontal Padding
-       - Authentic aixionlab.com Navy Footer (3-column layout + base attestation)
-       - Clean Typography & Spacing
+       AIXION LAB - CANONICAL SUBPAGE & FOOTER ALIGNMENT
        ========================================================================== */
 
     html {
@@ -35,7 +31,7 @@
       padding: 0 !important;
     }
 
-    /* 1. HIDE RESIDUAL UNWANTED ARTIFACTS */
+    /* 1. HIDE ALL ARTIFACTS, IMAGES & STRAY BADGES */
     img,
     .editorial-hero__image,
     .editorial-hero__shade,
@@ -51,18 +47,20 @@
     .journey-spectrum__active-index,
     .journey-spectrum__number,
     .journey-spectrum__dot,
-    .header-menu-pill {
+    .header-menu-pill,
+    .mode-toggle,
+    .scroll-cue {
       display: none !important;
     }
 
-    /* 2. HEADER - MATCH AIXIONLAB.COM EXACTLY (4 TABS, NO MENU) */
+    /* 2. HEADER - 4 TABS + CONTACT ↗ */
     .site-header {
       position: fixed !important;
       top: 0 !important;
       left: 0 !important;
       width: 100% !important;
       height: 72px !important;
-      background: rgba(7, 7, 10, 0.90) !important;
+      background: rgba(7, 7, 10, 0.92) !important;
       backdrop-filter: blur(16px) !important;
       -webkit-backdrop-filter: blur(16px) !important;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -74,7 +72,7 @@
     }
     .site-header__inner {
       width: 100% !important;
-      max-width: 1440px !important;
+      max-width: 1400px !important;
       margin: 0 auto !important;
       display: flex !important;
       align-items: center !important;
@@ -152,37 +150,6 @@
     .header-actions {
       display: flex !important;
       align-items: center !important;
-      gap: 16px !important;
-    }
-    .mode-toggle {
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      padding: 6px 14px !important;
-      border: 1px solid rgba(255, 255, 255, 0.16) !important;
-      border-radius: 99px !important;
-      background: transparent !important;
-      font-family: 'Padauk', sans-serif !important;
-      font-size: 12px !important;
-      color: #d4d4d8 !important;
-      user-select: none !important;
-    }
-    .mode-track {
-      width: 24px !important;
-      height: 12px !important;
-      border-radius: 99px !important;
-      background: rgba(255, 255, 255, 0.15) !important;
-      position: relative !important;
-      display: inline-block !important;
-    }
-    .mode-knob {
-      width: 8px !important;
-      height: 8px !important;
-      border-radius: 50% !important;
-      background: #ffffff !important;
-      position: absolute !important;
-      top: 2px !important;
-      right: 2px !important;
     }
     .header-contact {
       display: inline-flex !important;
@@ -194,17 +161,17 @@
       text-transform: uppercase !important;
       color: #ffffff !important;
       text-decoration: none !important;
-      padding: 6px 12px !important;
+      padding: 6px 0 !important;
       transition: opacity 0.25s ease !important;
     }
     .header-contact:hover {
       opacity: 0.8 !important;
     }
 
-    /* 3. BREADCRUMB - ALIGNED TO PAGE WIDTH */
+    /* 3. BREADCRUMB */
     .page-breadcrumb {
-      padding: 110px 4vw 0 !important;
-      max-width: 1440px !important;
+      padding: 100px 4vw 0 !important;
+      max-width: 1400px !important;
       margin: 0 auto !important;
       display: flex !important;
       gap: 8px !important;
@@ -223,14 +190,14 @@
       color: #ffffff !important;
     }
 
-    /* 4. EDITORIAL HERO (CRITICAL ALIGNMENT FIX) */
+    /* 4. EDITORIAL HERO */
     .editorial-hero {
       position: relative !important;
       height: auto !important;
       min-height: 0 !important;
       max-height: none !important;
-      padding: 40px 4vw 80px !important;
-      max-width: 1440px !important;
+      padding: 30px 4vw 60px !important;
+      max-width: 1400px !important;
       margin: 0 auto !important;
       box-sizing: border-box !important;
       overflow: visible !important;
@@ -240,7 +207,7 @@
       position: relative !important;
       inset: auto !important;
       transform: none !important;
-      max-width: 1040px !important;
+      max-width: 1000px !important;
       margin: 0 !important;
       padding: 0 !important;
       opacity: 1 !important;
@@ -248,22 +215,22 @@
     }
     .editorial-hero__content h1 {
       font-family: 'Oswald', sans-serif !important;
-      font-size: clamp(48px, 7vw, 100px) !important;
+      font-size: clamp(48px, 6.5vw, 92px) !important;
       font-weight: 700 !important;
       letter-spacing: -1.5px !important;
       line-height: 0.98 !important;
       text-transform: uppercase !important;
-      margin: 0 0 24px !important;
+      margin: 0 0 20px !important;
       color: #ffffff !important;
       word-break: normal !important;
     }
     .editorial-hero__copy {
       font-family: 'Padauk', sans-serif !important;
-      font-size: clamp(16px, 1.8vw, 22px) !important;
+      font-size: clamp(16px, 1.6vw, 20px) !important;
       line-height: 1.65 !important;
       color: #94a3b8 !important;
-      max-width: 880px !important;
-      margin: 0 0 36px !important;
+      max-width: 820px !important;
+      margin: 0 0 32px !important;
       text-align: left !important;
     }
     .editorial-hero__actions {
@@ -272,14 +239,13 @@
       gap: 16px !important;
       align-items: center !important;
       flex-wrap: wrap !important;
-      margin-top: 24px !important;
     }
     .editorial-hero__actions .button {
       font-family: 'Oswald', sans-serif !important;
-      font-size: 13px !important;
+      font-size: 12px !important;
       letter-spacing: 1.5px !important;
       text-transform: uppercase !important;
-      padding: 12px 24px !important;
+      padding: 10px 20px !important;
       border: 1px solid rgba(255, 255, 255, 0.25) !important;
       border-radius: 4px !important;
       background: rgba(255, 255, 255, 0.04) !important;
@@ -295,15 +261,11 @@
       color: #000000 !important;
     }
 
-    .scroll-cue {
-      display: none !important;
-    }
-
-    /* 5. EDITORIAL SECTIONS & CONTENT PADDING */
+    /* 5. EDITORIAL SECTIONS & PRACTICE STORY */
     .editorial-section,
     #page-content {
-      padding: 60px 4vw !important;
-      max-width: 1440px !important;
+      padding: 50px 4vw !important;
+      max-width: 1400px !important;
       margin: 0 auto !important;
       box-sizing: border-box !important;
       position: relative !important;
@@ -320,7 +282,7 @@
       display: flex !important;
       flex-direction: column !important;
       max-width: 100% !important;
-      margin: 40px 0 !important;
+      margin: 0 !important;
       padding: 0 !important;
     }
     .image-story__copy {
@@ -328,20 +290,21 @@
     }
     .image-story__copy h2 {
       font-family: 'Oswald', sans-serif !important;
-      font-size: clamp(36px, 5vw, 64px) !important;
+      font-size: clamp(34px, 4.5vw, 58px) !important;
       font-weight: 700 !important;
       letter-spacing: -1px !important;
       line-height: 1.05 !important;
       color: #ffffff !important;
-      margin: 12px 0 20px !important;
+      margin: 10px 0 20px !important;
       text-transform: uppercase !important;
     }
     .image-story__body p {
       font-family: 'Padauk', sans-serif !important;
-      font-size: 17px !important;
+      font-size: 16px !important;
       line-height: 1.7 !important;
       color: #cbd5e1 !important;
-      margin-bottom: 20px !important;
+      margin-bottom: 18px !important;
+      max-width: 820px !important;
     }
     .eyebrow {
       font-family: 'Oswald', sans-serif !important;
@@ -349,15 +312,125 @@
       letter-spacing: 2.5px !important;
       text-transform: uppercase !important;
       color: #94a3b8 !important;
-      margin-bottom: 12px !important;
+      margin-bottom: 10px !important;
     }
 
-    /* 6. AUTHENTIC AIXIONLAB.COM NAVY FOOTER */
-    .site-footer {
-      background: #0b131e !important;
+    /* 6. ENGINEERING PRINCIPLES - 3 COLUMN CLEAN GRID */
+    .editorial-heading {
+      margin-bottom: 32px !important;
+    }
+    .editorial-heading h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 4vw, 50px) !important;
+      font-weight: 700 !important;
+      letter-spacing: -1px !important;
+      line-height: 1.08 !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+      margin: 8px 0 0 !important;
+    }
+    .principles-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: 32px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+      padding-top: 32px !important;
+    }
+    @media (max-width: 850px) {
+      .principles-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+      }
+    }
+    .principle {
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+    }
+    .principle h3 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 20px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.5px !important;
+      color: #ffffff !important;
+      margin: 0 0 10px !important;
+    }
+    .principle p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      line-height: 1.65 !important;
+      color: #94a3b8 !important;
+      margin: 0 !important;
+    }
+
+    /* 7. CONTACT SECTION (THE LAB PAGE BOTTOM ALIGNMENT) */
+    .contact-layout {
+      display: grid !important;
+      grid-template-columns: 1fr 1.2fr !important;
+      gap: 60px !important;
+      align-items: start !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+      padding-top: 48px !important;
+      margin-top: 20px !important;
+    }
+    @media (max-width: 900px) {
+      .contact-layout {
+        grid-template-columns: 1fr !important;
+        gap: 36px !important;
+      }
+    }
+    .contact-copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 3.8vw, 48px) !important;
+      font-weight: 700 !important;
+      letter-spacing: -1px !important;
+      line-height: 1.08 !important;
+      color: #ffffff !important;
+      margin: 10px 0 16px !important;
+      text-transform: uppercase !important;
+    }
+    .contact-copy p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      line-height: 1.7 !important;
+      color: #94a3b8 !important;
+      max-width: 480px !important;
+    }
+    .contact-list {
+      display: flex !important;
+      flex-direction: column !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    .contact-list a {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 18px 0 !important;
       border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-      padding: 72px 4vw 40px !important;
-      margin-top: 100px !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 16px !important;
+      color: #cbd5e1 !important;
+      text-decoration: none !important;
+      transition: color 0.2s ease !important;
+    }
+    .contact-list a:hover {
+      color: #ffffff !important;
+    }
+    .contact-list a span:last-child {
+      color: #ffffff !important;
+      font-size: 15px !important;
+    }
+
+    /* 8. AUTHENTIC AIXIONLAB.COM NAVY FOOTER (EXACT 3-COLUMN REPLICA) */
+    /* ==========================================================================
+       AIXION LAB - AUTHENTIC 3-COLUMN FOOTER & BASE ALIGNMENT (AIXIONLAB.COM)
+       ========================================================================== */
+
+    .site-footer {
+      background: #0c141d !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+      padding: 56px 4vw 36px !important;
+      margin-top: 80px !important;
       font-family: 'Padauk', sans-serif !important;
       color: #94a3b8 !important;
       width: 100% !important;
@@ -367,58 +440,59 @@
     }
     .site-footer__main {
       display: grid !important;
-      grid-template-columns: 2fr 1fr 1.5fr !important;
-      gap: 60px !important;
-      max-width: 1440px !important;
-      margin: 0 auto 60px !important;
+      grid-template-columns: 1.5fr 1fr 1.2fr !important;
+      gap: 56px !important;
+      max-width: 1400px !important;
+      margin: 0 auto 40px !important;
       align-items: start !important;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 850px) {
       .site-footer__main {
         grid-template-columns: 1fr !important;
-        gap: 40px !important;
+        gap: 32px !important;
       }
     }
     .site-footer__identity {
       display: flex !important;
       flex-direction: column !important;
-      gap: 12px !important;
+      gap: 14px !important;
     }
     .site-footer__eyebrow {
-      font-family: 'Oswald', sans-serif !important;
+      font-family: 'Space Mono', monospace !important;
       font-size: 13px !important;
-      letter-spacing: 3px !important;
+      letter-spacing: 2px !important;
       color: #cbd5e1 !important;
       text-transform: uppercase !important;
       margin: 0 !important;
     }
     .site-footer__statement {
-      font-family: 'Padauk', sans-serif !important;
-      font-size: 17px !important;
-      color: #e2e8f0 !important;
+      font-family: 'Padauk', Georgia, serif !important;
+      font-size: 18px !important;
+      color: #f8fafc !important;
       margin: 0 !important;
-      line-height: 1.5 !important;
+      line-height: 1.35 !important;
+      letter-spacing: 0.2px !important;
     }
     .site-footer__subline {
       font-family: 'Padauk', sans-serif !important;
-      font-size: 15px !important;
+      font-size: 14px !important;
       color: #64748b !important;
       margin: 0 !important;
       line-height: 1.6 !important;
-      max-width: 440px !important;
+      max-width: 420px !important;
     }
 
     .site-footer__links {
       display: flex !important;
       flex-direction: column !important;
-      gap: 14px !important;
+      gap: 12px !important;
     }
     .site-footer__links a {
       font-family: 'Padauk', sans-serif !important;
-      font-size: 15px !important;
+      font-size: 14px !important;
       color: #94a3b8 !important;
       text-decoration: none !important;
-      transition: color 0.25s ease !important;
+      transition: color 0.2s ease !important;
       width: fit-content !important;
     }
     .site-footer__links a:hover {
@@ -428,61 +502,64 @@
     .site-footer__contact {
       display: flex !important;
       flex-direction: column !important;
-      gap: 14px !important;
+      gap: 12px !important;
     }
     .site-footer__desc {
       font-family: 'Padauk', sans-serif !important;
-      font-size: 15px !important;
-      color: #94a3b8 !important;
+      font-size: 14px !important;
+      color: #64748b !important;
     }
     .site-footer__link {
       font-family: 'Padauk', sans-serif !important;
-      font-size: 15px !important;
-      color: #cbd5e1 !important;
+      font-size: 14px !important;
+      color: #94a3b8 !important;
       text-decoration: none !important;
       display: inline-flex !important;
       align-items: center !important;
       gap: 6px !important;
-      transition: color 0.25s ease !important;
+      transition: color 0.2s ease !important;
       width: fit-content !important;
     }
     .site-footer__link:hover {
       color: #ffffff !important;
     }
-    .site-footer__link .arrow {
-      font-size: 14px !important;
-      transition: transform 0.25s ease !important;
-    }
-    .site-footer__link:hover .arrow {
-      transform: translate(2px, -2px) !important;
-    }
 
+    /* Base row: 3 columns perfectly aligned with 1.5fr 1fr 1.2fr */
     .site-footer__base {
-      display: flex !important;
-      justify-content: space-between !important;
+      display: grid !important;
+      grid-template-columns: 1.5fr 1fr 1.2fr !important;
+      gap: 56px !important;
       align-items: center !important;
-      flex-wrap: wrap !important;
-      gap: 20px !important;
-      padding-top: 32px !important;
+      padding-top: 24px !important;
       border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-      max-width: 1440px !important;
+      max-width: 1400px !important;
       margin: 0 auto !important;
       font-size: 12px !important;
       color: #64748b !important;
       font-family: 'Space Mono', monospace !important;
+      box-sizing: border-box !important;
+    }
+    @media (max-width: 850px) {
+      .site-footer__base {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
     }
     .site-footer__badge {
-      letter-spacing: 1.5px !important;
+      letter-spacing: 1px !important;
       text-transform: uppercase !important;
+      white-space: nowrap !important;
     }
     .site-footer__copy {
       color: #64748b !important;
+      white-space: nowrap !important;
     }
     .site-footer__process {
       color: #64748b !important;
       display: flex !important;
-      gap: 8px !important;
+      gap: 6px !important;
       align-items: center !important;
+      white-space: nowrap !important;
     }
     .site-footer__process i {
       font-style: normal !important;
@@ -542,7 +619,8 @@
 
 
   <!-- Global Standard Aixion x Kirifuda Footer -->
-    <!-- Authentic Aixion Lab Navy Footer -->
+      <!-- Authentic Aixion Lab Navy Footer -->
+  <!-- Authentic Production Aixion Lab Footer -->
   <footer class="site-footer">
     <div class="site-footer__main">
       <div class="site-footer__identity">
@@ -559,14 +637,14 @@
       </nav>
       <div class="site-footer__contact">
         <span class="site-footer__desc">Independent applied-engineering lab</span>
-        <a class="site-footer__link" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub <span class="arrow">↗</span></a>
-        <a class="site-footer__link" href="./about.html#contact">Start a conversation <span class="arrow">↗</span></a>
+        <a class="site-footer__link" href="https://github.com/ramgolladi1503-sys" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a class="site-footer__link" href="./about.html#contact">Start a conversation ↗</a>
       </div>
     </div>
     <div class="site-footer__base">
-      <span class="site-footer__badge">AIXION LAB / DEPLOYMENT ATTESTATION UNAVAILABLE</span>
-      <span class="site-footer__copy">© 2026 Aixion Lab</span>
-      <span class="site-footer__process">Research <i>·</i> Build <i>·</i> Validate <i>·</i> Observe <i>·</i> Learn</span>
+      <div class="site-footer__badge">AIXION LAB / DEPLOYMENT ATTESTATION UNAVAILABLE</div>
+      <div class="site-footer__copy">© 2026 Aixion Lab</div>
+      <div class="site-footer__process">Research · Build · Validate · Observe · Learn</div>
     </div>
   </footer>
 
