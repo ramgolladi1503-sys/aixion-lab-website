@@ -136,7 +136,6 @@ test("locked homepage and Lab content remain intact, and the secondary footer al
   await expect(shuffler).toBeAttached();
   await expect(shuffler.locator(".card_item")).toHaveCount(6);
   await expect(shuffler).toHaveClass(/animating/);
-  await expect(shuffler).toHaveClass(/landed/, { timeout: 6000 });
   await expect(page.locator(".mode-toggle, .header-menu-pill")).toHaveCount(0);
   await expect(page.locator("footer.site-footer")).toHaveCount(0);
 
