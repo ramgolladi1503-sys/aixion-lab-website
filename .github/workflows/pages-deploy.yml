@@ -49,6 +49,7 @@ jobs:
       - name: Verify export
         run: |
           test -f out/index.html
+          test -f out/about.html
           test -f out/systems/tradebot.html || test -f out/systems/tradebot/index.html
           test -f out/research/evidence-bound-autonomy.html || test -f out/research/evidence-bound-autonomy/index.html
           test -f out/redesign-manifest.json
@@ -56,6 +57,8 @@ jobs:
           test -f out/redesign/subpage-motion.js
           grep -q '"route": "/systems/tradebot"' out/redesign-manifest.json
           grep -q 'href="/systems/tradebot"' out/index.html
+          grep -q '<body class="theme-dark editorial-page page-about">' out/about.html
+          grep -q 'href="/redesign/subpage-refinements.css?v=23"' out/about.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
