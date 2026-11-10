@@ -51,6 +51,10 @@ for (const [fileName, route] of pages) {
   html = html.replace(/ aria-label="Aixion Lab home"/g, "");
   html = html.replace(/ aria-label="AIXION LAB Applied systems engineering"/g, "");
 
+  if (fileName === "about.html") {
+    html = ensureLabLayout(html);
+  }
+
   // Embedded source styles hide direct nav links on mobile with !important.
   // Append a scoped correction on inner pages only; leave the locked home out.
   if (fileName !== "index.html") {
@@ -160,6 +164,29 @@ function rewriteInternalLinks(html, sourceName) {
     if (!targetRoute) throw new Error(`Unmapped internal page link in ${sourceName}: ${target}`);
     return `href="${targetRoute}${hash}"`;
   });
+}
+
+function ensureLabLayout(html) {
+  const bodyMatch = html.match(/<body\s+class="([^"]*)">/i);
+  if (!bodyMatch) throw new Error("Lab export is missing its body class attribute");
+
+  const bodyClasses = new Set(bodyMatch[1].split(/\s+/).filter(Boolean));
+  bodyClasses.add("editorial-page");
+  bodyClasses.add("page-about");
+  html = html.replace(bodyMatch[0], `<body class="${[...bodyClasses].join(" ")}">`);
+
+  const stylesheetHref = "/redesign/subpage-refinements.css?v=23";
+  if (!html.includes('href="/redesign/subpage-refinements.css')) {
+    if (!html.includes("</head>")) throw new Error("Lab export is missing its head closing tag");
+    html = html.replace("</head>", `  <link rel="stylesheet" href="${stylesheetHref}">\n</head>`);
+  }
+
+  if (!html.includes('class="theme-dark editorial-page page-about"')
+      || !html.includes('href="/redesign/subpage-refinements.css')) {
+    throw new Error("Lab export is missing its page-specific layout contract");
+  }
+
+  return html;
 }
 
 function titleFrom(html) {
