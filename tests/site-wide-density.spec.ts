@@ -21,6 +21,15 @@ const publicRoutes = [
   "/page-that-does-not-exist",
 ];
 const overviewRoutes = new Set(["/work", "/research", "/journey"]);
+const labelAuditRoutes = [
+  "/work",
+  "/research",
+  "/journey",
+  "/resume",
+  "/systems/tradebot",
+  "/systems/control-core",
+  "/research/evidence-bound-autonomy",
+];
 
 test("routes avoid overflow and excess padding; overview body copy remains readable", async ({ page }) => {
   for (const route of publicRoutes) {
@@ -84,23 +93,25 @@ test("small interface labels and captions remain readable across public routes",
     ".site-footer .site-footer__base",
   ];
 
-  for (const route of publicRoutes.filter((item) => item !== "/page-that-does-not-exist")) {
+  // Audit one route for each editable page template. The locked home and Lab
+  // pages have separate preservation and accessibility checks.
+  for (const route of labelAuditRoutes) {
     await page.goto(route, { waitUntil: "domcontentloaded" });
-    for (const selector of readableLabels) {
-      const elements = page.locator(selector);
-      for (const element of await elements.all()) {
-        const layout = await element.evaluate((node) => {
-          const style = getComputedStyle(node);
-          const rect = node.getBoundingClientRect();
-          return {
-            visible: rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden",
-            text: (node.textContent ?? "").trim().slice(0, 64),
-            size: parseFloat(style.fontSize),
-          };
-        });
-        if (layout.visible) {
-          expect(layout.size, `${route} ${selector} should be at least 12px: ${layout.text}`).toBeGreaterThanOrEqual(12);
-        }
+    const layouts = await page.evaluate((selectors) => selectors.flatMap((selector) =>
+      [...document.querySelectorAll(selector)].map((node) => {
+        const style = getComputedStyle(node);
+        const rect = node.getBoundingClientRect();
+        return {
+          selector,
+          visible: rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden",
+          text: (node.textContent ?? "").trim().slice(0, 64),
+          size: parseFloat(style.fontSize),
+        };
+      }),
+    ), readableLabels);
+    for (const layout of layouts) {
+      if (layout.visible) {
+        expect(layout.size, `${route} ${layout.selector} should be at least 12px: ${layout.text}`).toBeGreaterThanOrEqual(12);
       }
     }
   }
