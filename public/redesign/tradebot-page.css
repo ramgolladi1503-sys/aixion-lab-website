@@ -1,0 +1,307 @@
+/* TradeBot-only layout and legibility corrections. Footer styles are intentionally out of scope. */
+body.page-tradebot {
+  --tradebot-gutter: clamp(24px, 4vw, 80px);
+}
+
+html.subpage-native-scroll {
+  scroll-behavior: smooth;
+  scroll-padding-top: 0 !important;
+}
+
+body.page-tradebot .site-header__inner {
+  max-width: none !important;
+  padding-right: var(--tradebot-gutter) !important;
+  padding-left: var(--tradebot-gutter) !important;
+}
+
+body.page-tradebot > .page-breadcrumb {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 100px var(--tradebot-gutter) 8px !important;
+  box-sizing: border-box !important;
+  align-items: center;
+  font-size: 12px !important;
+  line-height: 1.4;
+}
+
+body.page-tradebot main {
+  width: calc(100% - (2 * var(--tradebot-gutter))) !important;
+}
+
+body.page-tradebot main .page-width,
+body.page-tradebot main .system-subnav,
+body.page-tradebot main .system-facts,
+body.page-tradebot main .architecture-wrap,
+body.page-tradebot main .detail-grid,
+body.page-tradebot main .evidence-list,
+body.page-tradebot main .system-timeline {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+body.page-tradebot main .editorial-hero {
+  position: relative !important;
+  padding: 34px 0 38px !important;
+}
+
+body.page-tradebot main .editorial-hero__content {
+  left: 0 !important;
+  right: auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr) !important;
+  align-items: end !important;
+  column-gap: clamp(28px, 5vw, 88px) !important;
+  max-width: none !important;
+}
+
+body.page-tradebot main .editorial-hero__content > .eyebrow,
+body.page-tradebot main .editorial-hero__content > h1 {
+  grid-column: 1 / -1 !important;
+}
+
+body.page-tradebot main .editorial-hero__content > .editorial-hero__copy {
+  grid-column: 1 !important;
+  max-width: 68ch !important;
+  margin-bottom: 0 !important;
+}
+
+body.page-tradebot main .editorial-hero__content > .editorial-hero__actions {
+  grid-column: 2 !important;
+  grid-row: 3 !important;
+  justify-self: start !important;
+  align-self: end !important;
+  margin: 0 !important;
+}
+
+body.page-tradebot main .editorial-hero__actions .system-hero-meta {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+body.page-tradebot main .scroll-cue {
+  position: static !important;
+  inset: auto !important;
+  display: flex !important;
+  justify-content: flex-end;
+  width: 100%;
+  margin: 28px 0 0 !important;
+  padding: 0 !important;
+  color: #aab7c5 !important;
+  font-size: 13px !important;
+  line-height: 1.4;
+}
+
+body.page-tradebot main .system-subnav-wrap {
+  position: relative !important;
+  top: auto !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  padding: 0 var(--tradebot-gutter) !important;
+  box-sizing: border-box !important;
+  background: rgba(9, 15, 22, 0.96) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+body.page-tradebot main .system-subnav {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  gap: clamp(14px, 2vw, 32px) !important;
+  min-height: 54px;
+  margin: 0 !important;
+  padding: 10px 0 !important;
+  overflow-x: auto !important;
+  background: transparent !important;
+  scrollbar-width: thin;
+  scrollbar-color: #586575 transparent;
+}
+
+body.page-tradebot main .system-subnav a {
+  flex: 0 0 auto;
+  padding: 7px 0 !important;
+  color: #aab7c5 !important;
+  background: transparent !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.09em;
+  white-space: nowrap;
+  text-decoration: none !important;
+}
+
+body.page-tradebot main .system-subnav a:hover,
+body.page-tradebot main .system-subnav a:focus-visible {
+  color: #ffffff !important;
+  background: transparent !important;
+  box-shadow: inset 0 -2px #c75a64;
+  outline: none;
+}
+
+body.page-tradebot main #page-content {
+  background: #07090d !important;
+  padding-top: 30px !important;
+  padding-bottom: 36px !important;
+}
+
+body.page-tradebot main .system-facts {
+  margin: 0 0 14px !important;
+  padding: 24px 0 !important;
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+body.page-tradebot main .system-facts dt {
+  color: #a0adbb !important;
+  font-size: 13px !important;
+  line-height: 1.4;
+}
+
+body.page-tradebot main .image-story {
+  display: block !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  width: 100% !important;
+  margin: 0 0 42px !important;
+}
+
+body.page-tradebot main .image-story__media {
+  display: none !important;
+}
+
+body.page-tradebot main .image-story__copy {
+  width: min(100%, 92ch) !important;
+  max-width: 92ch !important;
+}
+
+body.page-tradebot main #engineering .impact-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+  margin: 28px 0 42px !important;
+}
+
+body.page-tradebot main #engineering .engineering-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+  margin: 28px 0 24px !important;
+}
+
+body.page-tradebot main .detail-card {
+  min-width: 0;
+  padding: clamp(24px, 2.5vw, 36px) !important;
+}
+
+body.page-tradebot main .detail-card h3 {
+  font-size: clamp(21px, 1.65vw, 26px) !important;
+  line-height: 1.18 !important;
+}
+
+body.page-tradebot main .detail-card p {
+  font-size: 17px !important;
+  line-height: 1.6 !important;
+}
+
+body.page-tradebot main .sentinel-tab-strip button > div:first-child {
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+}
+
+body.page-tradebot main .sentinel-tab-strip button > div:last-child {
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+}
+
+body.page-tradebot main .sentinel-vector-stage code,
+body.page-tradebot main .sentinel-vector-stage pre {
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+}
+
+body.page-tradebot main #evidence {
+  padding-bottom: 30px !important;
+}
+
+body.page-tradebot main #evidence .evidence-list {
+  margin-bottom: 0 !important;
+}
+
+body.page-tradebot main #roadmap {
+  padding-top: clamp(36px, 4vw, 56px) !important;
+}
+
+body.page-tradebot main :is(section[id], #system-current-state, #timeline) {
+  scroll-margin-top: 96px;
+}
+
+@media (max-width: 900px) {
+  body.page-tradebot main .editorial-hero__content {
+    grid-template-columns: minmax(0, 1fr) !important;
+    row-gap: 18px;
+  }
+
+  body.page-tradebot main .editorial-hero__content > .editorial-hero__copy,
+  body.page-tradebot main .editorial-hero__content > .editorial-hero__actions {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  body.page-tradebot main .scroll-cue {
+    justify-content: flex-start;
+  }
+
+  body.page-tradebot main #engineering .engineering-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  body.page-tradebot > .page-breadcrumb {
+    padding-top: 92px !important;
+  }
+
+  body.page-tradebot main .editorial-hero {
+    padding-top: 24px !important;
+    padding-bottom: 28px !important;
+  }
+
+  body.page-tradebot main .editorial-hero__content h1 {
+    font-size: clamp(56px, 18vw, 88px) !important;
+    line-height: 0.98 !important;
+    overflow-wrap: anywhere;
+  }
+
+  body.page-tradebot main .system-facts,
+  body.page-tradebot main #engineering .impact-grid,
+  body.page-tradebot main #engineering .engineering-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  body.page-tradebot main .system-facts div {
+    padding: 0 0 16px !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  body.page-tradebot main .system-facts div:last-child {
+    padding-bottom: 0 !important;
+    border-bottom: 0;
+  }
+
+  body.page-tradebot main .detail-card {
+    padding: 24px !important;
+  }
+
+  body.page-tradebot main .sentinel-vector-stage {
+    padding: 24px 20px !important;
+    gap: 24px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.subpage-native-scroll {
+    scroll-behavior: auto;
+  }
+}

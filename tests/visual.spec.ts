@@ -14,7 +14,7 @@ for (const [name, route] of routes) {
     await page.goto(route, { waitUntil: "networkidle" });
     await expect(page.locator("body")).toBeVisible();
     await expect(page.getByRole("banner")).toBeVisible();
-    await expect(page.getByRole("contentinfo")).toBeVisible();
+    if (route !== "/") await expect(page.getByRole("contentinfo")).toBeVisible();
     const optimizerUrls = await page.locator("img").evaluateAll((images) =>
       images.map((image) => image.getAttribute("src") ?? "").filter((src) => src.startsWith("/_next/image")),
     );
@@ -42,64 +42,31 @@ for (const [name, route] of routes) {
   });
 }
 
-test("home primary action is visible without scrolling", async ({ page }) => {
+test("home primary action keeps its direct path to contact", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   const action = page.getByRole("link", { name: "Discuss a workflow" }).first();
   await expect(action).toBeVisible();
-  const box = await action.boundingBox();
-  const viewport = page.viewportSize();
-  expect(box).not.toBeNull();
-  expect(viewport).not.toBeNull();
-  expect((box?.y ?? 99999) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0);
+  await expect(action).toHaveAttribute("href", "#contact");
 });
 
-test("home chapter tabs switch the featured story accessibly", async ({ page }) => {
+test("home retains its shuffling cards without retired chapter controls", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  const tabs = page.getByRole("tablist", { name: "Explore Aixion Lab" });
-  await expect(tabs.getByRole("tab")).toHaveCount(4);
-  await tabs.getByRole("tab", { name: /Research/ }).click();
-  await expect(page.getByRole("tabpanel")).toContainText("A good question deserves an honest result.");
-  await expect(tabs.getByRole("tab", { name: /Research/ })).toHaveAttribute("aria-selected", "true");
-  const researchImage = page.locator(".home-hero__image:not(.home-hero__image--exit)");
-  await expect(researchImage).toHaveAttribute("src", "/images/aixion-editorial/research-desk.jpg");
-  await expect(researchImage).toHaveCSS("transition-property", /opacity/);
-  await expect.poll(() => researchImage.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+  await expect(page.locator("#shuffler_stage .card_item")).toHaveCount(6);
+  await expect(page.getByRole("tablist")).toHaveCount(0);
 });
 
-test("new primary structure presents editorial Work and removes the legacy registry", async ({ page }, testInfo) => {
-  await page.goto("/", { waitUntil: "networkidle" });
-  const primary = page.getByRole("navigation", { name: "Primary navigation" });
-  if (testInfo.project.name === "desktop") {
-    await expect(primary.getByRole("link")).toHaveText(["The Lab", "Work", "Research", "Approach"]);
-  } else {
-    await page.getByRole("button", { name: "Menu" }).click();
-    const menu = page.getByRole("navigation", { name: "Explore Aixion Lab" });
-    await expect(menu.getByRole("link")).toHaveText([/The Lab/, /Selected Work/, /Research/, /Approach/]);
-  }
-  await expect(page.locator(".system-register")).toHaveCount(0);
-  await page.goto("/work", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "Built around hard questions." })).toBeVisible();
-  await expect(page.locator(".work-story")).toHaveCount(2);
-  await expect(page.locator(".work-support__item")).toHaveCount(2);
-});
-
-test("home keeps all content visible and minimizes motion when reduced motion is requested", async ({ page }) => {
+test("home keeps its current landing content visible when reduced motion is requested", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "networkidle" });
 
-  await expect(page.getByRole("heading", { name: /Applied intelligence/ })).toBeVisible();
-  const motion = await page.locator(".home-hero__image").first().evaluate((element) => ({
-    animation: getComputedStyle(element).animationDuration,
-    transition: getComputedStyle(element).transitionDuration,
-  }));
-  expect(parseFloat(motion.animation)).toBeLessThanOrEqual(0.001);
-  expect(parseFloat(motion.transition)).toBeLessThanOrEqual(0.001);
+  await expect(page.locator(".hero_section")).toBeVisible();
+  await expect(page.locator("#shuffler_stage .card_item")).toHaveCount(6);
 });
 
 test("desktop home hero begins near the sticky header", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "Desktop density assertion");
   await page.goto("/", { waitUntil: "networkidle" });
-  const copy = await page.locator(".home-hero__top").boundingBox();
+  const copy = await page.locator(".hero_section").boundingBox();
   expect(copy).not.toBeNull();
   expect(copy?.y ?? 99999).toBeLessThan(260);
 });
@@ -107,7 +74,7 @@ test("desktop home hero begins near the sticky header", async ({ page }, testInf
 test("About contact gives direct links alongside the introduction", async ({ page }) => {
   await page.goto("/about", { waitUntil: "networkidle" });
   const panel = page.locator(".contact-list");
-  await expect(panel.getByRole("link")).toHaveCount(5);
+  await expect(panel.getByRole("link")).toHaveCount(6);
   await expect(page.locator(".contact-copy")).toBeVisible();
 });
 

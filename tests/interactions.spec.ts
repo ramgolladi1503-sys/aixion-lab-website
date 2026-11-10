@@ -1,77 +1,49 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
-test("Lab Career mode changes presentation state", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "The view toggle is intentionally desktop-only; mobile exposes Career view in navigation");
-  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  const toggle = page.getByRole("button", { name: "Toggle Lab and Career view" });
-  await toggle.click();
-  await expect(page.locator("html")).toHaveAttribute("data-view", "career");
-  await expect(page.locator(".career-only").first()).toBeVisible();
-  await expect(toggle).toContainText("Career");
-});
-
-test("Research status filters are functional", async ({ page }) => {
+test("Research status filters update visible records and selection state", async ({ page }) => {
   await page.goto("/research", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Rejected" }).click();
-  const results = page.locator(".research-list");
-  await expect(results.getByRole("heading", { name: "Mean reversion candidate" })).toBeVisible();
-  await expect(results.getByRole("heading", { name: "Opening-session market structure" })).toHaveCount(0);
+  const rows = page.locator(".research-list .research-row");
+  await expect(rows).toHaveCount(4);
+  const rejected = page.getByRole("button", { name: "Rejected" });
+  await rejected.click();
+  await expect(rejected).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("heading", { name: "Mean reversion candidate" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Opening-session market structure" })).toBeHidden();
 });
 
-test("Evidence Drawer is proof-first and closes", async ({ page }) => {
+test("system evidence drawers open, close with Escape, and return focus to their trigger", async ({ page }) => {
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: /Inspect evidence/ }).first().click();
+  const trigger = page.getByRole("button", { name: "Inspect evidence" }).first();
+  await trigger.scrollIntoViewIfNeeded();
+  await trigger.click();
+
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
   await expect(dialog.getByText("RESULT / STATE")).toBeVisible();
-  await expect(dialog.getByText("PUBLIC PROOF")).toBeVisible();
+  await expect(dialog.getByText("PUBLIC PROOF STATUS")).toBeVisible();
   await expect(dialog.getByText("Public boundary")).toBeVisible();
-  const close = dialog.getByRole("button", { name: "Close evidence" });
-  const box = await close.boundingBox();
-  expect(box?.width ?? 0).toBeGreaterThanOrEqual(40);
-  expect(box?.height ?? 0).toBeGreaterThanOrEqual(40);
-  await close.click();
-  await expect(dialog).toBeHidden();
-});
+  await expect(dialog.getByRole("button", { name: "Close evidence" })).toBeFocused();
 
-test("header menu supports keyboard navigation", async ({ page }) => {
-  await page.goto("/", { waitUntil: "networkidle" });
-  const trigger = page.getByRole("button", { name: "Menu" });
-  await trigger.click();
-  const menu = page.getByRole("navigation", { name: "Explore Aixion Lab" });
-  await expect(menu.getByRole("link")).toHaveCount(4);
-  await page.keyboard.press("Tab");
-  await expect(menu.getByRole("link").first()).toBeFocused();
   await page.keyboard.press("Escape");
-  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(dialog).toBeHidden();
   await expect(trigger).toBeFocused();
 });
 
-test("Primary navigation exposes active route", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "Desktop active navigation assertion");
-  await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
-  await expect(page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Work" })).toHaveAttribute("aria-current", "page");
+test("system pages expose the four direct destinations and suppress View Lab and Menu", async ({ page }) => {
+  for (const route of ["/systems/tradebot", "/systems/control-core", "/systems/automation", "/systems/analytics"]) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    const nav = page.getByRole("navigation", { name: "Primary navigation" });
+    await expect(nav.getByRole("link")).toHaveText(["The Lab", "Work", "Research", "Approach"]);
+    await expect(page.locator(".mode-toggle, .header-menu-pill")).toHaveCount(0);
+  }
 });
 
-test("System page exposes internal navigation", async ({ page }) => {
+test("system detail navigation jumps to its labeled sections", async ({ page }) => {
   await page.goto("/systems/tradebot", { waitUntil: "networkidle" });
   const nav = page.getByRole("navigation", { name: "TradeBot page sections" });
-  await expect(nav.getByRole("link", { name: "Architecture" })).toBeVisible();
-  await expect(nav.getByRole("link", { name: "Research" })).toBeVisible();
-  await expect(nav.getByRole("link", { name: "Evidence" })).toBeVisible();
-});
-
-test("Mobile navigation exposes locked routes with usable targets", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== "mobile", "Mobile navigation test runs only in mobile project");
-  await page.goto("/", { waitUntil: "networkidle" });
-  const menu = page.getByRole("button", { name: "Menu" });
-  const menuBox = await menu.boundingBox();
-  expect(menuBox?.height ?? 0).toBeGreaterThanOrEqual(40);
-  await menu.click();
-  const navigation = page.getByRole("navigation", { name: "Explore Aixion Lab" });
-  await expect(navigation).toBeVisible();
-  const work = navigation.getByRole("link", { name: "Selected Work" });
-  await expect(work).toBeVisible();
-  const linkBox = await work.boundingBox();
-  expect(linkBox?.height ?? 0).toBeGreaterThanOrEqual(40);
+  const evidence = nav.getByRole("link", { name: "Evidence" });
+  await expect(evidence).toHaveAttribute("href", "#evidence");
+  await evidence.click();
+  await expect(page).toHaveURL(/#evidence$/);
+  await expect(page.locator("#evidence")).toBeInViewport();
 });

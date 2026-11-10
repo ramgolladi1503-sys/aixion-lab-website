@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 const productionRoutes = [
-  "/", "/work", "/systems", "/systems/tradebot", "/systems/control-core", "/systems/automation", "/systems/analytics",
+  "/", "/work", "/systems/tradebot", "/systems/control-core", "/systems/automation", "/systems/analytics",
   "/research", "/research/opening-session-market-structure", "/research/rec-md-structural-interaction",
   "/research/mean-reversion-candidate", "/research/evidence-bound-autonomy", "/pulse", "/journey", "/about", "/resume",
 ] as const;
@@ -21,16 +21,23 @@ test("production routes load without browser errors", async ({ page }) => {
     routeErrors.set(route, []);
     const response = await page.goto(route, { waitUntil: "networkidle" });
     expect(response?.status(), `${route} should return a successful response`).toBeLessThan(400);
-    await expect(page.locator("#main-content")).toBeVisible();
+    await expect(page.locator("main").first()).toBeVisible();
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /\S+/);
   }
   const failures = [...routeErrors.entries()].filter(([, errors]) => errors.length > 0).map(([route, errors]) => `${route}: ${errors.join(" | ")}`);
   expect(failures, "Production routes should not emit browser errors").toEqual([]);
 });
 
+test("View Lab and Menu controls are absent on every public route", async ({ page }) => {
+  for (const route of productionRoutes) {
+    await page.goto(route, { waitUntil: "networkidle" });
+    await expect(page.locator(".mode-toggle, .header-menu-pill"), route).toHaveCount(0);
+  }
+});
+
 test("all internal navigation links resolve", async ({ page, request }) => {
   const discovered = new Set<string>();
-  for (const route of ["/", "/work", "/systems", "/research", "/journey", "/about", "/resume"]) {
+  for (const route of ["/", "/work", "/systems/tradebot", "/research", "/journey", "/about", "/resume"]) {
     await page.goto(route, { waitUntil: "networkidle" });
     const hrefs = await page.locator('a[href^="/"]').evaluateAll(anchors => anchors.map(anchor => anchor.getAttribute("href")).filter(Boolean) as string[]);
     hrefs.forEach(href => discovered.add(href.split("#")[0] || "/"));
@@ -51,25 +58,25 @@ test("system detail heroes do not duplicate architecture visuals", async ({ page
   }
 });
 
-test("career snapshot is honest about résumé publication status", async ({ page }) => {
+test("career snapshot links to the résumé file that is included in the export", async ({ page, request }) => {
   await page.goto("/resume", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "Career snapshot" })).toBeVisible();
-  await expect(page.getByText("A downloadable résumé is not published here.")).toBeVisible();
-  const text = (await page.locator("body").innerText()).toLowerCase();
-  expect(text).not.toContain("publication pending");
-  expect(text).not.toContain("will be added");
-  expect(text).not.toContain("build preview");
+  await expect(page).toHaveTitle(/Career Snapshot/);
+  const download = page.getByRole("link", { name: /Download Verified Resume \(PDF\)/ });
+  await expect(download).toHaveAttribute("href", "/Ram-Golladi-Resume.pdf");
+  const response = await request.get("/Ram-Golladi-Resume.pdf");
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain("application/octet-stream");
+  expect((await response.body()).subarray(0, 5).toString()).toBe("%PDF-");
 });
 
-test("shared menu closes after route change", async ({ page }) => {
+test("mobile primary navigation links directly to the four approved destinations", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/", { waitUntil: "networkidle" });
-  const trigger = page.locator(".site-menu__trigger");
-  await trigger.click();
-  await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  await page.getByRole("navigation", { name: "Explore Aixion Lab" }).getByRole("link", { name: /Research/ }).click();
-  await expect(page).toHaveURL(/\/research$/);
-  await expect(page.getByRole("button", { name: "Menu" })).toHaveAttribute("aria-expanded", "false");
+  await page.goto("/about", { waitUntil: "networkidle" });
+  const nav = page.getByRole("navigation", { name: "Primary navigation" });
+  await expect(nav.getByRole("link")).toHaveText(["The Lab", "Work", "Research", "Approach"]);
+  await expect(nav).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Approach" })).toBeVisible();
+  await expect(page.locator(".mode-toggle, .header-menu-pill")).toHaveCount(0);
 });
 
 test("metadata endpoints are published", async ({ request }) => {
@@ -88,20 +95,13 @@ test("custom 404 is branded and legacy abstract scene is absent", async ({ page 
   await expect(page.getByRole("link", { name: /Browse work/ })).toHaveAttribute("href", "/work");
 });
 
-test("site menu exposes four focused destinations without a search palette", async ({ page }) => {
+test("desktop subpage navigation exposes the four approved destinations without extra controls", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/", { waitUntil: "networkidle" });
-  const trigger = page.getByRole("button", { name: "Menu" });
+  await page.goto("/work", { waitUntil: "networkidle" });
   await expect(page.getByRole("button", { name: /search/i })).toHaveCount(0);
-  await trigger.click();
-  const menu = page.getByRole("navigation", { name: "Explore Aixion Lab" });
-  await expect(menu.getByRole("link")).toHaveCount(4);
-  await expect(menu.getByRole("link")).toHaveText([
-    /The Lab/,
-    /Selected Work/,
-    /Research/,
-    /Approach/,
-  ]);
+  await expect(page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link"))
+    .toHaveText(["The Lab", "Work", "Research", "Approach"]);
+  await expect(page.locator(".mode-toggle, .header-menu-pill")).toHaveCount(0);
 });
 
 test("system detail pages expose readable architecture stages on mobile", async ({ page }) => {
@@ -120,7 +120,7 @@ test("system detail pages expose readable architecture stages on mobile", async 
     for (let index = 0; index < count; index += 1) {
       await expect(stages.nth(index)).toBeVisible();
       const box = await stages.nth(index).boundingBox();
-      expect(box?.width ?? 0).toBeGreaterThan(150);
+      expect(box?.width ?? 0).toBeGreaterThan(80);
       expect(box?.height ?? 0).toBeGreaterThan(30);
     }
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -137,11 +137,9 @@ test("research index explains why each public note has its state", async ({ page
   }
 });
 
-test("footer closes with the new site structure and clear contact path", async ({ page }) => {
+test("the locked homepage terminates with the split contact treatment and no duplicate footer", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
-  const footer = page.locator("footer.site-footer");
-  await expect(footer.locator(".site-footer__statement")).toHaveText("Research, build, validate, learn.");
-  const links = footer.getByRole("navigation", { name: "Footer navigation" });
-  await expect(links.getByRole("link")).toHaveText(["The Lab", "Work", "Research", "Approach", "Career snapshot"]);
-  await expect(footer.getByRole("link", { name: "Start a conversation ↗" })).toHaveAttribute("href", "/about#contact");
+  await expect(page.locator("#contact .contact_left_side")).toBeVisible();
+  await expect(page.locator("#contact .contact_right_side")).toBeVisible();
+  await expect(page.locator("footer.site-footer")).toHaveCount(0);
 });

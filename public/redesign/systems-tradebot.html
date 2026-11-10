@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TradeBot Sentinel — Aixion Lab</title>
@@ -13,28 +14,28 @@
   <style id="subpage-refined-css">
 
     /* ==========================================================================
-       AIXION LAB - CANONICAL SUBPAGE & FOOTER ALIGNMENT
+       AIXION x KIRIFUDA MASTER PURE-TYPOGRAPHIC STYLES
+       - Zero Image Dependencies (All images removed for crisp minimal aesthetics)
+       - Full Text Alignment & Justification
+       - Single-Line Status Badges & Action CTAs
+       - Elimination of all numbering traces
        ========================================================================== */
 
     html {
       overflow-y: scroll !important;
       overflow-x: hidden !important;
-      scroll-behavior: smooth;
     }
     body {
       overflow-x: hidden !important;
       position: relative !important;
       font-family: 'Padauk', sans-serif !important;
-      color: #e2e8f0 !important;
+      color: #e0e0e0 !important;
       background-color: #070709 !important;
-      margin: 0 !important;
-      padding: 0 !important;
     }
 
-    /* 1. HIDE ALL ARTIFACTS, IMAGES & STRAY BADGES */
+    /* 1. HIDE ALL IMAGES, BROKEN BOXES & RESIDUAL NUMBERING */
     img,
     .editorial-hero__image,
-    .editorial-hero__shade,
     .work-story__image,
     .work-support__image,
     .image-story__media,
@@ -46,42 +47,771 @@
     .home-work__index,
     .journey-spectrum__active-index,
     .journey-spectrum__number,
-    .journey-spectrum__dot,
-    .header-menu-pill,
-    .mode-toggle,
-    .scroll-cue {
+    .journey-spectrum__dot {
       display: none !important;
     }
 
-    /* 2. HEADER - 4 TABS + CONTACT ↗ */
+    /* 2. SUBPAGE HERO (Clean Editorial Layout) */
+    .editorial-hero {
+      padding: 140px 4vw 60px !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+    }
+    .editorial-hero__content {
+      max-width: 1000px !important;
+    }
+    .editorial-hero__content h1 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(48px, 8vw, 110px) !important;
+      font-weight: 700 !important;
+      letter-spacing: -1.5px !important;
+      line-height: 0.95 !important;
+      text-transform: uppercase !important;
+      margin: 0 0 24px !important;
+      color: #ffffff !important;
+    }
+    .editorial-hero__copy {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: clamp(16px, 1.8vw, 22px) !important;
+      line-height: 1.65 !important;
+      color: #aaaaaa !important;
+      max-width: 900px !important;
+      margin-bottom: 32px !important;
+      text-align: justify !important;
+      text-justify: inter-word !important;
+    }
+    .editorial-hero__actions {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 20px !important;
+      margin-top: 30px !important;
+    }
+    .editorial-hero__actions .button,
+    .editorial-hero__actions .button-secondary,
+    .editorial-hero__actions a {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 14px 28px !important;
+      border: 1px solid #ffffff !important;
+      background: transparent !important;
+      color: #ffffff !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      text-decoration: none !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .editorial-hero__actions .button:hover,
+    .editorial-hero__actions .button-secondary:hover,
+    .editorial-hero__actions a:hover {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    /* 3. PARAGRAPHS & EDITORIAL BODY JUSTIFICATION */
+    p,    .editorial-heading__copy,    .image-story__body p,
+    .chapter-copy p,
+    .work-story__copy p,
+    .detail-card p,
+    .content-card p {
+      text-align: justify !important;
+      text-justify: inter-word !important;
+      line-height: 1.75 !important;
+    }
+
+    /* Headings remain aligned left */
+    h1, h2, h3, h4, .eyebrow, dt {
+      text-align: left !important;
+    }
+
+    /* 4. WORK STORIES (Pure Typographic Presentation) */
+    .work-story, .work-story--reverse {
+      display: block !important;
+      width: 100% !important;
+      margin: 60px 0 !important;
+      padding: 48px !important;
+      border: 1px solid #202024 !important;
+      background: rgba(12, 12, 16, 0.6) !important;
+      box-sizing: border-box !important;
+      direction: ltr !important;
+    }
+    .work-story__copy {
+      max-width: 900px !important;
+    }
+    .work-story__copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 4.5vw, 54px) !important;
+      line-height: 1.05 !important;
+      margin: 12px 0 20px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .work-story__state {
+      display: inline-flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 14px !important;
+      margin: 16px 0 24px !important;
+    }
+    .work-story__state span:last-child {
+      font-family: 'Space Mono', monospace !important;
+      font-size: 13px !important;
+      color: #888888 !important;
+    }
+    .work-story dl {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+      gap: 24px !important;
+      margin: 28px 0 !important;
+      padding: 24px 0 !important;
+      border-top: 1px solid #1c1c22 !important;
+      border-bottom: 1px solid #1c1c22 !important;
+    }
+    .work-story dt {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #666666 !important;
+      text-transform: uppercase !important;
+      margin-bottom: 6px !important;
+    }
+    .work-story dd {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #cccccc !important;
+      margin: 0 !important;
+      line-height: 1.5 !important;
+    }
+
+    /* Work Support 2-Column Grid (Automation & Analytics Lab) */
+    .work-support__list {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 32px !important;
+      margin: 60px 0 100px !important;
+    }
+    @media (max-width: 800px) {
+      .work-support__list {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .work-support__item {
+      border: 1px solid #202024 !important;
+      padding: 40px !important;
+      background: rgba(12, 12, 16, 0.6) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      gap: 24px !important;
+    }
+    .work-support__title {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      margin-bottom: 8px !important;
+    }
+    .work-support__title h3 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 28px !important;
+      margin: 0 !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+
+    /* 5. IMAGE STORY (about.html & subpages without images) */
+    .image-story, .image-story--reverse {
+      display: block !important;
+      margin: 60px 0 !important;
+      width: 100% !important;
+    }
+    .image-story__copy {
+      max-width: 900px !important;
+    }
+    .image-story__copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 5vw, 64px) !important;
+      line-height: 1.05 !important;
+      margin: 16px 0 24px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+
+    /* 6. SYSTEM FACTS (Current gate, Current focus, Next gate) */
+    .system-facts {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 24px !important;
+      margin: 40px 0 20px !important;
+      padding: 32px 0 !important;
+      border-top: 1px solid #282828 !important;
+      border-bottom: 1px solid #282828 !important;
+      width: 100% !important;
+    }
+    @media (max-width: 900px) {
+      .system-facts {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+      }
+    }
+    .system-facts div {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      padding-right: 20px !important;
+      border-right: 1px solid #1a1a1a !important;
+    }
+    .system-facts div:last-child {
+      border-right: none !important;
+    }
+    .system-facts dt {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #666666 !important;
+    }
+    .system-facts dd {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      line-height: 1.5 !important;
+      font-weight: 500 !important;
+    }
+
+    /* 7. CAREER STRIP (Tags/Badges) */
+    .career-strip {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 16px !important;
+      padding: 24px 0 !important;
+      border-bottom: 1px solid #282828 !important;
+    }
+    .career-strip > span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #666666 !important;
+      text-transform: uppercase !important;
+      margin-right: 8px !important;
+    }
+    .career-strip div {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+    .career-strip i {
+      font-style: normal !important;
+      font-family: 'Space Mono', monospace !important;
+      font-size: 11px !important;
+      color: #aaaaaa !important;
+      background: #111116 !important;
+      border: 1px solid #222228 !important;
+      padding: 5px 12px !important;
+      border-radius: 2px !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    /* 8. SYSTEM SIGNAL FLOW (Horizontal Connected Pipeline) */
+    ol.signal-line {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      list-style: none !important;
+      margin: 28px 0 60px !important;
+      padding: 0 !important;
+      gap: 16px !important;
+    }
+    ol.signal-line li {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 14px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      background: #0d0d12 !important;
+      border: 1px solid #25252c !important;
+      padding: 10px 20px !important;
+      transition: all 0.3s ease !important;
+    }
+    ol.signal-line li::after {
+      content: '→' !important;
+      color: #444444 !important;
+      font-size: 14px !important;
+      margin-left: 8px !important;
+    }
+    ol.signal-line li:last-child::after {
+      display: none !important;
+    }
+    ol.signal-line li:hover {
+      border-color: #ffffff !important;
+      transform: translateY(-2px) !important;
+    }
+
+    /* 9. TIMELINE / MILESTONES (DATA / RESEARCH / LIVE) */
+    .system-timeline {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+      gap: 20px !important;
+      margin: 30px 0 60px !important;
+    }
+    .system-timeline > div {
+      border: 1px solid #282828 !important;
+      padding: 24px 28px !important;
+      background: rgba(10, 10, 14, 0.7) !important;
+    }
+    .system-timeline span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 2px !important;
+      color: #777777 !important;
+      text-transform: uppercase !important;
+      display: block !important;
+      margin-bottom: 8px !important;
+    }
+    .system-timeline strong {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 17px !important;
+      color: #ffffff !important;
+      font-weight: 500 !important;
+      line-height: 1.5 !important;
+    }
+
+    /* 10. EVIDENCE ROWS & ACTIONS */
+    .evidence-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+      margin: 36px 0 60px !important;
+    }
+    .evidence-row {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 24px 28px !important;
+      border: 1px solid #282828 !important;
+      background: rgba(12, 12, 15, 0.8) !important;
+      gap: 24px !important;
+      flex-wrap: wrap !important;
+    }
+    .evidence-row > span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      color: #888888 !important;
+      text-transform: uppercase !important;
+      min-width: 90px !important;
+    }
+    .evidence-row > strong {
+      flex: 1 !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      color: #ffffff !important;
+      min-width: 260px !important;
+    }
+    .evidence-actions {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 14px !important;
+    }
+    .evidence-trigger, .command-trigger {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      background: transparent !important;
+      border: 1px solid #444444 !important;
+      padding: 8px 16px !important;
+      cursor: pointer !important;
+      transition: all 0.25s ease !important;
+    }
+    .evidence-trigger:hover, .command-trigger:hover {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    /* 11. STATE TAGS & SINGLE-LINE CTA BADGES */
+    .state-tag {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 6px 14px !important;
+      border: 1px solid #ffffff !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      background: transparent !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+    }
+    .state-building {
+      border-color: #ffffff !important;
+      color: #ffffff !important;
+    }
+    .state-rejected {
+      border-color: #ff5555 !important;
+      color: #ff5555 !important;
+    }
+    .state-validating {
+      border-color: #55ff99 !important;
+      color: #55ff99 !important;
+    }
+
+    .editorial-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      border-bottom: 1px solid #444444 !important;
+      padding-bottom: 4px !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+      transition: all 0.3s ease !important;
+    }
+    .editorial-link:hover {
+      border-bottom-color: #ffffff !important;
+      color: #ffffff !important;
+    }
+    .editorial-link span {
+      display: inline-block !important;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .editorial-link:hover span {
+      transform: translate(3px, -3px) !important;
+    }
+
+    /* 12. JOURNEY SPECTRUM */
+    .journey-spectrum__rail {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 12px !important;
+      margin: 40px 0 !important;
+      padding-bottom: 24px !important;
+      border-bottom: 1px solid #282828 !important;
+    }
+    .journey-spectrum__stage {
+      display: inline-flex !important;
+      align-items: center !important;
+      padding: 12px 24px !important;
+      background: #0d0d12 !important;
+      border: 1px solid #222228 !important;
+      color: #aaaaaa !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    .journey-spectrum__stage[aria-selected="true"],
+    .journey-spectrum__stage.active {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border-color: #ffffff !important;
+    }
+    .journey-spectrum__name {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+    }
+    .journey-spectrum__panel {
+      padding: 40px 0 !important;
+    }
+
+    /* 13. PULSE CARDS */
+    .pulse-snapshot {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)) !important;
+      gap: 24px !important;
+      margin: 40px 0 80px !important;
+    }
+    .pulse-card {
+      border: 1px solid #282828 !important;
+      padding: 32px !important;
+      background: rgba(12, 12, 16, 0.8) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      gap: 24px !important;
+    }
+    .pulse-card__state {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding-bottom: 20px !important;
+      border-bottom: 1px solid #202026 !important;
+    }
+    .pulse-card__state strong {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 20px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .pulse-card__details {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 16px !important;
+    }
+    .pulse-card__details dt {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      color: #666666 !important;
+      text-transform: uppercase !important;
+    }
+    .pulse-card__details dd {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      color: #dddddd !important;
+      margin: 0 !important;
+    }
+
+    /* ==========================================================================
+       AUTHENTIC AIXION LAB 3-COLUMN FOOTER & CONTACT STYLES
+       Matches the exact layout, typography, and links from production aixionlab.com
+       ========================================================================== */
+
+    .site-footer {
+      background: #06080d !important;
+      border-top: 1px solid #1c2333 !important;
+      padding: 80px 4vw 40px !important;
+      margin-top: 100px !important;
+      font-family: 'Padauk', sans-serif !important;
+      color: #94a3b8 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      z-index: 10 !important;
+    }
+    .site-footer__main {
+      display: grid !important;
+      grid-template-columns: 2fr 1fr 1.5fr !important;
+      gap: 60px !important;
+      max-width: 1400px !important;
+      margin: 0 auto 60px !important;
+      align-items: start !important;
+    }
+    @media (max-width: 900px) {
+      .site-footer__main {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+    }
+    .site-footer__identity {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+    .site-footer__eyebrow {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 13px !important;
+      letter-spacing: 3px !important;
+      color: #cbd5e1 !important;
+      text-transform: uppercase !important;
+      margin: 0 !important;
+    }
+    .site-footer__statement {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 24px !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      letter-spacing: 0.5px !important;
+    }
+    .site-footer__subline {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #64748b !important;
+      margin: 0 !important;
+      line-height: 1.6 !important;
+      max-width: 440px !important;
+    }
+
+    .site-footer__links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+    .site-footer__links a {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+      text-decoration: none !important;
+      transition: color 0.25s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__links a:hover {
+      color: #ffffff !important;
+    }
+
+    .site-footer__contact {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+    }
+    .site-footer__desc {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 14px !important;
+      color: #64748b !important;
+    }
+    .site-footer__link {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #cbd5e1 !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      transition: color 0.25s ease !important;
+      width: fit-content !important;
+    }
+    .site-footer__link:hover {
+      color: #ffffff !important;
+    }
+    .site-footer__link .arrow {
+      font-size: 14px !important;
+      transition: transform 0.25s ease !important;
+    }
+    .site-footer__link:hover .arrow {
+      transform: translate(2px, -2px) !important;
+    }
+
+    .site-footer__base {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
+      padding-top: 32px !important;
+      border-top: 1px solid #141c2c !important;
+      max-width: 1400px !important;
+      margin: 0 auto !important;
+      font-size: 12px !important;
+      color: #475569 !important;
+      font-family: 'Space Mono', monospace !important;
+    }
+    .site-footer__badge {
+      letter-spacing: 1px !important;
+    }
+    .site-footer__copy {
+      color: #64748b !important;
+    }
+    .site-footer__process {
+      color: #64748b !important;
+      display: flex !important;
+      gap: 8px !important;
+      align-items: center !important;
+    }
+    .site-footer__process i {
+      font-style: normal !important;
+      color: #334155 !important;
+    }
+
+    /* Contact Section / Contact List Alignment (about.html) */
+    .contact-layout {
+      margin: 80px 0 !important;
+      padding: 60px 0 !important;
+      border-top: 1px solid #202026 !important;
+    }
+    .contact-copy h2 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(32px, 4vw, 56px) !important;
+      margin: 12px 0 16px !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+    }
+    .contact-copy p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 16px !important;
+      color: #94a3b8 !important;
+      line-height: 1.7 !important;
+      max-width: 720px !important;
+      margin-bottom: 40px !important;
+    }
+    .contact-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+      max-width: 760px !important;
+    }
+    .contact-list a {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 18px 24px !important;
+      border: 1px solid #222228 !important;
+      background: rgba(12, 12, 16, 0.7) !important;
+      color: #e2e8f0 !important;
+      text-decoration: none !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      transition: all 0.25s ease !important;
+      border-radius: 4px !important;
+    }
+    .contact-list a:hover {
+      border-color: #ffffff !important;
+      background: rgba(22, 22, 28, 0.9) !important;
+      color: #ffffff !important;
+      transform: translateX(4px) !important;
+    }
+    .contact-list a strong {
+      font-weight: 600 !important;
+    }
+    .contact-list a span:last-child {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 16px !important;
+    }
+
+    /* ==========================================================================
+       AUTHENTIC AIXION LAB 4-TAB HEADER & NAVIGATION
+       Matches exact layout: Brand | [The Lab, Work, Research, Approach] | View Lab, Menu, Contact
+       ========================================================================== */
+
     .site-header {
       position: fixed !important;
       top: 0 !important;
       left: 0 !important;
       width: 100% !important;
       height: 72px !important;
-      background: rgba(7, 7, 10, 0.92) !important;
-      backdrop-filter: blur(16px) !important;
-      -webkit-backdrop-filter: blur(16px) !important;
+      background: rgba(7, 7, 10, 0.85) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
       z-index: 1000 !important;
-      display: flex !important;
-      align-items: center !important;
-      padding: 0 4vw !important;
       box-sizing: border-box !important;
     }
     .site-header__inner {
-      width: 100% !important;
-      max-width: 1400px !important;
+      max-width: 1440px !important;
+      height: 100% !important;
       margin: 0 auto !important;
+      padding: 0 4vw !important;
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
     }
+
+    /* Brand */
     .brand {
       display: flex !important;
       align-items: center !important;
-      gap: 12px !important;
+      gap: 14px !important;
       text-decoration: none !important;
       color: #ffffff !important;
     }
@@ -94,9 +824,10 @@
       align-items: center !important;
       justify-content: center !important;
       font-family: 'Oswald', sans-serif !important;
-      font-size: 14px !important;
+      font-size: 13px !important;
       font-weight: 600 !important;
       color: #ffffff !important;
+      letter-spacing: 0.5px !important;
     }
     .brand-copy {
       display: flex !important;
@@ -105,29 +836,35 @@
     }
     .brand-copy strong {
       font-family: 'Oswald', sans-serif !important;
-      font-size: 14px !important;
-      letter-spacing: 2px !important;
-      text-transform: uppercase !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: 1.5px !important;
       color: #ffffff !important;
+      text-transform: uppercase !important;
     }
     .brand-copy small {
       font-family: 'Padauk', sans-serif !important;
       font-size: 11px !important;
-      color: #64748b !important;
-      letter-spacing: 0.5px !important;
+      color: #71717a !important;
     }
 
+    /* 4 Primary Navigation Tabs */
     .desktop-nav {
       display: flex !important;
       align-items: center !important;
       gap: 36px !important;
     }
+    @media (max-width: 860px) {
+      .desktop-nav {
+        display: none !important;
+      }
+    }
     .desktop-nav a {
       font-family: 'Oswald', sans-serif !important;
       font-size: 13px !important;
-      letter-spacing: 2px !important;
+      letter-spacing: 2.5px !important;
       text-transform: uppercase !important;
-      color: #94a3b8 !important;
+      color: #a1a1aa !important;
       text-decoration: none !important;
       position: relative !important;
       padding: 6px 0 !important;
@@ -140,338 +877,351 @@
     .desktop-nav a.active::after {
       content: '' !important;
       position: absolute !important;
-      bottom: 0 !important;
+      bottom: -2px !important;
       left: 0 !important;
       width: 100% !important;
-      height: 1.5px !important;
-      background: #ffffff !important;
+      height: 1px !important;
+      background: #e2e8f0 !important;
     }
 
+    /* Header Actions: View Lab, Menu, Contact */
     .header-actions {
       display: flex !important;
       align-items: center !important;
+      gap: 16px !important;
     }
+    .mode-toggle {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 6px 14px !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: 99px !important;
+      background: transparent !important;
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 12px !important;
+      color: #d4d4d8 !important;
+      user-select: none !important;
+    }
+    @media (max-width: 600px) {
+      .mode-toggle {
+        display: none !important;
+      }
+    }
+    .mode-label {
+      color: #71717a !important;
+    }
+    .mode-toggle strong {
+      color: #ffffff !important;
+      font-weight: 500 !important;
+    }
+    .mode-track {
+      width: 20px !important;
+      height: 10px !important;
+      background: #27272a !important;
+      border-radius: 99px !important;
+      position: relative !important;
+      display: inline-block !important;
+    }
+    .mode-knob {
+      width: 8px !important;
+      height: 8px !important;
+      border-radius: 50% !important;
+      background: #ffffff !important;
+      position: absolute !important;
+      top: 1px !important;
+      left: 10px !important;
+    }
+
+    .header-menu-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 6px 14px !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: 99px !important;
+      background: transparent !important;
+      color: #d4d4d8 !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      text-decoration: none !important;
+      transition: all 0.25s ease !important;
+    }
+    .header-menu-pill:hover {
+      border-color: #ffffff !important;
+      color: #ffffff !important;
+    }
+    .menu-lines {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 3px !important;
+      width: 12px !important;
+    }
+    .menu-lines i {
+      display: block !important;
+      height: 1px !important;
+      width: 100% !important;
+      background: currentColor !important;
+    }
+
     .header-contact {
       display: inline-flex !important;
       align-items: center !important;
-      gap: 6px !important;
+      gap: 4px !important;
       font-family: 'Oswald', sans-serif !important;
-      font-size: 12px !important;
-      letter-spacing: 1.5px !important;
+      font-size: 13px !important;
+      letter-spacing: 2px !important;
       text-transform: uppercase !important;
       color: #ffffff !important;
       text-decoration: none !important;
       padding: 6px 0 !important;
-      transition: opacity 0.25s ease !important;
+      transition: color 0.25s ease !important;
     }
     .header-contact:hover {
-      opacity: 0.8 !important;
+      color: #a1a1aa !important;
+    }
+    .header-contact .arrow {
+      font-size: 14px !important;
+      transition: transform 0.25s ease !important;
+    }
+    .header-contact:hover .arrow {
+      transform: translate(2px, -2px) !important;
     }
 
-    /* 3. BREADCRUMB */
-    .page-breadcrumb {
-      padding: 100px 4vw 0 !important;
-      max-width: 1400px !important;
-      margin: 0 auto !important;
-      display: flex !important;
-      gap: 8px !important;
+    /* 2. REMOVE ← → ARROWS FROM JOURNEY SPECTRUM */
+    .journey-spectrum__controls {
+      display: none !important;
+    }
+
+    /* ==========================================================================
+       RESEARCH ARCHIVE & PAPER STYLES
+       ========================================================================== */
+
+    .research-feature {
+      margin: 40px 0 80px !important;
+      padding: 48px !important;
+      border: 1px solid #202028 !important;
+      background: rgba(12, 12, 16, 0.7) !important;
+      box-sizing: border-box !important;
+    }
+    .research-feature__copy {
+      max-width: 900px !important;
+    }
+    .research-feature__copy h2 {
       font-family: 'Oswald', sans-serif !important;
-      font-size: 11px !important;
-      letter-spacing: 2px !important;
-      color: #64748b !important;
+      font-size: clamp(32px, 4.5vw, 56px) !important;
       text-transform: uppercase !important;
-      box-sizing: border-box !important;
-    }
-    .page-breadcrumb a {
-      color: #64748b !important;
-      text-decoration: none !important;
-    }
-    .page-breadcrumb a:hover {
       color: #ffffff !important;
+      margin: 16px 0 20px !important;
     }
 
-    /* 4. EDITORIAL HERO */
+    .research-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 20px !important;
+      margin: 40px 0 80px !important;
+    }
+    .research-row {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 32px 36px !important;
+      border: 1px solid #222228 !important;
+      background: rgba(10, 10, 14, 0.75) !important;
+      text-decoration: none !important;
+      gap: 32px !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .research-row:hover {
+      border-color: #ffffff !important;
+      background: rgba(18, 18, 24, 0.95) !important;
+      transform: translateX(6px) !important;
+    }
+    @media (max-width: 860px) {
+      .research-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 20px !important;
+      }
+    }
+    .research-row > div:first-child {
+      flex: 1 !important;
+      max-width: 760px !important;
+    }
+    .research-row h3 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 24px !important;
+      color: #ffffff !important;
+      margin: 0 0 10px !important;
+      text-transform: uppercase !important;
+    }
+    .research-row p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      line-height: 1.6 !important;
+      color: #94a3b8 !important;
+      margin: 0 0 8px !important;
+    }
+    .research-state-reason {
+      font-size: 13px !important;
+      color: #64748b !important;
+      margin: 0 !important;
+    }
+    .research-state-reason span {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 10px !important;
+      letter-spacing: 1.5px !important;
+      text-transform: uppercase !important;
+      color: #475569 !important;
+      display: inline-block !important;
+      margin-right: 8px !important;
+    }
+    .research-domain {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: #64748b !important;
+      min-width: 140px !important;
+      text-align: right !important;
+    }
+    @media (max-width: 860px) {
+      .research-domain {
+        text-align: left !important;
+      }
+    }
+    .state-active-validation {
+      border-color: #38bdf8 !important;
+      color: #38bdf8 !important;
+    }
+    .state-hypothesis-frozen {
+      border-color: #fbbf24 !important;
+      color: #fbbf24 !important;
+    }
+    .state-active {
+      border-color: #34d399 !important;
+      color: #34d399 !important;
+    }
+
+    /* ==========================================================================
+       AIXION PRODUCTION HERO & FOOTER ARCHITECTURE
+       1. Eliminates massive empty voids:
+          - Content-driven height (no forced 100vh / min-height: 760px emptiness)
+          - Restores fluid typography and natural flow
+       2. Exact production footer:
+          - Authentic 3-column layout (2fr 1fr 1fr)
+          - Left-to-right aligned base bar with proper flex wrap and margins
+       ========================================================================== */
+
+    /* 1. ELIMINATE VOID / EMPTY SPACE IN EDITORIAL HEROES */
+    .home-hero,
     .editorial-hero {
-      position: relative !important;
       height: auto !important;
-      min-height: 0 !important;
+      min-height: auto !important;
       max-height: none !important;
-      padding: 30px 4vw 60px !important;
-      max-width: 1400px !important;
-      margin: 0 auto !important;
+      padding: 130px 4vw 60px !important;
+      background: #070709 !important;
+      position: relative !important;
       box-sizing: border-box !important;
-      overflow: visible !important;
-      background: transparent !important;
     }
     .editorial-hero__content {
-      position: relative !important;
-      inset: auto !important;
-      transform: none !important;
-      max-width: 1000px !important;
+      max-width: 1100px !important;
       margin: 0 !important;
       padding: 0 !important;
-      opacity: 1 !important;
-      visibility: visible !important;
     }
     .editorial-hero__content h1 {
       font-family: 'Oswald', sans-serif !important;
-      font-size: clamp(48px, 6.5vw, 92px) !important;
+      font-size: clamp(48px, 7vw, 92px) !important;
       font-weight: 700 !important;
-      letter-spacing: -1.5px !important;
+      letter-spacing: -1px !important;
       line-height: 0.98 !important;
       text-transform: uppercase !important;
-      margin: 0 0 20px !important;
+      margin: 14px 0 24px !important;
       color: #ffffff !important;
-      word-break: normal !important;
     }
     .editorial-hero__copy {
       font-family: 'Padauk', sans-serif !important;
-      font-size: clamp(16px, 1.6vw, 20px) !important;
+      font-size: clamp(16px, 1.8vw, 21px) !important;
       line-height: 1.65 !important;
       color: #94a3b8 !important;
-      max-width: 820px !important;
-      margin: 0 0 32px !important;
-      text-align: left !important;
+      max-width: 840px !important;
+      margin: 0 0 28px !important;
+      text-align: justify !important;
+      text-justify: inter-word !important;
     }
     .editorial-hero__actions {
       display: flex !important;
       flex-direction: row !important;
-      gap: 16px !important;
       align-items: center !important;
-      flex-wrap: wrap !important;
-    }
-    .editorial-hero__actions .button {
-      font-family: 'Oswald', sans-serif !important;
-      font-size: 12px !important;
-      letter-spacing: 1.5px !important;
-      text-transform: uppercase !important;
-      padding: 10px 20px !important;
-      border: 1px solid rgba(255, 255, 255, 0.25) !important;
-      border-radius: 4px !important;
-      background: rgba(255, 255, 255, 0.04) !important;
-      color: #ffffff !important;
-      text-decoration: none !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      transition: all 0.25s ease !important;
-    }
-    .editorial-hero__actions .button:hover {
-      background: #ffffff !important;
-      color: #000000 !important;
+      gap: 18px !important;
+      margin-top: 24px !important;
     }
 
-    /* 5. EDITORIAL SECTIONS & PRACTICE STORY */
+    /* Tighten gap between hero and subsequent sections */
     .editorial-section,
-    #page-content {
-      padding: 50px 4vw !important;
-      max-width: 1400px !important;
+    .editorial-section--compact,
+    .editorial-section--cool {
+      padding: 40px 4vw 60px !important;
       margin: 0 auto !important;
+      max-width: 1440px !important;
       box-sizing: border-box !important;
-      position: relative !important;
-      z-index: 2 !important;
-    }
-    .page-width {
-      width: 100% !important;
-      max-width: 100% !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-    .image-story,
-    .image-story--reverse {
-      display: flex !important;
-      flex-direction: column !important;
-      max-width: 100% !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-    .image-story__copy {
-      max-width: 900px !important;
-    }
-    .image-story__copy h2 {
-      font-family: 'Oswald', sans-serif !important;
-      font-size: clamp(34px, 4.5vw, 58px) !important;
-      font-weight: 700 !important;
-      letter-spacing: -1px !important;
-      line-height: 1.05 !important;
-      color: #ffffff !important;
-      margin: 10px 0 20px !important;
-      text-transform: uppercase !important;
-    }
-    .image-story__body p {
-      font-family: 'Padauk', sans-serif !important;
-      font-size: 16px !important;
-      line-height: 1.7 !important;
-      color: #cbd5e1 !important;
-      margin-bottom: 18px !important;
-      max-width: 820px !important;
-    }
-    .eyebrow {
-      font-family: 'Oswald', sans-serif !important;
-      font-size: 12px !important;
-      letter-spacing: 2.5px !important;
-      text-transform: uppercase !important;
-      color: #94a3b8 !important;
-      margin-bottom: 10px !important;
     }
 
-    /* 6. ENGINEERING PRINCIPLES - 3 COLUMN CLEAN GRID */
-    .editorial-heading {
-      margin-bottom: 32px !important;
-    }
-    .editorial-heading h2 {
-      font-family: 'Oswald', sans-serif !important;
-      font-size: clamp(32px, 4vw, 50px) !important;
-      font-weight: 700 !important;
-      letter-spacing: -1px !important;
-      line-height: 1.08 !important;
-      color: #ffffff !important;
-      text-transform: uppercase !important;
-      margin: 8px 0 0 !important;
-    }
-    .principles-grid {
-      display: grid !important;
-      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-      gap: 32px !important;
-      border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-      padding-top: 32px !important;
-    }
-    @media (max-width: 850px) {
-      .principles-grid {
-        grid-template-columns: 1fr !important;
-        gap: 24px !important;
-      }
-    }
-    .principle {
-      padding: 0 !important;
-      background: transparent !important;
-      border: none !important;
-    }
-    .principle h3 {
-      font-family: 'Oswald', sans-serif !important;
-      font-size: 20px !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.5px !important;
-      color: #ffffff !important;
-      margin: 0 0 10px !important;
-    }
-    .principle p {
-      font-family: 'Padauk', sans-serif !important;
-      font-size: 14px !important;
-      line-height: 1.65 !important;
-      color: #94a3b8 !important;
-      margin: 0 !important;
-    }
-
-    /* 7. CONTACT SECTION (THE LAB PAGE BOTTOM ALIGNMENT) */
-    .contact-layout {
-      display: grid !important;
-      grid-template-columns: 1fr 1.2fr !important;
-      gap: 60px !important;
-      align-items: start !important;
-      border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-      padding-top: 48px !important;
-      margin-top: 20px !important;
-    }
-    @media (max-width: 900px) {
-      .contact-layout {
-        grid-template-columns: 1fr !important;
-        gap: 36px !important;
-      }
-    }
-    .contact-copy h2 {
-      font-family: 'Oswald', sans-serif !important;
-      font-size: clamp(32px, 3.8vw, 48px) !important;
-      font-weight: 700 !important;
-      letter-spacing: -1px !important;
-      line-height: 1.08 !important;
-      color: #ffffff !important;
-      margin: 10px 0 16px !important;
-      text-transform: uppercase !important;
-    }
-    .contact-copy p {
-      font-family: 'Padauk', sans-serif !important;
-      font-size: 15px !important;
-      line-height: 1.7 !important;
-      color: #94a3b8 !important;
-      max-width: 480px !important;
-    }
-    .contact-list {
-      display: flex !important;
-      flex-direction: column !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    }
-    .contact-list a {
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      padding: 18px 0 !important;
-      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-      font-family: 'Padauk', sans-serif !important;
-      font-size: 16px !important;
-      color: #cbd5e1 !important;
-      text-decoration: none !important;
-      transition: color 0.2s ease !important;
-    }
-    .contact-list a:hover {
-      color: #ffffff !important;
-    }
-    .contact-list a span:last-child {
-      color: #ffffff !important;
-      font-size: 15px !important;
-    }
-
-    /* 8. AUTHENTIC AIXIONLAB.COM NAVY FOOTER (EXACT 3-COLUMN REPLICA) */
-    /* ==========================================================================
-       AIXION LAB - AUTHENTIC 3-COLUMN FOOTER & BASE ALIGNMENT (AIXIONLAB.COM)
-       ========================================================================== */
-
+    /* 2. AUTHENTIC AIXION PRODUCTION 3-COLUMN FOOTER */
     .site-footer {
-      background: #0c141d !important;
-      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-      padding: 56px 4vw 36px !important;
+      background: #06090e !important;
+      border-top: 1px solid #151d2a !important;
+      padding: 60px 4vw 32px !important;
       margin-top: 80px !important;
       font-family: 'Padauk', sans-serif !important;
       color: #94a3b8 !important;
       width: 100% !important;
       box-sizing: border-box !important;
       position: relative !important;
-      z-index: 20 !important;
+      z-index: 10 !important;
     }
     .site-footer__main {
       display: grid !important;
-      grid-template-columns: 1.5fr 1fr 1.2fr !important;
-      gap: 56px !important;
+      grid-template-columns: 2fr 1fr 1fr !important;
+      gap: 50px !important;
       max-width: 1400px !important;
-      margin: 0 auto 40px !important;
+      margin: 0 auto 48px !important;
       align-items: start !important;
+      box-sizing: border-box !important;
     }
-    @media (max-width: 850px) {
+    @media (max-width: 860px) {
       .site-footer__main {
         grid-template-columns: 1fr !important;
-        gap: 32px !important;
+        gap: 36px !important;
       }
     }
+
+    /* Column 1: Identity */
     .site-footer__identity {
       display: flex !important;
       flex-direction: column !important;
-      gap: 14px !important;
+      gap: 12px !important;
     }
     .site-footer__eyebrow {
-      font-family: 'Space Mono', monospace !important;
+      font-family: 'Oswald', sans-serif !important;
       font-size: 13px !important;
-      letter-spacing: 2px !important;
-      color: #cbd5e1 !important;
+      letter-spacing: 3px !important;
+      color: #94a3b8 !important;
       text-transform: uppercase !important;
       margin: 0 !important;
     }
     .site-footer__statement {
-      font-family: 'Padauk', Georgia, serif !important;
-      font-size: 18px !important;
-      color: #f8fafc !important;
+      font-family: 'Oswald', sans-serif !important;
+      font-size: clamp(24px, 3.2vw, 42px) !important;
+      font-weight: 500 !important;
+      color: #ffffff !important;
       margin: 0 !important;
-      line-height: 1.35 !important;
-      letter-spacing: 0.2px !important;
+      letter-spacing: -0.5px !important;
+      line-height: 1.1 !important;
+      text-transform: uppercase !important;
     }
     .site-footer__subline {
       font-family: 'Padauk', sans-serif !important;
@@ -482,6 +1232,7 @@
       max-width: 420px !important;
     }
 
+    /* Column 2: Navigation Links */
     .site-footer__links {
       display: flex !important;
       flex-direction: column !important;
@@ -499,10 +1250,11 @@
       color: #ffffff !important;
     }
 
+    /* Column 3: Contact & Links */
     .site-footer__contact {
       display: flex !important;
       flex-direction: column !important;
-      gap: 12px !important;
+      gap: 14px !important;
     }
     .site-footer__desc {
       font-family: 'Padauk', sans-serif !important;
@@ -512,7 +1264,7 @@
     .site-footer__link {
       font-family: 'Padauk', sans-serif !important;
       font-size: 14px !important;
-      color: #94a3b8 !important;
+      color: #cbd5e1 !important;
       text-decoration: none !important;
       display: inline-flex !important;
       align-items: center !important;
@@ -523,64 +1275,237 @@
     .site-footer__link:hover {
       color: #ffffff !important;
     }
+    .site-footer__link .arrow {
+      font-size: 13px !important;
+      transition: transform 0.2s ease !important;
+    }
+    .site-footer__link:hover .arrow {
+      transform: translate(2px, -2px) !important;
+    }
 
-    /* Base row: 3 columns perfectly aligned with 1.5fr 1fr 1.2fr */
+    /* Base Horizontal Bar */
     .site-footer__base {
-      display: grid !important;
-      grid-template-columns: 1.5fr 1fr 1.2fr !important;
-      gap: 56px !important;
+      display: flex !important;
+      justify-content: space-between !important;
       align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
       padding-top: 24px !important;
-      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-top: 1px solid #131b28 !important;
       max-width: 1400px !important;
       margin: 0 auto !important;
-      font-size: 12px !important;
-      color: #64748b !important;
+      font-size: 11px !important;
+      color: #475569 !important;
       font-family: 'Space Mono', monospace !important;
       box-sizing: border-box !important;
     }
-    @media (max-width: 850px) {
-      .site-footer__base {
-        grid-template-columns: 1fr !important;
-        gap: 16px !important;
-      }
-    }
     .site-footer__badge {
       letter-spacing: 1px !important;
-      text-transform: uppercase !important;
-      white-space: nowrap !important;
     }
     .site-footer__copy {
       color: #64748b !important;
-      white-space: nowrap !important;
     }
     .site-footer__process {
       color: #64748b !important;
       display: flex !important;
-      gap: 6px !important;
+      gap: 8px !important;
       align-items: center !important;
-      white-space: nowrap !important;
     }
     .site-footer__process i {
       font-style: normal !important;
+      color: #334155 !important;
+    }
+
+    /* ==========================================================================
+       AIXION LAB ARCHITECTURAL GRID & ALIGNMENT SYSTEM
+       Restores crisp multi-column cards, justified copy, and perfect margins
+       ========================================================================== */
+
+    :root {
+      --page-max-width: 1320px;
+    }
+
+    /* Container alignment */
+    .page-width,
+    .editorial-hero__content,
+    .site-header__inner,
+    .site-footer__main,
+    .site-footer__base {
+      width: 100% !important;
+      max-width: var(--page-max-width) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Sections */
+    .editorial-section,
+    .editorial-hero,
+    .home-hero {
+      width: 100% !important;
+      padding-left: clamp(20px, 4vw, 60px) !important;
+      padding-right: clamp(20px, 4vw, 60px) !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Headings & Text Alignment */
+    h1, h2, h3, h4, .eyebrow, dt {
+      text-align: left !important;
+    }
+    p, dd, .image-story__body p, .chapter-copy p, .detail-card p, .content-card p, .principle p {
+      text-align: justify !important;
+      text-justify: inter-word !important;
+      line-height: 1.7 !important;
+    }
+
+    /* 1. PRINCIPLES GRID (3 Columns: Make state visible | Test the assumption | Keep authority explicit) */
+    .principles-grid,
+    .content-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: 28px !important;
+      margin: 40px 0 80px !important;
+      width: 100% !important;
+    }
+    @media (max-width: 900px) {
+      .principles-grid,
+      .content-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+      }
+    }
+    .principle,
+    .content-card {
+      border: 1px solid #1e2430 !important;
+      background: rgba(12, 16, 24, 0.7) !important;
+      padding: 32px 28px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+      transition: border-color 0.25s ease !important;
+    }
+    .principle:hover,
+    .content-card:hover {
+      border-color: #3b82f6 !important;
+    }
+    .principle h3,
+    .content-card h3 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 22px !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+    }
+    .principle p,
+    .content-card p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+      margin: 0 !important;
+      line-height: 1.6 !important;
+    }
+
+    /* 2. DETAIL GRID (2 Columns) */
+    .detail-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 28px !important;
+      margin: 36px 0 70px !important;
+      width: 100% !important;
+    }
+    @media (max-width: 800px) {
+      .detail-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .detail-card {
+      border: 1px solid #1e2430 !important;
+      background: rgba(12, 16, 24, 0.7) !important;
+      padding: 36px 32px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+    }
+    .detail-card h3 {
+      font-family: 'Oswald', sans-serif !important;
+      font-size: 24px !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      text-transform: uppercase !important;
+    }
+    .detail-card p {
+      font-family: 'Padauk', sans-serif !important;
+      font-size: 15px !important;
+      color: #94a3b8 !important;
+      margin: 0 !important;
+    }
+
+    /* 3. WORK STORIES & SELECTED SYSTEMS (Generous width, clean padding) */
+    .work-story, .work-story--reverse {
+      display: block !important;
+      width: 100% !important;
+      margin: 48px 0 !important;
+      padding: 48px !important;
+      border: 1px solid #1e2430 !important;
+      background: rgba(10, 14, 22, 0.75) !important;
+      box-sizing: border-box !important;
+    }
+    .work-story__copy {
+      max-width: 1000px !important;
+    }
+
+    /* 4. TIGHTEN HERO SPACING WHILE PRESERVING BREATHING ROOM */
+    .editorial-hero {
+      padding-top: 130px !important;
+      padding-bottom: 50px !important;
+      background: #070709 !important;
+    }
+    .editorial-hero__content {
+      padding: 0 !important;
+    }
+
+    /* 5. FOOTER (Balanced 3-Column + Base Alignment) */
+    .site-footer {
+      background: #06090e !important;
+      border-top: 1px solid #151d2a !important;
+      padding: 70px clamp(20px, 4vw, 60px) 36px !important;
+      margin-top: 80px !important;
+    }
+    .site-footer__main {
+      display: grid !important;
+      grid-template-columns: 2fr 1fr 1fr !important;
+      gap: 60px !important;
+      margin-bottom: 50px !important;
+    }
+    @media (max-width: 860px) {
+      .site-footer__main {
+        grid-template-columns: 1fr !important;
+        gap: 36px !important;
+      }
+    }
+    .site-footer__base {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
+      padding-top: 28px !important;
+      border-top: 1px solid #131b28 !important;
+      font-family: 'Space Mono', monospace !important;
+      font-size: 12px !important;
       color: #475569 !important;
     }
 
-    /* REVEAL ANIMATIONS */
-    [data-reveal="true"],
-    [data-reveal] {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: none !important;
-    }
-
   </style>
-  </head>
-<body class="theme-dark">
+  <link rel="stylesheet" href="./editorial-parity.css?v=10">
+  <link rel="stylesheet" href="./tradebot-page.css?v=1">
+</head>
+<body class="theme-dark editorial-page page-tradebot">
   <!-- Master Aixion Lab Header (Exact 4 Tabs: The Lab, Work, Research, Approach) -->
   <header class="site-header">
     <div class="site-header__inner">
-      <a class="brand" aria-label="Aixion Lab home" href="./index.html">
+      <a class="brand" href="./index.html">
         <span class="brand-mark" aria-hidden="true">A</span>
         <span class="brand-copy">
           <strong>AIXION LAB</strong>
@@ -598,7 +1523,7 @@
 
       <!-- Header Actions -->
       <div class="header-actions">
-        <a class="header-contact" href="./about.html#contact">
+<a class="header-contact" href="./about.html#contact">
           Contact <span class="arrow">↗</span>
         </a>
       </div>
@@ -607,14 +1532,14 @@
 
 
   <!-- Page Breadcrumb -->
-  <div class="page-breadcrumb">
+  <div class="page-breadcrumb" role="navigation" aria-label="Breadcrumb" style="padding: 110px 4vw 0; max-width: 1440px; margin: 0 auto; display: flex; gap: 8px; font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: 2px; color: #64748b; text-transform: uppercase;">
     <a href="./index.html" style="color: #64748b; text-decoration: none;">AIXION LAB</a>
     <span>/</span>
     <span style="color: #ffffff;">TRADEBOT SENTINEL</span>
   </div>
 
   <main id="main-content">
-<section id="overview"><section class="editorial-hero"><div class="editorial-hero__shade" aria-hidden="true"></div><div class="editorial-hero__content page-width" data-reveal="true"><p class="eyebrow eyebrow--light">Market intelligence · real-time systems · research</p><h1>TradeBot</h1><p class="editorial-hero__copy">Governed market-intelligence infrastructure for intraday decision support.</p><div class="editorial-hero__actions"><div class="system-hero-meta"><span class="state-tag state-validating">VALIDATING</span><a class="button button--light" href="#evidence">Review evidence <span aria-hidden="true">↓</span></a></div></div></div><a class="scroll-cue" href="#system-current-state" aria-label="Scroll to explore this page"><span aria-hidden="true"></span> Scroll to explore</a></section></section><div class="system-subnav-wrap"><nav class="page-width system-subnav" aria-label="TradeBot page sections"><a href="#overview">Overview</a><a href="#architecture">Architecture</a><a href="#sentinel">Sentinel Telemetry</a><a href="#engineering">Engineering</a><a href="#research">Research</a><a href="#evidence">Evidence</a><a href="#timeline">Timeline</a></nav></div><section id="page-content" class="editorial-section editorial-section--compact"><div class="page-width"><dl id="system-current-state" class="system-facts" data-reveal="true"><div><dt>Current gate</dt><dd>Live / evidence validation</dd></div><div><dt>Current focus</dt><dd>Evidence reconciliation, data integrity and candidate validation.</dd></div><div><dt>Next gate</dt><dd>Public-safe operational evidence review.</dd></div></dl><div class="career-only"><div class="career-only career-strip"><span>Career translation</span><div><i>Python</i><i>WebSockets</i><i>APIs</i><i>Real-time data</i><i>Testing</i><i>ML research</i><i>Observability</i><i>Governance</i></div></div></div></div></section><section id="architecture" class="editorial-section"><section class="image-story  visual-tradebot" data-reveal="true"><div class="image-story__media"></div><div class="image-story__copy"><p class="eyebrow">PUBLIC ARCHITECTURE</p><h2>How this system makes the difficult parts visible.</h2><div class="image-story__body"><p>Separate data truth, research output, risk and execution authority while preserving reproducible evidence.</p><p>A governed market-intelligence and validation system spanning real-time data, research candidates, risk controls and read-only/live observation.</p></div><a class="editorial-link" href="#engineering">Read the engineering approach<span aria-hidden="true">↗</span></a></div></section><div class="page-width architecture-wrap" data-reveal="true"><p class="eyebrow">SYSTEM FLOW / PUBLIC MODEL</p><ol class="signal-line" aria-label="Engineering lifecycle"><li><span class="signal-line__node" aria-hidden="true"></span><span>Feed</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>State</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Research</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Risk</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Human authority</span></li></ol></div></section><section id="engineering" class="editorial-section editorial-section--cool"><div class="page-width"><header class="editorial-heading editorial-heading--left editorial-heading--storyline" data-reveal="true"><p class="eyebrow">ENGINEERING STORY</p><h2>Problem → challenge → build → outcome</h2><p class="editorial-heading__copy">The work is explained through its constraints and evidence, not a technology-logo wall.</p></header><div class="detail-grid impact-grid"><article class="detail-card" data-reveal="true"><p class="eyebrow">PROBLEM</p><h3>What makes this difficult?</h3><p>Intraday market signals are noisy, while live data can fail in ways that a simple connected/disconnected flag cannot explain.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">CHALLENGE</p><h3>What must remain controlled?</h3><p>Separate data truth, research output, risk and execution authority while preserving reproducible evidence.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">WHAT EXISTS</p><h3>The system response</h3><p>A governed market-intelligence and validation system spanning real-time data, research candidates, risk controls and read-only/live observation.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">OUTCOME</p><h3>What this enables</h3><p>A platform capable of structured research, evidence capture and bounded decision support without publishing proprietary signal logic.</p></article></div><div class="detail-grid engineering-grid"><article class="detail-card" data-reveal="true"><h3>Live data integrity</h3><p>Connection state, freshness, subscription truth and evidence state are treated as different concerns rather than one green light.</p></article><article class="detail-card" data-reveal="true"><h3>Research authority</h3><p>Promising research does not silently become trading authority. Candidates remain isolated until explicit validation and governance gates pass.</p></article><article class="detail-card" data-reveal="true"><h3>Human authority</h3><p>Evidence and decision support can be automated while execution authority remains an explicit boundary.</p></article></div></div></section><section id="sentinel" class="editorial-section editorial-section--cool"><div class="page-width"><header class="editorial-heading editorial-heading--left editorial-heading--storyline" data-reveal="true"><p class="eyebrow">LIVE OBSERVABILITY ENGINE</p><h2>TradeBot Sentinel: Sub-Millisecond Microstructure Telemetry</h2><p class="editorial-heading__copy">Real-time in-memory telemetry, Level-5 order book depth parsing, cross-strike causal skew boundaries, and forensic audit logging—built strictly as a read-only software engineering framework.</p></header><div style="margin:2.5rem 0 3.5rem;background:var(--paper-bright);border:1px solid var(--line-strong);border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(0, 0, 0, 0.05)"><style>
+<section id="overview"><section class="editorial-hero"><div class="editorial-hero__shade" aria-hidden="true"></div><div class="editorial-hero__content page-width" data-reveal="true"><p class="eyebrow eyebrow--light">Market intelligence · real-time systems · research</p><h1>TradeBot</h1><p class="editorial-hero__copy">Governed market-intelligence infrastructure for intraday decision support.</p><div class="editorial-hero__actions"><div class="system-hero-meta"><span class="state-tag state-validating">VALIDATING</span><a class="button button--light" href="#evidence">Review evidence <span aria-hidden="true">↓</span></a></div></div></div><a class="scroll-cue" href="#system-current-state" aria-label="Scroll to explore this page"><span aria-hidden="true"></span> Scroll to explore</a></section></section><div class="system-subnav-wrap"><nav class="page-width system-subnav" aria-label="TradeBot page sections"><a href="#overview">Overview</a><a href="#architecture">Architecture</a><a href="#sentinel">Sentinel Telemetry</a><a href="#engineering">Engineering</a><a href="#research">Research</a><a href="#evidence">Evidence</a><a href="#timeline">Timeline</a></nav></div><section id="page-content" class="editorial-section editorial-section--compact"><div class="page-width"><dl id="system-current-state" class="system-facts" data-reveal="true"><div><dt>Current gate</dt><dd>Live / evidence validation</dd></div><div><dt>Current focus</dt><dd>Evidence reconciliation, data integrity and candidate validation.</dd></div><div><dt>Next gate</dt><dd>Public-safe operational evidence review.</dd></div></dl><div class="career-only"><div class="career-only career-strip"><span>Career translation</span><div><i>Python</i><i>WebSockets</i><i>APIs</i><i>Real-time data</i><i>Testing</i><i>ML research</i><i>Observability</i><i>Governance</i></div></div></div></div></section><section id="architecture" class="editorial-section"><section class="image-story  visual-tradebot" data-reveal="true"><div class="image-story__media"></div><div class="image-story__copy"><p class="eyebrow">PUBLIC ARCHITECTURE</p><h2>How this system makes the difficult parts visible.</h2><div class="image-story__body"><p>Separate data truth, research output, risk and execution authority while preserving reproducible evidence.</p><p>A governed market-intelligence and validation system spanning real-time data, research candidates, risk controls and read-only/live observation.</p></div><a class="editorial-link" href="#engineering">Read the engineering approach<span aria-hidden="true">↗</span></a></div></section><div class="page-width architecture-wrap" data-reveal="true"><p class="eyebrow">SYSTEM FLOW / PUBLIC MODEL</p><ol class="signal-line" aria-label="Engineering lifecycle"><li><span class="signal-line__node" aria-hidden="true"></span><span>Feed</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>State</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Research</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Risk</span></li><li><span class="signal-line__node" aria-hidden="true"></span><span>Human authority</span></li></ol></div></section><section id="engineering" class="editorial-section editorial-section--cool"><div class="page-width"><header class="editorial-heading editorial-heading--left editorial-heading--storyline" data-reveal="true"><p class="eyebrow">ENGINEERING STORY</p><h2>Problem → challenge → build → outcome</h2><p class="editorial-heading__copy">The work is explained through its constraints and evidence, not a technology-logo wall.</p></header><div class="detail-grid impact-grid"><article class="detail-card" data-reveal="true"><p class="eyebrow">PROBLEM</p><h3>What makes this difficult?</h3><p>Intraday market signals are noisy, while live data can fail in ways that a simple connected/disconnected flag cannot explain.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">CHALLENGE</p><h3>What must remain controlled?</h3><p>Separate data truth, research output, risk and execution authority while preserving reproducible evidence.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">WHAT EXISTS</p><h3>The system response</h3><p>A governed market-intelligence and validation system spanning real-time data, research candidates, risk controls and read-only/live observation.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">OUTCOME</p><h3>What this enables</h3><p>A platform capable of structured research, evidence capture and bounded decision support without publishing proprietary signal logic.</p></article></div><div class="detail-grid engineering-grid"><article class="detail-card" data-reveal="true"><h3>Live data integrity</h3><p>Connection state, freshness, subscription truth and evidence state are treated as different concerns rather than one green light.</p></article><article class="detail-card" data-reveal="true"><h3>Research authority</h3><p>Promising research does not silently become trading authority. Candidates remain isolated until explicit validation and governance gates pass.</p></article><article class="detail-card" data-reveal="true"><h3>Human authority</h3><p>Evidence and decision support can be automated while execution authority remains an explicit boundary.</p></article></div></div></section><section id="sentinel" class="editorial-section editorial-section--cool"><div class="page-width"><header class="editorial-heading editorial-heading--left editorial-heading--storyline" data-reveal="true"><p class="eyebrow">TELEMETRY ARCHITECTURE / ILLUSTRATIVE VIEW</p><h2>TradeBot Sentinel: Market-Structure Telemetry Model</h2><p class="editorial-heading__copy">A read-only architecture illustration for market-structure telemetry. Numerical values shown below are illustrative interface samples, not live measurements or trading results.</p></header><p class="eyebrow" role="note">ILLUSTRATIVE INTERFACE · SYNTHETIC VALUES · NOT LIVE TELEMETRY</p><div style="margin:2.5rem 0 3.5rem;background:var(--paper-bright);border:1px solid var(--line-strong);border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(0, 0, 0, 0.05)"><style>
         .sentinel-tab-strip {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
@@ -639,17 +1564,15 @@
             gap: 28px;
           }
         }
-      </style><div style="padding:16px 28px;background:#080c12;color:#d1d5db;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:12px"><div style="display:flex;align-items:center;gap:10px"><span style="width:9px;height:9px;border-radius:50%;background:#10b981;box-shadow:0 0 10px #10b981"></span><strong style="color:#fff;letter-spacing:0.06em">TRADEBOT SENTINEL ARCHITECTURE</strong><span style="color:#6b7280">|</span><span style="color:#9ca3af">INSTITUTIONAL 4-VECTOR QUANTITATIVE ENGINE</span></div><div style="display:flex;gap:18px;color:#9ca3af;font-size:11px"><span>LATENCY: <strong style="color:#34d399">0.8<!-- -->ms</strong></span><span>SKEW: <strong style="color:#60a5fa">16<!-- -->ms</strong></span><span>SPREAD: <strong style="color:#fbbf24">0.85<!-- -->%</strong></span><span>MODE: <strong style="color:#e5e7eb">READ_ONLY</strong></span></div></div><div class="sentinel-tab-strip"><button style="padding:18px 20px;border:none;background:var(--paper-bright);border-bottom:2px solid var(--ink);cursor:pointer;text-align:left;transition:all 0.2s ease"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--accent-deep);margin-bottom:4px">VECTOR 01<!-- --> • <!-- -->INSTITUTIONAL GEX</div><div style="font-size:14px;font-family:var(--serif);font-weight:600;color:var(--text);line-height:1.25">Dealer Gamma Exposure &amp; Wall Absorption</div></button><button style="padding:18px 20px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">VECTOR 02<!-- --> • <!-- -->STOIKOV (2018)</div><div style="font-size:14px;font-family:var(--serif);font-weight:400;color:var(--muted);line-height:1.25">Stoikov Micro-Price &amp; Book Imbalance</div></button><button style="padding:18px 20px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">VECTOR 03<!-- --> • <!-- -->TEMPORAL TRANSMISSION</div><div style="font-size:14px;font-family:var(--serif);font-weight:400;color:var(--muted);line-height:1.25">Cross-Index Basis Lead-Lag Transmission</div></button><button style="padding:18px 20px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">VECTOR 04<!-- --> • <!-- -->FINITE STATE MACHINE</div><div style="font-size:14px;font-family:var(--serif);font-weight:400;color:var(--muted);line-height:1.25">Active Position Manager &amp; Crash WAL</div></button></div><div class="sentinel-vector-stage"><div><div style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:99px;background:rgba(0, 0, 0, 0.04);border:1px solid var(--line-strong);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--accent-deep);margin-bottom:14px">VECTOR 01<!-- --> • <!-- -->INSTITUTIONAL GEX</div><h3 style="font-family:var(--serif);font-size:clamp(26px, 2.6vw, 36px);font-weight:400;line-height:1.15;margin:0 0 16px 0;color:var(--text)">Dealer Gamma Exposure &amp; Wall Absorption</h3><p style="font-size:15px;line-height:1.75;color:var(--muted);margin:0 0 24px 0">Tracks market maker delta-hedging obligations across index option surfaces in real time. When net dealer gamma is strongly positive, automated entry gates veto momentum breakout setups and favor mean-reversion absorption.</p><div style="padding:16px 20px;border-radius:12px;background:rgba(0, 0, 0, 0.025);border:1px solid var(--line-strong);margin-bottom:24px"><div style="font-size:10px;font-family:var(--mono);color:var(--muted);letter-spacing:0.08em;margin-bottom:6px">FORMULATION &amp; INVARIANT MODEL</div><code style="font-family:var(--mono);font-size:12px;color:var(--text);font-weight:600;display:block">GEX = ∑ (OI_call - OI_put) * Spot * Gamma * 100</code></div><div style="display:grid;gap:12px"><div style="padding:14px 18px;border-radius:10px;border:1px solid var(--line);background:rgba(0, 0, 0, 0.01);display:flex;gap:14px;align-items:flex-start"><span style="color:var(--accent-deep);font-size:14px;font-weight:bold">✓</span><div><div style="font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:2px">Strike Wall Observer</div><div style="font-size:12px;color:var(--muted);line-height:1.5">Real-time OI and volume concentration mapping at round strike numbers</div></div></div><div style="padding:14px 18px;border-radius:10px;border:1px solid var(--line);background:rgba(0, 0, 0, 0.01);display:flex;gap:14px;align-items:flex-start"><span style="color:var(--accent-deep);font-size:14px;font-weight:bold">✓</span><div><div style="font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:2px">Absorption Detection</div><div style="font-size:12px;color:var(--muted);line-height:1.5">CVD (Cumulative Volume Delta) vs price divergence detection</div></div></div><div style="padding:14px 18px;border-radius:10px;border:1px solid var(--line);background:rgba(0, 0, 0, 0.01);display:flex;gap:14px;align-items:flex-start"><span style="color:var(--accent-deep);font-size:14px;font-weight:bold">✓</span><div><div style="font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:2px">Automatic Regime Switch</div><div style="font-size:12px;color:var(--muted);line-height:1.5">Instantly switches from momentum acceleration to pin/exhaustion modes</div></div></div></div></div><div style="display:flex;flex-direction:column;gap:20px"><div style="padding:24px;border-radius:14px;background:var(--paper-bright);border:1px solid var(--line-strong);box-shadow:0 4px 15px rgba(0, 0, 0, 0.02)"><div style="font-size:10px;font-family:var(--mono);color:var(--muted);letter-spacing:0.1em;margin-bottom:8px">INSTANTANEOUS TELEMETRY: <!-- -->NET DEALER GAMMA</div><div style="font-size:32px;font-family:var(--serif);color:var(--text);font-weight:500">+$42.8M (LONG)</div><div style="font-size:12.5px;color:#10b981;margin-top:6px;font-weight:500">Mean Reversion Regime • Breakouts Vetoed</div></div><div style="background:#080c12;border-radius:14px;overflow:hidden;border:1px solid rgba(255, 255, 255, 0.1);flex-grow:1;display:flex;flex-direction:column"><div style="padding:10px 16px;background:rgba(255, 255, 255, 0.04);border-bottom:1px solid rgba(255, 255, 255, 0.08);font-size:11px;font-family:var(--mono);color:#9ca3af;display:flex;justify-content:space-between"><span>sentinel_<!-- -->gex<!-- -->_engine.py</span><span style="color:#34d399">INVARIANTS ENFORCED</span></div><pre style="margin:0;padding:18px 20px;color:#e5e7eb;font-family:var(--mono);font-size:12px;line-height:1.6;overflow-x:auto;flex-grow:1"><code>// Dealer Gamma Invariant Check
+      </style><div style="padding:16px 28px;background:#080c12;color:#d1d5db;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:12px"><div style="display:flex;align-items:center;gap:10px"><span style="width:9px;height:9px;border-radius:50%;background:#10b981;box-shadow:0 0 10px #10b981"></span><strong style="color:#fff;letter-spacing:0.06em">TRADEBOT SENTINEL ARCHITECTURE</strong><span style="color:#6b7280">|</span><span style="color:#9ca3af">ILLUSTRATIVE FOUR-VECTOR MODEL</span></div><div style="display:flex;gap:18px;color:#9ca3af;font-size:11px"><span>LATENCY: <strong style="color:#34d399">0.8<!-- -->ms</strong></span><span>SKEW: <strong style="color:#60a5fa">16<!-- -->ms</strong></span><span>SPREAD: <strong style="color:#fbbf24">0.85<!-- -->%</strong></span><span>MODE: <strong style="color:#e5e7eb">READ_ONLY</strong></span></div></div><div class="sentinel-tab-strip"><button style="padding:18px 20px;border:none;background:var(--paper-bright);border-bottom:2px solid var(--ink);cursor:pointer;text-align:left;transition:all 0.2s ease"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--accent-deep);margin-bottom:4px">VECTOR 01<!-- --> • <!-- -->INSTITUTIONAL GEX</div><div style="font-size:14px;font-family:var(--serif);font-weight:600;color:var(--text);line-height:1.25">Dealer Gamma Exposure &amp; Wall Absorption</div></button><button style="padding:18px 20px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">VECTOR 02<!-- --> • <!-- -->STOIKOV (2018)</div><div style="font-size:14px;font-family:var(--serif);font-weight:400;color:var(--muted);line-height:1.25">Stoikov Micro-Price &amp; Book Imbalance</div></button><button style="padding:18px 20px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">VECTOR 03<!-- --> • <!-- -->TEMPORAL TRANSMISSION</div><div style="font-size:14px;font-family:var(--serif);font-weight:400;color:var(--muted);line-height:1.25">Cross-Index Basis Lead-Lag Transmission</div></button><button style="padding:18px 20px;border:none;background:transparent;border-bottom:2px solid transparent;cursor:pointer;text-align:left;transition:all 0.2s ease"><div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">VECTOR 04<!-- --> • <!-- -->FINITE STATE MACHINE</div><div style="font-size:14px;font-family:var(--serif);font-weight:400;color:var(--muted);line-height:1.25">Active Position Manager &amp; Crash WAL</div></button></div><div class="sentinel-vector-stage"><div><div style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:99px;background:rgba(0, 0, 0, 0.04);border:1px solid var(--line-strong);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--accent-deep);margin-bottom:14px">VECTOR 01<!-- --> • <!-- -->INSTITUTIONAL GEX</div><h3 style="font-family:var(--serif);font-size:clamp(26px, 2.6vw, 36px);font-weight:400;line-height:1.15;margin:0 0 16px 0;color:var(--text)">Dealer Gamma Exposure &amp; Wall Absorption</h3><p style="font-size:15px;line-height:1.75;color:var(--muted);margin:0 0 24px 0">Tracks market maker delta-hedging obligations across index option surfaces in real time. When net dealer gamma is strongly positive, automated entry gates veto momentum breakout setups and favor mean-reversion absorption.</p><div style="padding:16px 20px;border-radius:12px;background:rgba(0, 0, 0, 0.025);border:1px solid var(--line-strong);margin-bottom:24px"><div style="font-size:10px;font-family:var(--mono);color:var(--muted);letter-spacing:0.08em;margin-bottom:6px">FORMULATION &amp; INVARIANT MODEL</div><code style="font-family:var(--mono);font-size:12px;color:var(--text);font-weight:600;display:block">GEX = ∑ (OI_call - OI_put) * Spot * Gamma * 100</code></div><div style="display:grid;gap:12px"><div style="padding:14px 18px;border-radius:10px;border:1px solid var(--line);background:rgba(0, 0, 0, 0.01);display:flex;gap:14px;align-items:flex-start"><span style="color:var(--accent-deep);font-size:14px;font-weight:bold">✓</span><div><div style="font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:2px">Strike Wall Observer</div><div style="font-size:12px;color:var(--muted);line-height:1.5">Real-time OI and volume concentration mapping at round strike numbers</div></div></div><div style="padding:14px 18px;border-radius:10px;border:1px solid var(--line);background:rgba(0, 0, 0, 0.01);display:flex;gap:14px;align-items:flex-start"><span style="color:var(--accent-deep);font-size:14px;font-weight:bold">✓</span><div><div style="font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:2px">Absorption Detection</div><div style="font-size:12px;color:var(--muted);line-height:1.5">CVD (Cumulative Volume Delta) vs price divergence detection</div></div></div><div style="padding:14px 18px;border-radius:10px;border:1px solid var(--line);background:rgba(0, 0, 0, 0.01);display:flex;gap:14px;align-items:flex-start"><span style="color:var(--accent-deep);font-size:14px;font-weight:bold">✓</span><div><div style="font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:2px">Automatic Regime Switch</div><div style="font-size:12px;color:var(--muted);line-height:1.5">Instantly switches from momentum acceleration to pin/exhaustion modes</div></div></div></div></div><div style="display:flex;flex-direction:column;gap:20px"><div style="padding:24px;border-radius:14px;background:var(--paper-bright);border:1px solid var(--line-strong);box-shadow:0 4px 15px rgba(0, 0, 0, 0.02)"><div style="font-size:10px;font-family:var(--mono);color:var(--muted);letter-spacing:0.1em;margin-bottom:8px">INSTANTANEOUS TELEMETRY: <!-- -->NET DEALER GAMMA</div><div style="font-size:32px;font-family:var(--serif);color:var(--text);font-weight:500">NO LIVE POSITION</div><div style="font-size:12.5px;color:#10b981;margin-top:6px;font-weight:500">Illustrative interface only · no live decision signal</div></div><div style="background:#080c12;border-radius:14px;overflow:hidden;border:1px solid rgba(255, 255, 255, 0.1);flex-grow:1;display:flex;flex-direction:column"><div style="padding:10px 16px;background:rgba(255, 255, 255, 0.04);border-bottom:1px solid rgba(255, 255, 255, 0.08);font-size:11px;font-family:var(--mono);color:#9ca3af;display:flex;justify-content:space-between"><span>sentinel_<!-- -->gex<!-- -->_engine.py</span><span style="color:#34d399">INVARIANTS ENFORCED</span></div><pre style="margin:0;padding:18px 20px;color:#e5e7eb;font-family:var(--mono);font-size:12px;line-height:1.6;overflow-x:auto;flex-grow:1"><code>// Dealer Gamma Invariant Check
 if (netDealerGamma &gt; POSITIVE_GAMMA_THRESHOLD) {
   gexRegime = GEXRegimeState.POSITIVE_GAMMA;
   vetoBreakoutSetups(reason=&quot;Dealer long gamma cushions volatility&quot;);
-}</code></pre></div></div></div><div style="padding:16px 28px;background:rgba(0, 0, 0, 0.02);border-top:1px solid var(--line-strong);font-size:11.5px;color:var(--muted);line-height:1.6"><strong>Regulatory &amp; Operational Scope Notice:</strong> TradeBot Sentinel is an engineering research and market microstructure observability framework developed by Aixion Lab. It operates exclusively in an isolated, read-only paper telemetry mode (<code>broker_api_called=false</code>, <code>is_order_action=false</code>). It does not provide investment advice, trading tips, portfolio management, or public financial recommendations under SEBI regulations. All metrics reflect streaming data integrity, feed freshness, and software invariant proofs.</div></div></div></section><section id="research" class="editorial-section editorial-section--compact"><div class="page-width"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">RESEARCH BOUNDARY</p><h2>Research is a gated lifecycle, not a shortcut to authority.</h2><p class="editorial-heading__copy">The public page explains method without publishing proprietary strategy mechanics.</p></header><div class="detail-grid"><article class="detail-card" data-reveal="true"><p class="eyebrow">METHOD</p><h3>Observe → hypothesize → freeze → test</h3><p>Candidate logic is frozen before evaluation so results cannot silently rewrite the question being tested.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">BOUNDARY</p><h3>Holdout and live observation stay separate</h3><p>Research evidence can support a decision to continue testing; it does not automatically grant execution authority.</p></article></div><div id="timeline" class="system-timeline" data-reveal="true"><div><span>DATA</span><strong>Feed health split into connection, freshness and subscription truth</strong></div><div><span>RESEARCH</span><strong>Research candidates isolated behind explicit validation gates</strong></div><div><span>LIVE</span><strong>Read-only observation used to expose failure paths before authority</strong></div></div></div></section><section id="evidence" class="editorial-section editorial-section--compact"><div class="page-width"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">EVIDENCE / PUBLIC BOUNDARY</p><h2>Claims stay bounded by what can be shown.</h2><p class="editorial-heading__copy">Proof records are public-safe summaries. Sensitive logic and operational data stay outside the site.</p></header><div class="evidence-list"><div class="evidence-row" data-reveal="true"><span>METHOD</span><strong>Frozen-hypothesis research and holdout separation</strong><div class="evidence-actions"><span class="state-tag state-public-summary">PUBLIC SUMMARY</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="TradeBot / Frozen-hypothesis research and holdout separation evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>TradeBot / Frozen-hypothesis research and holdout separation</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>PUBLIC SUMMARY</strong><p>Frozen-hypothesis research and holdout separation</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>METHOD</dd></div><div><dt>Authority</dt><dd>Public-safe evidence summary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div><div class="evidence-row" data-reveal="true"><span>LIVE</span><strong>Read-only live observation and failure-recovery work</strong><div class="evidence-actions"><span class="state-tag state-public-summary">PUBLIC SUMMARY</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="TradeBot / Read-only live observation and failure-recovery work evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>TradeBot / Read-only live observation and failure-recovery work</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>PUBLIC SUMMARY</strong><p>Read-only live observation and failure-recovery work</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>LIVE</dd></div><div><dt>Authority</dt><dd>Public-safe evidence summary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div><div class="evidence-row" data-reveal="true"><span>BOUNDARY</span><strong>Strategy parameters and proprietary edge remain private</strong><div class="evidence-actions"><span class="state-tag state-enforced">ENFORCED</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="TradeBot / Strategy parameters and proprietary edge remain private evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>TradeBot / Strategy parameters and proprietary edge remain private</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>ENFORCED</strong><p>Strategy parameters and proprietary edge remain private</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>BOUNDARY</dd></div><div><dt>Authority</dt><dd>Public/private boundary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div></div></div></section><section id="roadmap" class="editorial-section editorial-section--dark"><div class="page-width next-gate" data-reveal="true"><div><p class="eyebrow eyebrow--light">NEXT GATE</p><h2 class="next-gate__title--single">Public-safe operational evidence review.</h2><p>Evidence reconciliation, data integrity and candidate validation.</p></div><a class="button button--light" href="./work.html">All systems <span aria-hidden="true">↗</span></a></div></section><!--$--><!--/$-->
+}</code></pre></div></div></div><div style="padding:16px 28px;background:rgba(0, 0, 0, 0.02);border-top:1px solid var(--line-strong);font-size:11.5px;color:var(--muted);line-height:1.6"><strong>Regulatory &amp; Operational Scope Notice:</strong> TradeBot Sentinel is an engineering research and market microstructure observability framework developed by Aixion Lab. It operates exclusively in an isolated, read-only paper telemetry mode (<code>broker_api_called=false</code>, <code>is_order_action=false</code>). It does not provide investment advice, trading tips, portfolio management, or public financial recommendations under SEBI regulations. Numerical values shown above are illustrative interface samples; this page does not present live telemetry, trading performance or execution outcomes.</div></div></div></section><section id="research" class="editorial-section editorial-section--compact"><div class="page-width"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">RESEARCH BOUNDARY</p><h2>Research is a gated lifecycle, not a shortcut to authority.</h2><p class="editorial-heading__copy">The public page explains method without publishing proprietary strategy mechanics.</p></header><div class="detail-grid"><article class="detail-card" data-reveal="true"><p class="eyebrow">METHOD</p><h3>Observe → hypothesize → freeze → test</h3><p>Candidate logic is frozen before evaluation so results cannot silently rewrite the question being tested.</p></article><article class="detail-card" data-reveal="true"><p class="eyebrow">BOUNDARY</p><h3>Holdout and live observation stay separate</h3><p>Research evidence can support a decision to continue testing; it does not automatically grant execution authority.</p></article></div><div id="timeline" class="system-timeline" data-reveal="true"><div><span>DATA</span><strong>Feed health split into connection, freshness and subscription truth</strong></div><div><span>RESEARCH</span><strong>Research candidates isolated behind explicit validation gates</strong></div><div><span>LIVE</span><strong>Read-only observation used to expose failure paths before authority</strong></div></div></div></section><section id="evidence" class="editorial-section editorial-section--compact"><div class="page-width"><header class="editorial-heading editorial-heading--left " data-reveal="true"><p class="eyebrow">EVIDENCE / PUBLIC BOUNDARY</p><h2>Claims stay bounded by what can be shown.</h2><p class="editorial-heading__copy">Proof records are public-safe summaries. Sensitive logic and operational data stay outside the site.</p></header><div class="evidence-list"><div class="evidence-row" data-reveal="true"><span>METHOD</span><strong>Frozen-hypothesis research and holdout separation</strong><div class="evidence-actions"><span class="state-tag state-public-summary">PUBLIC SUMMARY</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="TradeBot / Frozen-hypothesis research and holdout separation evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>TradeBot / Frozen-hypothesis research and holdout separation</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>PUBLIC SUMMARY</strong><p>Frozen-hypothesis research and holdout separation</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>METHOD</dd></div><div><dt>Authority</dt><dd>Public-safe evidence summary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div><div class="evidence-row" data-reveal="true"><span>LIVE</span><strong>Read-only live observation and failure-recovery work</strong><div class="evidence-actions"><span class="state-tag state-public-summary">PUBLIC SUMMARY</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="TradeBot / Read-only live observation and failure-recovery work evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>TradeBot / Read-only live observation and failure-recovery work</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>PUBLIC SUMMARY</strong><p>Read-only live observation and failure-recovery work</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>LIVE</dd></div><div><dt>Authority</dt><dd>Public-safe evidence summary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div><div class="evidence-row" data-reveal="true"><span>BOUNDARY</span><strong>Strategy parameters and proprietary edge remain private</strong><div class="evidence-actions"><span class="state-tag state-enforced">ENFORCED</span><button class="evidence-trigger">Inspect evidence</button><dialog class="evidence-dialog" aria-label="TradeBot / Strategy parameters and proprietary edge remain private evidence record"><aside class="evidence-drawer"><div class="evidence-drawer-head"><div><p class="eyebrow">EVIDENCE RECORD</p><h2>TradeBot / Strategy parameters and proprietary edge remain private</h2></div><button class="drawer-close" aria-label="Close evidence">×</button></div><div class="evidence-result-card"><span>RESULT / STATE</span><strong>ENFORCED</strong><p>Strategy parameters and proprietary edge remain private</p></div><dl class="evidence-detail-list"><div><dt>Type</dt><dd>BOUNDARY</dd></div><div><dt>Authority</dt><dd>Public/private boundary</dd></div><div><dt>Proof surface</dt><dd>Summary-only public record</dd></div></dl><div class="evidence-proof-placeholder"><span>PUBLIC PROOF STATUS</span><strong>Summary only.</strong><p>No external artifact is linked for this record. The public claim is intentionally limited to the evidence summary above.</p></div><div class="evidence-boundary-note"><strong>Public boundary</strong><p>Private implementation details, credentials, proprietary research mechanics and sensitive runtime data remain outside the website.</p></div></aside></dialog></div></div></div></div></section><section id="roadmap" class="editorial-section editorial-section--dark"><div class="page-width next-gate" data-reveal="true"><div><p class="eyebrow eyebrow--light">NEXT GATE</p><h2 class="next-gate__title--single">Public-safe operational evidence review.</h2><p>Evidence reconciliation, data integrity and candidate validation.</p></div><a class="button button--light" href="./work.html">All systems <span aria-hidden="true">↗</span></a></div></section><!--$--><!--/$-->
   </main>
 
 
   <!-- Global Standard Aixion x Kirifuda Footer -->
-      <!-- Authentic Aixion Lab Navy Footer -->
-  <!-- Authentic Production Aixion Lab Footer -->
   <footer class="site-footer">
     <div class="site-footer__main">
       <div class="site-footer__identity">
@@ -677,256 +1600,8 @@ if (netDealerGamma &gt; POSITIVE_GAMMA_THRESHOLD) {
     </div>
   </footer>
 
-  <!-- Background WebGL Ambient Canvas -->
-  <canvas id="webgl-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.65;"></canvas>
 
-  <!-- Interactive Sleek Cursor Dot -->
-  <div id="cursor" style="position:fixed;top:0;left:0;width:8px;height:8px;background:#ffffff;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform 0.15s ease-out;"></div>
 
-  <script id="native-kirifuda-engine">
-  (function() {
-    // ==========================================================================
-    // 1. NATIVE SMOOTH KINETIC SCROLL & SKEW PHYSICS (Zero External Dependencies)
-    // ==========================================================================
-    var currentVelocity = 0;
-    var lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
-    var lastScrollTime = performance.now();
-    var currentSkew = 0;
-    var targetSkew = 0;
-
-    var skewElements = document.querySelectorAll(
-      '.kf_scroll_skew, .editorial-hero, .work-story, .principle, .detail-card, .research-row, .pulse-card, .system-facts, .system-timeline > div'
-    );
-
-    window.addEventListener('scroll', function() {
-      var now = performance.now();
-      var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-      var dt = Math.max(1, now - lastScrollTime);
-      var vel = (scrollY - lastScrollY) / dt * 15;
-      var clampedVel = Math.max(-14, Math.min(14, vel));
-
-      targetSkew = clampedVel * 0.22; // Kirifuda subtle dynamic skew (-3deg to +3deg)
-      currentVelocity = Math.abs(clampedVel);
-      lastScrollY = scrollY;
-      lastScrollTime = now;
-    }, { passive: true });
-
-    function updatePhysics() {
-      currentSkew += (targetSkew - currentSkew) * 0.12;
-      targetSkew *= 0.88;
-
-      if (Math.abs(currentSkew) > 0.005) {
-        var skewStr = 'skewY(' + currentSkew.toFixed(3) + 'deg)';
-        for (var i = 0; i < skewElements.length; i++) {
-          skewElements[i].style.transform = skewStr;
-          skewElements[i].style.transition = 'transform 0.05s ease-out';
-        }
-      } else {
-        for (var j = 0; j < skewElements.length; j++) {
-          skewElements[j].style.transform = 'none';
-        }
-      }
-      requestAnimationFrame(updatePhysics);
-    }
-    requestAnimationFrame(updatePhysics);
-
-    // ==========================================================================
-    // 2. INTERACTIVE SLEEK CURSOR DOT
-    // ==========================================================================
-    var cursor = document.getElementById('cursor');
-    var mX = window.innerWidth / 2, mY = window.innerHeight / 2;
-    var cX = mX, cY = mY;
-
-    window.addEventListener('mousemove', function(e) {
-      mX = e.clientX;
-      mY = e.clientY;
-    });
-
-    function updateCursor() {
-      cX += (mX - cX) * 0.45;
-      cY += (mY - cY) * 0.45;
-      if (cursor) {
-        cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px)';
-      }
-      requestAnimationFrame(updateCursor);
-    }
-    requestAnimationFrame(updateCursor);
-
-    var hoverTargets = document.querySelectorAll(
-      'a, button, .principle, .work-story, .detail-card, .research-row, .pulse-card, .state-tag, .editorial-link'
-    );
-    hoverTargets.forEach(function(el) {
-      el.addEventListener('mouseenter', function() {
-        if (cursor) cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px) scale(2.4)';
-      });
-      el.addEventListener('mouseleave', function() {
-        if (cursor) cursor.style.transform = 'translate(' + cX + 'px, ' + cY + 'px) scale(1)';
-      });
-    });
-
-    // ==========================================================================
-    // 3. NATIVE HARDWARE-ACCELERATED ORDER-FLOW WEBGL FLUID SHADER
-    // ==========================================================================
-    var canvas = document.getElementById('webgl-canvas');
-    if (canvas) {
-      var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (gl) {
-        function resizeCanvas() {
-          var dpr = Math.min(window.devicePixelRatio || 1, 2);
-          canvas.width = window.innerWidth * dpr;
-          canvas.height = window.innerHeight * dpr;
-          gl.viewport(0, 0, canvas.width, canvas.height);
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        var vsSource = [
-          'attribute vec2 a_pos;',
-          'varying vec2 vUv;',
-          'void main() {',
-          '  vUv = a_pos * 0.5 + 0.5;',
-          '  gl_Position = vec4(a_pos, 0.0, 1.0);',
-          '}'
-        ].join('\n');
-
-        var fsSource = [
-          'precision mediump float;',
-          'uniform float u_time;',
-          'uniform float u_pow;',
-          'uniform vec2 u_mouse;',
-          'uniform vec2 u_resolution;',
-          'varying vec2 vUv;',
-
-          'vec2 fluidOrderFlow(vec2 uv, float dist) {',
-          '  vec2 p = uv * 2.0 - 1.0;',
-          '  float r = length(p);',
-          '  float angle = atan(p.y, p.x);',
-          '  float theta = angle + sin(r * 4.0 - u_time * 0.8) * 0.08 * dist;',
-          '  vec2 warped = vec2(cos(theta), sin(theta)) * r;',
-          '  return warped * 0.5 + 0.5;',
-          '}',
-
-          'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }',
-
-          'float noise(vec2 p) {',
-          '  vec2 i = floor(p);',
-          '  vec2 f = fract(p);',
-          '  f = f * f * (3.0 - 2.0 * f);',
-          '  return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), f.x),',
-          '             mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);',
-          '}',
-
-          'float fbm(vec2 p) {',
-          '  float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0);',
-          '  mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));',
-          '  for (int i = 0; i < 4; ++i) {',
-          '    v += a * noise(p); p = rot * p * 2.0 + shift; a *= 0.5;',
-          '  }',
-          '  return v;',
-          '}',
-
-          'void main() {',
-          '  vec2 st = gl_FragCoord.xy / u_resolution.xy;',
-          '  st.x *= u_resolution.x / u_resolution.y;',
-          '  float distpow = u_pow * 5.5;',
-          '  vec2 distUv = fluidOrderFlow(vUv, distpow);',
-          '  vec2 q = vec2(fbm(st + 0.04 * u_time), fbm(st + vec2(1.0)));',
-          '  vec2 r = vec2(fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.12 * u_time),',
-          '                fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.10 * u_time));',
-          '  float f = fbm(st + r);',
-          '  float intensity = smoothstep(0.38, 0.72, f);',
-          '  vec3 color = vec3(intensity * 0.08);',
-          '  float mouseDist = length(vUv - u_mouse);',
-          '  color += (1.0 - smoothstep(0.0, 0.28, mouseDist)) * 0.05;',
-          '  gl_FragColor = vec4(color, 1.0);',
-          '}'
-        ].join('\n');
-
-        function compileShader(type, src) {
-          var shader = gl.createShader(type);
-          gl.shaderSource(shader, src);
-          gl.compileShader(shader);
-          return shader;
-        }
-
-        var prog = gl.createProgram();
-        gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSource));
-        gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSource));
-        gl.linkProgram(prog);
-        gl.useProgram(prog);
-
-        var buf = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
-
-        var aPos = gl.getAttribLocation(prog, 'a_pos');
-        gl.enableVertexAttribArray(aPos);
-        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-        var uTime = gl.getUniformLocation(prog, 'u_time');
-        var uPow = gl.getUniformLocation(prog, 'u_pow');
-        var uMouse = gl.getUniformLocation(prog, 'u_mouse');
-        var uRes = gl.getUniformLocation(prog, 'u_resolution');
-
-        var startTime = performance.now();
-        var targetPow = 0;
-        var currentPow = 0;
-
-        function renderWebGL() {
-          var now = performance.now();
-          var elapsed = (now - startTime) * 0.001;
-
-          targetPow += 0.002 * currentVelocity;
-          currentPow += (targetPow - currentPow) * 0.12;
-          currentPow *= 0.93;
-          targetPow *= 0.90;
-
-          gl.uniform1f(uTime, elapsed);
-          gl.uniform1f(uPow, currentPow);
-          gl.uniform2f(uMouse, mX / window.innerWidth, 1.0 - (mY / window.innerHeight));
-          gl.uniform2f(uRes, canvas.width, canvas.height);
-
-          gl.drawArrays(gl.TRIANGLES, 0, 6);
-          requestAnimationFrame(renderWebGL);
-        }
-        requestAnimationFrame(renderWebGL);
-      }
-    }
-
-    // ==========================================================================
-    // 4. INTERSECTION OBSERVER ENTRANCE & SCROLL REVEALS
-    // ==========================================================================
-    var revealObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-revealed');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll(
-      '.editorial-hero__content, .principles-grid .principle, .detail-grid .detail-card, .work-story, .research-row, .pulse-card, .system-timeline > div'
-    ).forEach(function(el) {
-      el.classList.add('kf-reveal-init');
-      revealObserver.observe(el);
-    });
-
-  })();
-  </script>
-
-  <style>
-    /* Kirifuda Stagger Entrance Animation Keyframes */
-    .kf-reveal-init {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-    .kf-reveal-init.is-revealed {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-    }
-  </style>
-
+  <script src="./subpage-motion.js?v=13"></script>
 </body>
 </html>
