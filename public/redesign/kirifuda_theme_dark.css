@@ -1,0 +1,77 @@
+
+
+/* Kirifuda Dark Mode Theme Enforcement for Editorial Content */
+:root {
+  --paper: #000000 !important;
+  --paper-bright: #0a0a0c !important;
+  --paper-cool: #111114 !important;
+  --ink: #ffffff !important;
+  --ink-soft: #dddddd !important;
+  --text: #ffffff !important;
+  --muted: #888888 !important;
+  --line: #222222 !important;
+  --line-strong: #333333 !important;
+  --brand-navy: #ffffff !important;
+  --brand-slate: #888888 !important;
+  --brand-cream: #000000 !important;
+}
+
+body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+main.page_container_full, section, article, div.editorial-hero, div.editorial-section, div.work-item, div.editorial-card {
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+h1, h2, h3, h4, .editorial-heading h2, .editorial-hero h1 {
+  color: #ffffff !important;
+  font-family: 'Oswald', sans-serif !important;
+}
+
+p, span, li, td {
+  color: #aaaaaa !important;
+}
+
+a {
+  color: #ffffff !important;
+}
+
+/* Fix broken Next.js image containers */
+img[src*="aixion-editorial"], img.editorial-hero__image, .cover-image img {
+  display: none !important;
+}
+
+/* Independent Page Typography & Editorial Layout Reset */
+.editorial-hero {
+  position: relative !important;
+  height: auto !important;
+  min-height: auto !important;
+  padding: 120px 0 60px 0 !important;
+  overflow: visible !important;
+}
+
+.editorial-hero h1 {
+  font-family: 'Oswald', sans-serif !important;
+  font-size: clamp(48px, 6vw, 84px) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  line-height: 1.05 !important;
+  margin: 20px 0 !important;
+}
+
+.editorial-section, .page-width, section, article {
+  position: relative !important;
+  height: auto !important;
+  max-width: 100% !important;
+}
+
+/* Ensure smooth native scroll always works effortlessly */
+html, body {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+  min-height: 100vh !important;
+}

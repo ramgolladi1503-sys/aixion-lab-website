@@ -1,0 +1,620 @@
+/* Shared page grid, type scale, spacing, scroll motion, and locked footer
+   layout for secondary editorial pages. */
+body.editorial-page {
+  --editorial-page-gutter: max(20px, 4vw);
+  --editorial-width: 1184px;
+  --editorial-gutter: clamp(20px, 4vw, 52px);
+  --footer-surface: #0c141d;
+  --footer-rule: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+}
+
+body.editorial-page main {
+  width: calc(100% - (2 * var(--editorial-page-gutter))) !important;
+  max-width: none !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+
+body.editorial-page .page-breadcrumb {
+  width: calc(100% - (2 * var(--editorial-page-gutter))) !important;
+  max-width: none !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+body.editorial-page main .editorial-hero,
+body.editorial-page main .editorial-section,
+body.editorial-page main #page-content,
+body.editorial-page main > section {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+body.editorial-page main .editorial-hero {
+  padding-top: 26px !important;
+  padding-bottom: 20px !important;
+}
+
+body.editorial-page main .editorial-section,
+body.editorial-page main #page-content {
+  padding-top: clamp(30px, 3vw, 40px) !important;
+  padding-bottom: clamp(40px, 5vw, 64px) !important;
+}
+
+body.editorial-page main .page-width {
+  width: 100% !important;
+  max-width: 1184px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+body.editorial-page main .editorial-hero__content {
+  width: 100% !important;
+  max-width: 940px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+}
+
+body.editorial-page main .editorial-heading,
+body.editorial-page main .image-story,
+body.editorial-page main .image-story__copy,
+body.editorial-page main .pulse-snapshot,
+body.editorial-page main .pulse-list,
+body.editorial-page main .research-answers,
+body.editorial-page main .research-method-layout,
+body.editorial-page main .editorial-list,
+body.editorial-page main .career-capabilities,
+body.editorial-page main .career-projects,
+body.editorial-page main .resume-note,
+body.editorial-page main .system-subnav,
+body.editorial-page main .system-facts,
+body.editorial-page main .career-strip,
+body.editorial-page main .architecture-wrap,
+body.editorial-page main .detail-grid,
+body.editorial-page main .impact-grid,
+body.editorial-page main .engineering-grid,
+body.editorial-page main .evidence-list,
+body.editorial-page main .system-timeline,
+body.editorial-page main .content-grid {
+  width: 100% !important;
+  max-width: 1184px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+body.editorial-page main .image-story__copy {
+  display: block !important;
+}
+
+body.editorial-page main .image-story__body p,
+body.editorial-page main .editorial-hero__copy,
+body.editorial-page main .editorial-heading__copy {
+  text-align: left !important;
+  text-justify: auto !important;
+}
+
+body.editorial-page main .editorial-hero__content h1 {
+  font-size: clamp(68px, 9.5vw, 150px) !important;
+  line-height: 0.95 !important;
+}
+
+body.editorial-page main .eyebrow {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+
+body.editorial-page main .editorial-hero__copy {
+  max-width: 720px !important;
+  font-size: clamp(19px, 1.8vw, 22px) !important;
+  line-height: 1.55 !important;
+}
+
+body.editorial-page main .editorial-hero__actions a,
+body.editorial-page main .editorial-link {
+  font-size: 15px !important;
+}
+
+body.editorial-page main .editorial-heading h2,
+body.editorial-page main .image-story__copy h2,
+body.editorial-page main .research-answers h2,
+body.editorial-page main .research-method-layout h2,
+body.editorial-page main .resume-note h2 {
+  font-size: clamp(42px, 5vw, 64px) !important;
+  line-height: 1.02 !important;
+}
+
+body.editorial-page main p:not(.eyebrow):not(.editorial-hero__copy),
+body.editorial-page main dd {
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+  text-align: left !important;
+  text-justify: auto !important;
+}
+
+body.editorial-page main .subpage-reveal {
+  opacity: 0;
+  transform: translate3d(0, 42px, 0);
+  animation: none !important;
+  transition-property: opacity, transform !important;
+  transition-duration: 760ms, 900ms !important;
+  transition-timing-function: cubic-bezier(.22, .72, .22, 1), cubic-bezier(.16, 1, .3, 1) !important;
+  transition-delay: var(--subpage-reveal-delay, 0ms) !important;
+  will-change: opacity, transform;
+}
+
+body.editorial-page main .subpage-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+body.editorial-page main .subpage-reveal:focus-within {
+  opacity: 1;
+  transform: none;
+}
+
+/* Match the established footer on the locked Lab page. */
+body.editorial-page .site-footer {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin-top: 0 !important;
+  padding: 28px var(--editorial-gutter) 18px !important;
+  background: var(--footer-surface) !important;
+  box-sizing: border-box !important;
+}
+
+body.editorial-page .site-footer__main,
+body.editorial-page .site-footer__base {
+  width: 100% !important;
+  max-width: var(--editorial-width) !important;
+  box-sizing: border-box !important;
+  margin-inline: auto !important;
+}
+
+body.editorial-page .site-footer__main {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.3fr) minmax(140px, 0.8fr) minmax(200px, 0.7fr) !important;
+  gap: clamp(24px, 4vw, 52px) !important;
+  align-items: start !important;
+  margin-bottom: 24px !important;
+}
+
+body.editorial-page .site-footer__base {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+  gap: 12px 20px !important;
+  align-items: center !important;
+  padding-top: 16px !important;
+  border-top: 1px solid var(--footer-rule) !important;
+  font-size: 14px !important;
+}
+
+body.editorial-page .site-footer .site-footer__base,
+body.editorial-page .site-footer .site-footer__badge,
+body.editorial-page .site-footer .site-footer__copy,
+body.editorial-page .site-footer .site-footer__process {
+  font-size: 16px !important;
+}
+
+body.editorial-page .site-footer__identity { gap: 10px !important; }
+body.editorial-page .site-footer__links,
+body.editorial-page .site-footer__contact { gap: 8px !important; }
+body.editorial-page .site-footer p.site-footer__eyebrow { font-size: 18px !important; }
+
+body.editorial-page .site-footer__badge {
+  max-width: 290px !important;
+  white-space: normal !important;
+  text-transform: uppercase !important;
+}
+
+body.editorial-page .site-footer__copy {
+  justify-self: center !important;
+  white-space: nowrap !important;
+  text-transform: none !important;
+}
+
+body.editorial-page .site-footer__process {
+  justify-content: flex-end !important;
+  white-space: normal !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+body.editorial-page .site-footer__statement {
+  font-family: 'Padauk', Georgia, serif !important;
+  font-size: 18px !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0.2px !important;
+  text-transform: none !important;
+}
+
+body.editorial-page .site-footer p.site-footer__statement,
+body.editorial-page .site-footer p.site-footer__subline { font-size: 18px !important; }
+
+body.editorial-page .site-footer__subline,
+body.editorial-page .site-footer__desc,
+body.editorial-page .site-footer__links a,
+body.editorial-page .site-footer__link {
+  font-family: 'Padauk', sans-serif !important;
+  font-size: 16px !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+body.editorial-page .site-footer .site-footer__links a,
+body.editorial-page .site-footer a.site-footer__link { font-size: 16px !important; }
+body.editorial-page .site-footer span.site-footer__desc { font-size: 17px !important; }
+
+@media (max-width: 850px) {
+  body.editorial-page .site-footer__main {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 28px !important;
+  }
+
+  body.editorial-page .site-footer__contact { grid-column: auto !important; }
+  body.editorial-page .site-footer__base {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  body.editorial-page .site-footer__badge,
+  body.editorial-page .site-footer__copy,
+  body.editorial-page .site-footer__process {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    justify-self: start !important;
+  }
+
+  body.editorial-page .site-footer__process { justify-content: flex-start !important; }
+  body.editorial-page main .subpage-reveal {
+    transform: translate3d(0, 24px, 0) !important;
+    transition-duration: 560ms, 680ms !important;
+  }
+}
+
+@media (max-width: 560px) {
+  body.editorial-page .page-breadcrumb { padding-top: 88px !important; }
+  body.editorial-page main .editorial-hero { padding-top: 20px !important; }
+  body.editorial-page main .editorial-section,
+  body.editorial-page main #page-content { padding-block: 32px !important; }
+
+  body.editorial-page .site-footer { padding: 24px var(--editorial-gutter) 18px !important; }
+  body.editorial-page .site-footer__main,
+  body.editorial-page .site-footer__base {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  body.editorial-page .site-footer__identity,
+  body.editorial-page .site-footer__contact,
+  body.editorial-page .site-footer__badge,
+  body.editorial-page .site-footer__copy,
+  body.editorial-page .site-footer__process {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    justify-self: start !important;
+  }
+
+  body.editorial-page .site-footer__process { justify-content: flex-start !important; }
+  body.editorial-page .site-footer__copy { white-space: normal !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.editorial-page main .subpage-reveal,
+  body.editorial-page main .subpage-reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    transition-delay: 0ms !important;
+    will-change: auto;
+  }
+}
+
+/* Let hero copy occupy the available editorial measure; keep the shared left
+   gutter consistent with the breadcrumb. */
+body.editorial-page main .editorial-hero__content {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+body.editorial-page main .editorial-hero__copy {
+  width: 100% !important;
+  max-width: none !important;
+  text-align: left !important;
+  text-justify: auto !important;
+}
+body.editorial-page .site-footer p,
+body.editorial-page .site-footer__desc {
+  text-align: left !important;
+  text-justify: auto !important;
+}
+body.subpage-motion-gsap main .subpage-reveal {
+  transition: none !important;
+  will-change: transform, opacity;
+}
+
+/* Secondary editorial content expands into the image-free side of the page. */
+body.editorial-page main > .page-width,
+body.editorial-page main .editorial-section > .page-width,
+body.editorial-page main #page-content > .page-width,
+body.editorial-page main .editorial-heading,
+body.editorial-page main .research-feature,
+body.editorial-page main .research-feature__copy,
+body.editorial-page main .research-list,
+body.editorial-page main .research-boundary,
+body.editorial-page main .journey-intro,
+body.editorial-page main .journey-spectrum,
+body.editorial-page main .work-support__heading,
+body.editorial-page main .work-support__list,
+body.editorial-page main .work-end__inner {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+body.editorial-page main .editorial-hero__content h1 {
+  width: 100% !important;
+  max-width: none !important;
+  text-wrap: balance;
+}
+
+/* The main wrapper already owns the page gutter; its child sections should
+   align directly with the hero instead of receiving a second inset. */
+body.editorial-page main > .editorial-section,
+body.editorial-page main > #page-content,
+body.editorial-page main > #work-stories,
+body.editorial-page main > .work-support,
+body.editorial-page main > .work-end {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+body.editorial-page main > #page-content > .page-width,
+body.editorial-page main > .editorial-section > .page-width {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+body.editorial-page main .editorial-heading h2,
+body.editorial-page main .journey-intro h2,
+body.editorial-page main .work-support__heading h2,
+body.editorial-page main .research-boundary h2 {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Only the four approved tabs plus Contact remain on secondary pages. */
+body.editorial-page .mode-toggle,
+body.editorial-page .header-menu-pill { display: none !important; }
+body.editorial-page .header-actions { gap: 0 !important; }
+
+/* Resume capability content and CTAs use the complete reading width. */
+body.editorial-page main .career-capabilities {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  width: 100% !important;
+  max-width: none !important;
+  gap: 16px !important;
+  margin-top: clamp(26px, 3vw, 42px) !important;
+}
+body.editorial-page main .career-capabilities > .principle {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 220px !important;
+  padding: clamp(22px, 2.5vw, 34px) !important;
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  background: #0c141d !important;
+  box-sizing: border-box !important;
+}
+body.editorial-page main .career-capabilities > .principle h3 {
+  margin: 0 0 16px !important;
+  color: #f8fafc !important;
+  font-size: clamp(23px, 1.65vw, 29px) !important;
+  line-height: 1.15 !important;
+}
+body.editorial-page main .career-capabilities > .principle p {
+  margin: 0 !important;
+  color: #aeb9c8 !important;
+  font-size: 18px !important;
+  line-height: 1.55 !important;
+}
+body.editorial-page main .career-capabilities > .career-capability-cta {
+  justify-content: space-between !important;
+  text-decoration: none !important;
+  transition: border-color 220ms ease, background-color 220ms ease !important;
+}
+body.editorial-page main .career-capabilities > .career-capability-cta:hover {
+  border-color: rgba(226, 232, 240, 0.65) !important;
+  background: #111b27 !important;
+}
+body.editorial-page main .career-capabilities > .career-capability-cta .eyebrow {
+  margin: 0 0 24px !important;
+  color: #93a4bb !important;
+}
+body.editorial-page main .career-projects {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  width: 100% !important;
+  max-width: none !important;
+  gap: clamp(20px, 3vw, 44px) !important;
+}
+body.editorial-page main .resume-actions .button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 24px !important;
+  min-height: 54px !important;
+  padding: 14px 20px !important;
+  border: 1px solid rgba(226, 232, 240, 0.45) !important;
+  background: transparent !important;
+  color: #f8fafc !important;
+  font-size: 15px !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
+}
+body.editorial-page main .resume-actions .button span { color: inherit !important; }
+
+/* Keep footer layout dimensions while aligning its inner rows to page gutter. */
+body.editorial-page .site-footer__main,
+body.editorial-page .site-footer__base {
+  margin-left: var(--editorial-page-gutter) !important;
+  margin-right: auto !important;
+}
+@media (max-width: 700px) {
+  body.editorial-page main .career-capabilities,
+  body.editorial-page main .career-projects { grid-template-columns: minmax(0, 1fr) !important; }
+  body.editorial-page .site-footer__main,
+  body.editorial-page .site-footer__base {
+    margin-left: var(--editorial-page-gutter) !important;
+    width: calc(100% - (2 * var(--editorial-page-gutter))) !important;
+  }
+}
+
+/* Keep inner-page content on the same viewport gutter and reclaim the width
+   that image-led layouts used to reserve. Footer padding and vertical rhythm
+   intentionally remain unchanged. */
+body.editorial-page {
+  --editorial-page-gutter: clamp(24px, 4vw, 80px);
+  --editorial-gutter: var(--editorial-page-gutter);
+}
+body.editorial-page main .page-width,
+body.editorial-page main .editorial-heading,
+body.editorial-page main .image-story,
+body.editorial-page main .editorial-list,
+body.editorial-page main .career-capabilities,
+body.editorial-page main .career-projects,
+body.editorial-page main .resume-note,
+body.editorial-page main .system-subnav,
+body.editorial-page main .system-facts,
+body.editorial-page main .career-strip,
+body.editorial-page main .architecture-wrap,
+body.editorial-page main .detail-grid,
+body.editorial-page main .impact-grid,
+body.editorial-page main .engineering-grid,
+body.editorial-page main .evidence-list,
+body.editorial-page main .system-timeline,
+body.editorial-page main .content-grid {
+  width: 100% !important;
+  max-width: none !important;
+}
+body.editorial-page main .editorial-hero__content {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr) !important;
+  column-gap: clamp(28px, 6vw, 96px) !important;
+  align-items: end !important;
+}
+body.editorial-page main .editorial-hero__content > .eyebrow,
+body.editorial-page main .editorial-hero__content > h1 { grid-column: 1 / -1 !important; }
+body.editorial-page main .editorial-hero__content > .editorial-hero__copy {
+  grid-column: 1 !important;
+  max-width: 72ch !important;
+}
+body.editorial-page main .editorial-hero__content > .editorial-hero__actions {
+  grid-column: 2 !important;
+  grid-row: 3 !important;
+  justify-self: start !important;
+  margin: 0 !important;
+}
+body.editorial-page main .editorial-hero__content h1 {
+  width: 100% !important;
+  max-width: none !important;
+}
+body.editorial-page .site-footer__main,
+body.editorial-page .site-footer__base {
+  width: 100% !important;
+  max-width: none !important;
+  margin-inline: auto !important;
+}
+body.editorial-page main .subpage-reveal {
+  transition-duration: 480ms, 560ms !important;
+}
+@media (max-width: 900px) {
+  body.editorial-page main .editorial-hero__content { grid-template-columns: minmax(0, 1fr) !important; }
+  body.editorial-page main .editorial-hero__content > .editorial-hero__actions {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+}
+
+/* Clear the legacy right-anchored hero coordinates on editorial subpages.
+   Keep transform overridable by the subpage reveal animation. */
+body.editorial-page main .editorial-hero__content {
+  position: relative !important;
+  inset: auto !important;
+  transform: translateX(0);
+}
+
+/* Raise small technical text to readable contrast on the dark page surfaces. */
+body.editorial-page .site-header .brand-copy small,
+body.editorial-page main .eyebrow,
+body.editorial-page main #system-current-state dt {
+  color: #aebbd0 !important;
+}
+
+body.editorial-page main #system-current-state dd {
+  color: #d0d8e1 !important;
+}
+
+body.editorial-page main .system-subnav {
+  background: #0c141d !important;
+}
+
+body.editorial-page main .system-subnav a {
+  color: #d0d8e1 !important;
+}
+
+body.editorial-page main .sentinel-tab-strip button > div:first-child,
+body.editorial-page main .tower-main-stage > div:nth-child(2) > div:first-child {
+  color: #f0b7bf !important;
+}
+
+body.page-work main .work-story__copy dl dt {
+  color: #aebbd0 !important;
+}
+
+body.editorial-page main .editorial-hero > .scroll-cue {
+  position: static !important;
+  inset: auto !important;
+  display: flex !important;
+  justify-content: flex-end;
+  width: max-content !important;
+  max-width: 100%;
+  margin: 24px 0 0 auto !important;
+}
+
+/* Keep compact labels legible on the dark system telemetry stages. */
+body.editorial-page main .tower-stepper-bar button:first-child > div:first-child,
+body.page-tradebot main .sentinel-vector-stage > div:first-child > div:first-child {
+  color: #aebbd0 !important;
+}
+
+/* Keep hero title hierarchy consistent on every editable inner page. */
+body.editorial-page:not(.page-about) #main-content .editorial-hero__content h1 {
+  color: #666666 !important;
+}
+body.editorial-page:not(.page-about) #main-content .editorial-hero__content h1::first-line {
+  color: #ffffff !important;
+}

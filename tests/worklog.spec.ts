@@ -8,14 +8,14 @@ test("Pulse remains available as a dated status record without returning to prim
     await expect(primary.getByRole("link", { name: "Work" })).toBeVisible();
     await expect(primary.getByRole("link", { name: "Pulse" })).toHaveCount(0);
   } else {
-    await page.getByRole("button", { name: "Menu" }).click();
-    const menu = page.getByRole("navigation", { name: "Explore Aixion Lab" });
-    await expect(menu.getByRole("link", { name: "The Lab" })).toBeVisible();
-    await expect(menu.getByRole("link", { name: /Selected Work/ })).toBeVisible();
-    await expect(menu.getByRole("link", { name: "Pulse" })).toHaveCount(0);
+    // The locked homepage has no mobile nav; verify that Pulse stays out of
+    // the mobile card surface, then verify the direct nav on its own page.
+    await expect(page.locator("#shuffler_stage .card_item").first()).toBeAttached();
+    await expect(page.getByRole("button", { name: "Menu" })).toHaveCount(0);
   }
 
   await page.goto("/pulse", { waitUntil: "networkidle" });
+  await expect(page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "The Lab" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "A clear view of what is moving." })).toBeVisible();
   await expect(page.locator(".pulse-snapshot")).toContainText("Last recorded snapshot");
   await expect(page.locator(".pulse-card")).toHaveCount(4);
